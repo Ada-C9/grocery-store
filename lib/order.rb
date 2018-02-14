@@ -8,15 +8,16 @@ module Grocery
 
     end
 
-    # def values
-    #
-    # end
+    def values
+      products.each { |key,value| do_something(value) }
+      return values
+    end
 
     def total
-      total = @products.sum
+      total = values.sum
 
       if @products.length == 0
-        return "BLAH"
+        return "Returns a total of zero if there are no products"
       end
 
       return total
