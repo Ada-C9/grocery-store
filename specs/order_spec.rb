@@ -29,7 +29,7 @@ describe "Order Wave 1" do
       order.total.must_equal expected_total
     end
 
-    xit "Returns a total of zero if there are no products" do
+    it "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
 
       order.total.must_equal 0
