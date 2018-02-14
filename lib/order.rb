@@ -8,11 +8,20 @@ module Grocery
     end
 
     def total
-      # TODO: implement total
+      sum = 0
+      @products.each do |k,value|
+        sum += value
+      end
+      sum = (sum + (sum * 0.075)).round(2)
     end
 
     def add_product(product_name, product_price)
-      # TODO: implement add_product
+
+      return false if @products.keys.include?(product_name)
+
+      @products[product_name] = product_price
+
+      return true
     end
   end
 end
