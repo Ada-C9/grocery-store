@@ -5,14 +5,28 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
+
     end
+
+    # def values
+    #
+    # end
 
     def total
-      # TODO: implement total
-    end
+      total = @products.sum
 
-    def add_product(product_name, product_price)
-      # TODO: implement add_product
+      if @products.length == 0
+        return "BLAH"
+      end
+
+      return total
+
+      # TODO: implement total
+
     end
+    #
+    # def add_product(product_name, product_price)
+    #   # TODO: implement add_product
+    # end
   end
 end
