@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -76,6 +77,39 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+
+  describe "#remove_product" do
+    it "decreases the number of products" do
+      products = {"banana" => 1.99, "cracker" => 3.00 }
+      before_count = products.count
+      order = Grocery::Order.new(123, products)
+
+      order.remove_product("banana", 1.99)
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+
+    it "is removed from collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(123, products)
+
+      order.remove_product("craker", 3.00)
+      order.products.include?("craker").must_equal false
+    end
+
+    it "returns false if product is not in collection" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(123, products)
+      before_total = order.total
+
+      result = order.remove_product("apple", 2.50)
+      after_total = order.total
+
+      result.must_equal false
+      before_total.must_equal after_total
+    end
+
+  end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
@@ -83,6 +117,9 @@ xdescribe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
+      order1 = { "banana" => 1.99, "cracker" => 3.00 }
+      order2 = { "apple" => 2.5, "oreos" => 3.25}
+      all_orders = []
     end
 
     it "Returns accurate information about the first order" do
