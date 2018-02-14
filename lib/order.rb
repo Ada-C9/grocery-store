@@ -8,11 +8,16 @@ module Grocery
     end
 
     def total
-      # TODO: implement total
+      ((@products.values.sum) * 1.075).round(2)
     end
 
     def add_product(product_name, product_price)
-      # TODO: implement add_product
+      if @products.keys.include? (product_name)
+        return false
+      else
+        @products[product_name] = product_price
+      return true 
+      end
     end
   end
 end
