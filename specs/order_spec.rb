@@ -3,6 +3,10 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+require "minitest/reporters"
+# adds color to minitest
+Minitest::Reporters.use!
+
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
