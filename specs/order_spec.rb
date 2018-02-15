@@ -4,7 +4,7 @@ require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
 describe "Order Wave 1" do
-  describe "#initialize" do
+  xdescribe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -16,9 +16,9 @@ describe "Order Wave 1" do
       order.must_respond_to :products
       order.products.length.must_equal 0
     end
-  end
+  end # describe initialize
 
-  describe "#total" do
+  xdescribe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -34,9 +34,9 @@ describe "Order Wave 1" do
 
       order.total.must_equal 0
     end
-  end
+  end # describe total
 
-  describe "#add_product" do
+  xdescribe "#add_product" do
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -75,8 +75,51 @@ describe "Order Wave 1" do
       result = order.add_product("salad", 4.25)
       result.must_equal true
     end
-  end
-end
+  end # describe add_product
+
+  xdescribe "#remove_product" do
+    it "Decreases the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("cracker")
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+
+    it "Removes the item from the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("cracker")
+      order.products.include?("cracker").must_equal false
+    end
+
+    it "Returns false if the product isn't already present" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+
+      order = Grocery::Order.new(1337, products)
+      before_total = order.total
+
+      result = order.remove_product("cheese")
+      after_total = order.total
+
+      result.must_equal false
+      before_total.must_equal after_total
+    end
+
+    it "Returns true if the product wasn't already present" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      order = Grocery::Order.new(1337, products)
+
+      result = order.remove_product("cracker")
+      result.must_equal true
+    end
+  end # describe remove_product
+
+end # describe order wave 1
+
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Order Wave 2" do
