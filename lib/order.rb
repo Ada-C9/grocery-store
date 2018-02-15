@@ -8,7 +8,11 @@ module Grocery
     end
 
     def total
-      # TODO: implement total
+      subtotal = 0
+      @products.each do |product, price|
+        subtotal += price
+      end
+      total = subtotal + (subtotal * 0.075).round(2)
     end
 
     def add_product(product_name, product_price)
