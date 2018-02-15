@@ -1,6 +1,7 @@
 module Grocery
   class Order
-    attr_reader :id, :products
+    attr_reader :id
+    attr_accessor :products
 
     def initialize(id, products)
       @id = id
@@ -16,7 +17,12 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      # TODO: implement add_product
+
+      @products.each do |product_name, product_price|
+        if @product_name != product_name
+        @products[product_name] = product_price
+        end
+      end
     end
   end
 end
