@@ -88,7 +88,7 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.remove_product("banana")
-      expected_count = before_count + 1
+      expected_count = before_count - 1
       order.products.count.must_equal expected_count
     end
 
