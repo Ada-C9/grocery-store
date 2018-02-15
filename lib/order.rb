@@ -25,20 +25,20 @@ module Grocery
       # before_count = @products.count
       # expected_count = before_count + 1
 
+      # @products[product_name] = product_price
+      # puts "product list is now: #{@products}"
+
+      if @products.has_key?(product_name)
+        return false
+      else
+        @products[product_name] = product_price
+        puts "product list is now: #{@products}"
+      end
+
+    end #end of add_product method
+
+  end #end of class
 
 
 
-      @products[product_name] = product_price
-
-      puts "products is: #{@products}"
-
-
-
-      return
-    end
-
-  end
-
-
-
-end
+end #end of module
