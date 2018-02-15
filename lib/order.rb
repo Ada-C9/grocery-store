@@ -23,20 +23,12 @@ module Grocery
 
     def add_product(product_name, product_price)
       # TODO: implement add_product
-      beginning_length = @products.length
-      @products[product_name] = product_price
-      if @products.length > beginning_length
-        return true
-      else
+      if @products.key?(product_name) #method to see if the product already exists in product hash
         return false
+      else
+        @products[product_name] = product_price
+        return true
       end
     end
   end
 end
-
-# products = { :apple => 1.25, :pear => 2.00 }
-# new_order = Grocery::Order.new(12345, products)
-# # new_order.add_product("cake", 5.00)
-# # puts new_order.total
-# puts new_order.add_product("banana", 4.25)
-# puts products
