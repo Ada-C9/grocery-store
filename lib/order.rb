@@ -28,9 +28,23 @@ module Grocery
       # product name and price, and add the data to the product collection
       # It should return true if the item was successfully added and false
       # if it was not
-
+      if @products.has_key?(product_name)
+      else
+        @products[product_name] = product_price
+      end
     end
 
   end # class Order
 
 end # module Grocery
+
+
+
+
+
+
+
+
+
+
+# Go! Luxi! Go!
