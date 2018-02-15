@@ -8,7 +8,7 @@ module Grocery
     end
 
 
-# gets the total plus tax of all of the products
+    # gets the total plus tax of all of the products
     def total
       product_total = 0
       subtotal = 0
@@ -24,13 +24,9 @@ module Grocery
 
     end
 
-# Adds new product to @product array
+    # Adds new product to @product array
     def add_product(product_name, product_price)
-      products = {}
-      @products.each do |product_name, product_price|
-        @products[product_name]= product_price
-      end
-      return products
+      @products[product_name]= product_price
     end
   end
 end
