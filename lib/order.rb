@@ -1,7 +1,7 @@
 module Grocery
 
   class Order
-    attr_reader :id, :products
+    attr_accessor :id, :products
 
     def initialize(id, products)
       @id = id
@@ -29,14 +29,22 @@ module Grocery
       # It should return true if the item was successfully added and false
       # if it was not
       if @products.has_key?(product_name)
+        return false
       else
         @products[product_name] = product_price
+        return true
       end
+
     end
 
   end # class Order
 
 end # module Grocery
+
+products = { "banana" => 1.99, "cracker" => 3.00 }
+order = Grocery::Order.new(1337, products)
+order.add_product("sushi", 5.50)
+puts order.products
 
 
 
