@@ -1,12 +1,21 @@
+require 'pry'
+
 module Grocery
 
   class Order
     attr_reader :id
     attr_accessor :products
+    @@order_count = 0
+    @@all_orders = []
 
     def initialize(id, products_hash)
       @id = id.to_i
       @products = products_hash
+      @@order_count += 1
+      @new_order_hash = Hash.new
+      @new_order_hash[@id] = @products
+      @@all_orders << @new_order_hash
+
     end
 
     def subtotal
@@ -41,6 +50,12 @@ module Grocery
       end
     end
 
+    def self.all
+      @@all_orders
+    end
+
   end # order
 
 end # Grocery
+
+binding.pry

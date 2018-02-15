@@ -100,22 +100,31 @@ end # Order wave1
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
+  before do
+    products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+    @list_of_orders = [
+      Grocery::Order.new(1, products),
+      Grocery::Order.new(2, products),
+      Grocery::Order.new(3, products),
+      Grocery::Order.new(4, products)
+    ]
+  end
   describe "Order.all" do
     it "Returns an array of all orders" do
+      Grocery::Order.all.class.must_equal Array
+    end
+
+    xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
     end
 
-    it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the last order" do
+    xit "Returns accurate information about the last order" do
       # TODO: Your test code here!
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
