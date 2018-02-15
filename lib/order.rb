@@ -1,6 +1,7 @@
 module Grocery
   class Order
-    attr_reader :id, :products
+    attr_reader :id
+    attr_accessor :products
 
     def initialize(id, products)
       @id = id
@@ -23,5 +24,25 @@ module Grocery
 
       return true
     end
+
+    # def remove_product(product_name)
+    #   @products.delete_if {|product, value| product == product_name }
+    #
+    #   if @products.keys.include?(product_name)
+    #     return false
+    #   else
+    #     return true
+    #   end
+    # end
+
+    def remove_product(product_name)
+      if @products.key?(product_name)
+        @products.delete(product_name)
+        return true
+      else
+        return false
+      end
+    end
+
   end
 end
