@@ -30,16 +30,3 @@ module Grocery
     end
   end
 end
-
-
-# describe 'remove_product' do
-#
-#   it "returns true if the product is removed" do
-#     products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25}
-#     order = Grocery::Order.new(1337, products)
-#
-#     result = order.remove_product("salad")
-#     result.must_equal true
-#     products.length.must_equal 2
-#   end
-# end
