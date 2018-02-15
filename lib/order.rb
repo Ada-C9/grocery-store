@@ -25,16 +25,6 @@ module Grocery
       return true
     end
 
-    # def remove_product(product_name)
-    #   @products.delete_if {|product, value| product == product_name }
-    #
-    #   if @products.keys.include?(product_name)
-    #     return false
-    #   else
-    #     return true
-    #   end
-    # end
-
     def remove_product(product_name)
       if @products.key?(product_name)
         @products.delete(product_name)
