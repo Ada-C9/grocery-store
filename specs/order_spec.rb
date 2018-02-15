@@ -81,32 +81,32 @@ describe "Order Wave 1" do
     end
   end
 
-    describe "#remove_product" do
-      it "decreases the number of products" do
-        products = { "banana" => 1.99, "cracker" => 3.00 }
-        before_count = products.count
-        order = Grocery::Order.new(1337, products)
+  describe "#remove_product" do
+    it "decreases the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
 
-        order.remove_product("banana")
-        expected_count = before_count + 1
-        order.products.count.must_equal expected_count
-      end
+      order.remove_product("banana")
+      expected_count = before_count + 1
+      order.products.count.must_equal expected_count
+    end
 
-      it "returns true if the product is removed" do
-        products = { "banana" => 1.99, "cracker" => 3.00 }
-        order = Grocery::Order.new(1337, products)
+    it "returns true if the product is removed" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
 
-        order.remove_product("banana")
-        !order.products.include?("banana").must_equal true
-      end
+      order.remove_product("banana")
+      !order.products.include?("banana").must_equal true
+    end
 
-      it "returns false if the product is not removed" do
-        products = { "banana" => 1.99, "cracker" => 3.00 }
-        order = Grocery::Order.new(1337, products)
+    it "returns false if the product is not removed" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
 
-        order.remove_product("cracker")
-        order.products.include?("banana").must_equal false
-      end
+      order.remove_product("cracker")
+      order.products.include?("banana").must_equal false
+    end
   end
 end
 
