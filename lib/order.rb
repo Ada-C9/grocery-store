@@ -19,14 +19,24 @@ module Grocery
       return false if @products.has_key?(product_name)
       @products[product_name] = product_price
       p @products
-      puts "*" * 20
-      puts "products is #{@products}"
-
+      # else
       return true
     end
 
-
-
-
+    # Add a `remove_product` method to the `Order` class which will take in one parameter, a product name, and remove the product from the collection
+    #     - It should return `true` if the item was successfully remove and `false` if it was not
+    def remove_product(product_name)
+      p @products
+      if @products.key?(product_name)
+        @products.delete(product_name)
+        return true
+      else
+        return false
+      end
+      # return true if @products.key?(product_name)
+      # @products.delete(product_name)
+      #
+      # return false
+    end
   end
 end
