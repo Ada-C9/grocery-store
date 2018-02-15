@@ -41,7 +41,7 @@ module Grocery
       end
     end
 
-    # Create a remove_product method
+    # Create a remove_product method to check if a product is removed
     def remove_product(product_name)
       if @products.keys.include?(product_name)
         return false
