@@ -3,11 +3,17 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+Minitest::Reporters.use!
+
+
 describe "Order Wave 1" do
-  describe "#initialize" do
+  # describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
+      # Below, calling upon module Grocer and class Order
+      # Each order (or purchase) has a unique id with a hash of products
       order = Grocery::Order.new(id, {})
+      # Order must have an id and products
 
       order.must_respond_to :id
       order.id.must_equal id
@@ -21,9 +27,14 @@ describe "Order Wave 1" do
   describe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
+      # Using a hash of the product name assigned as a string with a value as a float
+
       order = Grocery::Order.new(1337, products)
+      # A hash of ID and products (which contains a hash of product and price) is created as a new order
 
       sum = products.values.inject(0, :+)
+      # Need to def values method in class...thinking hash relating to product/price?
+
       expected_total = sum + (sum * 0.075).round(2)
 
       order.total.must_equal expected_total
@@ -36,46 +47,46 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#add_product" do
-    it "Increases the number of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      before_count = products.count
-      order = Grocery::Order.new(1337, products)
-
-      order.add_product("salad", 4.25)
-      expected_count = before_count + 1
-      order.products.count.must_equal expected_count
-    end
-
-    it "Is added to the collection of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      order = Grocery::Order.new(1337, products)
-
-      order.add_product("sandwich", 4.25)
-      order.products.include?("sandwich").must_equal true
-    end
-
-    it "Returns false if the product is already present" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-
-      order = Grocery::Order.new(1337, products)
-      before_total = order.total
-
-      result = order.add_product("banana", 4.25)
-      after_total = order.total
-
-      result.must_equal false
-      before_total.must_equal after_total
-    end
-
-    it "Returns true if the product is new" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      order = Grocery::Order.new(1337, products)
-
-      result = order.add_product("salad", 4.25)
-      result.must_equal true
-    end
-  end
+  # describe "#add_product" do
+  #   it "Increases the number of products" do
+  #     products = { "banana" => 1.99, "cracker" => 3.00 }
+  #     before_count = products.count
+  #     order = Grocery::Order.new(1337, products)
+  #
+  #     order.add_product("salad", 4.25)
+  #     expected_count = before_count + 1
+  #     order.products.count.must_equal expected_count
+  #   end
+  #
+  #   it "Is added to the collection of products" do
+  #     products = { "banana" => 1.99, "cracker" => 3.00 }
+  #     order = Grocery::Order.new(1337, products)
+  #
+  #     order.add_product("sandwich", 4.25)
+  #     order.products.include?("sandwich").must_equal true
+  #   end
+  #
+  #   it "Returns false if the product is already present" do
+  #     products = { "banana" => 1.99, "cracker" => 3.00 }
+  #
+  #     order = Grocery::Order.new(1337, products)
+  #     before_total = order.total
+  #
+  #     result = order.add_product("banana", 4.25)
+  #     after_total = order.total
+  #
+  #     result.must_equal false
+  #     before_total.must_equal after_total
+  #   end
+  #
+  #   it "Returns true if the product is new" do
+  #     products = { "banana" => 1.99, "cracker" => 3.00 }
+  #     order = Grocery::Order.new(1337, products)
+  #
+  #     result = order.add_product("salad", 4.25)
+  #     result.must_equal true
+  #   end
+  # end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
