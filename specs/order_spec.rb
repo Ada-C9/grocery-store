@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
+Minitest::Reporters.use!
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
