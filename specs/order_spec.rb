@@ -16,7 +16,7 @@ describe "Order Wave 1" do
       order.must_respond_to :products
       order.products.length.must_equal 0
     end
-  end
+  end # initialize
 
   describe "#total" do
     it "Returns the total from the collection of products" do
@@ -34,7 +34,7 @@ describe "Order Wave 1" do
 
       order.total.must_equal 0
     end
-  end
+  end # total
 
   describe "#add_product" do
     it "Increases the number of products" do
@@ -75,8 +75,29 @@ describe "Order Wave 1" do
       result = order.add_product("salad", 4.25)
       result.must_equal true
     end
-  end
-end
+  end # add_product
+
+  describe "#remove_product" do
+    it "Decreases the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("salad")
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+
+    it "Is removed from the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("sandwich")
+      order.products.include?("sandwich").must_equal false
+    end
+  end # remove_product
+end # Order wave1
+
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Order Wave 2" do
