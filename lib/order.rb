@@ -5,29 +5,11 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
-
-    end
-
-    def values
-      products.each { |product, price| extract_price_value(price) }
-      return price
-    end
-
-    def subtotal
-      total = values.sum
-
-      if @products.length == 0
-        return "Returns a total of zero if there are no products"
-      end
-
-      return subtotal
-    end
-
-    def tax
-      return subtotal * 0.075
     end
 
     def total
+      subtotal = @products.values.sum
+      sum = subtotal + (subtotal * 0.075.round(2))
       return subtotal + tax
     end
 
