@@ -1,3 +1,5 @@
+require 'awesome_print'
+
 module Grocery
 
 
@@ -20,8 +22,21 @@ module Grocery
 
     def add_product(product_name, product_price)
       # TODO: implement add_product
+      # before_count = @products.count
+      # expected_count = before_count + 1
 
+
+
+
+      @products[product_name] = product_price
+
+      puts "products is: #{@products}"
+
+
+
+      return
     end
+
   end
 
 
