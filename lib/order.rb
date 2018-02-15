@@ -9,22 +9,28 @@ module Grocery
     end
 
     def values
-      products.each { |key,value| do_something(value) }
-      return values
+      products.each { |product, price| extract_price_value(price) }
+      return price
     end
 
-    def total
+    def subtotal
       total = values.sum
 
       if @products.length == 0
         return "Returns a total of zero if there are no products"
       end
 
-      return total
-
-      # TODO: implement total
-
+      return subtotal
     end
+
+    def tax
+      return subtotal * 0.075
+    end
+
+    def total
+      return subtotal + tax
+    end
+
     #
     # def add_product(product_name, product_price)
     #   # TODO: implement add_product
