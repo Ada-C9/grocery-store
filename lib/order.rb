@@ -16,6 +16,14 @@ module Grocery
       return total.round(2)
     end
 
+    def add_product(product_name, product_price)
+      if @products.keys.include?(product_name)
+        return false
+      else
+        @products[product_name] = product_price
+        return true
+      end
+    end
 
   end
 end
