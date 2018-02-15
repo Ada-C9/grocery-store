@@ -17,7 +17,11 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      # TODO: implement add_product
+      # id = rand(0001..9999)
+      # until @products.include?(id) != true
+      #   id = rand(0001..9999)
+      # end
+      return  @products.merge!({product_name: product_price})
     end
   end
 end

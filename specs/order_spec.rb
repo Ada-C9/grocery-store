@@ -37,7 +37,7 @@ describe "Order Wave 1" do
   end
 
   describe "#add_product" do
-    xit "Increases the number of products" do
+    it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
