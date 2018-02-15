@@ -1,21 +1,26 @@
 require 'pry'
+require 'csv'
+require 'awesome_print'
 
 module Grocery
 
   class Order
     attr_reader :id
     attr_accessor :products
-    @@order_count = 0
-    @@all_orders = []
 
-    def initialize(id, products_hash)
+    def initialize(id, products_string)
       @id = id.to_i
-      @products = products_hash
-      @@order_count += 1
-      @new_order_hash = Hash.new
-      @new_order_hash[@id] = @products
-      @@all_orders << @new_order_hash
+      @products = {}
+      @products_string = products_string
+      products_string_to_hash
+    end
 
+    def products_string_to_hash
+      products_split = @products_string.split(';')
+      products_split.each do |mash|
+        split = mash.split(':')
+        @products[split[0]] = split[1]
+      end
     end
 
     def subtotal
@@ -50,12 +55,20 @@ module Grocery
       end
     end
 
-    def self.all
-      @@all_orders
+    def self.all(file_name) # change this to not reference a class variable
+      all_orders = []
+      CSV.open(file_name, "r").each do |order|
+        new_order = Order.new(order[0], order[1])
+        all_orders << new_order
+      end
+      return all_orders
     end
 
   end # order
 
 end # Grocery
+
+all_orders = CSV.read('../support/orders_test.csv')
+# ap all_orders
 
 binding.pry
