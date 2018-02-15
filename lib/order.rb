@@ -9,8 +9,8 @@ module Grocery
 
     def total
       subtotal = @products.values.sum
-      sum = subtotal + (subtotal * 0.075.round(2))
-      return subtotal + tax
+      sum = subtotal + (subtotal * 0.075).round(2)
+      return sum
     end
 
     #
