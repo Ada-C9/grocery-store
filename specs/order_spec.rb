@@ -8,7 +8,7 @@ Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
-    xit "Takes an ID and collection of products" do
+    it "Takes an ID and collection of products" do
       id = 1337
       # Below, calling upon module Grocer and class Order
       # Each order (or purchase) has a unique id with a hash of products
@@ -41,7 +41,7 @@ describe "Order Wave 1" do
       order.total.must_equal expected_total
     end
 
-    xit "Returns a total of zero if there are no products" do
+    it "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
 
       order.total.must_equal 0
@@ -49,7 +49,7 @@ describe "Order Wave 1" do
   end
 
   describe "#add_product" do
-    xit "Increases the number of products" do
+    it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
@@ -59,15 +59,15 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
-    # xit "Is added to the collection of products" do
-    #   products = { "banana" => 1.99, "cracker" => 3.00 }
-    #   order = Grocery::Order.new(1337, products)
-    #
-    #   order.add_product("sandwich", 4.25)
-    #   order.products.include?("sandwich").must_equal true
-    # end
+    it "Is added to the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
 
-    xit "Returns false if the product is already present" do
+      order.add_product("sandwich", 4.25)
+      order.products.include?("sandwich").must_equal true
+    end
+
+    it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
 
       order = Grocery::Order.new(1337, products)
@@ -80,7 +80,7 @@ describe "Order Wave 1" do
       before_total.must_equal after_total
     end
 
-    xit "Returns true if the product is new" do
+    it "Returns true if the product is new" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
@@ -91,7 +91,7 @@ describe "Order Wave 1" do
 
   #Basically the opposite of #add_product
   describe "#remove_product" do
-    xit "Decreases the number of products" do
+    it "Decreases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
@@ -103,13 +103,13 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
-    # xit "Is removed to the collection of products" do
-    #   products = { "banana" => 1.99, "cracker" => 3.00 }
-    #   order = Grocery::Order.new(1337, products)
-    #
-    #   order.remove_product("sandwich", 4.25)
-    #   order.products.include?("sandwich").must_equal true
-    # end
+    it "Is removed to the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("sandwich")
+      order.products.include?("sandwich").wont_equal true
+    end
 
     it "Returns true if the product is removed" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
