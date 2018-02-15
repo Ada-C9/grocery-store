@@ -75,6 +75,15 @@ describe "Order Wave 1" do
       result = order.add_product("salad", 4.25)
       result.must_equal true
     end
+
+    # it "Removes a value from product list" do
+    #   products = { "banana" => 1.99, "cracker" => 3.00 }
+    #   order = Grocery::Order.new(1337, products)
+    #
+    #   result = order.remove_product("cracker")
+    #   result.must_equal true
+    # end
+
   end
 end
 
