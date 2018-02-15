@@ -1,5 +1,3 @@
-require 'awesome_print'
-
 module Grocery
 
 
@@ -14,27 +12,16 @@ module Grocery
     end
 
     def total
-      # TODO: implement total
       subtotal = @products.values.sum
       sum = subtotal + (subtotal * 0.075).round(2)
       return sum
     end
 
     def add_product(product_name, product_price)
-      # TODO: implement add_product
-      # before_count = @products.count
-      # expected_count = before_count + 1
 
-      # @products[product_name] = product_price
-      # puts "product list is now: #{@products}"
-
-      if @products.has_key?(product_name)
-        return false
-      else
-        @products[product_name] = product_price
-        puts "product list is now: #{@products}"
-      end
-
+      return false if @products.has_key?(product_name)
+      @products[product_name] = product_price
+      return true
     end #end of add_product method
 
   end #end of class
