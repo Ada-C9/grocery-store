@@ -19,7 +19,7 @@ module Grocery
       @products.each_value do |prices|
         sub_total += prices
       end
-      return product_total = (sub_total * 0.075).round(2) + sub_total
+      return product_total = (sub_total * 0.075).round(2) + sub_total.round(2)
     end
 
 
@@ -28,12 +28,13 @@ module Grocery
       # product name and price, and add the data to the product collection
       # It should return true if the item was successfully added and false
       # if it was not
-      if @products.has_key?(product_name)
-        return false
-      else
+      return false if @products.has_key?(product_name)
+      # else
         @products[product_name] = product_price
+        #
+        # puts "products is #{@products}"
         return true
-      end
+      # end
 
     end
 
@@ -41,10 +42,13 @@ module Grocery
 
 end # module Grocery
 
-products = { "banana" => 1.99, "cracker" => 3.00 }
+products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
 order = Grocery::Order.new(1337, products)
-order.add_product("sushi", 5.50)
+order.add_product("takoyaki", 7.50)
 puts order.products
+puts order.total
+
+
 
 
 
