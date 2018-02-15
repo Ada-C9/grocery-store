@@ -23,10 +23,11 @@ module Grocery
       # end
       products = {product_name => product_price}
       products.each do |product, price|
-        if @products.include?({product => price})
+        if @products.include? product
           return false
         else
           @products.merge!({product => price})
+          return true
         end
       end
     #return  @products.merge!({product_name: product_price})
