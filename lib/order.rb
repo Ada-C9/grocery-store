@@ -8,20 +8,22 @@ module Grocery
     attr_reader :id
     attr_accessor :products
 
-    def initialize(id, products_string)
+    FILE_NAME = 'support/orders_test.csv'
+
+    def initialize(id, products_hash)
       @id = id.to_i
-      @products = {}
-      @products_string = products_string
-      products_string_to_hash
+      @products = products_hash
+      # @products_string = products_string
+      # products_string_to_hash
     end
 
-    def products_string_to_hash
-      products_split = @products_string.split(';')
-      products_split.each do |mash|
-        split = mash.split(':')
-        @products[split[0]] = split[1]
-      end
-    end
+    # def products_string_to_hash
+    #   products_split = @products_string.split(';')
+    #   products_split.each do |mash|
+    #     split = mash.split(':')
+    #     @products[split[0]] = split[1]
+    #   end
+    # end
 
     def subtotal
       subtotal = 0
@@ -55,10 +57,17 @@ module Grocery
       end
     end
 
-    def self.all(file_name) # change this to not reference a class variable
+    def self.all
       all_orders = []
-      CSV.open(file_name, "r").each do |order|
-        new_order = Order.new(order[0], order[1])
+      CSV.open(FILE_NAME, "r").each do |order| # order - array
+        products_hash= {}
+        # order[1].each do |string| # string - string
+          products_split = order[1].split(';') # products_split - array of "product:price"
+          products_split.each do |mash|
+            split = mash.split(':')
+            products_hash[split[0]] = split[1]
+          end
+        new_order = Order.new(order[0], products_hash)
         all_orders << new_order
       end
       return all_orders
@@ -68,7 +77,7 @@ module Grocery
 
 end # Grocery
 
-all_orders = CSV.read('../support/orders_test.csv')
+# all_orders = CSV.read('../support/orders_test.csv')
 # ap all_orders
 
 binding.pry
