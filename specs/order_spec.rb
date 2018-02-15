@@ -1,7 +1,9 @@
 require 'minitest/autorun'
-require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'minitest/reporters'
 require_relative '../lib/order'
+
+Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -56,6 +58,7 @@ describe "Order Wave 1" do
     end
 
     it "Returns false if the product is already present" do
+
       products = { "banana" => 1.99, "cracker" => 3.00 }
 
       order = Grocery::Order.new(1337, products)
