@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require 'awesome_print'
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -18,7 +19,7 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#total" do
+  xdescribe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -36,12 +37,11 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#add_product" do
+  xdescribe "#add_product" do
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
-
       order.add_product("salad", 4.25)
       expected_count = before_count + 1
       order.products.count.must_equal expected_count
