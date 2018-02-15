@@ -47,7 +47,7 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
-    xit "Is added to the collection of products" do
+    it "Is added to the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 

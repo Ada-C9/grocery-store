@@ -21,7 +21,11 @@ module Grocery
       # until @products.include?(id) != true
       #   id = rand(0001..9999)
       # end
-      return  @products.merge!({product_name: product_price})
+      products = {product_name => product_price}
+      products.each do |product, price|
+        @products.merge!({product => price})
+      end
+    #return  @products.merge!({product_name: product_price})
     end
   end
 end
