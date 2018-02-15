@@ -18,7 +18,7 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#total" do
+  xdescribe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -36,7 +36,7 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#add_product" do
+  xdescribe "#add_product" do
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -78,33 +78,33 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
-  describe "Order.all" do
-    it "Returns an array of all orders" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
-    end
-  end
-
-  describe "Order.find" do
-    it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
-end
+# # TODO: change 'xdescribe' to 'describe' to run these tests
+# xdescribe "Order Wave 2" do
+#   describe "Order.all" do
+#     it "Returns an array of all orders" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Returns accurate information about the first order" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Returns accurate information about the last order" do
+#       # TODO: Your test code here!
+#     end
+#   end
+#
+#   describe "Order.find" do
+#     it "Can find the first order from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Can find the last order from the CSV" do
+#       # TODO: Your test code here!
+#     end
+#
+#     it "Raises an error for an order that doesn't exist" do
+#       # TODO: Your test code here!
+#     end
+#   end
+# end
