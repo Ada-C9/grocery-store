@@ -8,14 +8,23 @@ module Grocery
     end
 
     def total
-      subtotal = @products.values.sum
-      sum = subtotal + (subtotal * 0.075).round(2)
-      return sum
+      sum = @products.values.sum
+      expected_total = sum + (sum * 0.075).round(2)
+      return expected_total
     end
 
-    #
-    # def add_product(product_name, product_price)
-    #   # TODO: implement add_product
-    # end
+
+    def add_product(product_name, product_price)
+      @products[product_name] = product_price
+      # p @products
+      # puts "*" * 20
+      # puts "products is #{@products}"
+      # puts  "cracker price should be this: #{@products['cracker']}"
+      return @products
+
+
+
+
+    end
   end
 end
