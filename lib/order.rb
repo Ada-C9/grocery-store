@@ -15,16 +15,18 @@ module Grocery
 
 
     def add_product(product_name, product_price)
+
+      return false if @products.has_key?(product_name)
       @products[product_name] = product_price
-      # p @products
-      # puts "*" * 20
-      # puts "products is #{@products}"
-      # puts  "cracker price should be this: #{@products['cracker']}"
-      return @products
+      p @products
+      puts "*" * 20
+      puts "products is #{@products}"
 
-
-
-
+      return true
     end
+
+
+
+
   end
 end
