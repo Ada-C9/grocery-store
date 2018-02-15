@@ -93,7 +93,7 @@ describe "Order Wave 1" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
-      order.remove_product("banana")
+      order.remove_product("cracker")
 
       order.products.include?("banana").must_equal false
     end
