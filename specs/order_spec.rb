@@ -97,7 +97,7 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.remove_product("banana")
-      !order.products.include?("banana").must_equal true
+      order.products.include?("banana").must_equal false
     end
 
     it "returns false if the product is not removed" do
@@ -105,7 +105,7 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.remove_product("cracker")
-      order.products.include?("banana").must_equal false
+      order.products.include?("banana").must_equal true
     end
   end
 end
