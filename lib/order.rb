@@ -8,7 +8,7 @@ module Grocery
 
     def initialize(id, products_hash)
       @id = id
-      @products_hash = products_hash
+      @products = products_hash
 
     end
 
@@ -17,7 +17,7 @@ module Grocery
 
       # sum the products
       sub_total = 0
-      @products_hash.each do |product, price|
+      @products.each do |product, price|
         sub_total += price
       end
       # return sub_total
@@ -33,20 +33,20 @@ module Grocery
     # add new product with price if not already present in list
     def add_product(product_name, product_price)
       # TODO: implement add_product
-      if @products_hash.include?(product_name)
+      if @products.include?(product_name)
         return false
       else
-        @products_hash[product_name] = product_price
+        @products[product_name] = product_price
         return true
       end
     end
 
     # remove product and price only if it already exists in list
     def remove_product(product_name)
-      if !@products_hash.include?(product_name)
+      if !@products.include?(product_name)
         return false
       else
-        @products_hash.delete(product_name)
+        @products.delete(product_name)
         return true
       end
     end

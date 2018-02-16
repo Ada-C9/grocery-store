@@ -4,8 +4,8 @@ require 'minitest/skip_dsl'
 require 'csv'
 require_relative '../lib/order'
 
-xdescribe "Order Wave 1" do
-  xdescribe "#initialize" do
+describe "Order Wave 1" do
+  describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -19,7 +19,7 @@ xdescribe "Order Wave 1" do
     end
   end # describe initialize
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -37,7 +37,7 @@ xdescribe "Order Wave 1" do
     end
   end # describe total
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -78,7 +78,7 @@ xdescribe "Order Wave 1" do
     end
   end # describe add_product
 
-  xdescribe "#remove_product" do
+  describe "#remove_product" do
     it "Decreases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
       before_count = products.count
@@ -123,7 +123,7 @@ end # describe order wave 1
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-describe "Order Wave 2" do
+xdescribe "Order Wave 2" do
   xdescribe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
@@ -225,7 +225,7 @@ describe "Order Wave 2" do
 
       # act
       nonexistent_order = Grocery::Order.find("123")
-      
+
       # assert
       nonexistent_order.must_be_instance_of String
       nonexistent_order.must_equal error_message
