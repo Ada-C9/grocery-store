@@ -17,7 +17,12 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      @products[product_name] = product_price
+      current_products = @products.keys
+      if current_products.include? (product_name)
+        return false
+      else
+        @products[product_name] = product_price
+      end
     end # end of add_product method
   end # end of class order
 end # end of module grocery
