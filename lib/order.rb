@@ -1,5 +1,10 @@
 require 'pry'
 
+require 'csv'
+require 'awesome_print'
+
+FILE_NAME = '../support/orders.csv'
+
 module Grocery
 
   class Order
@@ -44,12 +49,26 @@ module Grocery
 
 end # module Grocery
 
+# # ui to test wave 1 changes
 # products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
 # order = Grocery::Order.new(1337, products)
 # puts order.products
 # order.add_product("cracker", 5.00)
 # puts order.products
 # puts order.total
+
+# # ui to test wave 2
+# products = []
+# CSV.open(FILE_NAME, 'r').each do |product|
+#   puts "#{product[0]}: #{price[1]}"
+#   products << Order.new(product[0])
+# end
+
+# ui to test wave 2
+
+data = CSV.read(FILE_NAME)
+
+ap data
 
 # binding.pry
 
