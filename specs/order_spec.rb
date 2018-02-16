@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require "csv"
 
 require 'awesome_print'
 
@@ -134,7 +135,12 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      # arrange
+      # NO arrange needed here
+      # act
+      Grocery::Order.last_order
+      # assert
+      Grocery::Order.last_order.must_equal CSV.read('support/orders.csv', 'r')[-1]
     end
   end
 
