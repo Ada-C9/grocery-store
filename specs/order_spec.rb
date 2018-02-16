@@ -20,7 +20,7 @@ describe "Order Wave 1" do
     end
   end
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -38,7 +38,7 @@ describe "Order Wave 1" do
     end
   end
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -59,13 +59,11 @@ describe "Order Wave 1" do
 
     it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
-
       order = Grocery::Order.new(1337, products)
-      before_total = order.total
 
+      before_total = order.total
       result = order.add_product("banana", 4.25)
       after_total = order.total
-
       result.must_equal false
       before_total.must_equal after_total
     end
@@ -87,6 +85,7 @@ describe "Order Wave 1" do
       order.remove_product("salad")
       expected_count = before_count - 1
       order.products.count.must_equal expected_count
+
     end
     it "Is removed from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sandwich" => 4.25}
