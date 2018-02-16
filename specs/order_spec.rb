@@ -15,8 +15,8 @@ describe "Order Wave 1" do
 
       order.must_respond_to :products
       order.products.length.must_equal 0
-    end
-  end
+    end#end it
+  end#end initialize describe
 
   describe "#total" do
     it "Returns the total from the collection of products" do
@@ -79,24 +79,40 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
+      products1 = { "banana" => 1.99, "cracker" => 3.00 }
+      products2 = { "salad" => 4.50, "sandwich" => 6.99 }
+      order1 = Grocery::Order.new(1337, products1)
+      order2 = Grocery::Order.new(8008, products2)
+
+      Grocery::Order.all.must_equal [order1, order2]
+      Grocery::Order.all.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      products = {"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"}
+      order = Grocery::Order.new(1,products)
+
+      first_order = Grocery::Order.find(1)
+      first_order.must_equal order
     end
 
     it "Can find the last order from the CSV" do
