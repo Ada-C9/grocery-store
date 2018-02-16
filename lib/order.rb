@@ -6,21 +6,15 @@ module Grocery
 
     def self.all
       order_objects = []
-      CSV.read("orders.csv").each do |line|
+      CSV.read("support/orders.csv").each do |line|
         products_array = line[1].split(';')
 
         products_array2 = []
         products_array.each do |product|
-          products_array2 << product.split(';')
+          products_array2 << product.split(':')
         end
 
-        products_array3 = []
-        products_array2.each do |product|
-          product.each do |i|
-            products_array3 << i.split(':')
-          end
-        end
-        products_hash = products_array3.to_h
+        products_hash = products_array2.to_h
         line = Order.new(line[0], products_hash)
         order_objects << line
       end
@@ -31,10 +25,9 @@ module Grocery
       Order.all.each do |object|
         if object.id == id
           return object
-        else
-          return nil
         end
       end
+      return nil
     end
 
     attr_reader :id, :products
@@ -72,9 +65,7 @@ module Grocery
 
 
   end
-# first = Order.all[0]
-# puts first.products
-object_1 = Order.find("1")
-puts object_1.products
-puts object_1.total
+
+puts Order.find("45")
+
 end
