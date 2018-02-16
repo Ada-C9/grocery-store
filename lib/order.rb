@@ -12,7 +12,6 @@ module Grocery
       @id = id
       @products = products
       @tax = 0.075
-      @total = 0.00
     end
 
     def self.all
@@ -34,9 +33,11 @@ module Grocery
       return all_orders
     end
 
-    # def self.find(id)
-    #
-    # end
+    def self.find(id)
+      self.all.each do |order|
+        return order if order.id == id
+      end
+    end
 
     def total
       # TODO: implement total
@@ -62,7 +63,8 @@ module Grocery
   end
 end
 
-ap Grocery::Order.all
+# ap Grocery::Order.all
+ap Grocery::Order.find(6)
 # my_order = Grocery::Order.new(1,[{"Slivered Almonds" => 22.88},{"Wholewheat flour" => 1.93},{"Grape Seed Oil" => 74.9}])
 # puts my_order
 # puts Grocery::Order.all
