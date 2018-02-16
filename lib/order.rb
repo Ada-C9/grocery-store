@@ -62,7 +62,6 @@ module Grocery
       CSV.read(FILE_NAME, "r").each do |order|
         # product id
         id = order[0].to_i
-
         # products - hashes
         order_row = order[1].split(%r{;\s*}) # it's an array of string
         # Split again to get two strings seperate
@@ -90,16 +89,22 @@ module Grocery
           correct_order = each_order
         end
       end
-      return correct_order
+
+      if correct_order != nil
+        return correct_order
+      else
+        return nil
+      end
+      
     end # self.find method ends
 
   end # Order class ends
 end # module Grocery ends
 
 
-ap Grocery::Order.find(24)
+# ap Grocery::Order.find(24)
 
-ap Grocery::Order.all.class
+Grocery::Order.all
 
 
 # ap csv_products

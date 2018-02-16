@@ -34,9 +34,14 @@ class Customer
         correct_customer = customer
       end
     end
-    return correct_customer
 
+    if correct_customer != nil
+      return correct_customer
+    else
+      return nil
+    end
   end
-end
+
+end # Customer class ends
 
 # ap Customer.all
