@@ -114,10 +114,9 @@ describe "Order Wave 2" do
       result.id.must_equal 100
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    it "Returns Nil for an order that doesn't exist" do
       result = Grocery::Order.find(180)
-      result.must_be_kind_of String
-      result.must_equal "Sorry, that order is not in our records"
+      result.must_equal NIL
     end
   end
 end

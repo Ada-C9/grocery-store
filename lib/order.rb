@@ -51,7 +51,7 @@ module Grocery
     end
 
     def self.find(passed_id)
-      return_value = "Sorry, that order is not in our records"
+      return_value = NIL
       self.all.each do |order|
         if order.id == passed_id
           return_value = order
