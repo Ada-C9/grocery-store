@@ -3,8 +3,10 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+Minitest::Reporters.use!
+
 describe "Order Wave 1" do
-  describe "#initialize" do
+  xdescribe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -18,7 +20,7 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#total" do
+  xdescribe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -36,7 +38,7 @@ describe "Order Wave 1" do
     end
   end
 
-  describe "#add_product" do
+  xdescribe "#add_product" do
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -76,6 +78,23 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+  describe "#remove_product" do
+    it "Decreases the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25}
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("salad")
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+    it "Is removed from the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "sandwich" => 4.25}
+      order = Grocery::Order.new(1337, products)
+      order.remove_product("sandwich")
+      order.products.include?("sandwich").must_equal false
+    end
+  end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
@@ -94,7 +113,7 @@ xdescribe "Order Wave 2" do
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
