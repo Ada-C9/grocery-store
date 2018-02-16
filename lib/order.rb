@@ -37,12 +37,16 @@ module Grocery
       # if it was not
       return false if @products.has_key?(product_name)
       # else
-        @products[product_name] = product_price
-        #
-        # puts "products is #{@products}"
-        return true
+      @products[product_name] = product_price
+      #
+      # puts "products is #{@products}"
+      return true
       # end
 
+    end
+
+    def to_s
+      return "#{@id}: #{@product}"
     end
 
   end # class Order
@@ -57,18 +61,14 @@ end # module Grocery
 # puts order.products
 # puts order.total
 
-# # ui to test wave 2
-# products = []
-# CSV.open(FILE_NAME, 'r').each do |product|
-#   puts "#{product[0]}: #{price[1]}"
-#   products << Order.new(product[0])
-# end
-
 # ui to test wave 2
+# products = []
+CSV.open(FILE_NAME, 'r').each do |product|
+  puts "Order ##{product[0]} include: #{product[1]}"
+  # products << Order.new(product[0])
+end
 
-data = CSV.read(FILE_NAME)
-
-ap data
+puts product[0]
 
 # binding.pry
 
