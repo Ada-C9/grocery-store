@@ -47,8 +47,9 @@ module Grocery
 
     def self.all
       # Read contents of file into array of arrays
-      # csv_array = CSV.read('support/orders.csv')
-      csv_array = CSV.read('support/less_orders.csv')
+      # Uncomment the next line
+      csv_array = CSV.read('support/orders.csv')
+      # csv_array = CSV.read('support/less_orders.csv')
 
       orders = []
       csv_array.each do |row|
