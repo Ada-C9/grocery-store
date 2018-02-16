@@ -1,7 +1,7 @@
 require 'csv'
 require 'awesome_print'
 
-FILE_NAME = '../support/orders.csv'
+FILE_NAME = 'support/orders.csv'
 
 
 module Grocery
@@ -45,7 +45,19 @@ module Grocery
       return all_orders
     end
 
+    def self.find(passed_id)
+      return_value = "Sorry, no such product"
+      self.all.each do |order|
+        if order.id == passed_id
+          return_value = order
+        end
+      end
+      return return_value
+    end
+
   end
 end
 
-ap Grocery::Order.all
+# ap Grocery::Order.all
+
+ap Grocery::Order.find(25)
