@@ -50,6 +50,7 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
+     #tests remove product method 
     describe "#remove_product" do
       it "Decreases the number of products" do
         #arrange
@@ -60,11 +61,7 @@ describe "Order Wave 1" do
         order.remove_product("banana")
         expected_count = before_count - 1
         #assert
-        if order.products.count.must_equal expected_count
-          return true
-        else
-          return false
-        end 
+         order.products.count.must_equal expected_count
       end
     end
 

@@ -22,12 +22,20 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      @products[product_name] = product_price
-      # TODO: implement add_product
+      if @products.has_key? product_name
+        return false
+      else
+        @products[product_name] = product_price
+        # TODO: implement add_product
+      end
     end
 
     def remove_product(product_name)
       @products.delete(product_name)
+      if @products.has_key? product_name
+        return false
+      end
+
     end
   end
 end
