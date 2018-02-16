@@ -1,8 +1,7 @@
 require "csv"
 require "awesome_print"
 
-# Put the name of the file in a constant
-FILE_NAME = "../support/orders.csv"
+FILE_NAME = "support/orders.csv"
 
 module Grocery
   class Order
@@ -10,73 +9,39 @@ module Grocery
 
     def initialize(id, products)
       @id = id
-      @products = {}
+      @products = products
     end
-
-    # all_orders = [
-    #   [1,
-    #     {
-    #     A: 2.00,
-    #     B: 3.00
-    #     }
-    #   ],
-    #   [2,
-    #     {
-    #     C: 4.00
-    #     }
-    #   ]
-    # ]
-
-    # def self.all
-    #   all_orders = []
-    #   ids = []
-    #   products = []
-    #   CSV.read(FILE_NAME, 'r').each do |order|
-    #     ids = order[0]
-    #     hash = {}
-    #     #products.each do |product|
-    #
-    #     # end
-    #     #   result.split(":")
-    #   end
-    #   return products
-    # end
 
     def self.all
       all_orders = []
       CSV.read(FILE_NAME, 'r').each do |order|
-        products = []
-        id = order[0]
-        products << id
+        id = order[0].to_i
+        product_hash = {}
         order[1].split(";").each do |product|
-          arr = product.split(":")
-          product_hash = {}
-          product_hash[arr[0]] = arr[1]
-          products << product_hash
+          product_array = product.split(":")
+          product_hash[product_array[0]] = product_array[1].to_f
         end
-        all_orders << products
+        order_instance = Order.new(id, product_hash)
+        all_orders << order_instance
       end
       all_orders
     end
+
+
+
+    # def self.find(product)
+    #   all_orders.each do |product|
+    #
+    # end
 
     def total
       result = 0
       @products.each_value do |value|
         result += value
       end
-      result = result + (result * 0.075).round(2)
-      return result
+      result = result + (result * 0.075)
+      return result.round(2)
     end
-
-    # def total-- Another way to do it!!
-    #   prices = @products.values
-    #   result = 0
-    #   prices.each do |price|
-    #     result += price
-    #   end
-    #   result = result + (result * 0.075).round(2)
-    #   return result
-    # end
 
     def add_product(product_name, product_price)
       if @products.key?(product_name)
@@ -88,16 +53,16 @@ module Grocery
     end
 
     def remove_product(product_name)
-      @products.delete product_name
       if @products.key?(product_name)
-        return false
-      else
+        @products.delete(product_name)
         return true
+      else
+        return false
       end
     end
   end
 end
 
-# firstOrder = Grocery::Order.new(1, {"Almonds": 22.8, "Wholewheat flour": 1.93, "Grape Seed Oil": 74.9})
-# print firstOrder
-puts Grocery::Order.all
+firstOrder = Grocery::Order.new(1, {"Almonds": 22.8, "Wholewheat flour": 1.93, "Grape Seed Oil": 74.9})
+print firstOrder
+ap Grocery::Order.all
