@@ -104,14 +104,49 @@ describe "Customer" do
   describe "Customer.find" do
     it "Can find the first customer from the CSV" do
       # TODO: Your test code here!
+      id = 1
+      email = "leonard.rogahn@hagenes.org"
+      address_1 = "71596 Eden Route"
+      city = "Connellymouth"
+      state = "LA"
+      zip_code = "98872-9105"
+
+      found_customer = Grocery::Customer.find(1)
+
+      found_customer.class.must_equal Grocery::Customer
+      found_customer.id.must_equal id
+      found_customer.email.must_equal email
+      found_customer.address_1.must_equal address_1
+      found_customer.city.must_equal city
+      found_customer.state.must_equal state
+      found_customer.zip_code.must_equal zip_code
     end
 
     it "Can find the last customer from the CSV" do
       # TODO: Your test code here!
+      id = 35
+      email = "rogers_koelpin@oconnell.org"
+      address_1 = "7513 Kaylee Summit"
+      city = "Uptonhaven"
+      state = "DE"
+      zip_code = "64529-2614"
+
+      found_customer = Grocery::Customer.find(35)
+
+      found_customer.class.must_equal Grocery::Customer
+      found_customer.id.must_equal id
+      found_customer.email.must_equal email
+      found_customer.address_1.must_equal address_1
+      found_customer.city.must_equal city
+      found_customer.state.must_equal state
+      found_customer.zip_code.must_equal zip_code
     end
 
     it "Raises an error for a customer that doesn't exist" do
       # TODO: Your test code here!
+      found_customer = Grocery::Customer.find(101)
+
+      found_customer.must_equal nil
     end
   end
 end
