@@ -4,7 +4,6 @@ require 'awesome_print'
 module Grocery
 
 
-
   class Order
     attr_reader :id, :products, :original_array, :hash
 
@@ -12,8 +11,6 @@ module Grocery
       @id = id
       @hash = {}
       @hash = Hash[parameter.map {|x| [x[0], x[1..-1]]}]
-      print @hash
-      print original_array
     end
 
     def total
@@ -51,14 +48,7 @@ module Grocery
   end
 end
 
-original_array = [
-  ["apple", "red", "crisp"],
-  ["orange", "citrus", "sweet"]
-  ]
-
-dinner = Grocery::Order.new(original_array)
+array_of_orders_data = CSV.open("../support/orders.csv", 'r')
 
 
-# array_of_orders_data = CSV.open("../support/orders.csv", 'r').each do |line|
-#   ap line
-# end
+dinner = Grocery::Order.new(array_of_orders_data)
