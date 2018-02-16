@@ -153,6 +153,15 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      CSV.read("support/orders.csv").each do |order|
+        new_order = Grocery::Order.new(order[0], order[1])
+      end
+
+      found_order = Grocery::Order.find(1)
+
+      found_order.class.must_equal Grocery::Order
+      found_order.id.must_equal 1
+      found_order.products.must_equal ({"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
     end
 
     it "Can find the last order from the CSV" do

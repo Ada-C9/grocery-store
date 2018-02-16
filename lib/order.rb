@@ -70,6 +70,14 @@ module Grocery
       end
       @@all_orders
     end
+    def self.find(id)
+      self.all
+      @@all_orders.each do |order|
+        if id == order.id
+          return order
+        end
+      end
+    end
 
   end
 end
@@ -78,6 +86,7 @@ end
 # ap Grocery::Order.all
 
 # experimenting with csv data and formatting
+# to understand the way the file works
 # def making_usable_orders(grouped_orders)
 #   separated_orders = []
 #   grouped_orders.each do |grouped_order|
