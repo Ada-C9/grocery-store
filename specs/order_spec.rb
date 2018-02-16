@@ -82,32 +82,74 @@ describe "Order Wave 1" do
       result = order.add_product("salad", 4.25)
       result.must_equal true
     end
-
-  # describe "#remove_product" do
-  #   it "decreases the number of products" do
-  #     products = { "banana" => 1.99, "cracker" => 3.00 }
-  #     before_count = products.count
-  #     order = Grocery::Order.new(1337, products)
-  #
-  #     order.remove_product("banana")
-  #     expected_count = before_count - 1
-  #     order.products.count.must_equal expected_count
-  #   end
-
   end
 
+  #Basically the opposite of #add_product
+ describe "#remove_product" do
+  it "Decreases the number of products" do
+   products = { "banana" => 1.99, "cracker" => 3.00 }
+   before_count = products.count
+   order = Grocery::Order.new(1337, products)
+
+   # based only on the first argument or name of product
+   order.remove_product("banana")
+   # remove instead of add
+   expected_count = before_count - 1
+   order.products.count.must_equal expected_count
   end
+
+  it "Is removed to the collection of products" do
+   products = { "banana" => 1.99, "cracker" => 3.00 }
+   order = Grocery::Order.new(1337, products)
+
+   order.remove_product("sandwich")
+   order.products.include?("sandwich").wont_equal true
+  end
+
+  it "Returns true if the product is removed" do
+   products = { "banana" => 1.99, "cracker" => 3.00 }
+
+   order = Grocery::Order.new(1337, products)
+   before_total = order.total
+
+   result = order.remove_product("banana")
+   after_total = order.total
+
+   # Returns true if the before total != after total when item is removed
+   result.must_equal true
+   before_total.wont_equal after_total
+  end
+
+  it "Returns false if the product is new" do
+   products = { "banana" => 1.99, "cracker" => 3.00 }
+   order = Grocery::Order.new(1337, products)
+
+   result = order.remove_product("salad")
+   result.must_equal false
+  end
+
+ end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Order Wave 2" do
   describe "Order.all" do
-    xit "Returns an array of all orders" do
-      # TODO: Your test code here!
+    it "Returns an array of all orders" do
+      # wait don't I need to put an "arrange" statement here??
+      #
+      # Grocery::Order.all.count
+      #
+      # Grocery::Order.all.count.must_equal 100
+
+      all_orders = Grocery::Order.all
+      all_orders.must_be_kind_of Array
+
     end
 
     xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
+
+    
     end
 
     xit "Returns accurate information about the last order" do
