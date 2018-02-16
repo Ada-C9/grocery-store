@@ -51,8 +51,7 @@ module Grocery
       all_orders = []
       CSV.open(FILE_NAME, "r").each do |order| # order - array
         products_hash= {}
-        # order[1].each do |string| # string - string
-          products_split = order[1].split(';') # products_split - array of "product:price"
+        products_split = order[1].split(';') # products_split - array of "product:price"
           products_split.each do |mash|
             split = mash.split(':')
             products_hash[split[0]] = split[1].to_f
@@ -64,8 +63,13 @@ module Grocery
     end
 
     def self.find(id)
-
-    end
+      # wouldn't self.all generate all the information again? Can't I have that as a class variable?
+      self.all.each do |order|
+        if order.id == id
+          return order
+        end
+      end
+    end # self.find
 
   end # order
 

@@ -121,16 +121,19 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
-    it "Can find the first order from the CSV" do
+  describe "Order.find" do
+    it "Can find the first order from the CSV" do # reverse into comma separated values?
+      first_item_id = 1
+      first_product_hash = {"Slivered Almonds"=>22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      Grocery::Order.find(1).id.must_equal first_item_id
+      Grocery::Order.find(1).products.must_equal first_product_hash
+    end
+
+    xit "Can find the last order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
-    end
-
-    it "Raises an error for an order that doesn't exist" do
+    xit "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
     end
   end
