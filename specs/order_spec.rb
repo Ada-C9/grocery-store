@@ -1,11 +1,12 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -98,17 +99,6 @@ describe "Order Wave 1" do
       order.products.include?("banana").must_equal false
     end
 
-    # it "returns false if the product is still present" do
-    #   products = { "banana" => 1.99, "cracker" => 3.00 }
-    #
-    #   order = Grocery::Order.new(1337, products)
-    #   before_total = order.total
-    #
-    #   result = order.remove_product("banana")
-    #
-    #   result.must_equal false
-    # end
-
     it "returns true if the product is removed" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -120,19 +110,43 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
+      CSV.read("support/orders.csv").each do |order|
+        new_order = Grocery::Order.new(order[0], order[1])
+      end
 
+      total_orders = Grocery::Order.all
+
+      total_orders.length.must_equal 100
+      total_orders[0].class.must_equal Grocery::Order
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      CSV.read("support/orders.csv").each do |order|
+        new_order = Grocery::Order.new(order[0], order[1])
+      end
+
+      total_orders = Grocery::Order.all
+
+      total_orders[0].id.must_equal 1
+      total_orders[0].products.must_equal ({"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+
+      CSV.read("support/orders.csv").each do |order|
+        new_order = Grocery::Order.new(order[0], order[1])
+      end
+
+      total_orders = Grocery::Order.all
+
+      total_orders.last.id.must_equal 100
+      total_orders.last.products.must_equal ({"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59})
     end
   end
 
