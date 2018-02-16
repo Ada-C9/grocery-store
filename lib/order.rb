@@ -3,7 +3,7 @@ require 'pry'
 require 'csv'
 require 'awesome_print'
 
-FILE_NAME = '../support/orders.csv'
+FILE_NAME = 'support/orders.csv'
 
 module Grocery
 
@@ -42,7 +42,6 @@ module Grocery
       # puts "products is #{@products}"
       return true
       # end
-
     end
 
     # def to_s
@@ -50,10 +49,13 @@ module Grocery
     # end
 
     def self.all
+      my_orders = []
       CSV.open(FILE_NAME, 'r').each do |product|
-        return "Order ##{product[0]} include: #{product[1]}"
+        my_orders << "Order ##{product[0]} include: #{product[1]}"
       end
+      return my_orders
     end
+
 
     def self.find(id)
     end
@@ -74,11 +76,12 @@ end # module Grocery
 # products = []
 # CSV.open(FILE_NAME, 'r').each do |product|
 #   puts "Order ##{product[0]} include: #{product[1]}"
-#   # products << Order.new(product[0])
+#   products << Order.new(product[0])
 # end
-
+#
 first_order = Grocery::Order.all
 puts first_order
+puts first_order.class
 # binding.pry
 
 
