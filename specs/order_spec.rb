@@ -139,7 +139,7 @@ describe "Order Wave 2" do
       # act
       Grocery::Order.last_order
       # assert
-      Grocery::Order.last_order.must_equal CSV.read('support/orders.csv', 'r')[-1]
+      Grocery::Order.last_order.id.must_equal CSV.read('support/orders.csv', 'r')[-1][0]
     end
   end
 

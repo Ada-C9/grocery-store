@@ -60,7 +60,7 @@ module Grocery
     end
 
     def self.last_order
-      CSV.read('support/orders.csv', 'r')[-1]
+      self.all[-1]
     end
 
   end
