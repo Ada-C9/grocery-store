@@ -3,27 +3,17 @@ require 'csv'
 require 'awesome_print'
 
 module Grocery
+  FILE_NAME = 'support/orders.csv'
 
   class Order
     attr_reader :id
     attr_accessor :products
 
-    FILE_NAME = 'support/orders_test.csv'
 
     def initialize(id, products_hash)
       @id = id.to_i
       @products = products_hash
-      # @products_string = products_string
-      # products_string_to_hash
     end
-
-    # def products_string_to_hash
-    #   products_split = @products_string.split(';')
-    #   products_split.each do |mash|
-    #     split = mash.split(':')
-    #     @products[split[0]] = split[1]
-    #   end
-    # end
 
     def subtotal
       subtotal = 0
@@ -65,19 +55,20 @@ module Grocery
           products_split = order[1].split(';') # products_split - array of "product:price"
           products_split.each do |mash|
             split = mash.split(':')
-            products_hash[split[0]] = split[1]
+            products_hash[split[0]] = split[1].to_f
           end
-        new_order = Order.new(order[0], products_hash)
+        new_order = self.new(order[0], products_hash)
         all_orders << new_order
       end
       return all_orders
+    end
+
+    def self.find(id)
+
     end
 
   end # order
 
 end # Grocery
 
-# all_orders = CSV.read('../support/orders_test.csv')
-# ap all_orders
-
-binding.pry
+# binding.pry
