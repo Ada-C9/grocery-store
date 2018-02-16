@@ -1,15 +1,16 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-
-require_relative '../lib/customer'
+Minitest::Reporters.use!
+require_relative '../lib/customer.rb'
 
 describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
       id = 1234
       email = "rhubarbra@dogworld.com"
-      address = "1234 Treat lane, Seattle WA 98103"
+      address = "1234 Treat lane Seattle WA 98103"
+
       roobear = Grocery::Customer.new(id, email, address)
 
       roobear.must_respond_to :id
@@ -25,20 +26,35 @@ describe "Customer" do
     end
   end
 
-  xdescribe "Customer.all" do
+  describe "Customer.all" do
+    # TODO: Your test code here!
+    # Useful checks might include:
+    #   - The number of orders is correct
+    #   - The ID, email address of the first and last
+    #       customer match what's in the CSV file
+
     it "Returns an array of all customers" do
-      # TODO: Your test code here!
-      # Useful checks might include:
-      #   - Customer.all returns an array
-      #   - Everything in the array is a Customer
-      #   - The number of orders is correct
-      #   - The ID, email address of the first and last
-      #       customer match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      Grocery::Customer.all.class.must_equal Array
     end
   end
 
-  describe "Customer.find" do
+    it "Returns an array of objects of the Customer class" do
+      Grocery::Customer.all.each do |customer|
+        customer.must_be_instance_of Grocery::Customer
+      end
+    end
+
+    it "Returns accurate information about the first order" do
+      id = 1
+      email = "leonard.rogahn@hagenes.org"
+      address = "71596 Eden Route Connellymouth LA 98872-9105"
+
+      Grocery::Customer.all.first.id.must_equal id
+      Grocery::Customer.all.first.email.must_equal email
+      Grocery::Customer.all.first.address.must_equal address
+    end
+
+  xdescribe "Customer.find" do
     it "Can find the first customer from the CSV" do
       # TODO: Your test code here!
     end
