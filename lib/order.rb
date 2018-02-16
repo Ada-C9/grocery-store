@@ -1,9 +1,12 @@
 require 'csv'
 require 'awesome_print'
 
+
 module Grocery
   class Order
     attr_reader :id, :products
+
+    @@all_orders = []
 
     def initialize(id, products)
       @id = id
@@ -25,51 +28,23 @@ module Grocery
       end
     end
 
+    def self.all
+      @@all_orders = []
+      CSV.foreach("support/orders.csv") do |row|
+        row[0] = row[0].to_i
+        row[1] = row[1].split(";")
+        @@all_orders << row
+      end
+      return @@all_orders
+    end
+
+    def self.find(id)
+      specific_order = self.all[id - 1]
+      if id <= self.all.length
+        return specific_order
+      else
+        raise NotImplementedError
+      end
+    end
   end
-
 end
-
-order = Grocery::Order.new(1, { silvered_almonds: 22.88, wholewheat_flour: 1.93, grape_seed_oil: 74.9 })
-
-
-
-
-
-
-
-
-# ######### ARRAY OF HASHES ###########
-# orders = []
-# CSV.foreach("../support/orders.csv", headers: true, headers: :symbol, headers: :converter) do |row|
-#   orders << row
-# end
-#
-#
-# ap orders
-
-
-#
-# orders = []
-# CSV.foreach("../support/orders.csv", headers: true) do |row|
-#
-# #orders.push(row)
-#   # row.each do |i|
-#
-#
-#
-#   #ap orders
-#   #puts orders[0]
-#   #ap orders
-#   ap row
-# end
-
-#puts orders[2]
-
-# orders.each do |i|
-
-# product.each_with_index do |array, index|
-#   puts "#{index}. #{array}"
-# end
-
-
-#test1 = Grocery::Order.new(products[:], products)

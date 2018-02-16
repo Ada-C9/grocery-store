@@ -81,32 +81,49 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      array_of_orders = Grocery::Order.all
+
+      array_of_orders.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      array_of_orders = Grocery::Order.all
+      first_id = array_of_orders[0][0]
+
+      first_id.must_equal 1
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      array_of_orders = Grocery::Order.all
+      last_id = array_of_orders[-1][0]
+
+      last_id.must_equal 100
     end
+
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      first_order = Grocery::Order.find(1)
+
+      first_order.must_equal Grocery::Order.all[0]
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      last_order = Grocery::Order.find(100)
+
+      last_order.must_equal Grocery::Order.all[-1]
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+
+      assert_raises NotImplementedError do
+        nonexistant_order = Grocery::Order.find(200)
+      end
+
     end
   end
 end
