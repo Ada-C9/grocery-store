@@ -1,18 +1,19 @@
 require 'csv'
 require 'awesome_print'
+require 'pry'
 # TODO: what to do about had initialize values??
 
 module Grocery
   class Order
 
-    @@all_orders = []
+    @@all = []
 
     attr_reader :id, :products
 
     def initialize(order_id, order_products)
       @id = order_id
-      @products = {}
-      populate_products(order_products)
+      @products = order_products
+      # populate_products(order_products)
     end
 
     # def initialize(order_id, order_products)
@@ -44,61 +45,56 @@ module Grocery
     def self.all
       if @@all.empty?
         CSV.read("../support/orders.csv").each do |order|
-          order_id = order[0]
-          order_products = []
-          list_of_each_product_as_sting = order[1].split(";")
-          list_of_each_product_as_sting.each do |product_as_string|
-          # order[1].split(";").each do |product_as_string|
-            name_and_price = product_as_string.split(":")
-            product = { name: name_and_price[0], price: name_and_price[1] }
-            order_products.push(product)
-          end
-        @@all_orders << Order.new(order_id, order_products)
+          order_id = order[0].to_i
+          # puts order[1].scan(/[^\:;]+/).each_slice(2).inspect
+
+          product_hash = {}
+          order[1].scan(/[^\;]+/).each do |one_order|
+              name, price = one_order.split(":")
+              product_hash["#{name}"] = price.to_f
+
+           end
+          # order[1].scan(/[^\:;]+/) do |name, cost|
+          #   product_hash["#{name}"] = cost
+          # end
+
+          @@all << Order.new(order_id, product_hash)
+        #   # order_products = []
+        #   list_of_each_product_as_sting = order[1].split(";")
+        #   list_of_each_product_as_sting.each do |product_as_string|
+        #   # order[1].split(";").each do |product_as_string|
+        #     name_and_price = product_as_string.split(":")
+        #     product = { name: name_and_price[0], price: name_and_price[1] }
+        #     order_products.push(product)
+        #   end
+        # @@all << Order.new(order_id, order_products)
         end
       end
       return @@all
-      # all_orders_list = []
-      # CSV.read("../support/orders.csv").each do |order|
-      #   order_id = order[0]
-      #   order_products = []
-      #   list_of_each_product_as_sting = order[1].split(";")
-      #   list_of_each_product_as_sting.each do |product_as_string|
-      #   # order[1].split(";").each do |product_as_string|
-      #     name_and_price = product_as_string.split(":")
-      #     product = {}
-      #     product[:name] = name_and_price[0]
-      #     product[:price] = name_and_price[1]
-      #     order_products.push(product)
-      #   end
-      # all_orders_list.push(Order.new(order_id, order_products))
-      # end
-      # return all_orders_list
     end
 
     def find
+
     end
 
 
 private
 
-
+    # This assumes valid products from products_as_string. Is this bad??
     def populate_products(products_as_string)
-      # order_products = []
-      products_as_string.split(";").each do |product_as_string|
-        product_name_and_price = product_as_sting.split(":")
-        @products.push(product_name_and_price[0])
-        product[:name] = name_and_price[0]
-        product[:price] = name_and_price[0]
-        products_of_order.push(product)
-      end
-
+      # puts products_as_string.inspect
+      # @products = products_as_string.split(";").to_h
     end
 
-    # Pre: provided cost_without_sales_tax must be a double or int.
-    #
-    # If the sales tax (7.5% and rounded to two decimal places) for provided
-    # total_cost_with_out_tax is greater than 0.0, returns the sales tax. Otherwise,
-    # returns  0.0.
+
+    # def populate_products(products_as_string)
+    #   products_as_string.split(";").each do |product_as_string|
+    #     name_and_price = product_as_sting.split(":")
+    #     @products.push["#{name_and_price[0]}"] = name_and_price[1]
+    #   end
+    # end
+
+
     def get_sales_tax(total_cost_with_out_tax)
       sales_tax_amount = (total_cost_with_out_tax * 0.075).round(2)
       # Not possible to have negative sales tax
@@ -155,3 +151,22 @@ private
 
   end
 end
+
+# This version of self breaks up products for initializing new orders.
+# def self.all
+#   if @@all.empty?
+#     CSV.read("../support/orders.csv").each do |order|
+#       order_id = order[0]
+#       order_products = []
+#       list_of_each_product_as_sting = order[1].split(";")
+#       list_of_each_product_as_sting.each do |product_as_string|
+#       # order[1].split(";").each do |product_as_string|
+#         name_and_price = product_as_string.split(":")
+#         product = { name: name_and_price[0], price: name_and_price[1] }
+#         order_products.push(product)
+#       end
+#     @@all << Order.new(order_id, order_products)
+#     end
+#   end
+#   return @@all
+# end
