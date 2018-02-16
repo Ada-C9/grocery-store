@@ -166,10 +166,26 @@ describe "Order Wave 2" do
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      CSV.read("support/orders.csv").each do |order|
+        new_order = Grocery::Order.new(order[0], order[1])
+      end
+
+      found_order = Grocery::Order.find(100)
+
+      found_order.class.must_equal Grocery::Order
+      found_order.id.must_equal 100
+      found_order.products.must_equal ({"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59})
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
+      CSV.read("support/orders.csv").each do |order|
+        new_order = Grocery::Order.new(order[0], order[1])
+      end
+
+      found_order = Grocery::Order.find(101)
+
+      found_order.must_equal "Sorry, that order doesn't exist."
     end
   end
 end
