@@ -128,18 +128,18 @@ describe "Order Wave 2" do
       # arrange
       # NO arrange needed here
       # act
-      Grocery::Order.all[0]
+      Grocery::Order.all[0].id
       # assert
-      Grocery::Order.first_order.id.must_equal "1"
+      Grocery::Order.all[0].id.must_equal "1"
     end
 
     it "Returns accurate information about the last order" do
       # arrange
       # NO arrange needed here
       # act
-      Grocery::Order.all[-1]
+      Grocery::Order.all[-1].id
       # assert
-      Grocery::Order.last_order.id.must_equal CSV.read('support/orders.csv', 'r')[-1][0]
+      Grocery::Order.all[-1].id.must_equal CSV.read('support/orders.csv', 'r')[-1][0]
     end
   end
 
