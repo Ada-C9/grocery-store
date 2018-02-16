@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require_relative '../support/order'
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -76,7 +77,7 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
-  
+
   describe 'remove_product' do
 
     it "returns true if the product is removed" do
@@ -94,7 +95,9 @@ end
 xdescribe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      array = Grocery::Order.all
+      array.must_be_kind_of Array
+
     end
 
     it "Returns accurate information about the first order" do

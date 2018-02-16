@@ -1,10 +1,10 @@
 require 'csv'
 require 'awesome_print'
 
-FILE_NAME = '../support/orders.csv'
-
+FILE_NAME = 'support/orders.csv'
 
 module Grocery
+
   class Order
     attr_reader :id, :products
 
@@ -51,6 +51,17 @@ module Grocery
       end
       return all_orders
     end
+
+    def self.find(passed_id)
+      error = "That ID doesn't exist"
+      self.all.each do |order|
+        if order.id == passed_id
+            error = order
+        end
+      end
+      return error
+    end
   end
 end
-ap Grocery::Order.all
+# ap Grocery::Order.all
+ap Grocery::Order.find(30)
