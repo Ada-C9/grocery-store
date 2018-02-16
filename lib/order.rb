@@ -1,3 +1,6 @@
+require 'pry'
+require 'csv'
+require 'awesome_print'
 module Grocery
   class Order
     attr_reader :id, :products
@@ -34,3 +37,5 @@ module Grocery
     end
   end
 end
+
+binding.pry

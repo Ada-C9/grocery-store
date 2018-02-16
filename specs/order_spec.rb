@@ -82,11 +82,18 @@ end
 xdescribe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      # Arrange
+      id = 1
+      products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # Act
+      order = Grocery::Order.new(id, products)
+      # Assert
+      order.id.must_equal 1
+      order.total.must_equal 107.19
     end
 
     it "Returns accurate information about the last order" do
