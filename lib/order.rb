@@ -1,16 +1,32 @@
 require 'csv'
 require 'awesome_print'
 
+
 module Grocery
 
 
   class Order
-    attr_reader :id, :products, :original_array, :hash
+    attr_reader :id, :products, :original_array, :hash, :data
 
-    def initialize(parameter)
+
+    def initialize(info)
       @id = id
-      @hash = {}
-      @hash = Hash[parameter.map {|x| [x[0], x[1..-1]]}]
+      @info = info
+
+    def return_list
+      order_list = {}
+      @order_list = order_list
+      @info.each do |row|
+        order_id = row[0]
+        products = row[1]
+        products = products.split(';')
+
+        products.each do |item|
+          item = item.split(':')
+          @order_list[item[0]] = item[1]
+        end
+      end
+      print @order_list
     end
 
     def total
@@ -33,8 +49,8 @@ module Grocery
       if @products.has_key? @product_name
         return false
       else
-      @products[@product_name] = @product_price
-      return true
+        @products[@product_name] = @product_price
+        return true
       end
     end
 
@@ -47,8 +63,10 @@ module Grocery
     end
   end
 end
+end
 
-array_of_orders_data = CSV.open("../support/orders.csv", 'r')
 
+data = CSV.read("../support/orders.csv")
 
-dinner = Grocery::Order.new(array_of_orders_data)
+first_try = Grocery::Order.new(data)
+first_try.return_list
