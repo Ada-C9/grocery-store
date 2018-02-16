@@ -1,7 +1,20 @@
+require 'csv'
+require 'awesome_print'
 
 module Grocery
   class Order
     attr_reader :id, :products
+
+    def self.all
+      print "This is a class method."
+      #returns the csv file to an array with headers
+      #orders_csv = CSV.read('support/orders.csv', 'r')
+      orders_csv = CSV.read("support/orders.csv", 'r',headers: true).to_a
+      #ap orders_csv
+      #ap orders_csv.length
+
+      return orders_csv
+    end
 
     def initialize(id, products)
       @id = id
@@ -39,3 +52,9 @@ module Grocery
     end
   end
 end
+
+#with a class method you don't need the instance of the class
+#Grocery::Order.all
+ last_order = CSV.open('support/orders.csv', 'r').to_a
+
+ ap last_order[1]
