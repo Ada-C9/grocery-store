@@ -76,16 +76,26 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       result = order.add_product("salad", 4.25)
+
       result.must_equal true
     end
   end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+    # Arrange
+    ap Grocery::Order.all
+
+    all_orders = Grocery::Order.all
+
+    # Act
+    result = Grocery::Order.all
+
+    # Assert
+    result.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first order" do
@@ -97,7 +107,7 @@ xdescribe "Order Wave 2" do
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
