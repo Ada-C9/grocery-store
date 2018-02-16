@@ -45,8 +45,19 @@ module Grocery
 
     end
 
-    def to_s
-      return "#{@id}: #{@product}"
+    # def to_s
+    #   return "#{@id}: #{@product}"
+    # end
+
+    def self.all
+      order_array = []
+      CSV.open(FILE_NAME, 'r').each do |product|
+        puts "Order ##{product[0]} include: #{product[1]}"
+        order_array << Order.new(product[0])
+      end
+    end
+
+    def self.find(id)
     end
 
   end # class Order
@@ -63,12 +74,10 @@ end # module Grocery
 
 # ui to test wave 2
 # products = []
-CSV.open(FILE_NAME, 'r').each do |product|
-  puts "Order ##{product[0]} include: #{product[1]}"
-  # products << Order.new(product[0])
-end
-
-puts product[0]
+# CSV.open(FILE_NAME, 'r').each do |product|
+#   puts "Order ##{product[0]} include: #{product[1]}"
+#   # products << Order.new(product[0])
+# end
 
 # binding.pry
 
