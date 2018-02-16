@@ -79,9 +79,9 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
-    xit "Returns an array of all orders" do
+    it "Returns an array of all orders" do
       # TODO: Your test code here!
     end
 
