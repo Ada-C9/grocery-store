@@ -15,26 +15,25 @@ module Grocery
 
     #A total method which will calculate the total cost of the order by:
     def total
-      # TODO: implement total
-        sum = 0
-        subtotal = @products.values
-        subtotal.each do |price|
-          sum += price.to_f
-        end
-        # subtotal = new_array.inject{ |a,b| a + b }
-         total = (sum * 1.075).round(2)
+      sum = 0
+      subtotal = @products.values
+      subtotal.each do |price|
+        sum += price.to_f
+      end
+      # subtotal = new_array.inject{ |a,b| a + b }
+      total = (sum * 1.075).round(2)
       return total
     end
 
     #An add_product method that adds the data to the product collection
     def add_product(product_name, product_price)
-      # TODO: implement add_product
-      #binding.pry
       product_exists = @products.has_key?(product_name) == false
       @products[product_name] = product_price if product_exists
       return product_exists
-    end
+    end#end add product method
 
+    #returns a collection of Order instances, representing all of the Orders
+    #described in the CSV. See below for the CSV file specifications
     def self.all
       orders = []
       #opening CSV
@@ -49,9 +48,11 @@ module Grocery
         products = step2.to_h
         orders << Grocery::Order.new(order[0].to_i,products)
       end#reads and parses through CSV file
-      return orders
+      return orders #array of instances of Order
     end#self.all method
 
+    # returns an instance of Order where the value of the id field in the
+    # CSV matches the passed parameter.
     def self.find(id)
       return_val = nil
       if all.include? id
@@ -62,4 +63,4 @@ module Grocery
 
   end#end Order class
 
-end#end Grocery module.
+end#end Grocery module
