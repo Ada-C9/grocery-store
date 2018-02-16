@@ -27,13 +27,18 @@ module Grocery
 
     end
 
+    def to_s
+      return "#{@id} #{@products}"
+
+    end
+
     def self.all
       all_orders = []
-      CSV.open(FILE_NAME, 'r').each do |order|
+      CSV.open(FILE_NAME, 'r').each do |str|
         # puts order
         new_hash = {}
-        id = order[0].to_i
-        order[1].split(";").each do |pair|
+        id = str[0].to_i
+        str[1].split(";").each do |pair|
           new_pair = pair.split(":")
           key = new_pair[0]
           value = new_pair[1].to_f
@@ -46,7 +51,7 @@ module Grocery
     end
 
     def self.find(passed_id)
-      return_value = "Sorry, no such product"
+      return_value = "Sorry, that order is not in our records"
       self.all.each do |order|
         if order.id == passed_id
           return_value = order
@@ -60,4 +65,4 @@ end
 
 # ap Grocery::Order.all
 
-ap Grocery::Order.find(25)
+ap Grocery::Order.find(9876)
