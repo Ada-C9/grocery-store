@@ -51,8 +51,13 @@ module Grocery
     def self.all
       my_orders = []
       CSV.open(FILE_NAME, 'r').each do |product|
-        my_orders << "Order ##{product[0]} include: #{product[1]}"
+        my_orders << "#{product[1]}"
       end
+      # my_orders.each do |index|
+      #   result = index.split("; ")
+      #   result = result.map{|x| x = x.split(": "); Hash[x.first.to_sym, x.last] }
+      #   result = result.reduce(:merge)
+      # end
       return my_orders
     end
 
@@ -82,6 +87,12 @@ end # module Grocery
 first_order = Grocery::Order.all
 puts first_order
 puts first_order.class
+puts first_order[0]
+result = first_order[0].split(";")
+result = result.map{|x| x = x.split(":"); Hash[x.first.to_sym, x.last] }
+result = result.reduce(:merge)
+puts result
+puts result[]
 # binding.pry
 
 
