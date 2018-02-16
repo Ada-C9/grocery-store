@@ -105,19 +105,19 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      # expected_first_order_id = 1
-      # # TODO: What happens this if this changes??
-      # expected_first_order_products = {"Slivered Almonds"=>22.88,
-      #   "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
-      #
-      # first_order = Grocery::Order.all[0]
-      #
-      # first_order.id.must_be_kind_of Integer
-      # first_order.id.must_equal expected_first_order_id
-      #
-      #
-      # first_order.products.must_be_kind_of Hash
-      # first_order.products.must_equal expected_first_order_products
+      expected_last_order_id = 100
+      # TODO: What happens this if this changes??
+      expected_last_order_products = {"Allspice"=>64.74, "Bran"=>14.72,
+        "UnbleachedFlour"=>80.59}
+
+      first_order = Grocery::Order.all.last
+
+      first_order.id.must_be_kind_of Integer
+      first_order.id.must_equal expected_last_order_id
+
+
+      first_order.products.must_be_kind_of Hash
+      first_order.products.must_equal expected_last_order_products
     end
   end
 
