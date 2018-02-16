@@ -4,7 +4,7 @@ require 'minitest/skip_dsl'
 require 'csv'
 require_relative '../lib/order'
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -123,7 +123,7 @@ end # describe order wave 1
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-describe "Order Wave 2" do
+xdescribe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
@@ -210,7 +210,7 @@ describe "Order Wave 2" do
       last_order_found.must_be_instance_of Grocery::Order
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    it "Returns nil for an order that doesn't exist" do
       # TODO: Your test code here!
       # arrange
       # act
