@@ -5,7 +5,7 @@ require 'minitest/skip_dsl'
 require 'awesome_print'
 require_relative '../lib/order'
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -33,7 +33,6 @@ xdescribe "Order Wave 1" do
 
     it "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
-
       order.total.must_equal 0
     end
   end
@@ -80,26 +79,45 @@ xdescribe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
+
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      ap Grocery::Order.all
       Grocery::Order.all.must_be_kind_of Array
-
-      # all_orders.each do |order|
-      #   puts order.inspect
-      # end
-
-      # TODO: Your test code here!
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+
+      expected_first_order_id = 1
+      # TODO: What happens this if this changes??
+      expected_first_order_products = {"Slivered Almonds"=>22.88,
+        "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+
+      first_order = Grocery::Order.all[0]
+
+      first_order.id.must_be_kind_of Integer
+      first_order.id.must_equal expected_first_order_id
+
+
+      first_order.products.must_be_kind_of Hash
+      first_order.products.must_equal expected_first_order_products
+
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      # expected_first_order_id = 1
+      # # TODO: What happens this if this changes??
+      # expected_first_order_products = {"Slivered Almonds"=>22.88,
+      #   "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+      #
+      # first_order = Grocery::Order.all[0]
+      #
+      # first_order.id.must_be_kind_of Integer
+      # first_order.id.must_equal expected_first_order_id
+      #
+      #
+      # first_order.products.must_be_kind_of Hash
+      # first_order.products.must_equal expected_first_order_products
     end
   end
 
