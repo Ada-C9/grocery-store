@@ -1,7 +1,12 @@
+require "csv"
+# require_relative "/support"
+
 module Grocery
   class Order
     attr_reader :id
     attr_accessor :products
+
+    @@all_orders = []
 
     def initialize(id, products)
       @id = id
@@ -31,6 +36,12 @@ module Grocery
         return true
       else
         return false
+      end
+    end
+
+    def self.all
+      CSV.read('support/orders.csv', 'r').each do |row|
+        @@all_orders << self.new(row[0], row[2])
       end
     end
 
