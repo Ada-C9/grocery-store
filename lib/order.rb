@@ -53,28 +53,42 @@ module Grocery
       end
     end
 
-  end
-end
+    # Create self.all method to read csv files.
+    def self.all
+      csv_orders = []
+      CSV.open("orders.csv", "r").each do |order|
+        # product id
+        id = order[0]
 
-#
-csv_products = []
-CSV.open("orders.csv", "r").each do |order|
-  # product id
-  ap order[0]
+        # products - hashes
+        order_row = order[1].split(%r{;\s*}) # it's an array of string
+        # Split again to get two strings seperate
+        product_hash = {}
 
-  # products -hashes
-  products = order[1].split(%r{;\s*}) # it's an array of string
-  # Split again to get two strings seperate
-  products.each do |product|
-    product_hash = {}
-    pairs = product.split(%r{:\s*}) # an array of two string - key & value
-    # Store the key value pair in a new hash - which refers to one product
-    product_hash[pairs[0]] = pairs[1].to_f
-    ap product_hash
+        order_row.each do |product|
+          pairs = product.split(%r{:\s*}) # an array of two string - key & value
+          # Store the key value pair in a new hash - which refers to one product
+          product_hash[pairs[0]] = pairs[1].to_f
+        end
 
-  end
+        product = product_hash
+        csv_orders << Order.new(id, product)
 
-end
+      end # CSV open method ends
+
+      return csv_orders
+    end # self.all method ends
+
+    #
+
+  end # Order class ends
+
+end # module Grocery ends
+
+
+ap Grocery::Order.all
+
+# ap Order.all(csv_products)
 
 # ap csv_products
 
