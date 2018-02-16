@@ -7,7 +7,7 @@ module Grocery
     attr_reader :id, :products
 
     def initialize(id, products_hash)
-      @id = id
+      @id = id.to_i
       @products = products_hash
 
     end
@@ -55,7 +55,7 @@ module Grocery
     def self.all
       orders_array = []
       CSV.open("support/orders.csv", "r").each do |order|
-        id = [0].to_i
+        id = order[0].to_i
         products_hash = {}
 
         products_array = order[1].split(";")
