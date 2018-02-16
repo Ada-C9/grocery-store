@@ -29,6 +29,8 @@ module Grocery
           product_pairs[separated_item[0]] = separated_item[1].to_f.round(2)
         end
         product_pairs
+      elsif grouped_data.class == Hash
+        grouped_data
       end
     end
 

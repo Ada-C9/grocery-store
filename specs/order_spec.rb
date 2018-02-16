@@ -6,7 +6,7 @@ require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
