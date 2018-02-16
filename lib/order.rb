@@ -15,19 +15,20 @@ module Grocery
       sum = sum.round(2)
       return sum
     end
-    # add_product.each do |product_name, product_price|
-    #   products[product_name] = product_price
-    # end
-    # return products
-    # end
+
     def add_product(product_name, product_price)
-      @products[:product_name] = product_price
-      before_count = @products.count
-      if @products.count == before_count + 1
+      if @products.has_key?(product_name)
+        return false
+      else
+        return true
+        @products[:product_name] = product_price
+        before_count = @products.count
+        if @products.count == before_count + 1
           return true
         else
           return false
         end
+      end
     end
   end
 end
