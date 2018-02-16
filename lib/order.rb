@@ -1,7 +1,7 @@
 require "csv"
 require "awesome_print"
 
-FILE_NAME = "support/orders.csv"
+FILE_NAME = "../support/orders.csv"
 
 module Grocery
   class Order
@@ -29,10 +29,10 @@ module Grocery
 
 
 
-    # def self.find(product)
-    #   all_orders.each do |product|
-    #
-    # end
+    def self.find(id)
+      all_orders = self.all .each do |product|
+
+    end
 
     def total
       result = 0
@@ -63,6 +63,7 @@ module Grocery
   end
 end
 
-firstOrder = Grocery::Order.new(1, {"Almonds": 22.8, "Wholewheat flour": 1.93, "Grape Seed Oil": 74.9})
-print firstOrder
+# Testing for Wave 1
+# firstOrder = Grocery::Order.new(1, {"Almonds": 22.8, "Wholewheat flour": 1.93, "Grape Seed Oil": 74.9})
+# print firstOrder
 ap Grocery::Order.all
