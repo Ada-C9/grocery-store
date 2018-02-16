@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 require 'awesome_print'
+require 'csv'
+
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -119,9 +121,13 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   let(:all) {Grocery::Order.all}
   let(:find) {Grocery::Order.find(17)}
+
+let(:first_order) {Grocery::Order.new(1, {"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})}
+
+let(:last_order) {Grocery::Order.new(100, {" Allspice"=>"64.74", "Bran"=>"1.93", "UnbleachedFlour"=>"74.9"})}
 
   describe "Order.all" do
     it "Returns an array of all orders" do
@@ -140,17 +146,26 @@ xdescribe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      Grocery::Order.find(1).must_be_instance_of Grocery::Order
+      Grocery::Order.find(1).id[0].must_equal first_order.id[0]
+      Grocery::Order.find(1).products[name].must_equal first_order.products[name]
+
     end
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      Grocery::Order.find(100).must_be_instance_of Grocery::Order
+      Grocery::Order.find(100).id[0].must_equal last_order.id[0]
+      Grocery::Order.find(100).products[name].must_equal last_order.products[name]
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
+      proc { Grocery::Order.find(112) }.must_raise ArgumentError
+
     end
   end
 end
