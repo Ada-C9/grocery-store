@@ -39,15 +39,20 @@ describe "Customer" do
 
   describe "Customer.find" do
     it "Can find the first customer from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Customer.find(34)
+      result.must_be_kind_of Grocery::Customer
+      result.id.must_equal 23
     end
 
     it "Can find the last customer from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Customer.find(100)
+      result.must_be_kind_of Grocery::Customer
+      result.id.must_equal 100
     end
 
     it "Raises an error for a customer that doesn't exist" do
-      # TODO: Your test code here!
+      result = Grocery::Customer.find(456)
+      result.must_be_nil
     end
   end
 end
