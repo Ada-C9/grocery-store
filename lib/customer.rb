@@ -28,13 +28,19 @@ module  Grocery
       return all_customers
     end # Self.all method
 
-    def self.find(id)
-
+    def self.find(passed_id)
+      return_value = nil
+      self.all.each do |customer|
+        if customer.id == passed_id
+          return_value = customer
+        end
+      end
+      return return_value
     end
 
 
-  end
+  end # Class - Customer
 
-end
+end # Module - Grocery
 
 # ap Grocery::Customer.all

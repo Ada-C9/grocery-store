@@ -10,7 +10,7 @@ describe "Customer" do
 
   id = 3452
   email = "karinna@gmail.com"
-  delivery_address = "227 Boyston Ave E, Seattle, WA 98102"
+  delivery_address = "227 Boylston Ave E, Seattle, WA 98102"
 
   new_customer = Grocery::Customer.new(id,email,delivery_address)
 
@@ -18,7 +18,7 @@ describe "Customer" do
     it "Takes an ID, email and address info" do
 
       new_customer.must_respond_to :id
-      new_customer.id.must_equal 345
+      new_customer.id.must_equal 3452
       new_customer.id.must_be_kind_of Integer
 
       new_customer.must_respond_to :email
@@ -41,16 +41,16 @@ describe "Customer" do
     it "Can find the first customer from the CSV" do
       result = Grocery::Customer.find(34)
       result.must_be_kind_of Grocery::Customer
-      result.id.must_equal 23
+      result.id.must_equal 34
     end
 
     it "Can find the last customer from the CSV" do
-      result = Grocery::Customer.find(100)
+      result = Grocery::Customer.find(35)
       result.must_be_kind_of Grocery::Customer
-      result.id.must_equal 100
+      result.id.must_equal 35
     end
 
-    it "Raises an error for a customer that doesn't exist" do
+    it "Returns nil for a customer that doesn't exist" do
       result = Grocery::Customer.find(456)
       result.must_be_nil
     end
