@@ -66,7 +66,10 @@ module Grocery
       # wouldn't self.all generate all the information again? Can't I have that as a class variable?
       self.all.each do |order|
         if order.id == id
-          return order
+          found_order = order
+          return found_order
+        else
+          raise NoMethodError
         end
       end
     end # self.find
@@ -75,4 +78,4 @@ module Grocery
 
 end # Grocery
 
-# binding.pry
+# p Grocery::Order.find(120)
