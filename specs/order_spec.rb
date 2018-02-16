@@ -182,7 +182,7 @@ describe "Order Wave 2" do
 
       found_order = Grocery::Order.find(101)
 
-      found_order.must_equal "Sorry, that order doesn't exist."
+      found_order.must_equal nil
     end
   end
 end

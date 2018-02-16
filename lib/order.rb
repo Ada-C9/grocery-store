@@ -78,7 +78,7 @@ module Grocery
           return order
         end
       end
-      return "Sorry, that order doesn't exist."
+      nil
     end
   end
 
