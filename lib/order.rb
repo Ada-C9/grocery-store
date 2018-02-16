@@ -1,4 +1,5 @@
 require "csv"
+require "awesome_print"
 
 # Put the name of the file in a constant
 FILE_NAME = "../support/orders.csv"
@@ -12,25 +13,50 @@ module Grocery
       @products = {}
     end
 
-# all_orders = [
-#   [1,
-#     {
-#     A: 2.00,
-#     B: 3.00
-#     }
-#   ],
-#   [2,
-#     {
-#     C: 4.00
-#     }
-#   ]
-# ]
+    # all_orders = [
+    #   [1,
+    #     {
+    #     A: 2.00,
+    #     B: 3.00
+    #     }
+    #   ],
+    #   [2,
+    #     {
+    #     C: 4.00
+    #     }
+    #   ]
+    # ]
+
+    # def self.all
+    #   all_orders = []
+    #   ids = []
+    #   products = []
+    #   CSV.read(FILE_NAME, 'r').each do |order|
+    #     ids = order[0]
+    #     hash = {}
+    #     #products.each do |product|
+    #
+    #     # end
+    #     #   result.split(":")
+    #   end
+    #   return products
+    # end
 
     def self.all
       all_orders = []
-      CSV.read(FILE_NAME, 'r').each do |product|
-        puts product
-      end 
+      CSV.read(FILE_NAME, 'r').each do |order|
+        products = []
+        id = order[0]
+        products << id
+        order[1].split(";").each do |product|
+          arr = product.split(":")
+          product_hash = {}
+          product_hash[arr[0]] = arr[1]
+          products << product_hash
+        end
+        all_orders << products
+      end
+      all_orders
     end
 
     def total
@@ -38,8 +64,8 @@ module Grocery
       @products.each_value do |value|
         result += value
       end
-        result = result + (result * 0.075).round(2)
-        return result
+      result = result + (result * 0.075).round(2)
+      return result
     end
 
     # def total-- Another way to do it!!
