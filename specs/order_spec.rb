@@ -127,21 +127,18 @@ describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
-      CSV.read("support/orders.csv").each do |order|
-        new_order = Grocery::Order.new(order[0], order[1])
-      end
 
       total_orders = Grocery::Order.all
 
       total_orders.length.must_equal 100
-      total_orders[0].class.must_equal Grocery::Order
+      total_orders.class.must_equal Array
+      total_orders.each do |order|
+        order.class.must_equal Grocery::Order
+      end
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
-      CSV.read("support/orders.csv").each do |order|
-        new_order = Grocery::Order.new(order[0], order[1])
-      end
 
       total_orders = Grocery::Order.all
 
@@ -151,10 +148,6 @@ describe "Order Wave 2" do
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
-
-      CSV.read("support/orders.csv").each do |order|
-        new_order = Grocery::Order.new(order[0], order[1])
-      end
 
       total_orders = Grocery::Order.all
 
@@ -166,9 +159,6 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
-      CSV.read("support/orders.csv").each do |order|
-        new_order = Grocery::Order.new(order[0], order[1])
-      end
 
       found_order = Grocery::Order.find(1)
 
@@ -179,9 +169,6 @@ describe "Order Wave 2" do
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
-      CSV.read("support/orders.csv").each do |order|
-        new_order = Grocery::Order.new(order[0], order[1])
-      end
 
       found_order = Grocery::Order.find(100)
 
@@ -192,9 +179,6 @@ describe "Order Wave 2" do
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
-      CSV.read("support/orders.csv").each do |order|
-        new_order = Grocery::Order.new(order[0], order[1])
-      end
 
       found_order = Grocery::Order.find(101)
 
