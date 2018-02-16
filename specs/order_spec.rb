@@ -5,7 +5,7 @@ require_relative '../lib/order'
 
 describe "Order Wave 1" do
   describe "#initialize" do
-    it "Takes an ID and collection of products" do
+    xit "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
 
@@ -19,17 +19,19 @@ describe "Order Wave 1" do
   end
 
   describe "#total" do
-    it "Returns the total from the collection of products" do
+    xit "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
       sum = products.values.inject(0, :+)
+
       expected_total = sum + (sum * 0.075).round(2)
 
       order.total.must_equal expected_total
+
     end
 
-    it "Returns a total of zero if there are no products" do
+    xit "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
 
       order.total.must_equal 0
@@ -37,7 +39,7 @@ describe "Order Wave 1" do
   end
 
   describe "#add_product" do
-    it "Increases the number of products" do
+    xit "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
@@ -47,7 +49,7 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
-    it "Is added to the collection of products" do
+    xit "Is added to the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
@@ -68,7 +70,7 @@ describe "Order Wave 1" do
       before_total.must_equal after_total
     end
 
-    it "Returns true if the product is new" do
+    xit "Returns true if the product is new" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
@@ -81,29 +83,29 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Order Wave 2" do
   describe "Order.all" do
-    it "Returns an array of all orders" do
+    xit "Returns an array of all orders" do
       # TODO: Your test code here!
     end
 
-    it "Returns accurate information about the first order" do
+  xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
     end
 
-    it "Returns accurate information about the last order" do
+    xit "Returns accurate information about the last order" do
       # TODO: Your test code here!
     end
   end
 
   describe "Order.find" do
-    it "Can find the first order from the CSV" do
+    xit "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Can find the last order from the CSV" do
+    xit "Can find the last order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    xit "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
     end
   end
