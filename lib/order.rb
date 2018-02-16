@@ -1,5 +1,7 @@
 require 'csv'
 require 'awesome_print'
+# require_relative '../support/orders.csv'
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -58,7 +60,7 @@ module Grocery
       csv_orders = []
       CSV.open("orders.csv", "r").each do |order|
         # product id
-        id = order[0]
+        id = order[0].to_i
 
         # products - hashes
         order_row = order[1].split(%r{;\s*}) # it's an array of string
@@ -79,16 +81,25 @@ module Grocery
       return csv_orders
     end # self.all method ends
 
-    #
+    # Create a self.find method
+    def self.find(id)
+      correct_order = nil
+      self.all.each do |each_order|
+        if each_order.id == id
+          correct_order = each_order
+        end
+      end
+      return correct_order
+    end # self.find method ends
 
   end # Order class ends
-
 end # module Grocery ends
 
 
-ap Grocery::Order.all
+ ap Grocery::Order.find(234)
 
-# ap Order.all(csv_products)
+ap Grocery::Order.all.class
+
 
 # ap csv_products
 
