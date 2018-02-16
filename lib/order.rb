@@ -20,17 +20,17 @@ module Grocery
       @products = useful_data(products)
     end
 
-    def useful_data(grouped_data)
-      if grouped_data.class == String
-        grouped_products = grouped_data.split(";")
+    def useful_data(data)
+      if data.class == String
+        grouped_products = data.split(";")
         product_pairs = {}
         grouped_products.each do |grouped_item|
           separated_item = grouped_item.split(":")
           product_pairs[separated_item[0]] = separated_item[1].to_f.round(2)
         end
         product_pairs
-      elsif grouped_data.class == Hash
-        grouped_data
+      elsif data.class == Hash
+        data
       end
     end
 
@@ -40,8 +40,7 @@ module Grocery
       @products.each do |product, price|
         subtotal += price
       end
-      total = subtotal + (subtotal * 0.075)
-      total.round(2)
+      total = (subtotal + (subtotal * 0.075)).round(2)
     end
 
     def add_product(product_name, product_price)
@@ -71,7 +70,7 @@ module Grocery
       end
       @@all_orders
     end
-    
+
     def self.find(id)
       self.all
       @@all_orders.each do |order|
