@@ -5,6 +5,7 @@ FILE_NAME = 'support/orders.csv'
 
 
 module Grocery
+
   class Order
     attr_reader :id, :products
 
@@ -51,7 +52,7 @@ module Grocery
     end
 
     def self.find(passed_id)
-      return_value = NIL
+      return_value = nil
       self.all.each do |order|
         if order.id == passed_id
           return_value = order
@@ -65,4 +66,4 @@ end
 
 # ap Grocery::Order.all
 
-ap Grocery::Order.find(9876)
+# ap Grocery::Order.find(9876)

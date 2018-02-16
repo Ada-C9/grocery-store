@@ -116,7 +116,7 @@ describe "Order Wave 2" do
 
     it "Returns Nil for an order that doesn't exist" do
       result = Grocery::Order.find(180)
-      result.must_equal NIL
+      result.must_be_nil
     end
   end
 end
