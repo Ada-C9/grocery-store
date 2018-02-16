@@ -50,8 +50,8 @@ module Grocery
       return @@all
     end
 
-    def find
-
+    def self.find(requested_id)
+      return @@all.find { |order| order.id == requested_id }
     end
 
 
