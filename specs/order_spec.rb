@@ -81,7 +81,6 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all_orders" do
     it "Returns an array of all orders" do
@@ -92,45 +91,32 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the first order" do
-      Grocery::Order.all_orders[0].products.class.must_equal Hash
-      Grocery::Order.all_orders[0].products.length.must_equal 3
-      Grocery::Order.all_orders[0].products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
-
+      Grocery::Order.all_orders.first.products.class.must_equal Hash
+      Grocery::Order.all_orders.first.products.length.must_equal 3
     end
 
     it "Returns accurate information about the last order" do
       Grocery::Order.all_orders.last.products.class.must_equal Hash
       Grocery::Order.all_orders.last.products.length.must_equal 3
-      Grocery::Order.all_orders.last.products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
+
     end
   end
 
-  # describe "Order.find_order" do
-  #   xit "Can find the first order from the CSV" do
-  #     orders = [
-  #       a = [Grocery::Order.new(1111, {"banana" => 1.99, "cracker" => 3.00 })],
-  #       b = [Grocery::Order.new(2222, {"apple" => 2.99, "miso" => 3.00})]]
-  #
-  #       orders.first.must_equal orders[0]
-  #     end
-  #
-  #   xit "Can find the last order from the CSV" do
-  #     orders = [
-  #     a = [Grocery::Order.new(1111, {"banana" => 1.99, "cracker" => 3.00})],
-  #     b = [Grocery::Order.new(2222, {"apple" => 2.99, "miso" => 3.00})]]
-  #
-  #     orders.last.must_equal orders[1]
-  #
-  #   end
-  #
-  #   xit "Raises an error for an order that doesn't exist" do
-  #     orders = [
-  #     a = [Grocery::Order.new(1111, {"banana" => 1.99, "cracker" => 3.00})],
-  #     b = [Grocery::Order.new(2222, {"apple" => 2.99, "miso" => 3.00})]]
-  #
-  #     result = orders.check_order(3333)
-  #     result.must_equal false
-  #
-  #   end
-  # end
+  describe "Order.find_order" do
+    it "Can find the first order from the CSV" do
+      Grocery::Order.find_order("1").id.must_equal "1"
+      Grocery::Order.find_order("1").products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
+      end
+
+    it "Can find the last order from the CSV" do
+      Grocery::Order.find_order("100").id.must_equal "100"
+      Grocery::Order.find_order("100").products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
+    end
+
+    it "Raises an error for an order that doesn't exist" do
+    Grocery::Order.find_order("200").must_equal nil
+    Grocery::Order.find_order("0").must_equal nil
+
+    end
+  end
 end
