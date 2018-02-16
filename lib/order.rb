@@ -13,14 +13,7 @@ module Grocery
     def initialize(order_id, order_products)
       @id = order_id
       @products = order_products
-      # populate_products(order_products)
     end
-
-    # def initialize(order_id, order_products)
-    #   @id = order_id
-    #   @products = {}
-    #   populate_products
-    # end
 
     def total
       cost_without_sales_tax = get_cost_without_sales_tax
@@ -46,28 +39,12 @@ module Grocery
       if @@all.empty?
         CSV.read("../support/orders.csv").each do |order|
           order_id = order[0].to_i
-          # puts order[1].scan(/[^\:;]+/).each_slice(2).inspect
-
           product_hash = {}
           order[1].scan(/[^\;]+/).each do |one_order|
               name, price = one_order.split(":")
               product_hash["#{name}"] = price.to_f
-
-           end
-          # order[1].scan(/[^\:;]+/) do |name, cost|
-          #   product_hash["#{name}"] = cost
-          # end
-
+          end
           @@all << Order.new(order_id, product_hash)
-        #   # order_products = []
-        #   list_of_each_product_as_sting = order[1].split(";")
-        #   list_of_each_product_as_sting.each do |product_as_string|
-        #   # order[1].split(";").each do |product_as_string|
-        #     name_and_price = product_as_string.split(":")
-        #     product = { name: name_and_price[0], price: name_and_price[1] }
-        #     order_products.push(product)
-        #   end
-        # @@all << Order.new(order_id, order_products)
         end
       end
       return @@all
@@ -79,20 +56,6 @@ module Grocery
 
 
 private
-
-    # This assumes valid products from products_as_string. Is this bad??
-    def populate_products(products_as_string)
-      # puts products_as_string.inspect
-      # @products = products_as_string.split(";").to_h
-    end
-
-
-    # def populate_products(products_as_string)
-    #   products_as_string.split(";").each do |product_as_string|
-    #     name_and_price = product_as_sting.split(":")
-    #     @products.push["#{name_and_price[0]}"] = name_and_price[1]
-    #   end
-    # end
 
 
     def get_sales_tax(total_cost_with_out_tax)
@@ -109,8 +72,8 @@ private
 
     # product_name must be a String
     def has_product_key?(new_name)
-      return @products.any? { |product| product[name] == new_name }
-       # @products.has_key?(new_name)
+      # return @products.any? { |product| product[name] == new_name }
+       @products.has_key?(new_name)
     end
 
 
@@ -127,10 +90,10 @@ private
     end
 
     #
-    def add_product_if_valid_and_non_duplicate(new_name, new_cost)
-      @products.push({name: new_name, price: new_cost }) if
-        is_valid_new_product?(name, cost)
-      # @products["#{name}"] = cost if is_valid_new_product?(name, cost)
+    def add_product_if_valid_and_non_duplicate(name, cost)
+      # @products.push({name: new_name, price: new_cost }) if
+      #   is_valid_new_product?(new_name, new_cost)
+      @products["#{name}"] = cost if is_valid_new_product?(name, cost)
     end
 
     def is_valid_new_product?(name, cost)
