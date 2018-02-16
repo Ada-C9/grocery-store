@@ -1,5 +1,7 @@
 require 'csv'
 
+FILE_NAME = "support/orders.csv"
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -37,8 +39,22 @@ module Grocery
 
     def self.all
       all_orders = []
-      CSV.open("support/orders.csv", 'r').each do |line|
-        all_orders << line
+      CSV.open(FILE_NAME, 'r').each do |order|
+        # ..support/orders.csv < -- wont work inrake
+        products_id_name = []
+        id = order[0]
+        products_id_name << id
+
+        order[1].split(";").each do |product|
+          product_array = product.split(":")
+          # print product_array
+
+          product_hash = {}
+          product_hash[product_array[0]] = product_array[1]
+
+          products_id_name << product_hash
+        end
+        all_orders << products_id_name
       end
       return all_orders
       # returns a collection of `Order` instances, representing all of the Orders described in the CSV
