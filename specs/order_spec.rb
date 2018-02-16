@@ -87,20 +87,28 @@ describe "Order Wave 2" do
       array_of_orders = Grocery::Order.all
 
       array_of_orders.length.must_equal 100
+
+      # - all emements are orders
+      # - returns an array
+
     end
 
     it "Returns accurate information about the first order" do
       array_of_orders = Grocery::Order.all
       first_id = array_of_orders[0][0]
+      first_order_items = array_of_orders[0][1]
 
       first_id.must_equal 1
+      first_order_items.length.must_equal 3
     end
 
     it "Returns accurate information about the last order" do
       array_of_orders = Grocery::Order.all
       last_id = array_of_orders[-1][0]
+      last_order_items = array_of_orders[-1][1]
 
       last_id.must_equal 100
+      last_order_items.length.must_equal 3
     end
 
   end

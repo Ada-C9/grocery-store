@@ -30,10 +30,19 @@ module Grocery
 
     def self.all
       @@all_orders = []
-      CSV.foreach("support/orders.csv") do |row|
+      CSV.foreach("../support/orders.csv") do |row|
         row[0] = row[0].to_i
         row[1] = row[1].split(";")
-        @@all_orders << row
+
+        products_hash = {}
+
+        row[1].map! do |products|
+          products = products.split(":")
+          products_hash[products[0]] = products[1].to_f
+        end
+
+        @@all_orders << [row[0], products_hash]
+
       end
       return @@all_orders
     end
@@ -46,5 +55,24 @@ module Grocery
         raise NotImplementedError
       end
     end
+
   end
 end
+
+
+
+ap Grocery::Order.all
+
+
+
+
+###potentially add to order.all ###
+
+
+
+
+#     hash = { i[0] => i[1].to_f }
+#   end
+# end
+#  return @@all_orders
+#end
