@@ -5,7 +5,7 @@ require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -115,22 +115,38 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
+    before do
+      order_1 = [1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}]
+      order_2 = [2, {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}]
+      order_3 = [3, {"Lentils" => 7.17}]
+      @orders = [order_1, order_2, order_3]
+    end
+
     it "Returns an array of all orders" do
       # TODO: Your test code here!
+      orders = Grocery::Order.all
+
+      orders.must_equal @orders
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      orders = Grocery::Order.all
+
+      orders[0].must_equal @orders[0]
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+      orders = Grocery::Order.all
+
+      orders.last.must_equal @orders.last
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end

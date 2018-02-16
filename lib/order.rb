@@ -1,3 +1,5 @@
+require 'csv'
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -6,6 +8,7 @@ module Grocery
       @id = id
       @products = products
     end
+
 
     def total
       # TODO: implement total
@@ -41,5 +44,27 @@ module Grocery
         return true
       end
     end
+
+    def self.all
+      csv_array = ['1,Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9', '2,Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55', '3,Lentils:7.17']
+      all_orders = []
+      @@orders = []
+      csv_array.each do |string|
+        parsed_csv_arr = string.parse_csv
+        result = parsed_csv_arr[1].split(";")
+        result = result.map do |x|
+          x = x.split(":")
+          Hash[x.first, x.last.to_f]
+        end
+        result = result.reduce(:merge)
+        @@orders << [parsed_csv_arr[0].to_i, result]
+      end
+      return @@orders
+    end
+
+    def self.find(id)
+
+    end
+
   end
 end
