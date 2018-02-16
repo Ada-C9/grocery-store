@@ -2,9 +2,10 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 require 'minitest/skip_dsl'
+require 'awesome_print'
 require_relative '../lib/order'
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -83,8 +84,12 @@ end
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      order = Grocery::Order.new(1337, products)
+      ap Grocery::Order.all
+      Grocery::Order.all.must_be_kind_of Array
+
+      # all_orders.each do |order|
+      #   puts order.inspect
+      # end
 
       # TODO: Your test code here!
     end
