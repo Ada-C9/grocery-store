@@ -1,8 +1,9 @@
 require 'csv'
 require 'awesome_print'
 
-FILENAME = "orders.csv"
-# data = CSV.read(FILENAME)
+FILENAME = "support/orders.csv"
+data = CSV.read(FILENAME)
+
 
 module Grocery
   class Order
@@ -36,7 +37,9 @@ module Grocery
         end
       end
     end
+
     def self.all
+      return data
     end
 
     def self.find(id)
@@ -44,10 +47,13 @@ module Grocery
   end
 end
 
-CSV.open(FILENAME, 'r') do |file|
-  first_line = file.readline
-  puts "first line was #{first_line}"
-  file.each do |product, price|
-    puts "Product: #{@product}: #{@product[1]}"
-  end
-end
+print data
+
+# display a the first product
+# CSV.open(FILENAME,'r') do |file|
+#   first_line = file.readline
+#   puts "first line was #{first_line}"
+#   data.each do |id, raw_products|
+#     puts "Product: #{id}: #{raw_products}"
+#   end
+# end
