@@ -55,7 +55,7 @@ module Grocery
     def self.all
       orders_array = []
       CSV.open("support/orders.csv", "r").each do |order|
-        id = [0]
+        id = [0].to_i
         products_hash = {}
 
         products_array = order[1].split(";")
