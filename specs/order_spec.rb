@@ -123,15 +123,44 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      expected_first_order_id = 1
+      # TODO: What happens this if this changes??
+      expected_first_order_products = {"Slivered Almonds"=>22.88,
+        "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+
+      expected_first_order = Grocery::Order.find(1)
+
+      expected_first_order.id.must_be_kind_of Integer
+      expected_first_order.id.must_equal expected_first_order_id
+
+
+      expected_first_order.products.must_be_kind_of Hash
+      expected_first_order.products.must_equal expected_first_order_products
+
     end
 
-    it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+    xit "Can find the last order from the CSV" do
+      expected_first_order_id = 100
+      # TODO: What happens this if this changes??
+      expected_first_order_products = {"Allspice"=>64.74, "Bran"=>14.72,
+        "UnbleachedFlour"=>80.59}
+
+      expected_last_order = Grocery::Order.find(100)
+
+      expected_last_order.id.must_be_kind_of Integer
+      expected_last_order.id.must_equal expected_first_order_id
+
+
+      expected_last_order.products.must_be_kind_of Hash
+      expected_last_order.products.must_equal expected_first_order_products
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    xit "Raises an error for an order that doesn't exist" do
+
+      expected_nil = Grocery::Order.find(-1)
+
+      expected_nil.products.must_be_kind_of Nil
+
     end
   end
 end
