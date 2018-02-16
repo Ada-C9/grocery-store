@@ -82,12 +82,17 @@ end
 
 describe "Order Wave 2" do
   describe "Order.all" do
+
     it "Returns an array of all orders" do
-      Grocery::Order.all.must_be_kind_of Array
+      array_of_all_orders = Grocery::Order.all
+
+      array_of_all_orders.must_be_kind_of Array
+
+      assert array_of_all_orders.all? { |order| order.class == Grocery::Order}
+
     end
 
     it "Returns accurate information about the first order" do
-
       expected_first_order_id = 1
       # TODO: What happens this if this changes??
       expected_first_order_products = {"Slivered Almonds"=>22.88,
