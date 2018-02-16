@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+# require 'csv'
 Minitest::Reporters.use!
 
 describe "Order Wave 1" do
@@ -113,35 +114,70 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
+    #SOMETIMES DOES NOT PASS BC TESTS NOT RUN IN ORDER.
     it "Returns an array of all orders" do
       # TODO: Your test code here!
-      order1 = { "banana" => 1.99, "cracker" => 3.00 }
-      order2 = { "apple" => 2.5, "oreos" => 3.25}
-      all_orders = []
+      all_orders = Grocery::Order.all
+      expected_length = all_orders.length
+
+      expected_length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      first_order = Grocery::Order.new(1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
+      id = first_order.id
+      products = first_order.products
+
+      order1_id = Grocery::Order.all[0].id
+      order1_products = Grocery::Order.all[0].products
+
+      order1_id.must_equal id
+      order1_products.must_equal products
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+      last_order = Grocery::Order.new(100, {"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59})
+      id = last_order.id
+      products = last_order.products
+
+      order100_id = Grocery::Order.all[99].id
+      order100_products = Grocery::Order.all[99].products
+
+      order100_id.must_equal id
+      order100_products.must_equal products
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      first_order = Grocery::Order.find(1)
+      first_order_id = first_order.id
+      first_order_products = first_order.products
+
+      first_order_id.must_equal 1
+      first_order_products.must_equal ({"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
     end
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      last_order = Grocery::Order.find(100)
+      last_order_id = last_order.id
+      last_order_products = last_order.products
+
+      last_order_id.must_equal 100
+      last_order_products.must_equal ({"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59})
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
+      no_such_order = Grocery::Order.find(101)
+
+      assert_nil(no_such_order, "There is no order with that id")
     end
   end
 end
