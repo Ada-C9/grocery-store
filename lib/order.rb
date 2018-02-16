@@ -9,10 +9,17 @@ module Grocery
 
     attr_reader :id, :products
 
-    def initialize(id, products)
-      @id = id
-      @products = products
+    def initialize(order_id, order_products)
+      @id = order_id
+      @products = {}
+      populate_products(order_products)
     end
+
+    # def initialize(order_id, order_products)
+    #   @id = order_id
+    #   @products = {}
+    #   populate_products
+    # end
 
     def total
       cost_without_sales_tax = get_cost_without_sales_tax
@@ -35,7 +42,7 @@ module Grocery
     # end
 
     def self.all
-      if @@all_orders.empty?
+      if @@all.empty?
         CSV.read("../support/orders.csv").each do |order|
           order_id = order[0]
           order_products = []
@@ -49,7 +56,7 @@ module Grocery
         @@all_orders << Order.new(order_id, order_products)
         end
       end
-      return @@all_orders
+      return @@all
       # all_orders_list = []
       # CSV.read("../support/orders.csv").each do |order|
       #   order_id = order[0]
@@ -72,47 +79,20 @@ module Grocery
     end
 
 
-
-    # all_orders_list.each { |order| ap order }
-  def get_all_orders
-    # all_orders_list = []
-    # CSV.read("../support/orders.csv").each do |order|
-    #   order_id = order[0]
-    #   order_products = []
-    #   list_of_each_product_as_sting = order[1].split(";")
-    #   list_of_each_product_as_sting.each do |product_as_string|
-    #   # order[1].split(";").each do |product_as_string|
-    #     name_and_price = product_as_string.split(":")
-    #     product = {}
-    #     product[:name] = name_and_price[0]
-    #     product[:price] = name_and_price[1]
-    #     order_products.push(product)
-    #   end
-    # all_orders_list.push(Order.new(order_id, order_products))
-    # end
-  end
-
-
-
-
 private
-  # # list_of_each_product_as_sting = order[1].split(";")
-  #   def get_all_orders
-  #     all_orders_list = []
-  #     CSV.read("../support/orders.csv").each do |order|
-  #       order_id = order[0]
-  #       order_products = []
-  #       order[1].split(";").each do |product_as_string|
-  #         name_and_price = product_as_sting.split(":")
-  #         product = {}
-  #         product[:name] = name_and_price[0]
-  #         product[:price] = name_and_price[0]
-  #         products_of_order.push(product)
-  #       end
-  #     all_orders_list.push(Order.new(order_id), order_products)
-  #   end
-  #   end
 
+
+    def populate_products(products_as_string)
+      # order_products = []
+      products_as_string.split(";").each do |product_as_string|
+        product_name_and_price = product_as_sting.split(":")
+        @products.push(product_name_and_price[0])
+        product[:name] = name_and_price[0]
+        product[:price] = name_and_price[0]
+        products_of_order.push(product)
+      end
+
+    end
 
     # Pre: provided cost_without_sales_tax must be a double or int.
     #
