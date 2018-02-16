@@ -53,6 +53,51 @@ describe "Customer" do
       #   - The ID, email address of the first and last
       #       customer match what's in the CSV file
       # Feel free to split this into multiple tests if needed
+      all_customers = Grocery::Customer.all
+      total_customers = all_customers.length
+
+      total_customers.must_equal 35
+      all_customers.class.must_equal Array
+      all_customers.each do |customer|
+        customer.class.must_equal Grocery::Customer
+      end
+    end
+    it "returns accurate information about the first customer" do
+      id = 1
+      email = "leonard.rogahn@hagenes.org"
+      address_1 = "71596 Eden Route"
+      city = "Connellymouth"
+      state = "LA"
+      zip_code = "98872-9105"
+
+       all_customers = Grocery::Customer.all
+       first_customer = all_customers[0]
+
+       first_customer.id.must_equal id
+       first_customer.email.must_equal email
+       first_customer.address_1.must_equal address_1
+       first_customer.city.must_equal city
+       first_customer.state.must_equal state
+       first_customer.zip_code.must_equal zip_code
+   end
+
+    it "returns accurate information about the last customer" do
+      id = 35
+      email = "rogers_koelpin@oconnell.org"
+      address_1 = "7513 Kaylee Summit"
+      city = "Uptonhaven"
+      state = "DE"
+      zip_code = "64529-2614"
+
+      all_customers = Grocery::Customer.all
+      last_customer = all_customers.last
+
+      last_customer.id.must_equal id
+      last_customer.email.must_equal email
+      last_customer.address_1.must_equal address_1
+      last_customer.city.must_equal city
+      last_customer.state.must_equal state
+      last_customer.zip_code.must_equal zip_code
     end
   end
 
