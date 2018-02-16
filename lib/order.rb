@@ -1,5 +1,5 @@
 require "csv"
-# require_relative "/support"
+require "awesome_print"
 
 module Grocery
   class Order
@@ -40,9 +40,19 @@ module Grocery
     end
 
     def self.all
+      all_orders = []
       CSV.read('support/orders.csv', 'r').each do |row|
-        @@all_orders << self.new(row[0], row[2])
+        products = row[1].split(';') # splits products string
+        # turns products array strings into hashes
+        product_hash = {}
+        products.each do |string|
+          product = string.split(':')
+          product_hash[product[0]] = product[1]
+        end
+
+        all_orders << self.new(row[0], product_hash)
       end
+      return all_orders
     end
 
     def self.first_order
