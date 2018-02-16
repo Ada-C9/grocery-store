@@ -8,11 +8,26 @@ module Grocery
     end
 
     def total
-      # TODO: implement total
+      sum = 0.0
+      @products.each do |product, price|
+        sum += price * 1.075
+      end
+      sum = sum.round(2)
+      return sum
     end
-
+    # add_product.each do |product_name, product_price|
+    #   products[product_name] = product_price
+    # end
+    # return products
+    # end
     def add_product(product_name, product_price)
-      # TODO: implement add_product
+      @products[:product_name] = product_price
+      before_count = @products.count
+      if @products.count == before_count + 1
+          return true
+        else
+          return false
+        end
     end
   end
 end
