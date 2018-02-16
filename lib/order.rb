@@ -45,5 +45,9 @@ module Grocery
       end
     end
 
+    def self.first_order
+      CSV.read('support/orders.csv', 'r')[0]
+    end
+
   end
 end
