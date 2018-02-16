@@ -26,6 +26,15 @@ module Grocery
       return all_customers
     end
 
+    def self.find(id)
+      all.each do |customer|
+        if customer.id == id
+          return customer
+        end
+      end
+      return nil
+    end
+
   end # customer
 
 end # grocery

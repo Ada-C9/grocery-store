@@ -28,8 +28,6 @@ describe "Customer" do
 
   describe "Customer.all" do
     # TODO: Your test code here!
-    # Useful checks might include:
-    #   - The number of orders is correct
     #   - The ID, email address of the first and last
     #       customer match what's in the CSV file
 
@@ -54,17 +52,34 @@ describe "Customer" do
       Grocery::Customer.all.first.address.must_equal address
     end
 
-  xdescribe "Customer.find" do
+    it "Returns an accurate count of customers generated from a CSV" do
+      customer_count = 35
+      Grocery::Customer.all.count.must_equal customer_count
+    end
+
+  describe "Customer.find" do
     it "Can find the first customer from the CSV" do
-      # TODO: Your test code here!
+      first_customer_id = 1
+      first_customer_email = "leonard.rogahn@hagenes.org"
+      first_customer_address = "71596 Eden Route Connellymouth LA 98872-9105"
+
+      Grocery::Customer.find(1).id.must_equal first_customer_id
+      Grocery::Customer.find(1).email.must_equal first_customer_email
+      Grocery::Customer.find(1).address.must_equal first_customer_address
     end
 
     it "Can find the last customer from the CSV" do
-      # TODO: Your test code here!
+      last_customer_id = 35
+      last_customer_email = "rogers_koelpin@oconnell.org"
+      last_customer_address = "7513 Kaylee Summit Uptonhaven DE 64529-2614"
+
+      Grocery::Customer.find(35).id.must_equal last_customer_id
+      Grocery::Customer.find(35).email.must_equal last_customer_email
+      Grocery::Customer.find(35).address.must_equal last_customer_address
     end
 
     it "Raises an error for a customer that doesn't exist" do
-      # TODO: Your test code here!
+      Grocery::Customer.find(100).must_be_nil
     end
   end
 end
