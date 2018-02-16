@@ -1,6 +1,6 @@
 module Grocery
   class Order
-    attr_reader :id
+    attr_reader :id 
     attr_accessor :products
 
     def initialize(id, products)
