@@ -18,21 +18,19 @@ module Grocery
       product_total = (subtotal * 0.075).round(2)+ subtotal
       return product_total
 
-
-
-
-
     end
-
     # Adds new product to @product array
     def add_product(product_name, product_price)
-      @products[product_name]= product_price
+
+      if @products.include?(product_name)
+
+        return false
+      else
+        @products[product_name]= product_price
+        return true
+      end
+      return products
+
     end
   end
 end
-
-new_order = Grocery::Order.new(776, {})
-new_order.add_product("apple", 2.99)
-new_order.add_product("pear",1.00)
-new_order.add_product("banana",1.00)
-new_order.total
