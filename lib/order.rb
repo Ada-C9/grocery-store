@@ -1,17 +1,17 @@
 require 'csv'
 require 'awesome_print'
 
-ORDERS_CSV = 'support/orders.csv'
+FILE_NAME = 'support/orders.csv'
 
-orders_array = CSV.read(ORDERS_CSV, 'r')
-parsed_array = []
-orders_array.each_with_index do |order, i|
-  parsed_array[i] =[]
-  parsed_array[i][0] = order[0].to_i
-  parsed_array[i][1] = Hash[order[1].split(/:|;/).each_slice(2).collect { |k, v| [k,v.to_f] }]
-end
-
-ap parsed_array
+# orders_array = CSV.read(FILE_NAME, 'r')
+# parsed_array = []
+# orders_array.each_with_index do |order, i|
+#   parsed_array[i] =[]
+#   parsed_array[i][0] = order[0].to_i
+#   parsed_array[i][1] = Hash[order[1].split(/:|;/).each_slice(2).collect { |k, v| [k,v.to_f] }]
+# end
+#
+# ap parsed_array
 # CSV.open(ORDERS_CSV, 'r')
 #   file.each do |line|
 #     orders_array << line
@@ -52,11 +52,18 @@ module Grocery
       end
     end
 
-    # def self.all
-    #
-    # end
+    def self.all(csv_file)
+      csv_array = CSV.read(csv_file, 'r')
+      all_orders = []
+      csv_array.each do |order|
+        id = order[0].to_i
+        products = Hash[order[1].split(/:|;/).each_slice(2).collect { |k, v| [k,v.to_f] }]
+        new_order = Order.new(id, products)
+        all_orders << new_order
+      end
+      return all_orders
+    end
   end
 end
 
-order_1 = Grocery::Order.new(parsed_array[0][0],parsed_array[0][1])
-puts "The order total is #{order_1.total}"
+ap Grocery::Order.all(FILE_NAME)
