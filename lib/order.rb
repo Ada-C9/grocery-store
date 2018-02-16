@@ -67,10 +67,8 @@ module Grocery
     # returns appropriate information from all orders csv file
     def self.all
       orders_array = []
-      CSV.open("support/orders.csv", "r") do |file|
-        file.each do |order|
-          orders_array << Order.new(order)
-        end
+      CSV.open("support/orders.csv", "r").each do |order|
+        orders_array << Order.new(order)
       end
       return orders_array
     end
