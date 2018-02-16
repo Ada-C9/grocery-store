@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
+Minitest::Reporters.use!
 require 'minitest/skip_dsl'
+require_relative '../lib/c'
 
 # TODO: uncomment the next line once you start wave 3
 # require_relative '../lib/customer'
@@ -30,13 +32,22 @@ xdescribe "Customer" do
   end
 
   describe "Customer.all" do
+    expected_first_id = 1
+    expected_first_email = "leonard.rogahn@hagenes.org"
+    expected_first_address = {street: "1596 Eden Route", city: "Connellymouth",
+      state: "LA",zip_code: "98872-9105"}
+
+      expected_last_id = 35
+      expected_last_email = "rogers_koelpin@oconnell.org"
+      expected_last_address = {street: "7513 Kaylee Summit", city: "Uptonhaven",
+        state: "DE",zip_code: "64529-2614"}
+
     it "Returns an array of all customers" do
+      array_of_all_customers = Grocery::Customer.all
 
-      array_of_all_customers = Grocery::Order.all
+      array_of_all_customers.must_be_kind_of Grocery::Customer
 
-      array_of_all_customers.must_be_kind_of Grocery::Order
-
-      assert array_of_all_customers.all? { |customer| customer.class == Grocery::Order}
+      assert array_of_all_customers.all? { |customer| customer.class == Grocery::Customer}
 
       # Useful checks might include:
       #   - Customer.all returns an array
@@ -48,59 +59,80 @@ xdescribe "Customer" do
     end
 
     it "Returns accurate information about the first order" do
-      expected_first_id = 1
-      expected_first_email = "leonard.rogahn@hagenes.org"
-      expected_first_address = {street: "1596 Eden Route", city: "Connellymouth",
-        state: "LA",zip_code: "98872-9105"}
+      # expected_first_id = 1
+      # expected_first_email = "leonard.rogahn@hagenes.org"
+      # expected_first_address = {street: "1596 Eden Route", city: "Connellymouth",
+      #   state: "LA",zip_code: "98872-9105"}
 
       # TODO: What happens this if this changes??
-      first_order = Grocery::Order.all.first
+      first_customer = Grocery::Customer.all.first
 
-      first_order.id.must_be_kind_of Integer
-      first_order.id.must_equal expected_first_id
+      first_customer.id.must_be_kind_of Integer
+      first_customer.id.must_equal expected_first_id
 
+      first_customer.email.must_be_kind_of String
+      first_customer.email.must_equal expected_first_email
 
-      first_order.email.must_be_kind_of String
-      first_order.email.must_equal expected_first_email
-
-      first_order.address.must_be_kind_of Hash
-      first_order.address.must_equal expected_first_address
+      first_customer.address.must_be_kind_of Hash
+      first_customer.address.must_equal expected_first_address
 
     end
 
     it "Returns accurate information about the last order" do
-      expected_last_id = 35
-      expected_last_email = "rogers_koelpin@oconnell.org"
-      expected_last_address = {street: "7513 Kaylee Summit", city: "Uptonhaven",
-        state: "DE",zip_code: "64529-2614"}
+      # expected_last_id = 35
+      # expected_last_email = "rogers_koelpin@oconnell.org"
+      # expected_last_address = {street: "7513 Kaylee Summit", city: "Uptonhaven",
+      #   state: "DE",zip_code: "64529-2614"}
 
       # TODO: What happens this if this changes??
-      last_order = Grocery::Order.all.last
+      last_customer = Grocery::Customer.all.last
 
-      last_order.id.must_be_kind_of Integer
-      last_order.id.must_equal expected_last_id
+      last_customer.id.must_be_kind_of Integer
+      last_customer.id.must_equal expected_last_id
 
 
-      last_order.email.must_be_kind_of String
-      last_order.email.must_equal expected_last_email
+      last_customer.email.must_be_kind_of String
+      last_customer.email.must_equal expected_last_email
 
-      last_order.address.must_be_kind_of Hash
-      last_order.address.must_equal expected_last_address
+      last_customer.address.must_be_kind_of Hash
+      last_customer.address.must_equal expected_last_address
     end
-
   end
 
   describe "Customer.find" do
     it "Can find the first customer from the CSV" do
-      # TODO: Your test code here!
+
+      first_customer_for_find = Grocery::Customer.find(expected_first_id)
+
+      first_customer_for_find.id.must_be_kind_of Integer
+      first_customer.id.must_equal expected_first_id
+
+      first_customer_for_find.email.must_be_kind_of String
+      first_customer_for_find.email.must_equal expected_first_email
+
+      first_customer_for_find.address.must_be_kind_of Hash
+      first_customer_for_find.address.must_equal expected_first_address
+
     end
 
     it "Can find the last customer from the CSV" do
-      # TODO: Your test code here!
+      last_customer_for_find = Grocery::Customer.find(expected_last_id)
+
+      last_customer_for_find.id.must_be_kind_of Integer
+      last_customer_for_find.id.must_equal expected_last_id
+
+
+      last_customer_for_find.email.must_be_kind_of String
+      last_customer_for_find.email.must_equal expected_last_email
+
+      last_customer_for_find.address.must_be_kind_of Hash
+      last_customer_for_find.address.must_equal expected_last_address
     end
 
     it "Raises an error for a customer that doesn't exist" do
-      # TODO: Your test code here!
+      invalid_customer_number = Grocery::Order.find("bar")
+      assert_nil invalid_customer_number
     end
+
   end
 end
