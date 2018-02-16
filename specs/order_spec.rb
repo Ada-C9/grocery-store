@@ -123,8 +123,13 @@ describe "Order Wave 2" do
       Grocery::Order.all.must_be_kind_of Array
     end
 
-    xit "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+    it "Returns accurate information about the first order" do
+      # arrange
+      # NO arrange needed here
+      # act
+      Grocery::Order.first_order
+      # assert
+      Grocery::Order.first_order.must_equal [[1],["Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]]
     end
 
     xit "Returns accurate information about the last order" do
