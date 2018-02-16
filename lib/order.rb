@@ -1,3 +1,5 @@
+require 'csv'
+require 'awesome_print'
 module Grocery
   class Order
     attr_reader :id, :products
@@ -53,3 +55,35 @@ module Grocery
 
   end
 end
+
+#
+csv_products = []
+CSV.open("orders.csv", "r").each do |order|
+  # product id
+  ap order[0]
+
+  # products -hashes
+  products = order[1].split(%r{;\s*}) # it's an array of string
+  # Split again to get two strings seperate
+  products.each do |product|
+    product_hash = {}
+    pairs = product.split(%r{:\s*}) # an array of two string - key & value
+    # Store the key value pair in a new hash - which refers to one product
+    product_hash[pairs[0]] = pairs[1].to_f
+    ap product_hash
+
+  end
+
+end
+
+# ap csv_products
+
+
+
+
+
+
+
+
+
+#
