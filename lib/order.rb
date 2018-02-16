@@ -1,3 +1,5 @@
+require 'pry'
+
 module Grocery
 
   class Order
@@ -44,9 +46,12 @@ end # module Grocery
 
 products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
 order = Grocery::Order.new(1337, products)
-order.add_product("takoyaki", 7.50)
+puts order.products
+order.add_product("cracker", 5.00)
 puts order.products
 puts order.total
+
+# binding.pry
 
 
 
