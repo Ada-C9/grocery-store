@@ -123,8 +123,8 @@ end # describe order wave 1
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
-  xdescribe "Order.all" do
+describe "Order Wave 2" do
+  describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
       # arrange
@@ -152,7 +152,7 @@ xdescribe "Order Wave 2" do
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
       # arrange
-      first_order_id = "1"
+      first_order_id = 1
       first_order_details = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
 
       # act
@@ -167,7 +167,7 @@ xdescribe "Order Wave 2" do
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
       # arrange
-      last_order_id = "100"
+      last_order_id = 100
       last_order_details = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
 
       # act
@@ -180,56 +180,61 @@ xdescribe "Order Wave 2" do
   end # describe order.all
 
   describe "Order.find" do
-    xit "Can find the first order from the CSV" do
+    it "Can find the first order from the CSV" do
       # TODO: Your test code here!
       # arrange
-      first_order = ["1", "Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
       first_order_details = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
-      order = Grocery::Order.new(first_order)
-
-      order.id.must_equal "1"
-      order.products.must_equal first_order_details
+      first_order = Grocery::Order.new(1, first_order_details)
 
       # act
-      first_order_found = Grocery::Order.find("1")
+      first_order_found = Grocery::Order.find(1)
 
       # assert
-      first_order_found.id.must_equal order.id
-      first_order_found.products.must_equal order.products
+      first_order_found.id.must_equal first_order.id
+      first_order_found.products.must_equal first_order.products
       first_order_found.must_be_instance_of Grocery::Order
     end
 
-    xit "Can find the last order from the CSV" do
+    it "Can find the last order from the CSV" do
       # TODO: Your test code here!
       # arrange
-      last_order = ["100", "Allspice:64.74;Bran:14.72;UnbleachedFlour:80.59"]
       last_order_details = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
-      order = Grocery::Order.new(last_order)
-
-      order.id.must_equal "100"
-      order.products.must_equal last_order_details
+      last_order = Grocery::Order.new(100, last_order_details)
 
       # act
-      last_order_found = Grocery::Order.find("100")
+      last_order_found = Grocery::Order.find(100)
 
       # assert
-      last_order_found.id.must_equal order.id
-      last_order_found.products.must_equal order.products
+      last_order_found.id.must_equal last_order.id
+      last_order_found.products.must_equal last_order.products
       last_order_found.must_be_instance_of Grocery::Order
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
       # arrange
-      error_message = "That order does not exist."
-
       # act
       nonexistent_order = Grocery::Order.find("123")
 
       # assert
-      nonexistent_order.must_be_instance_of String
-      nonexistent_order.must_equal error_message
+      nonexistent_order.must_be_instance_of NilClass
+      nonexistent_order.must_equal nil
     end
   end # describe order find
 
 end # describe order wave 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
