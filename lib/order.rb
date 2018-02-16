@@ -1,3 +1,9 @@
+require 'csv'
+require 'awesome_print'
+
+FILENAME = "orders.csv"
+# data = CSV.read(FILENAME)
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -30,5 +36,18 @@ module Grocery
         end
       end
     end
+    def self.all
+    end
+
+    def self.find(id)
+    end
+  end
+end
+
+CSV.open(FILENAME, 'r') do |file|
+  first_line = file.readline
+  puts "first line was #{first_line}"
+  file.each do |product, price|
+    puts "Product: #{@product}: #{@product[1]}"
   end
 end
