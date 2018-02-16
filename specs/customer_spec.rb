@@ -111,17 +111,48 @@ describe "Customer" do
   end # describe Customer.all
 
 
-  xdescribe "Customer.find" do
+  describe "Customer.find" do
     it "Can find the first customer from the CSV" do
       # TODO: Your test code here!
+      first_customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", "71596 Eden Route", "Connellymouth", "LA", "98872-9105")
+
+      # act
+      first_customer_found = Grocery::Customer.find(1)
+
+      # assert
+      first_customer_found.id.must_equal first_customer.id
+      first_customer_found.email.must_equal first_customer.email
+      first_customer_found.street_address.must_equal first_customer.street_address
+      first_customer_found.city.must_equal first_customer.city
+      first_customer_found.state.must_equal first_customer.state
+      first_customer_found.zip.must_equal first_customer.zip
+      first_customer_found.must_be_instance_of Grocery::Customer
     end
 
     it "Can find the last customer from the CSV" do
       # TODO: Your test code here!
+      last_customer = Grocery::Customer.new(35, "rogers_koelpin@oconnell.org", "7513 Kaylee Summit", "Uptonhaven", "DE", "64529-2614")
+
+      # act
+      last_customer_found = Grocery::Customer.find(35)
+
+      # assert
+      last_customer_found.id.must_equal last_customer.id
+      last_customer_found.email.must_equal last_customer.email
+      last_customer_found.street_address.must_equal last_customer.street_address
+      last_customer_found.city.must_equal last_customer.city
+      last_customer_found.state.must_equal last_customer.state
+      last_customer_found.zip.must_equal last_customer.zip
+      last_customer_found.must_be_instance_of Grocery::Customer
     end
 
-    it "Raises an error for a customer that doesn't exist" do
+    it "Returns nil for a customer that doesn't exist" do
       # TODO: Your test code here!
+      nonexistent_customer = Grocery::Customer.find(50)
+
+      # assert
+      nonexistent_customer.must_be_instance_of NilClass
+      nonexistent_customer.must_equal nil
     end
   end
 end

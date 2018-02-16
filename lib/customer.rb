@@ -29,8 +29,17 @@ module Grocery
     end # .all method
 
 
-    def self.find(id)
-    end 
+    def self.find(customer_id)
+      customers_array = self.all
+      customer_found = nil
+      customers_array.each do |customer|
+        if customer.id == customer_id
+          return customer_found = customer
+        end
+      end
+
+      return customer_found
+    end
 
   end # Customer class
 
