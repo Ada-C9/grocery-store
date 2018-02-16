@@ -1,6 +1,7 @@
 require 'csv'
 require 'awesome_print'
 # require_relative '../support/orders.csv'
+FILE_NAME = "support/orders.csv"
 
 module Grocery
   class Order
@@ -58,7 +59,7 @@ module Grocery
     # Create self.all method to read csv files.
     def self.all
       csv_orders = []
-      CSV.open("orders.csv", "r").each do |order|
+      CSV.read(FILE_NAME, "r").each do |order|
         # product id
         id = order[0].to_i
 
@@ -96,7 +97,7 @@ module Grocery
 end # module Grocery ends
 
 
- ap Grocery::Order.find(234)
+ap Grocery::Order.find(24)
 
 ap Grocery::Order.all.class
 
