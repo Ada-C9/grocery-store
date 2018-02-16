@@ -2,17 +2,30 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
-# TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/customer'
+require_relative '../lib/customer'
 
-xdescribe "Customer" do
+describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
-      # TODO: Your test code here!
+      id = 1234
+      email = "rhubarbra@dogworld.com"
+      address = "1234 Treat lane, Seattle WA 98103"
+      roobear = Grocery::Customer.new(id, email, address)
+
+      roobear.must_respond_to :id
+      roobear.id.must_equal id
+      roobear.id.must_be_kind_of Integer
+
+      roobear.must_respond_to :email
+      roobear.email.must_equal email
+
+      roobear.must_respond_to :address
+      roobear.address.must_equal address
+
     end
   end
 
-  describe "Customer.all" do
+  xdescribe "Customer.all" do
     it "Returns an array of all customers" do
       # TODO: Your test code here!
       # Useful checks might include:
