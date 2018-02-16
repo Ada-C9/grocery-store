@@ -55,13 +55,14 @@ module Grocery
     end
 
     def remove_product(product_name)
-      @products.delete(product_name)
       if @products[product_name]
-        false
-      else
+        @products.delete(product_name)
         true
+      else
+        false
       end
     end
+
     def self.all
       @@all_orders = []
       CSV.read("support/orders.csv").each do |order|
@@ -70,6 +71,7 @@ module Grocery
       end
       @@all_orders
     end
+    
     def self.find(id)
       self.all
       @@all_orders.each do |order|

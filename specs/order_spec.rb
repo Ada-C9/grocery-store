@@ -106,6 +106,19 @@ describe "Order Wave 1" do
       result = order.remove_product("banana")
       result.must_equal true
     end
+
+    it "Returns false if the product still present" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+
+      order = Grocery::Order.new(1337, products)
+      before_total = order.total
+
+      result = order.remove_product("sandwich")
+      after_total = order.total
+
+      result.must_equal false
+      before_total.must_equal after_total
+    end
   end
 end
 
