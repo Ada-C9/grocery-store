@@ -6,7 +6,7 @@ require 'awesome_print'
 
 Minitest::Reporters.use!
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -125,7 +125,7 @@ describe "Order Wave 2" do
   end
 
   describe "Order.all" do
-    xit "Returns an array of all orders" do
+    it "Returns an array of all orders" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
 
@@ -133,6 +133,12 @@ describe "Order Wave 2" do
         orders[i].id.must_equal @orders[i].id
         orders[i].products.must_equal @orders[i].products
       end
+    end
+
+    it "Returns right number of oders" do
+      orders = Grocery::Order.all
+
+      orders.count.must_equal @orders.count
     end
 
     it "Returns accurate information about the first order" do
