@@ -47,12 +47,16 @@ module Grocery
 
     def self.all
       # Read contents of file into array of arrays
-      # Uncomment the next line
-      # csv_array = CSV.read('support/orders.csv')
-      csv_array = CSV.read('support/less_orders.csv')
+      csv_array = CSV.read('support/orders.csv')
+      # Convert strings in array to hashes
+      orders = Order.string_to_hash(csv_array)
+      return orders
+    end
 
+    # Helper method to convert strings in array to hashes
+    def self.string_to_hash(arr_of_arrs)
       orders = []
-      csv_array.each do |row|
+      arr_of_arrs.each do |row|
         # Convert products string into Hash
         product_string = row[1].split(";")
         product_hash = product_string.map do |x|

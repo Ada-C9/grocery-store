@@ -3,10 +3,11 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 require 'awesome_print'
+require 'csv'
 
 Minitest::Reporters.use!
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -118,10 +119,8 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   before do
-    order_1 = Grocery::Order.new(1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
-    order_2 = Grocery::Order.new(2, {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55})
-    order_3 = Grocery::Order.new(100, {"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59})
-    @orders = [order_1, order_2, order_3]
+    order_array = CSV.read('support/orders.csv')
+    @orders = Grocery::Order.string_to_hash(order_array)
   end
 
   describe "Order.all" do
@@ -170,7 +169,7 @@ describe "Order Wave 2" do
       # TODO: Your test code here!
       order_find = Grocery::Order.find(100)
 
-      order_find.must_equal @orders[2].products
+      order_find.must_equal @orders[99].products
     end
 
     it "Raises an error for an order that doesn't exist" do
