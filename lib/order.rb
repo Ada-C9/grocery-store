@@ -5,14 +5,13 @@ require 'awesome_print'
 module Grocery
   class Order
 
-    # @@all_products = get_all_producers
+    @@all_orders = []
 
     attr_reader :id, :products
 
     def initialize(id, products)
       @id = id
       @products = products
-
     end
 
     def total
@@ -35,20 +34,85 @@ module Grocery
     #   successfully_removed_product?(product_name)
     # end
 
-    def all
-
+    def self.all
+      if @@all_orders.empty?
+        CSV.read("../support/orders.csv").each do |order|
+          order_id = order[0]
+          order_products = []
+          list_of_each_product_as_sting = order[1].split(";")
+          list_of_each_product_as_sting.each do |product_as_string|
+          # order[1].split(";").each do |product_as_string|
+            name_and_price = product_as_string.split(":")
+            product = { name: name_and_price[0], price: name_and_price[1] }
+            order_products.push(product)
+          end
+        @@all_orders << Order.new(order_id, order_products)
+        end
+      end
+      return @@all_orders
+      # all_orders_list = []
+      # CSV.read("../support/orders.csv").each do |order|
+      #   order_id = order[0]
+      #   order_products = []
+      #   list_of_each_product_as_sting = order[1].split(";")
+      #   list_of_each_product_as_sting.each do |product_as_string|
+      #   # order[1].split(";").each do |product_as_string|
+      #     name_and_price = product_as_string.split(":")
+      #     product = {}
+      #     product[:name] = name_and_price[0]
+      #     product[:price] = name_and_price[1]
+      #     order_products.push(product)
+      #   end
+      # all_orders_list.push(Order.new(order_id, order_products))
+      # end
+      # return all_orders_list
     end
 
     def find
     end
 
-    private
 
-    # def get_all_producers
-    #   all_orders = CSV.read("../support/orders.csv")
-    #   all_orders.each do |order|
-    #
+
+    # all_orders_list.each { |order| ap order }
+  def get_all_orders
+    # all_orders_list = []
+    # CSV.read("../support/orders.csv").each do |order|
+    #   order_id = order[0]
+    #   order_products = []
+    #   list_of_each_product_as_sting = order[1].split(";")
+    #   list_of_each_product_as_sting.each do |product_as_string|
+    #   # order[1].split(";").each do |product_as_string|
+    #     name_and_price = product_as_string.split(":")
+    #     product = {}
+    #     product[:name] = name_and_price[0]
+    #     product[:price] = name_and_price[1]
+    #     order_products.push(product)
+    #   end
+    # all_orders_list.push(Order.new(order_id, order_products))
     # end
+  end
+
+
+
+
+private
+  # # list_of_each_product_as_sting = order[1].split(";")
+  #   def get_all_orders
+  #     all_orders_list = []
+  #     CSV.read("../support/orders.csv").each do |order|
+  #       order_id = order[0]
+  #       order_products = []
+  #       order[1].split(";").each do |product_as_string|
+  #         name_and_price = product_as_sting.split(":")
+  #         product = {}
+  #         product[:name] = name_and_price[0]
+  #         product[:price] = name_and_price[0]
+  #         products_of_order.push(product)
+  #       end
+  #     all_orders_list.push(Order.new(order_id), order_products)
+  #   end
+  #   end
+
 
     # Pre: provided cost_without_sales_tax must be a double or int.
     #
@@ -69,8 +133,8 @@ module Grocery
 
     # product_name must be a String
     def has_product_key?(new_name)
-      # return @products.any? { |product| product[name] == new_name }
-       @products.has_key?(new_name)
+      return @products.any? { |product| product[name] == new_name }
+       # @products.has_key?(new_name)
     end
 
 
@@ -87,10 +151,10 @@ module Grocery
     end
 
     #
-    def add_product_if_valid_and_non_duplicate(name, cost)#(new_name, new_cost)
-      # @products.push({name: new_name, price: new_cost }) if
-      #   is_valid_new_product?(name, cost)
-      @products["#{name}"] = cost if is_valid_new_product?(name, cost)
+    def add_product_if_valid_and_non_duplicate(new_name, new_cost)
+      @products.push({name: new_name, price: new_cost }) if
+        is_valid_new_product?(name, cost)
+      # @products["#{name}"] = cost if is_valid_new_product?(name, cost)
     end
 
     def is_valid_new_product?(name, cost)
