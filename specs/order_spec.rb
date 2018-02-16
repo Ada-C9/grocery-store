@@ -80,16 +80,18 @@ describe "Order Wave 1" do
 end
 
 describe "Order Wave 2" do
+
+  CSV.open('sample.csv', 'w+') do |csv|
+    csv << ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
+    csv << ["2","Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55"]
+    csv << ["3","Lentils:7.17"]
+    csv << ["4","Hiramasa Kingfish:78.37;Oatmeal:10.41;Mahi mahi:35.95;Bean Sprouts:16.5"]
+  end
+
+  orders = Grocery::Order.all('sample.csv')
+
   describe "Order.all" do
     it "Returns an array of all orders" do
-      CSV.open('sample.csv', 'w+') do |csv|
-        csv << ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
-        csv << ["2","Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55"]
-        csv << ["3","Lentils:7.17"]
-        csv << ["4","Hiramasa Kingfish:78.37;Oatmeal:10.41;Mahi mahi:35.95;Bean Sprouts:16.5"]
-      end
-
-      orders = Grocery::Order.all('sample.csv')
       orders.must_be_kind_of Array
       orders.length.must_equal 4
       orders.each do |order|
@@ -98,14 +100,6 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the first order" do
-      CSV.open('sample.csv', 'w+') do |csv|
-        csv << ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
-        csv << ["2","Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55"]
-        csv << ["3","Lentils:7.17"]
-        csv << ["4","Hiramasa Kingfish:78.37;Oatmeal:10.41;Mahi mahi:35.95;Bean Sprouts:16.5"]
-      end
-
-      orders = Grocery::Order.all('sample.csv')
       orders.first.id.must_be_kind_of Integer
       orders.first.id.must_equal 1
       orders.first.products.must_be_kind_of Hash
@@ -114,14 +108,6 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      CSV.open('sample.csv', 'w+') do |csv|
-        csv << ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
-        csv << ["2","Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55"]
-        csv << ["3","Lentils:7.17"]
-        csv << ["4","Hiramasa Kingfish:78.37;Oatmeal:10.41;Mahi mahi:35.95;Bean Sprouts:16.5"]
-      end
-
-      orders = Grocery::Order.all('sample.csv')
       orders.last.id.must_be_kind_of Integer
       orders.last.id.must_equal 4
       orders.last.products.must_be_kind_of Hash
@@ -130,17 +116,21 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      orders.find(1).must_be_instance_of Grocery::Order
+      orders.find(1).id.must_equal 1
+      orders.find(1).products.must_equal ({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      orders.find(4).must_be_instance_of Grocery::Order
+      orders.find(4).id.must_equal 4
+      orders.find(4).products.must_equal ({"Hiramasa Kingfish"=>78.37, "Oatmeal"=>10.41, "Mahi mahi"=>35.95, "Bean Sprouts"=>16.5})
     end
 
     it "Return nil for an order that doesn't exist" do
-      # TODO: Your test code here!
+      orders.find(5).must_be_nil
     end
   end
 end
