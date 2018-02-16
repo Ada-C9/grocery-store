@@ -1,9 +1,10 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'csv'
 require_relative '../lib/order'
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   xdescribe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -122,22 +123,63 @@ end # describe order wave 1
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
-  describe "Order.all" do
+describe "Order Wave 2" do
+  xdescribe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
+      # arrange
+      # get num rows in csv file
+      # orders_row_count = orders.csv.readlines.size
+      orders_row_count = 0
+      CSV.open("support/orders.csv", "r").each do |order|
+        orders_row_count += 1
+      end
+
+      # check orders_row_count works
+      # orders_row_count.must_equal 100
+
+      # act
+      # call .all class method on Orders
+      # get length of array that was returned
+      orders_array = Grocery::Order.all
+      orders_array_length = orders_array.length
+
+      #assert
+      # check that length of array equals num rows in csv file
+      orders_array_length.must_equal orders_row_count
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      # arrange
+      first_order_id = "1"
+      first_order_details = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+
+      # act
+      first_order = Grocery::Order.all[0]
+
+      # assert
+      first_order.id.must_equal first_order_id
+      first_order.products.must_equal first_order_details
+
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
-    end
-  end
+      # arrange
+      last_order_id = "100"
+      last_order_details = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
 
-  describe "Order.find" do
+      # act
+      last_order = Grocery::Order.all.last
+
+      # assert
+      last_order.id.must_equal last_order_id
+      last_order.products.must_equal last_order_details
+    end
+  end # describe order.all
+
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
@@ -149,5 +191,6 @@ xdescribe "Order Wave 2" do
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
     end
-  end
-end
+  end # describe order find
+
+end # describe order wave 2

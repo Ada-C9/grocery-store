@@ -1,10 +1,28 @@
+require "csv"
+
+# FILE_NAME = "../support/orders.csv"
+
 module Grocery
   class Order
     attr_reader :id, :products
 
-    def initialize(id, products)
-      @id = id
-      @products = products
+    def initialize(order_details)
+      # not sure if it's ok to do this in the initialize method
+      # find id
+      # order_details = order.split(",")
+      @id = order_details[0]
+
+      # find product-price pairs
+      products = order_details[1]
+      products_array = products.split(";")
+      products_hash = {}
+      products_array.each do |product|
+        product_price_pair = []
+        product_price_pair = product.split(":")
+        products_hash[product_price_pair[0]] = product_price_pair[1].to_f
+      end
+      @products = products_hash
+
     end
 
     def total
@@ -36,7 +54,7 @@ module Grocery
       end
     end
 
-    # remove product and price only if it already exists in list 
+    # remove product and price only if it already exists in list
     def remove_product(product_name)
       if !@products.include?(product_name)
         return false
@@ -46,9 +64,41 @@ module Grocery
       end
     end
 
+    # returns appropriate information from all orders csv file
+    def self.all
+      orders_array = []
+      CSV.open("support/orders.csv", "r") do |file|
+        file.each do |order|
+          orders_array << Order.new(order)
+        end
+      end
+      return orders_array
+    end
+
   end # class Order
 
 end # module Grocery
+
+#
+# # test that Order class can take data in the format found in csv file
+# first_order_info = nil
+# CSV.open("../support/orders.csv", "r") do |file|
+#   first_line = file.readline
+#   first_order_info = first_line
+# end
+#
+# puts "#{first_order_info}"
+# puts first_order_info.class
+# #
+# first_order = Grocery::Order.new(first_order_info)
+#
+# puts "#{first_order.id}"
+# puts "#{first_order.products}"
+# puts "#{first_order.total}"
+
+# testing .all class method
+# puts "#{Grocery::Order.all}"
+
 
 
 
