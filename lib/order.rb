@@ -40,7 +40,7 @@ module Grocery
       @products.each do |product, price|
         subtotal += price
       end
-      total = (subtotal + (subtotal * 0.075)).round(2)
+      (subtotal + (subtotal * 0.075)).round(2)
     end
 
     def add_product(product_name, product_price)
@@ -80,8 +80,9 @@ module Grocery
       end
       return "Sorry, that order doesn't exist."
     end
-
   end
+
+
 end
 
 
