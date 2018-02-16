@@ -50,10 +50,8 @@ module Grocery
     # end
 
     def self.all
-      order_array = []
       CSV.open(FILE_NAME, 'r').each do |product|
-        puts "Order ##{product[0]} include: #{product[1]}"
-        order_array << Order.new(product[0])
+        return "Order ##{product[0]} include: #{product[1]}"
       end
     end
 
@@ -79,6 +77,8 @@ end # module Grocery
 #   # products << Order.new(product[0])
 # end
 
+first_order = Grocery::Order.all
+puts first_order
 # binding.pry
 
 
