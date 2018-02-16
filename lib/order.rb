@@ -80,7 +80,7 @@ module Grocery
           return entry.products
         end
       end
-      return "Error: this order doesn't exist!"
+      return nil
     end
 
   end

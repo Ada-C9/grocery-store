@@ -176,7 +176,7 @@ describe "Order Wave 2" do
       # TODO: Your test code here!
       order_find = Grocery::Order.find(101)
 
-      order_find.must_equal "Error: this order doesn't exist!"
+      order_find.must_be_nil
     end
   end
 end
