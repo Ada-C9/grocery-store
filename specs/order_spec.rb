@@ -6,7 +6,7 @@ require 'awesome_print'
 
 Minitest::Reporters.use!
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -117,14 +117,14 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
-  describe "Order.all" do
-    before do
-      order_1 = Grocery::Order.new(1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
-      order_2 = Grocery::Order.new(2, {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55})
-      order_3 = Grocery::Order.new(3, {"Lentils" => 7.17})
-      @orders = [order_1, order_2, order_3]
-    end
+  before do
+    order_1 = Grocery::Order.new(1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
+    order_2 = Grocery::Order.new(2, {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55})
+    order_3 = Grocery::Order.new(3, {"Lentils" => 7.17})
+    @orders = [order_1, order_2, order_3]
+  end
 
+  describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
@@ -152,17 +152,26 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      order_find = Grocery::Order.find(1)
+
+      order_find.must_equal @orders[0].products
     end
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      order_find = Grocery::Order.find(3)
+
+      order_find.must_equal @orders[2].products
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
+      order_find = Grocery::Order.find(4)
+
+      order_find.must_equal "Error: this order doesn't exist!"
     end
   end
 end

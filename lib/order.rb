@@ -1,4 +1,5 @@
 require 'csv'
+require 'awesome_print'
 
 module Grocery
   class Order
@@ -8,7 +9,6 @@ module Grocery
       @id = id
       @products = products
     end
-
 
     def total
       # TODO: implement total
@@ -49,7 +49,7 @@ module Grocery
       csv_array = ['1,Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9', '2,Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55', '3,Lentils:7.17']
       orders = []
       csv_array.each do |string|
-        # Parse CSV lines
+        # Parse CSV array
         parsed_csv_arr = string.parse_csv
         result = parsed_csv_arr[1].split(";")
         result = result.map do |x|
@@ -63,12 +63,17 @@ module Grocery
         products = result
         orders << Order.new(id, products)
       end
-
       return orders
     end
 
     def self.find(id)
-
+      orders = Order.all
+      orders.each do |entry|
+        if entry.id == id
+          return entry.products
+        end
+      end
+      return "Error: this order doesn't exist!"
     end
 
   end
