@@ -19,9 +19,9 @@ describe "Order Wave 1" do
   end
 
   describe "#total" do
-    xit "Returns the total from the collection of products" do
+    it "Returns the total from the collection of products" do
       #arrange
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = { "banana" => 1.99, "cracker" => 3.00}
       order = Grocery::Order.new(1337, products)
 
       #act
@@ -41,7 +41,7 @@ describe "Order Wave 1" do
 
   describe "#add_product" do
     xit "Increases the number of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {"banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
 
@@ -50,15 +50,15 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
-     #tests remove product method 
+     #tests remove product method
     describe "#remove_product" do
       it "Decreases the number of products" do
         #arrange
-        products = { "banana" => 1.99, "cracker" => 3.00 }
+        products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93}
         before_count = products.count
         order = Grocery::Order.new(1337, products)
         #act
-        order.remove_product("banana")
+        order.remove_product("Slivered Almonds")
         expected_count = before_count - 1
         #assert
          order.products.count.must_equal expected_count
