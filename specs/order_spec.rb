@@ -137,29 +137,41 @@ xdescribe "Order Wave 2" do
     it "Returns an array of all orders" do
       # wait don't I need to put an "arrange" statement here??
       #
-      # Grocery::Order.all.count
-      #
-      # Grocery::Order.all.count.must_equal 100
+
+
+
 
       all_orders = Grocery::Order.all
       all_orders.must_be_kind_of Array
+      # or all_orders.class.must_equal Array
+
+      all_orders.each do |order|
+        order.must_be_kind_of Order
+      end
+
+      all_orders.count.must_equal 100
+
 
     end
 
     xit "Returns accurate information about the first order" do
-      # TODO: Your test code here!
 
     
     end
 
     xit "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+
     end
   end
 
   describe "Order.find" do
     xit "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+
+      first_order = Grocery::Order.find
+
+      first_order.must_equal the first index
+
+
     end
 
     xit "Can find the last order from the CSV" do
