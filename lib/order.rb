@@ -36,23 +36,20 @@ module Grocery
     end
 
     def self.all
-
-
-      # p order
-      # CSV.open("../support/orders.csv", "r") do |file|
-      # puts file
-      # end
-
-      # returns a collection of `Order` instances, representing all of the Orders described in the CSV
       all_orders = []
-
+      CSV.open("support/orders.csv", 'r').each do |line|
+        all_orders << line
+      end
+      return all_orders
+      # returns a collection of `Order` instances, representing all of the Orders described in the CSV
+    end
+#
       # id = ?
       # products = ?
       # all_orders << Order.new(id, products)
       # all_orders <- how to populate it with the CSV data
       # every element in the array is an Order instance
-      return all_orders
-    end
+
 
     def self.find(id)
       # returns an instance of `Order` where the value of the id field in the CSV matches the passed parameter
