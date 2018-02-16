@@ -6,22 +6,9 @@ module Grocery
   class Order
     attr_reader :id, :products
 
-    def initialize(order_details)
-      # not sure if it's ok to do this in the initialize method
-      # find id
-      # order_details = order.split(",")
-      @id = order_details[0]
-
-      # find product-price pairs
-      products = order_details[1]
-      products_array = products.split(";")
-      products_hash = {}
-      products_array.each do |product|
-        product_price_pair = []
-        product_price_pair = product.split(":")
-        products_hash[product_price_pair[0]] = product_price_pair[1].to_f
-      end
-      @products = products_hash
+    def initialize(id, products_hash)
+      @id = id
+      @products_hash = products_hash
 
     end
 
@@ -30,7 +17,7 @@ module Grocery
 
       # sum the products
       sub_total = 0
-      @products.each do |product, price|
+      @products_hash.each do |product, price|
         sub_total += price
       end
       # return sub_total
@@ -46,20 +33,20 @@ module Grocery
     # add new product with price if not already present in list
     def add_product(product_name, product_price)
       # TODO: implement add_product
-      if @products.include?(product_name)
+      if @products_hash.include?(product_name)
         return false
       else
-        @products[product_name] = product_price
+        @products_hash[product_name] = product_price
         return true
       end
     end
 
     # remove product and price only if it already exists in list
     def remove_product(product_name)
-      if !@products.include?(product_name)
+      if !@products_hash.include?(product_name)
         return false
       else
-        @products.delete(product_name)
+        @products_hash.delete(product_name)
         return true
       end
     end
@@ -68,7 +55,16 @@ module Grocery
     def self.all
       orders_array = []
       CSV.open("support/orders.csv", "r").each do |order|
-        orders_array << Order.new(order)
+        id = [0]
+        products_hash = {}
+
+        products_array = order[1].split(";")
+        products_array.each do |product|
+          product_info = product.split(":")
+          products_hash[product_info[0]] = product_info[1].to_f
+        end
+
+        orders_array << Order.new(id, products_hash)
       end
       return orders_array
     end
