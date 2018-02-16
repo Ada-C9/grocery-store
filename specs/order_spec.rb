@@ -129,12 +129,15 @@ describe "Order Wave 2" do
       Grocery::Order.find(1).products.must_equal first_product_hash
     end
 
-    xit "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+    it "Can find the last order from the CSV" do
+      last_item_id = 100
+      last_product_hash = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+      Grocery::Order.find(100).id.must_equal last_item_id
+      Grocery::Order.find(100).products.must_equal last_product_hash
     end
 
-    xit "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Raises an error for an order that doesn't exist" do
+      Grocery::Order.find(101).must_raise StandardError
     end
   end
 end
