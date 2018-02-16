@@ -12,10 +12,13 @@ describe "Customer" do
       # arrange
       id = 50
       email = "thebatintheman@gmail.com"
-      address = "200 Cave St., Baton Rouge, Louisiana, 65980"
+      street_address = "200 Cave St."
+      city = "Baton Rouge"
+      state = "Louisiana"
+      zip = "65980"
 
       # act
-      customer = Grocery::Customer.new(id, email, address)
+      customer = Grocery::Customer.new(id, email, street_address, city, state, zip)
 
       # assert
       customer.must_respond_to :id
@@ -24,24 +27,89 @@ describe "Customer" do
       customer.must_respond_to :email
       customer.email.must_be_kind_of String
       customer.email.must_equal email
-      customer.must_respond_to :address
-      customer.address.must_be_kind_of String
-      customer.address.must_equal address
+      customer.must_respond_to :street_address
+      customer.street_address.must_be_kind_of String
+      customer.street_address.must_equal street_address
+      customer.must_respond_to :city
+      customer.city.must_be_kind_of String
+      customer.city.must_equal city
+      customer.must_respond_to :state
+      customer.state.must_be_kind_of String
+      customer.state.must_equal state
+      customer.must_respond_to :zip
+      customer.zip.must_be_kind_of String
+      customer.zip.must_equal zip
     end
-  end
+  end # describe initialize
 
-  xdescribe "Customer.all" do
+  describe "Customer.all" do
     it "Returns an array of all customers" do
       # TODO: Your test code here!
       # Useful checks might include:
+
       #   - Customer.all returns an array
       #   - Everything in the array is a Customer
       #   - The number of orders is correct
-      #   - The ID, email address of the first and last
-      #       customer match what's in the CSV file
-      # Feel free to split this into multiple tests if needed
+      # arrange
+      customers_count = 0
+      CSV.open("support/customers.csv", "r").each do |customer|
+        customers_count += 1
+      end
+
+      # act
+      customers = Grocery::Customer.all
+      customers_right_class = false
+      customers.each do |customer|
+        if customer.class == Grocery::Customer
+          customers_right_class = true
+        else
+          return customers_right_class = false
+        end
+      end
+
+      # assert
+      customers.must_be_kind_of Array
+      customers.length.must_equal customers_count
+      customers_right_class.must_equal true
     end
-  end
+
+    #   - The ID, email address of the first and last
+    #       customer match what's in the CSV file
+    it "returns the correct information for the first customer" do
+      # arrange
+      first_customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", "71596 Eden Route", "Connellymouth", "LA", "98872-9105")
+
+      # act
+      customers_array = Grocery::Customer.all
+      first_from_array = customers_array[0]
+
+      # assert
+      first_from_array.id.must_equal first_customer.id
+      first_from_array.email.must_equal first_customer.email
+      first_from_array.street_address.must_equal first_customer.street_address
+      first_from_array.city.must_equal first_customer.city
+      first_from_array.state.must_equal first_customer.state
+      first_from_array.zip.must_equal first_customer.zip
+    end
+
+    it "returns the correct information for the last customer" do
+      # arrange
+      last_customer = Grocery::Customer.new(35, "rogers_koelpin@oconnell.org", "7513 Kaylee Summit", "Uptonhaven", "DE", "64529-2614")
+
+      # act
+      customers_array = Grocery::Customer.all
+      last_from_array = customers_array.last
+
+      # assert
+      last_from_array.id.must_equal last_customer.id
+      last_from_array.email.must_equal last_customer.email
+      last_from_array.street_address.must_equal last_customer.street_address
+      last_from_array.city.must_equal last_customer.city
+      last_from_array.state.must_equal last_customer.state
+      last_from_array.zip.must_equal last_customer.zip
+    end
+  end # describe Customer.all
+
 
   xdescribe "Customer.find" do
     it "Can find the first customer from the CSV" do
