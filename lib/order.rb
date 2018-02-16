@@ -1,13 +1,13 @@
 require 'csv'
 require 'awesome_print'
 
+
 FILE_NAME = "../support/orders.csv"
 
 module Grocery
   class Order
     attr_reader :id, :products
 
-    products = [] #adding products as an array of hashes
     def initialize(id, products)
       @id = id
       @products = products
@@ -16,12 +16,27 @@ module Grocery
     end
 
     def self.all
-      all = []
+      all_orders = []
+
       CSV.open(FILE_NAME, "r").each do |line|
-        all << line
+        # all_orders << line # original to test if it would open/what printed
+        id = line[0].to_i
+        products = {}
+        product_array = line[1].split(";") #separates prods in order into array
+        product_array.each do |item|
+          split_item = item.split(":")
+          product_name = split_item[0]
+          product_price = split_item[1].to_f
+          products[product_name] = product_price
+        end
+        all_orders << self.new(id, products)
       end
-      return all
+      return all_orders
     end
+
+    # def self.find(id)
+    #
+    # end
 
     def total
       # TODO: implement total
@@ -31,8 +46,8 @@ module Grocery
       end
       # return sub_total
 
-      @total = sub_total + (sub_total * @tax).round(2)
-      return @total
+      @total = sub_total + (sub_total * @tax)
+      return @total.round(2)
     end
 
     def add_product(product_name, product_price)
@@ -47,7 +62,7 @@ module Grocery
   end
 end
 
+ap Grocery::Order.all
 # my_order = Grocery::Order.new(1,[{"Slivered Almonds" => 22.88},{"Wholewheat flour" => 1.93},{"Grape Seed Oil" => 74.9}])
 # puts my_order
 # puts Grocery::Order.all
-# puts Grocery::Order.all.inspect
