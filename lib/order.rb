@@ -47,9 +47,9 @@ module Grocery
 
     def self.all
       csv_array = ['1,Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9', '2,Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55', '3,Lentils:7.17']
-      all_orders = []
-      @@orders = []
+      orders = []
       csv_array.each do |string|
+        # Parse CSV lines
         parsed_csv_arr = string.parse_csv
         result = parsed_csv_arr[1].split(";")
         result = result.map do |x|
@@ -57,9 +57,14 @@ module Grocery
           Hash[x.first, x.last.to_f]
         end
         result = result.reduce(:merge)
-        @@orders << [parsed_csv_arr[0].to_i, result]
+
+        # Create new order and push into orders
+        id = parsed_csv_arr[0].to_i
+        products = result
+        orders << Order.new(id, products)
       end
-      return @@orders
+
+      return orders
     end
 
     def self.find(id)

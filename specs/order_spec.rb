@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require 'awesome_print'
 
 Minitest::Reporters.use!
 
@@ -118,9 +119,9 @@ end
 describe "Order Wave 2" do
   describe "Order.all" do
     before do
-      order_1 = [1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}]
-      order_2 = [2, {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}]
-      order_3 = [3, {"Lentils" => 7.17}]
+      order_1 = Grocery::Order.new(1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
+      order_2 = Grocery::Order.new(2, {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55})
+      order_3 = Grocery::Order.new(3, {"Lentils" => 7.17})
       @orders = [order_1, order_2, order_3]
     end
 
@@ -128,21 +129,26 @@ describe "Order Wave 2" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
 
-      orders.must_equal @orders
+      orders.each_index do |i|
+        orders[i].id.must_equal @orders[i].id
+        orders[i].products.must_equal @orders[i].products
+      end
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
 
-      orders[0].must_equal @orders[0]
+      orders[0].id.must_equal @orders[0].id
+      orders[0].products.must_equal @orders[0].products
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
 
-      orders.last.must_equal @orders.last
+      orders.last.id.must_equal @orders.last.id
+      orders.last.products.must_equal @orders.last.products
     end
   end
 
