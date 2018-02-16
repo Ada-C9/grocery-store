@@ -136,8 +136,8 @@ describe "Order Wave 2" do
       Grocery::Order.find(100).products.must_equal last_product_hash
     end
 
-    it "Raises an error for an order that doesn't exist" do # self generated error or terminal error?
-      Grocery::Order.find(101).must_raise NoMethodError
+    it "Return nil for an order that doesn't exist" do
+      Grocery::Order.find(101).must_be_nil
     end
   end
 end

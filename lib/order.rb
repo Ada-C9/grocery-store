@@ -64,14 +64,13 @@ module Grocery
 
     def self.find(id)
       # wouldn't self.all generate all the information again? Can't I have that as a class variable?
-      self.all.each do |order|
+      all.each do |order|
         if order.id == id
           found_order = order
           return found_order
-        else
-          raise NoMethodError
         end
       end
+      return nil # need this to be here so as to complete the iteration of the all loop then return nil
     end # self.find
 
   end # order
