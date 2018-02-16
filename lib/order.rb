@@ -5,7 +5,7 @@ module Grocery
   class Order
     attr_reader :id
     attr_accessor :products
-    
+
     def initialize(id, products)
       @id = id
       @products = products
@@ -37,6 +37,7 @@ module Grocery
       end
     end
 
+    ## Start Class methods
     def self.all
       all_orders = []
       CSV.read('support/orders.csv', 'r').each do |row|
@@ -52,14 +53,5 @@ module Grocery
       end
       return all_orders
     end
-
-    def self.first_order
-      self.all[0]
-    end
-
-    def self.last_order
-      self.all[-1]
-    end
-
   end
 end

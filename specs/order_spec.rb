@@ -128,7 +128,7 @@ describe "Order Wave 2" do
       # arrange
       # NO arrange needed here
       # act
-      Grocery::Order.first_order
+      Grocery::Order.all[0]
       # assert
       Grocery::Order.first_order.id.must_equal "1"
     end
@@ -137,7 +137,7 @@ describe "Order Wave 2" do
       # arrange
       # NO arrange needed here
       # act
-      Grocery::Order.last_order
+      Grocery::Order.all[-1]
       # assert
       Grocery::Order.last_order.id.must_equal CSV.read('support/orders.csv', 'r')[-1][0]
     end
