@@ -30,7 +30,6 @@ module Grocery
 
     def to_s
       return "#{@id} #{@products}"
-
     end
 
     def self.all

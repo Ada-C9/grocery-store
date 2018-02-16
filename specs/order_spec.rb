@@ -106,6 +106,14 @@ describe "Order Wave 2" do
       list_item = Grocery::Order.all[-1]
       csv_row = CSV.read('support/orders.csv')[-1]
       csv_row[0].to_i.must_equal list_item.id
+
+      products_string = ""
+      list_item.products.each do |k, v|
+        products_string += "#{k}:#{v};"
+      end
+      products_string = products_string.chomp(";")
+
+      csv_row[1].must_equal products_string
     end
   end
 
