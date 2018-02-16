@@ -11,18 +11,18 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
-      orders = []
-      @orders = orders
     end
 
     #A total method which will calculate the total cost of the order by:
     def total
       # TODO: implement total
-      total = 0
-      if @products.length > 0
-        subtotal = @products.values.inject{ |a,b| a + b }
-        total = (subtotal * 1.075).round(2)
-      end
+        sum = 0
+        subtotal = @products.values
+        subtotal.each do |price|
+          sum += price.to_f
+        end
+        # subtotal = new_array.inject{ |a,b| a + b }
+         total = (sum * 1.075).round(2)
       return total
     end
 
@@ -36,11 +36,10 @@ module Grocery
     end
 
     def self.all
-
-
+      orders = []
       #opening CSV
       CSV.read(FILE_NAME, 'r').each do |order|
-        orders = []
+
         step1 = order[1].split(";")
         step2 = []
 
@@ -48,36 +47,19 @@ module Grocery
           step2 << pair.split(":")
         end
         products = step2.to_h
-        orders << Grocery::Order.new(order[0],products)
-        return orders
-
+        orders << Grocery::Order.new(order[0].to_i,products)
       end#reads and parses through CSV file
-
+      return orders
     end#self.all method
 
     def self.find(id)
-      id = id.to_i
-      return @orders[i]
+      return_val = nil
+      if all.include? id
+        return_val = all[id-1]
+      end
+      return return_val
     end#self.find method
 
   end#end Order class
 
-end#end Grocery module
-
-
-print Grocery::Order.all()
-
-
-# #opening CSV
-# CSV.read(FILE_NAME, 'r').each do |order|
-#   step1 = order[1]
-#   step2 = step1.split(";")
-#   step3 = []
-#
-#   step2.each do |pair|
-#     step3 << pair.split(":")
-#   end
-#   products = step3.to_h
-#   puts products
-#   orders << Grocery::Order.new(order[0],products)
-# end#reads and parses through CSV file
+end#end Grocery module.
