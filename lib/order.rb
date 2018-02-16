@@ -22,6 +22,7 @@ module Grocery
         return false
       else
         @products[product_name] = product_price
+        return true
       end
     end # end of add_product method
   end # end of class order
