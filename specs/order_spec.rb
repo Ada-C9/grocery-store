@@ -179,17 +179,56 @@ describe "Order Wave 2" do
     end
   end # describe order.all
 
-  xdescribe "Order.find" do
-    it "Can find the first order from the CSV" do
+  describe "Order.find" do
+    xit "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      # arrange
+      first_order = ["1", "Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
+      first_order_details = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+      order = Grocery::Order.new(first_order)
+
+      order.id.must_equal "1"
+      order.products.must_equal first_order_details
+
+      # act
+      first_order_found = Grocery::Order.find("1")
+
+      # assert
+      first_order_found.id.must_equal order.id
+      first_order_found.products.must_equal order.products
+      first_order_found.must_be_instance_of Grocery::Order
     end
 
-    it "Can find the last order from the CSV" do
+    xit "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      # arrange
+      last_order = ["100", "Allspice:64.74;Bran:14.72;UnbleachedFlour:80.59"]
+      last_order_details = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+      order = Grocery::Order.new(last_order)
+
+      order.id.must_equal "100"
+      order.products.must_equal last_order_details
+
+      # act
+      last_order_found = Grocery::Order.find("100")
+
+      # assert
+      last_order_found.id.must_equal order.id
+      last_order_found.products.must_equal order.products
+      last_order_found.must_be_instance_of Grocery::Order
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
+      # arrange
+      error_message = "That order does not exist."
+
+      # act
+      nonexistent_order = Grocery::Order.find("123")
+      
+      # assert
+      nonexistent_order.must_be_instance_of String
+      nonexistent_order.must_equal error_message
     end
   end # describe order find
 

@@ -75,6 +75,20 @@ module Grocery
       return orders_array
     end
 
+    # finds order using id field and returns that Order instance
+    def self.find(order_id)
+      orders_array = self.all
+      order_found = ""
+      orders_array.each do |order|
+        if order.id == order_id
+          order_found = order
+        else
+          return "That order does not exist."
+        end
+      end
+      return order_found
+    end
+
   end # class Order
 
 end # module Grocery
