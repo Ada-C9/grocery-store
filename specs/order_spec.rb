@@ -3,6 +3,8 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+require 'awesome_print'
+
 Minitest::Reporters.use!
 
 describe "Order Wave 1" do
@@ -113,10 +115,8 @@ end
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      first_order = Grocery::Order.new(1337, products)
-      second_order = Grocery::Order.new(1234, products)
-      third_order = Grocery::Order.new(5678, products)
+      # arrange
+      # NO arrange needed here
       # act
       Grocery::Order.all
       # assert
