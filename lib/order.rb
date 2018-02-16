@@ -36,8 +36,9 @@ module Grocery
 
     def populate_products
       10.times do
-        food_name = Faker::Food.ingredient
-        @products[:food_name] = rand(0.0..10.0).round(2)
+        food_name =Faker::Food.ingredient
+        random_number = rand(0.0..10.0).round(2)
+        @products.store(food_name, random_number)
         # print "food_name #{food_name}\n"
         # print "cost : #{@products[:food_name]}\n"
         # print "***********************\n"
@@ -49,11 +50,11 @@ module Grocery
 end
 
 
-thisorder = Grocery::Order.new(1, {})
+thisorder = Grocery::Order.new(1 ,{})
 
-puts thisorder.summary
+ap thisorder.summary
 
 
-# thisgroceries = Grocery::ProductList.new
+#thisgroceries = Grocery::ProductList.new
 #
-# puts thisgroceries.populate_products
+#ap thisgroceries.populate_products
