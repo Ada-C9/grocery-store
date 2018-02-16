@@ -81,10 +81,14 @@ describe "Order Wave 1" do
     end
 
     it "Returns true if the product is new" do
+      # Arrange
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
+      # Act
       result = order.add_product("salad", 4.25)
+
+      # Assert
       result.must_equal true
     end
   end
@@ -92,14 +96,19 @@ describe "Order Wave 1" do
   #Basically the opposite of #add_product
   describe "#remove_product" do
     it "Decreases the number of products" do
+      # Arrange
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
 
+
+      # Act
       # based only on the first argument or name of product
       order.remove_product("banana")
       # remove instead of add
       expected_count = before_count - 1
+
+      # Assert
       order.products.count.must_equal expected_count
     end
 
@@ -133,16 +142,23 @@ describe "Order Wave 1" do
       result.must_equal false
     end
 
-
-
   end
 end
 #
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
-    xit "Returns an array of all orders" do
-      # TODO: Your test code here!
+    it "Returns an array of all orders" do
+      # Arrange
+
+      # Act
+      array_of_all_orders = Grocery::Order.all
+
+      # Assert
+      array_of_all_orders.must_be_kind_of Array
+      # array_of_all_orders[0].must_be_kind_of Grocery::Order
+      # 1. array_of_all_orders is of class Array
+      # 2. the first element of the array_of_all_orders is of class Order
     end
 
     xit "Returns accurate information about the first order" do
@@ -154,7 +170,7 @@ xdescribe "Order Wave 2" do
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     xit "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
