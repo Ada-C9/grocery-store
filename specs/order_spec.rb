@@ -120,21 +120,27 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 xdescribe "Order Wave 2" do
+  let(:all) {Grocery::Order.all}
+  let(:find) {Grocery::Order.find(17)}
+
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
+      all.must_be_instance_of Array
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      all[0].id.must_equal 1
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+      all[-1].id.must_equal 100
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
