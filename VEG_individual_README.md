@@ -41,27 +41,30 @@
 
                             YUP - code
 
-                        b.  A collection of products, such that:
+                            ii.  Uses the proper helper method
 
-                              YUP -- code + test
+                            YUP
 
-                            i.  THE COLLECTION AS A WHOLE:  
+                        b.  A PRODUCTS ATTRIBUTE to hold a collection of
+                            products, such that:
+
+                            i.  The correct helper method is used:
+
+                                YUP
+
+                            ii.  THE COLLECTION AS A WHOLE:  
 
                                 I.  Is allowed to contain zero products
 
                                 YUP -- CODE + TEST
 
-                            ii.  MEMBERS OF THE COLLECTION
+                            iii.  MEMBERS OF THE COLLECTION
 
                                 I.  Are unique
                                     (i.e, there is only one of each kind of product)
 
                                 II. Have prices  
 
-                            iii. VEG'S PRELIMINARY THOUGHTS:  
-
-                                  -- Given B.3.b.ii., below, this might be good as
-                                     an array of hashes, where each hash contains a single pair.
 
                   3.     Its METHODS include:
 
@@ -152,7 +155,7 @@
 
                     - Decreases the number of products
                     - returns FALSE if the product is still present
-                    -
+                    - returns FALSE if the product is already absent
 
         2.    To run tests:  
 
@@ -160,3 +163,68 @@
 
               B.  All tests provided should be passing at the end
                   of your work on Wave 1.
+
+    WAVE II:   (Due at same time as Wave 3)  
+
+  A.  TESTING:  
+
+    1.  Using the test stubs in order_spec.rb:
+
+      a.  Fill in the test stubs that have already been provided for you
+
+      b.  Get these tests to pass. You should run the tests regularly alongside the code you are writing in the Order class itself.
+
+  A. ACTIVE CODE:
+
+    1.  Update the Order class to be able to handle all of the fields from the CSV file used as input.
+
+        a. In preparation:
+
+            i.  Manually choose the data from the first line of the CSV File
+            ii. Make sure you can create a new instance of your Order using that data.
+
+        b. Modifications to order:  
+
+            i.  class methods:
+
+                I.  To add:
+
+                    A.  self.all ---
+
+                        1.  Returns: a collection of order instances,
+                            representing all the Orders described in the CSV
+
+                        2.   Notes:
+
+                              a.  To parse the product string from the CSV
+                                  you will need to use the split method.
+
+                              b.  CSV file specs:   
+
+                                  The data consists of:
+
+                                  I.  ID (an integer) -- a unique identifier--
+                                  II, PRODUCT (strings):
+                                      The list of products in the following format:      
+                                            name:price;nextname:nextprice
+
+
+                    B.  self.find(id) -
+
+                        1.  Returns:  an instance of Order where the value of the id field in the CSV matches the passed parameter.
+
+              II. Determine if the data structure used in Wave 1 will still
+                  work
+
+            III.  CSV handling:  
+
+                  A. Appropriately parse the product data from CSV file in Order.all
+                  B. Use CSV library only in Order.all (not in Order.find)
+                  C. Use Order.all to get order list in Order.find
+
+
+
+            IV.  Error Handling:  
+
+                A.  Determine what should your program do if Order.find
+                    is called with an ID that doesn't exist.
