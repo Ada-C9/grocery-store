@@ -34,27 +34,34 @@ module Grocery
       end
     end
 
-def self.all
-  all_orders = []
-  CSV.read("support/orders.csv").each do |line|
-    id = line[0].to_i
-    products = {}
-    products_hash = line[1].split(";")
+    def self.all
+      all_orders = []
+      CSV.read("support/orders.csv").each do |line|
+        id = line[0].to_i
+        products = {}
+        products_hash = line[1].split(";")
 
-    products_hash.each do |product|
-      split_product = product.split(":")
-      item = split_product[0]
-      price = split_product[1]
-      product_hash = {item => price}
-      products.merge!(product_hash)
+        products_hash.each do |product|
+          split_product = product.split(":")
+          item = split_product[0]
+          price = split_product[1]
+          product_hash = {item => price}
+          products.merge!(product_hash)
+        end
+        all_orders << Grocery::Order.new(id, products)
+      end
+      return all_orders
     end
-    all_orders << Grocery::Order.new(id, products)
-  end
-  return all_orders
-end
+
+    def self.find(id)
+      self.all.each do |order|
+        return order if order.id == id
+      end
+      raise ArgumentError.new("An order with the ID #{id} does not exist.")
+    end
 
   end
 end
-order = Grocery::Order.new(1, "{Slivered Almonds:22.88, Wholewheat flour:1.93,Grape Seed Oil:74.9
-}")
-puts order
+  # order = Grocery::Order.new(1, "{Slivered Almonds:22.88, Wholewheat flour:1.93,Grape Seed Oil:74.9
+  # }")
+  # puts order
