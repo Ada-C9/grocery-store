@@ -19,17 +19,20 @@ describe "Order Wave 1" do
   end
 
   describe "#total" do
-    it "Returns the total from the collection of products" do
+    xit "Returns the total from the collection of products" do
+      #arrange
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
+      #act
       sum = products.values.inject(0, :+)
-      expected_total = sum + (sum * 0.075).round(2)
+      expected_total = sum + (sum *0.075).round(2)
 
+      #assert
       order.total.must_equal expected_total
     end
 
-    it "Returns a total of zero if there are no products" do
+    xit "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
 
       order.total.must_equal 0
@@ -37,7 +40,7 @@ describe "Order Wave 1" do
   end
 
   describe "#add_product" do
-    it "Increases the number of products" do
+    xit "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
       order = Grocery::Order.new(1337, products)
@@ -47,7 +50,25 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
 
-    it "Is added to the collection of products" do
+    describe "#remove_product" do
+      it "Decreases the number of products" do
+        #arrange
+        products = { "banana" => 1.99, "cracker" => 3.00 }
+        before_count = products.count
+        order = Grocery::Order.new(1337, products)
+        #act
+        order.remove_product("banana")
+        expected_count = before_count - 1
+        #assert
+        if order.products.count.must_equal expected_count
+          return true
+        else
+          return false
+        end 
+      end
+    end
+
+    xit "Is added to the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
@@ -55,7 +76,7 @@ describe "Order Wave 1" do
       order.products.include?("sandwich").must_equal true
     end
 
-    it "Returns false if the product is already present" do
+    xit "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
 
       order = Grocery::Order.new(1337, products)
@@ -68,7 +89,7 @@ describe "Order Wave 1" do
       before_total.must_equal after_total
     end
 
-    it "Returns true if the product is new" do
+    xit "Returns true if the product is new" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 

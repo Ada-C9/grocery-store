@@ -1,6 +1,3 @@
-require 'faker'
-require 'ap'
-
 
 module Grocery
   class Order
@@ -8,53 +5,29 @@ module Grocery
 
     def initialize(id, products)
       @id = id
-      @products = Grocery::ProductList.new.populate_products
-    end
-
-    def summary
-      print "Here are the Products"
-      ap @products
+      @products = products
     end
 
     def total
+      sum = 0
+      if !(@products.empty?) || @products !=  nil
+        @products.each do |product, cost|
+          sum += cost
+        end
+        sales_tax = 0.075
+        sum = (sum + (sum * sales_tax)).round(2)
+      end
+      return sum
       # TODO: implement total
     end
 
     def add_product(product_name, product_price)
+      @products[product_name] = product_price
       # TODO: implement add_product
     end
 
-  end
-
-
-  class ProductList
-    attr_reader :products
-
-    def initialize
-      @products = {}
-    end
-
-    def populate_products
-      10.times do
-        food_name =Faker::Food.ingredient
-        random_number = rand(0.0..10.0).round(2)
-        @products.store(food_name, random_number)
-        # print "food_name #{food_name}\n"
-        # print "cost : #{@products[:food_name]}\n"
-        # print "***********************\n"
-      end
-      return @products
+    def remove_product(product_name)
+      @products.delete(product_name)
     end
   end
-
 end
-
-
-thisorder = Grocery::Order.new(1 ,{})
-
-ap thisorder.summary
-
-
-#thisgroceries = Grocery::ProductList.new
-#
-#ap thisgroceries.populate_products
