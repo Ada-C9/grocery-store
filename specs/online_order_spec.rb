@@ -17,27 +17,34 @@ describe "OnlineOrder" do
       # Check that an OnlineOrder is in fact a kind of Order
       #Instatiate your OnlineOrder here
       products = { "banana" => 1.99, "cracker" => 3.00 }
-      online_order = OnlineOrder.new(1,products)
+      online_order = OnlineOrder.new(1,products,3)
       online_order.must_be_kind_of Grocery::Order
     end
 
-
-    it "Can access Customer object" do
+    xit "Can access Customer object" do
       # TODO: Your test code here!
     end
 
     it "Can access the online order status" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      online_order = OnlineOrder.new(1,products,3)
+      online_order.must_equal "pending"
     end
   end
 
   describe "#total" do
     it "Adds a shipping fee" do
       # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      online_order = OnlineOrder.new(1,products,3)
+      online_order.total.must_equal 14.99
     end
 
     it "Doesn't add a shipping fee if there are no products" do
       # TODO: Your test code here!
+      products = {}
+      online_order = OnlineOrder.new(2,products,4)
+      online_order.total.must_equal 0
     end
   end
 
@@ -80,11 +87,11 @@ describe "OnlineOrder" do
       # TODO: Your test code here!
     end
 
-    it "Raises an error if the customer does not exist" do
+    xit "Raises an error if the customer does not exist" do
       # TODO: Your test code here!
     end
 
-    it "Returns an empty array if the customer has no orders" do
+    xit "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
     end
   end

@@ -4,16 +4,21 @@ require 'pry'
 
 
 module Grocery
+
   class OnlineOrder < Order
     attr_accessor :order_status, :customer
-    def initialize(customer, order_status = "pending")
+    def initialize(id, products, customer, order_status = "pending")
       super(id, products)
       @customer = customer
       @order_status = order_status
     end
 
     def total()
-      return super() + 10
+      if super() > 0
+        return super() + 10
+      else
+        return super()
+      end
     end
 
     def add_product()
