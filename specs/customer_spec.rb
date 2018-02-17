@@ -65,7 +65,7 @@ describe "Customer" do
       # arrange
       # No arrange needed
       # act
-      Grocery::Customer.all
+      ap Grocery::Customer.all
       #assert
       Grocery::Customer.all[0].id.must_equal "1"
       Grocery::Customer.all[0].email.must_equal "leonard.rogahn@hagenes.org"
@@ -99,17 +99,53 @@ describe "Customer" do
     end
   end
 
-  xdescribe "Customer.find" do
+  describe "Customer.find" do
     it "Can find the first customer from the CSV" do
-      # TODO: Your test code here!
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.find("first")
+      #assert
+      Grocery::Customer.find("first").id.must_equal Grocery::Customer.all[0]
+      Grocery::Customer.find("first").email.must_equal Grocery::Customer.all[0].email
+      Grocery::Customer.find("first").address[:street].must_equal Grocery::Customer.all[0].address[:street]
+      Grocery::Customer.find("first").address[:city].must_equal Grocery::Customer.all[0].address[:city]
+      Grocery::Customer.find("first").address[:state].must_equal Grocery::Customer.all[0].address[:state]
     end
 
     it "Can find the last customer from the CSV" do
-      # TODO: Your test code here!
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.find("last")
+      #assert
+      Grocery::Customer.find("last").id.must_equal "last"
+      Grocery::Customer.find("last").email.must_equal "leonard.rogahn@hagenes.org"
+      Grocery::Customer.find("last").address[:street].must_equal "71596 Eden Route"
+      Grocery::Customer.find("last").address[:city].must_equal "Connellymouth"
+      Grocery::Customer.find("last").address[:state].must_equal "LA"
+    end
+
+    it "Can find the customer from the CSV by id" do
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.find("1")
+      #assert
+      Grocery::Customer.find("1").id.must_equal Grocery::Customer.all[0]
+      Grocery::Customer.find("1").email.must_equal Grocery::Customer.all[0].email
+      Grocery::Customer.find("1").address[:street].must_equal Grocery::Customer.all[0].address[:street]
+      Grocery::Customer.find("1").address[:city].must_equal Grocery::Customer.all[0].address[:city]
+      Grocery::Customer.find("1").address[:state].must_equal Grocery::Customer.all[0].address[:state]
     end
 
     it "Raises an error for a customer that doesn't exist" do
-      # TODO: Your test code here!
+      #arrange
+      # N/A
+      # act
+      Grocery::Customer.find("500")
+      # assert
+      Grocery::Customer.find("500").must_equal nil
     end
   end
 end
