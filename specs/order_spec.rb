@@ -96,6 +96,7 @@ describe "Order Wave 2" do
 
     # Assert
     result.must_be_kind_of Array
+    all_orders.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do

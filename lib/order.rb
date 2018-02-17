@@ -7,8 +7,6 @@ module Grocery
   class Order
     attr_reader :id, :products, :product_name, :product_price
 
-    @@order_list = []
-
     def initialize(id, products)
       @id = id
       @products = products
@@ -36,19 +34,30 @@ module Grocery
     end
 
     def self.all
+      order_list = []
       # class method, read from csv, retrun list of orders
-      CSV.read('../support/orders.csv').each do |line|
-        @@order_list << line
-        return @@order_list
+      # CSV.read('../support/orders.csv').each do |line|
+      #   order_list << line
+      #   return order_list
+      # end
+      #
+      CSV.read('../support/orders.csv').each do |row|
+        order_list << {id: row[0], products: row[1].split(';')}
       end
-      @@order_list[]
-      @@order_list.each do |item|
-        @@order_list[item] << { id:  line[0] }
-        # line[1].split(';')
 
-        # products:  item[1]
+      order_list.each do |order|
+        products_hash = {}
+        order[:products].each do |item|
+          product_price = item.split(':')
+          product = product_price[0]
+          price = product_price[1]
+          products_hash[product] = price
+        end
+        order[:products] = products_hash
       end
+      return order_list
     end
+
 
     def self.find
       # will take one parameter (an ID), returns one order from the CSV, return nil if ID not found
