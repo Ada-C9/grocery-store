@@ -57,7 +57,7 @@ describe "Customer" do
       # act
       Grocery::Customer.all
       #assert
-      Grocery::Customer.all.length must_equal 35
+      Grocery::Customer.all.length.must_equal 35
     end
 
     it "returns accurate information about the first order" do
@@ -66,9 +66,9 @@ describe "Customer" do
       # act
       Grocery::Customer.all
       #assert
-      Grocery::Customer.all[0].id must_equal "1"
-      Grocery::Customer.all[0].email must_equal "leonard.rogahn@hagenes.org"
-      Grocery::Customer.all[0].address must_equal "71596 Eden Route,Connellymouth,LA,98872-9105"
+      Grocery::Customer.all[0].id.must_equal "1"
+      Grocery::Customer.all[0].email.must_equal "leonard.rogahn@hagenes.org"
+      Grocery::Customer.all[0].address.must_equal "71596 Eden Route,Connellymouth,LA,98872-9105"
     end
 
     it "returns accurate information about the last order" do
@@ -77,9 +77,9 @@ describe "Customer" do
       # act
       Grocery::Customer.all
       #assert
-      Grocery::Customer.all[-1].id must_equal "35"
-      Grocery::Customer.all[-1].email must_equal "rogers_koelpin@oconnell.org"
-      Grocery::Customer.all[-1].address must_equal "7513 Kaylee Summit,Uptonhaven,DE,64529-2614"
+      Grocery::Customer.all[-1].id.must_equal "35"
+      Grocery::Customer.all[-1].email.must_equal "rogers_koelpin@oconnell.org"
+      Grocery::Customer.all[-1].address.must_equal "7513 Kaylee Summit,Uptonhaven,DE,64529-2614"
 
     end
   end
