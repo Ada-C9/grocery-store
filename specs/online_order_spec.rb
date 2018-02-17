@@ -125,23 +125,50 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       # TODO: Your test code here!
+      total_orders = Grocery::OnlineOrder.all
+
+      total_orders.length.must_equal 100
+      total_orders.class.must_equal Array
+      total_orders.each do |online_order|
+        online_order.class.must_equal Grocery::OnlineOrder
+      end
     end
 
     it "Returns accurate information about the first online order" do
       # TODO: Your test code here!
+      # 1,Lobster:17.18;Annatto seed:58.38;Camomile:83.21,25,complete
+      total_orders = Grocery::OnlineOrder.all
+      online_order_1 = total_orders[0]
+
+      online_order_1.id.must_equal 1
+      online_order_1.products.must_equal ({"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21})
+      online_order_1.customer_id.must_equal 25
+      online_order_1.customer.class.must_equal Grocery::Customer
+      online_order_1.status.must_equal :complete
     end
 
     it "Returns accurate information about the last online order" do
       # TODO: Your test code here!
+      # 100,Amaranth:83.81;Smoked Trout:70.6;Cheddar:5.63,20,pending
+
+      total_orders = Grocery::OnlineOrder.all
+      online_order_last = total_orders.last
+
+      online_order_last.id.must_equal 100
+      online_order_last.products.must_equal ({"Amaranth" => 83.81, "Smoked Trout" => 70.6, "Cheddar" => 5.63})
+      online_order_last.customer_id.must_equal 20
+      online_order_last.customer.class.must_equal Grocery::Customer
+      online_order_last.status.must_equal :pending
     end
   end
 
   xdescribe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       # TODO: Your test code here!
+      
     end
 
     it "Raises an error for an online order that doesn't exist" do
