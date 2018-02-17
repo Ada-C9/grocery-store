@@ -8,6 +8,7 @@ module Grocery
   # rescue Grocery::FindError > e
   # end
 
+  # custom error for the Order.find class method
   class FindError < ArgumentError
     def initialize(msg="Error: Order has not been created yet")
       super
@@ -33,10 +34,6 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      # id = rand(0001..9999)
-      # until @products.include?(id) != true
-      #   id = rand(0001..9999)
-      # end
       products = {product_name => product_price}
       products.each do |product, price|
         if @products.include? product
@@ -46,13 +43,11 @@ module Grocery
           return true
         end
       end
-      #return  @products.merge!({product_name: product_price})
     end # Order#add_product
 
     def self.all
       list_all = []
       headers = ["id", "products"]
-      # order_list = CSV.open('support/orders.csv', 'r', headers: true, header_converters: :symbol).each {|row| Hash[order_list.collect { |order| [order.id, order.products] } ] }
       CSV.open('support/orders.csv', 'r', headers: true, header_converters: :symbol).each do |row|
         products = {}
         id = row[:id].to_i
@@ -79,5 +74,3 @@ module Grocery
     end # Order.find
   end # Order
 end # Grocery
-
-binding.pry
