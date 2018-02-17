@@ -65,8 +65,8 @@ module Grocery
   end
 end
 # Running Wave 1
-firstOrder = Grocery::Order.new(1, {"Slivered Almonds":22.88, "Wholewheat flour":1.93, "Grape Seed Oil":74.9})
-# print firstOrder
+# firstOrder = Grocery::Order.new(1, {"Slivered Almonds":22.88, "Wholewheat flour":1.93, "Grape Seed Oil":74.9})
+# ap firstOrder.total
 
 # Running Wave 2
 # self.all
