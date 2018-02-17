@@ -79,8 +79,15 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.all.class.must_equal Array
     end
 
-    xit "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+    it "Returns accurate information about the first online order" do
+      first_id = 1
+      first_product_hash = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+      first_customer_id = 25
+      first_order_status = :complete
+      Grocery::OnlineOrder.all.first.order_id.must_equal first_id
+      Grocery::OnlineOrder.all.first.products.must_equal first_product_hash
+      Grocery::OnlineOrder.all.first.customer_id.must_equal first_customer_id
+      Grocery::OnlineOrder.all.first.fill_status.must_equal first_order_status
     end
 
     xit "Returns accurate information about the last online order" do

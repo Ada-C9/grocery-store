@@ -1,3 +1,4 @@
+require 'pry'
 require 'csv'
 require_relative './order.rb'
 require_relative './customer.rb'
@@ -13,7 +14,7 @@ module Grocery
     def initialize(order_id, products, cust_id, fill_status)
       @order_id = order_id.to_i
       @products = products
-      @customer_id = cust_id
+      @customer_id = cust_id.to_i
       @fill_status = fill_status.to_sym
       @customer = Grocery::Customer.find(@customer_id)
     end
@@ -40,7 +41,7 @@ module Grocery
       all_online_orders = Array.new
       CSV.open(ONLINE_ORDERS, "r").each do |order|
         products_hash = {}
-        products_split = order[2].split(';')
+        products_split = order[1].split(';')
         products_split.each do |mash|
           split = mash.split(':')
           products_hash[split[0]] = split[1].to_f
@@ -53,3 +54,5 @@ module Grocery
   end # onlineorder
 
 end # grocery
+
+binding.pry
