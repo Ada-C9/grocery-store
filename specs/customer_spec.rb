@@ -65,7 +65,7 @@ describe "Customer" do
       # arrange
       # No arrange needed
       # act
-      ap Grocery::Customer.all
+      Grocery::Customer.all
       #assert
       Grocery::Customer.all[0].id.must_equal "1"
       Grocery::Customer.all[0].email.must_equal "leonard.rogahn@hagenes.org"
