@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require_relative '../lib/order'
 require_relative '../lib/online_order'
 require "csv"
 
@@ -18,19 +19,13 @@ describe "OnlineOrder" do
     it "Is a kind of Order" do
       # arrange
       id = 1337
-      # Instatiate your OnlineOrder here
-      order = Grocery::Order.new(id, {})
-      online_order = Grocery::OnlineOrder.new
+      products = { "banana" => 1.99, "cracker" => 3.00 }
       # act
+      # Instatiate your OnlineOrder here
+      Grocery::Order.new(id, products)
+      online_order = Grocery::OnlineOrder.new(id, {})
 
       # assert
-      order.must_respond_to :id
-      order.id.must_equal id
-      order.id.must_be_kind_of Integer
-
-      order.must_respond_to :products
-      order.products.length.must_equal 0
-
       # Check that an OnlineOrder is in fact a kind of Order
       online_order.must_be_kind_of Grocery::Order
     end
