@@ -51,8 +51,29 @@ module Grocery
       end
       return all_online_orders
     end
+
+    #self.find is inherited from the parent class(Order)
+
+    # def self.add_to_all(new_order) # this only works if all did not generate new online_orders only from a CSV.
+    #   all << new_order
+    # end
+
+    def self.find_by_customer(customer_id)
+      customer_orders = []
+      all.each do |order|
+        if order.customer_id == customer_id
+          customer_orders << order
+        end
+      end # all.each
+      if Grocery::Customer.find(customer_id) == nil # check that the customer id exists at all
+        return nil
+      else
+        return customer_orders
+      end
+    end # find_by_customer
+
   end # onlineorder
 
 end # grocery
 
-binding.pry
+# binding.pry

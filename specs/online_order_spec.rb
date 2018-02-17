@@ -115,22 +115,37 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.find(34).fill_status.must_equal fill_status
     end
 
-    xit "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Raises an error for an online order that doesn't exist" do
+      Grocery::OnlineOrder.find(200).must_be_nil
     end
   end
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find_by_customer(7).class.must_equal Array
+    end
+
+    it "Returns accurate online orders for a specific customer ID" do
+      # can't test for the same things as OnlineOrder.find because this returns an array of all orders for a particular customer, not the instance of the OnlineOrder
+      online_cust7 = Grocery::OnlineOrder.find_by_customer(9)
+      customer_id = 9
+      online_cust7.each do |online_order|
+        online_order.customer_id.must_equal customer_id
+      end
+    end
+
+    it "Returns an accurate count of online orders for a specific customer ID" do
+      online_cust7 = Grocery::OnlineOrder.find_by_customer(9)
+      online_cust7.count.must_equal 2
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find_by_customer(200).must_be_nil
     end
 
-    it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+    xit "Returns an empty array if the customer has no orders" do
+      # 6,Peaches:46.34,14,pending
+      Grocery::OnlineOrder.find_by_customer("?").count.must_be 0
     end
   end
 end
