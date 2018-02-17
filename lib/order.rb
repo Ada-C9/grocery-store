@@ -37,7 +37,6 @@ module Grocery
       end
     end
 
-    ## Start Class methods
     def self.all
       all_orders = []
       CSV.read('support/orders.csv', 'r').each do |row|
@@ -53,5 +52,16 @@ module Grocery
       end
       return all_orders
     end
+
+    def self.find(id)
+      all_orders = self.all
+      all_orders.each do |order|
+        if order.id == id
+          return order
+        end
+      end
+      return nil
+    end
+
   end
 end

@@ -146,31 +146,31 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       #arrange
-      id = "1"
+      # N/A
       # act
-      Grocery::Order.find(id)
+      Grocery::Order.find("1")
       # assert
-      Grocery::Order.find.id.must_equal "1"
+      Grocery::Order.find("1").id.must_equal "1"
+      Grocery::Order.find("1").products.keys.must_include "Slivered Almonds"
     end
 
     it "Can find the last order from the CSV" do
       #arrange
-      id = "100"
+      # N/A
       # act
-      Grocery::Order.find(id)
+      Grocery::Order.find("100")
       # assert
-      Grocery::Order.find.id.must_equal "100"
-      # CSV.read('support/orders.csv', 'r')[-1][0]
+      Grocery::Order.find("100").id.must_equal "100"
+      Grocery::Order.find("100").products.keys.must_include "Allspice"
     end
 
     it "Returns nil for an order that doesn't exist" do
       #arrange
-      id = "500"
+      # N/A
       # act
-      Grocery::Order.find(id)
+      Grocery::Order.find("500")
       # assert
-      Grocery::Order.find.must_equal nil
-      # CSV.read('support/orders.csv', 'r')[-1][0]
+      Grocery::Order.find("500").must_equal nil
     end
   end
 end
