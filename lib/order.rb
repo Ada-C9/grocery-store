@@ -53,7 +53,7 @@ module Grocery
         orders << [order_id, products]
         # puts products # = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
       end
-      ap orders
+      # ap orders
       return orders
     end
 
@@ -94,4 +94,5 @@ module Grocery
   end
 end
 
-order = Grocery::Order.all
+# order = Grocery::Order.all
+# ap order.class
