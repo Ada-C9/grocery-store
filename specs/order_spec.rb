@@ -106,7 +106,8 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      #
+      Grocery::Order.all.find(1) ==
     end
 
     it "Can find the last order from the CSV" do
