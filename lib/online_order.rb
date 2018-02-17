@@ -8,10 +8,12 @@ ONLINE_FILE_NAME = 'support/online_order.csv'
 module  Grocery
 
   class OnlineOrder < Order
-    attr_reader :id, :products, :customer_object, :fulfillment_status
+    attr_reader :customer_object, :fulfillment_status
 
-    def initialize(customer_object, fulfillment_status)
-      super()
+    def initialize(id, products, customer_object, fulfillment_status)
+      super(id, products)
+      # @id = id
+      # @products = products
       @customer_object = customer_object
       @fulfillment_status = :fulfillment_status
     end
@@ -26,6 +28,8 @@ module  Grocery
   end
 end
 
-new_online_order = Grocery::OnlineOrder.new(434, {"product": 5.50, "apples": 4.50},Grocery::Customer.new(4,"karinna@gmail.com","227 Boylston"),pending)
+new_online_order = Grocery::OnlineOrder.new(434, {"product": 5.50, "apples": 4.50},45,"pending")
 
 puts new_online_order.total
+
+puts new_online_order.products
