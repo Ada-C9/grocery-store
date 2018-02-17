@@ -1,32 +1,56 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
+Minitest::Reporters.use!
 require 'minitest/skip_dsl'
 
-# TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/online_order'
-# You may also need to require other classes here
+require_relative '../lib/customer'
+require_relative '../lib/order'
+require_relative '../lib/online_order'
 
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
+describe "OnlineOrder" do
+    customer_id = 42
+    email = "adalovelace.gmail.com"
+    address = {street: "42 Baker Street", city: "Seattle", state: "WA",
+      zip_code: "98101-1820"}
 
-xdescribe "OnlineOrder" do
+    test_customer = Grocery::Customer.new(customer_id, email, address)
+
+    test_order_id = 21
+    test_order_products = {"banana" => 1.99, "cracker" => 3.00}
+
+    test_online_order = Grocery::OnlineOrder.new(test_order_id,
+      test_order_products, test_customer, "pending")
+
+
+
   describe "#initialize" do
     it "Is a kind of Order" do
-      # Check that an OnlineOrder is in fact a kind of Order
+    #   customer_id = 42
+    #   email = "adalovelace.gmail.com"
+    #   address = {street: "42 Baker Street", city: "Seattle", state: "WA",
+    #     zip_code: "98101-1820"}
+    #
+    #   test_customer = Grocery::Customer.new(customer_id, email, address)
+    #
+    #   test_order_id = 21
+    #   test_order_products = {"banana" => 1.99, "cracker" => 3.00}
+    #
+    #   test_online_order = Grocery::OnlineOrder.new(test_order_id,
+    #     test_order_products, test_customer, "Pending")
+    #
+    #
+      test_online_order.must_be_kind_of Grocery::Order
 
-      # Instatiate your OnlineOrder here
-      # online_order =
-      # online_order.must_be_kind_of Grocery::Order
     end
 
     it "Can access Customer object" do
-      # TODO: Your test code here!
+      test_online_order.customer.must_be_kind_of Grocery::Customer
+      test_online_order.customer.must_equal test_customer
     end
 
     it "Can access the online order status" do
-      # TODO: Your test code here!
+      test_online_order.fulfillment.must_be_kind_of String
+      test_online_order.fulfillment.must_equal "pending"
     end
   end
 
