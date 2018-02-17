@@ -95,16 +95,28 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
-    xit "Returns an array of all orders" do
+    it "Returns an array of all orders" do
 
-    Grocery::Order.all.must_be_kind_of orders
+      orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')
+
+      Grocery::Order.all.length.must_equal orders.length
+
+      Grocery::Order.all.must_be_kind_of Array
 
     end
 
     xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      # orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[0]
+      #
+      # # id = orders[0]
+      # # products = Grocery::Order.separate("#{orders[1]}".split(';'))
+      # # order = Grocery::Order.new(id , products)
+      # # first_order = Grocery::Order.all[0]
+      # # file_order = Grocery::Order.new(first_order[0], first_order[1])
+      # # file_order.must_equal order
     end
 
     xit "Returns accurate information about the last order" do
