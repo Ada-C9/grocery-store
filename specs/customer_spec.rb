@@ -6,14 +6,29 @@ Minitest::Reporters.use!
 
 require_relative '../lib/customer'
 
-xdescribe "Customer" do
+describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
-      # TODO: Your test code here!
+      # arrange
+      id = 1234
+      email = "kathryn@lindcasper.net"
+      address = "995 Harris Track,Ryanborough,HI,67820"
+      # act
+      customer =Grocery::Customer.new(id, email, address)
+      # assert
+      customer.id.must_respond_to :id
+      customer.id.must_equal id
+      customer.id.must_be_kind_of Integer
+
+      customer.must_respond_to :email
+      customer.email.must_include "@"
+
+      customer.must_respond_to :address
+      assert_match customer.address, /\b[A-Z]{2}/
     end
   end
 
-  describe "Customer.all" do
+  xdescribe "Customer.all" do
     it "Returns an array of all customers" do
       # TODO: Your test code here!
       # Useful checks might include:
@@ -26,7 +41,7 @@ xdescribe "Customer" do
     end
   end
 
-  describe "Customer.find" do
+  xdescribe "Customer.find" do
     it "Can find the first customer from the CSV" do
       # TODO: Your test code here!
     end
