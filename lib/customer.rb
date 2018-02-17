@@ -1,38 +1,6 @@
 require 'csv'
 require 'pry'
 
-
-
-# Customer
-#
-# Create a Customer class within the Grocery module.
-#
-# Each new Customer should include the following attributes:
-#
-# ID
-# email address
-# delivery address information
-#
-# The Customer should also have the following class methods:
-#
-# self.all - returns a collection of Customer instances, representing all of
-# the Customer described in the CSV. See below for the CSV file specifications
-# self.find(id) - returns an instance of Customer where the value of the id
-# field in the CSV matches the passed parameter.
-# CSV Data File
-#
-# The data for the customer CSV file consists of:
-#
-# Field	Type	Description
-# Customer ID	Integer	A unique identifier corresponding to the Customer
-# Email	String	The customer's e-mail address
-# Address 1	String	The customer's street address
-# City	String	The customer's city
-# State	String	The customer's state
-# Zip Code	String	The customer's zip code
-
-
-
 module Grocery
   class Customer
     attr_reader :id, :email, :address

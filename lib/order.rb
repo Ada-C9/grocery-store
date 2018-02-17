@@ -1,5 +1,4 @@
 require 'csv'
-require 'awesome_print'
 require 'pry'
 # TODO: what to do about had initialize values??
 
@@ -11,6 +10,7 @@ module Grocery
     attr_reader :id, :products
 
     def initialize(order_id, order_products)
+      # TODO: ensure no duplicate id vs all ids
       @id = order_id
       @products = order_products
     end
@@ -36,27 +36,26 @@ module Grocery
     # end
 
     def self.all
-      if @@all.empty?
-        CSV.read("../support/orders.csv").each do |order|
-          order_id = order[0].to_i
+      # if @@all.empty? # TODO: uncomment these when done!!
+        CSV.read("../support/orders.csv").each do |order_line|
+          order_id = order_line[0].to_i
           product_hash = {}
-          order[1].scan(/[^\;]+/).each do |one_order|
-              name, price = one_order.split(":")
+          order_line[1].scan(/[^\;]+/).each do |order|
+              name, price = order.split(":")
               product_hash["#{name}"] = price.to_f
           end
           @@all << Order.new(order_id, product_hash)
         end
-      end
+      # end
       return @@all
     end
 
-    def self.find(requested_id)
+    def self.find(requested_id) # TODO: index - 1 = id and then use binary search?
       return @@all.find { |order| order.id == requested_id }
     end
 
 
 private
-
 
     def get_sales_tax(total_cost_with_out_tax)
       sales_tax_amount = (total_cost_with_out_tax * 0.075).round(2)
@@ -75,7 +74,6 @@ private
       # return @products.any? { |product| product[name] == new_name }
        @products.has_key?(new_name)
     end
-
 
     def successfully_add_product?(name, cost)
        original_num_of_products = @products.length
