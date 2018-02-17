@@ -14,40 +14,38 @@ require_relative '../lib/customer'
 # only test things that are different.
 
 describe "OnlineOrder" do
+  before do
+    @order_id = 3
+    @products = {"Ramen" => 0.99, "Sake" => 7.99}
+    @cust_id = 22
+    @fill_status = "pending"
+
+    @online_order = Grocery::OnlineOrder.new(@order_id, @products, @cust_id, @fill_status)
+
+  end
+
   describe "#initialize" do
     it "Is a kind of Order" do
       # Instatiate your OnlineOrder here
-      order_id = 3
-      products = {"Ramen" => 0.99, "Sake" => 7.99}
-      cust_id = 22
-      fill_status = "pending"
-
-      online_order = Grocery::OnlineOrder.new(order_id, products, cust_id, fill_status)
-      online_order.must_be_kind_of Grocery::Order
+      @online_order.must_be_kind_of Grocery::Order
     end
 
     it "Can access Customer object" do
-      order_id = 3
-      products = {"Ramen" => 0.99, "Sake" => 7.99}
-      cust_id = 22
-      fill_status = "pending"
-
-      customer = Grocery::OnlineOrder.new(order_id, products, cust_id, fill_status)
-
-      customer.customer.must_be_instance_of Grocery::Customer
+      @online_order.customer.must_be_instance_of Grocery::Customer
     end
 
-    xit "Can access the online order status" do
-      # TODO: Your test code here!
+    it "Can access the online order status" do
+      @online_order.fill_status.must_equal :pending
     end
   end
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
+      order_total = 19.65
+      @online_order.total.must_equal order_total
     end
 
-    it "Doesn't add a shipping fee if there are no products" do
+    xit "Doesn't add a shipping fee if there are no products" do
       # TODO: Your test code here!
     end
   end

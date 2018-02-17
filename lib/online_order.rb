@@ -15,6 +15,12 @@ module Grocery
       @customer = Grocery::Customer.find(@customer_id)
     end
 
+    def total
+      total = super() + 10.00
+      total = total.round(2)
+      return total
+    end
+
   end # onlineorder
 
 end # grocery
