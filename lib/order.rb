@@ -20,12 +20,34 @@ module Grocery
       @products = products
     end
 
+    # "../support/orders.csv " #change path back to this when opening this file in ruby instead of through rake
+
+    # def self.all
+    #   array_of_orders = []
+    #   CSV.open("support/orders.csv", 'r').each do |line|
+    #     array_of_orders << line
+    #   end
+    #   return array_of_orders
+    # end
+
     def self.all
       array_of_orders = []
       CSV.open("support/orders.csv", 'r').each do |line|
-        array_of_orders << line
-      end
-      return array_of_orders
+        # for each line I need to take the index[0] and make it a key of a hash and the value of that hash is then another hash (which is index[1] of the array) with key: product name , value: product price
+        # first step is turning two elements of an array into a hash. second step is taking the value of that hash and turning it into another hash
+        line[0].to_i
+        product_list = line[1].split(';')
+        product_hash = {}
+        product_list.each do |item|
+          product = item.split(':')
+          product_hash[product[0]] = product[1]
+        end
+          array_of_orders << Grocery::Order.new(line[0], product_hash)
+        end
+       array_of_orders
+    end
+
+    def self.find
     end
 
 
@@ -66,4 +88,4 @@ module Grocery
 
 end #end of module
 
-# ap Grocery::Order.all
+#ap Grocery::Order.all[0][1]
