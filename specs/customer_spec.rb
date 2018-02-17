@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
+require 'awesome_print'
+
 Minitest::Reporters.use!
 
 require_relative '../lib/customer'
