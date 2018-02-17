@@ -1,7 +1,8 @@
 require 'csv'
 require 'awesome_print'
+require 'pry'
 
-FILE_NAME = "../support/orders.csv"
+FILE_NAME = "support/orders.csv"
 
 # data = CSV.read(FILE_NAME)
 # ap data
@@ -16,7 +17,7 @@ FILE_NAME = "../support/orders.csv"
 # #  end
 # end
 
- module Grocery
+module Grocery
   class Order
     attr_reader :id, :products
 
@@ -48,13 +49,33 @@ FILE_NAME = "../support/orders.csv"
         return true
       end
     end
-  end
- end
 
-# products = []
-# CSV.open(FILE_NAME, 'r').each do |product|
-#  #  file.each do |product|
-#     puts " Product #{product[0]}: #{product[1]}"
-#     products << Order.new(product[0], product[2])
-#  #  end
-#  end
+
+
+    def self.all
+      products = []
+      CSV.open(FILE_NAME, 'r').each do |product|
+        line_hash = {}
+        id = product[0]
+        each_line = product[1].split(%r{;\s*})
+
+        each_line.each do |hash|
+          pairs = hash.split(%r{:\s*})
+          line_hash[pairs[0]] = pairs[1].to_f
+        end
+        order = Order.new(id, line_hash)
+        products << order
+      end
+      return products
+    end
+
+    def find
+
+    end
+  end
+end
+
+ap Grocery::Order.all
+#   puts " Product #{product[0]}: #{product[1]}"
+#   products << Order.new(product[0], product[2])
+# end

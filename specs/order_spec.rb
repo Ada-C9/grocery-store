@@ -4,7 +4,7 @@ require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
 describe "Order Wave 1" do
-  describe "#initialize" do
+  xdescribe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -78,33 +78,47 @@ describe "Order Wave 1" do
   end
 end
 
+
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
-    end
+       Grocery::Order.all.must_be_kind_of(Array)
+       Grocery::Order.all.each do |item|
+         item.must_be_kind_of(Grocery::Order)
+       end
+      end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+        Grocery::Order.all.must_be_kind_of(Array)
+        first = Grocery::Order.all.first
+        first.id.must_equal "1"
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      Grocery::Order.all.must_be_kind_of(Array)
+      last = Grocery::Order.all[-1]
+      last.id.must_equal "100"
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      order = Grocery::Order.find(1)
+      order.must_be_kind_of Grocery::Order
+      order.id.must_equal "1"
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      order = Grocery::Order.find(100)
+      order.must_be_kind_of Grocery::Order
+      order.id.must_equal "100"
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    xit "Return nil for an order that doesn't exist" do
+      order = Grocery::Order.find(101)
+      order.must_be_kind_of Grocery::Order
+      order.must_be_nil
     end
   end
 end
