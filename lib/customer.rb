@@ -23,9 +23,14 @@ module Grocery
       return @@all_customers
     end
 
-    def self.find
-
+    def self.find(id)
+      specific_customer = self.all[id - 1]
+      if id <= @@all_customers.length
+        return specific_customer
+      else
+        raise NotImplementedError
+      end
+      # instance of customer will be used within online order
     end
-    # instance of customer will be used within online order
   end
-end
+end 

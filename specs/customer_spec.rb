@@ -50,16 +50,22 @@ describe "Customer" do
   end
 end
 
-xdescribe "Customer.find" do
+describe "Customer.find" do
   it "Can find the first customer from the CSV" do
-    # TODO: Your test code here!
+    first_customer_info = Grocery::Customer.find(1)
+
+    first_customer_info.must_equal Grocery::Customer.all[0]
   end
 
   it "Can find the last customer from the CSV" do
-    # TODO: Your test code here!
+    last_customer_info = Grocery::Customer.find(35)
+
+    last_customer_info.must_equal Grocery::Customer.all[-1]
   end
 
   it "Raises an error for a customer that doesn't exist" do
-    # TODO: Your test code here!
+    assert_raises NotImplementedError do
+      nonexistant_customer = Grocery::Customer.find(50)
+    end
   end
-end
+end 
