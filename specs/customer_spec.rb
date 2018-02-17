@@ -31,16 +31,54 @@ describe "Customer" do
     end
   end
 
-  xdescribe "Customer.all" do
+  describe "Customer.all" do
     it "Returns an array of all customers" do
-      # TODO: Your test code here!
+      # arrange
+      # NO arrange needed here calling data from csv in customer.rb
+      # act
+      Grocery::Customer.all
+      # assert
+      Grocery::Customer.all.must_be_kind_of Array
+
       # Useful checks might include:
       #   - Customer.all returns an array
       #   - Everything in the array is a Customer
-      #   - The number of orders is correct
+      #   - The number of customers is correct
       #   - The ID, email address of the first and last
       #       customer match what's in the CSV file
       # Feel free to split this into multiple tests if needed
+    end
+
+    it "returns the correct number of customers" do
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.all
+      #assert
+      Grocery::Customer.all.length must_equal 35
+    end
+
+    it "returns accurate information about the first order" do
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.all
+      #assert
+      Grocery::Customer.all[0].id must_equal "1"
+      Grocery::Customer.all[0].email must_equal "leonard.rogahn@hagenes.org"
+      Grocery::Customer.all[0].address must_equal "71596 Eden Route,Connellymouth,LA,98872-9105"
+    end
+
+    it "returns accurate information about the last order" do
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.all
+      #assert
+      Grocery::Customer.all[-1].id must_equal "35"
+      Grocery::Customer.all[-1].email must_equal "rogers_koelpin@oconnell.org"
+      Grocery::Customer.all[-1].address must_equal "7513 Kaylee Summit,Uptonhaven,DE,64529-2614"
+
     end
   end
 
