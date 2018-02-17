@@ -132,14 +132,10 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # wait don't I need to put an "arrange" statement here??
-      #
-
-
-
 
       all_orders = Grocery::Order.all
       all_orders.must_be_kind_of Array
@@ -150,35 +146,53 @@ xdescribe "Order Wave 2" do
       end
 
       all_orders.count.must_equal 100
-
-
     end
 
-    xit "Returns accurate information about the first order" do
+    it "Returns accurate information about the first order" do
 
-    
+      all_orders = Grocery::Order.all
+
+      all_orders[0][0].must_equal 1
+      all_orders[0][1].must_be_kind_of Hash
+
+
     end
 
     xit "Returns accurate information about the last order" do
+      all_orders = Grocery::Order.all
+
+      all_orders[0][99].must_equal 100
+      all_orders[0][1].must_be_kind_of Hash
+
 
     end
   end
 
   describe "Order.find" do
-    xit "Can find the first order from the CSV" do
+    it "Can find the first order from the CSV" do
+      all_orders = Grocery::Order.all
 
-      first_order = Grocery::Order.find
+      all_orders.find[1].must_equal true
 
-      first_order.must_equal the first index
+      first_order.must_equal all_orders[0][0]
 
 
     end
 
-    xit "Can find the last order from the CSV" do
+    it "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      all_orders = Grocery::Order.all
+
+      last_order = all_orders.find[100]
+
+      last_order.must_equal true
+
+      last_order.must_equal all_orders[0][-1]
+
+
     end
 
-    xit "Raises an error for an order that doesn't exist" do
+    xit "Returns nil for an order that doesn't exist" do
       # TODO: Your test code here!
     end
   end
