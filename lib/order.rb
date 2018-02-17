@@ -63,7 +63,7 @@ module Grocery
         end
         transaction_id_products << products_to_purchase
         # p purchase_id_products
-        all_orders << transaction_id_products
+        all_orders << Grocery::Order.new(id, products_to_purchase)
       end
       return all_orders
       # returns a collection of `Order` instances, representing all of the Orders described in the CSV
