@@ -15,7 +15,7 @@ module Grocery
     def self.all
       all_customers = []
       CSV.read('support/customers.csv', 'r').each do |row|
-        address = row[2] + "," + row[3] + "," + row[4] + "," + row[5]
+        address = {street: row[2], city: row[3], state: row[4], zip: row[5]}
         all_customers << self.new(row[0], row[1] , address)
       end
       return all_customers
