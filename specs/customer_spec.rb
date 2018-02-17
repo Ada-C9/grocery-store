@@ -24,7 +24,7 @@ describe "Customer" do
       customer.email.must_include "@"
 
       customer.must_respond_to :address
-      assert_match customer.address, /\b[A-Z]{2}/
+      assert_match(/\b[A-Z]{2}/, customer.address)
     end
   end
 
