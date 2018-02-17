@@ -146,7 +146,7 @@ describe "Customer" do
       # TODO: Your test code here!
       found_customer = Grocery::Customer.find(101)
 
-      found_customer.must_equal nil
+      found_customer.must_be_nil
     end
   end
 end
