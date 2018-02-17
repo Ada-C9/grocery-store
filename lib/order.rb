@@ -1,9 +1,6 @@
 require 'awesome_print'
 require 'csv'
 
-# CSV.read("orders.csv")
-# CSV.open("orders.csv", mode='r')
-
 # manually choose the data from the first line of the CSV file and ensure you can create a new instance of your Order using that data
 
 module Grocery
@@ -32,7 +29,7 @@ module Grocery
 
     def self.all
       array_of_orders = []
-      CSV.open("support/orders.csv", 'r').each do |line|
+      CSV.open("../support/orders.csv", 'r').each do |line|
         # for each line I need to take the index[0] and make it a key of a hash and the value of that hash is then another hash (which is index[1] of the array) with key: product name , value: product price
         # first step is turning two elements of an array into a hash. second step is taking the value of that hash and turning it into another hash
         line[0].to_i
@@ -42,12 +39,27 @@ module Grocery
           product = item.split(':')
           product_hash[product[0]] = product[1]
         end
-          array_of_orders << Grocery::Order.new(line[0], product_hash)
-        end
-       array_of_orders
+        array_of_orders << Grocery::Order.new(line[0], product_hash)
+      end
+      array_of_orders
     end
 
-    def self.find
+    def self.find(id)
+      # returns an instance of Order where the value of the id field in the CSV matches the passed parameter.
+      #to call this Class method: Grocery::Order.find(id)
+
+      all_orders = Grocery::Order.all
+      #
+      # single_order = all_orders[id.to_i - 1]
+      #
+      # return single_order
+
+      if all_orders.include?(id)
+        return all_orders[id - 1]
+      else
+        return nil
+      end
+
     end
 
 
@@ -70,7 +82,7 @@ module Grocery
 		# It should return true if the item was successfully remove and false if it was not
 
     def remove_product(product_name)
-      p @products
+      #p @products
       if @products.key?(product_name)
         @products.delete(product_name)
         return true
@@ -79,13 +91,16 @@ module Grocery
       end
     end
 
-
-
-
   end #end of class
 
 
 
 end #end of module
 
-#ap Grocery::Order.all[0][1]
+all_orders = Grocery::Order.all
+
+# puts "\n#{all_orders}\n\n"
+
+
+
+puts all_orders.find("3")
