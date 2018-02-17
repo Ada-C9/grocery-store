@@ -106,7 +106,7 @@ describe "Customer" do
       # act
       Grocery::Customer.find("first")
       #assert
-      Grocery::Customer.find("first").id.must_equal Grocery::Customer.all[0]
+      Grocery::Customer.find("first").id.must_equal Grocery::Customer.all[0].id
       Grocery::Customer.find("first").email.must_equal Grocery::Customer.all[0].email
       Grocery::Customer.find("first").address[:street].must_equal Grocery::Customer.all[0].address[:street]
       Grocery::Customer.find("first").address[:city].must_equal Grocery::Customer.all[0].address[:city]
@@ -119,20 +119,20 @@ describe "Customer" do
       # act
       Grocery::Customer.find("last")
       #assert
-      Grocery::Customer.find("last").id.must_equal "last"
-      Grocery::Customer.find("last").email.must_equal "leonard.rogahn@hagenes.org"
-      Grocery::Customer.find("last").address[:street].must_equal "71596 Eden Route"
-      Grocery::Customer.find("last").address[:city].must_equal "Connellymouth"
-      Grocery::Customer.find("last").address[:state].must_equal "LA"
+      Grocery::Customer.find("last").id.must_equal Grocery::Customer.all[-1].id
+      Grocery::Customer.find("last").email.must_equal Grocery::Customer.all[-1].email
+      Grocery::Customer.find("last").address[:street].must_equal Grocery::Customer.all[-1].address[:street]
+      Grocery::Customer.find("last").address[:city].must_equal Grocery::Customer.all[-1].address[:city]
+      Grocery::Customer.find("last").address[:state].must_equal Grocery::Customer.all[-1].address[:state]
     end
 
     it "Can find the customer from the CSV by id" do
       # arrange
       # No arrange needed
       # act
-      Grocery::Customer.find("1")
+      ap Grocery::Customer.find("1")
       #assert
-      Grocery::Customer.find("1").id.must_equal Grocery::Customer.all[0]
+      Grocery::Customer.find("1").id.must_equal Grocery::Customer.all[0].id
       Grocery::Customer.find("1").email.must_equal Grocery::Customer.all[0].email
       Grocery::Customer.find("1").address[:street].must_equal Grocery::Customer.all[0].address[:street]
       Grocery::Customer.find("1").address[:city].must_equal Grocery::Customer.all[0].address[:city]
