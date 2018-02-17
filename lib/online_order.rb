@@ -1,6 +1,7 @@
 require 'csv'
 require 'awesome_print'
 require_relative 'order.rb'
+require_relative 'customer.rb'
 
 ONLINE_FILE_NAME = 'support/online_order.csv'
 
@@ -8,21 +9,21 @@ ONLINE_FILE_NAME = 'support/online_order.csv'
 module  Grocery
 
   class OnlineOrder < Order
-    attr_reader :customer_object, :fulfillment_status
+    attr_reader :customer_id, :status
 
-    def initialize(id, products, customer_object, fulfillment_status)
+    def initialize(id, products, customer_id, status)
       super(id, products)
       # @id = id
       # @products = products
-      @customer_object = customer_object
-      @fulfillment_status = :fulfillment_status
+      @customer_object = customer_id
+      @status = status.to_sym
     end
 
 
     def total
       old_total = super()
       new_total = old_total + 10
-      return new_total
+      return new_total.round(2)
     end
 
   end
@@ -33,3 +34,5 @@ new_online_order = Grocery::OnlineOrder.new(434, {"product": 5.50, "apples": 4.5
 puts new_online_order.total
 
 puts new_online_order.products
+
+puts Grocery::Customer.find(new_online_order.customer_id)
