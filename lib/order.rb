@@ -52,10 +52,10 @@ module Grocery
       CSV.open(FILE_NAME, "r").each do |order| # order - array
         products_hash= {}
         products_split = order[1].split(';') # products_split - array of "product:price"
-          products_split.each do |mash|
-            split = mash.split(':')
-            products_hash[split[0]] = split[1].to_f
-          end
+        products_split.each do |mash|
+          split = mash.split(':')
+          products_hash[split[0]] = split[1].to_f
+        end
         new_order = self.new(order[0], products_hash)
         all_orders << new_order
       end

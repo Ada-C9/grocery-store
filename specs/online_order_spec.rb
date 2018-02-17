@@ -74,16 +74,16 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
+      Grocery::OnlineOrder.all.class.must_equal Array
+    end
+
+    xit "Returns accurate information about the first online order" do
       # TODO: Your test code here!
     end
 
-    it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the last online order" do
+    xit "Returns accurate information about the last online order" do
       # TODO: Your test code here!
     end
   end
