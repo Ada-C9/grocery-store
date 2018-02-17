@@ -20,33 +20,40 @@ module Grocery
       # Read file:
       orders = []
       CSV.read('../support/orders.csv', 'r').each do |row|
-          orders << row
 
-      #Select the order number and assign it:
-      order_id = row[0]
-      ap order_id
+        #Select the order number and assign it:
+        order_id = row[0]
+        # ap order_id
 
-      # Selec the order element (product, price) and assign it:
-      elements_of_order = "#{row[1]}".split(';')
-      puts "elements of order:"
-      ap elements_of_order.class
-      ap elements_of_order
+        # Selec the order element (product, price) and assign it:
+        elements_of_order = "#{row[1]}".split(';')
 
-      # Separete the elements into (product_name, product_price)
-      products = []
-      elements_of_order.each do |item|
-        # puts "products: #{products}"
-        product =  "#{item.split(':')[0]}"
-        # puts "product : #{product}"
-        price =  "#{item.split(':')[1]}"
-        # puts "price : #{price}"
-        products << {"#{product}" => price}
-        # puts "products: #{products}"
+        ap elements_of_order.class
+        ap elements_of_order
+
+        # Separete the elements into (product_name, product_price):
+        products = []
+        elements_of_order.each do |item|
+
+          # Assign the product of this element in this order:
+          product =  "#{item.split(':')[0]}".split.map(&:capitalize).join(' ')
+          # puts "product : #{product}"
+
+          # Assign the price of this element in this order:
+          price =  "#{item.split(':')[1]}"
+          # puts "price : #{price}"
+
+          #Push the Product and the Price into the array products for this order:
+          products << {"#{product}" => price}
+          # puts "products: #{products}"
+
+        end
+
+        # Push this order to the array od orders
+        orders << [order_id, products]
+        # puts products # = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
       end
-      return products
-
-    end
-
+      puts orders
     end
 
     # Total of order with tax:
