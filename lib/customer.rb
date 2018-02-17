@@ -3,7 +3,6 @@ require 'awesome_print'
 
 module Grocery
   class Customer
-
     attr_reader :id, :email, :address
 
     def initialize(customer_id, email, address)
