@@ -21,7 +21,9 @@ describe "Customer" do
       customer.id.must_be_kind_of Integer
 
       customer.must_respond_to :email
-      customer.email.must_include "@"
+      # asserts that the email is a valid email address (found by searching 'regex for email ruby')
+      assert_match(/[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/, customer.email)
+      # customer.email.must_include "@"
 
       customer.must_respond_to :address
       # asserts that a state id exsists in the address string
