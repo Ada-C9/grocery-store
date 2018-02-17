@@ -91,7 +91,7 @@ module Grocery
 end
 
 # order = Grocery::Order.find(1)
-# ap order
+# ap order.id
 
 # orders = Grocery::Order.all
 # # ap orders
