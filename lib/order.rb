@@ -16,6 +16,24 @@ module Grocery
       return orders_csv
     end
 
+    def self.find(id)
+      orders_csv = CSV.read("support/orders.csv", 'r',headers: true).to_a
+
+      if id > orders_csv.length
+        return nil
+      end
+
+      if id >=1
+        specific_order = orders_csv [id-1]
+      elsif id < 0
+        specific_order = orders_csv[id]
+      else
+        return nil
+      end
+      return specific_order
+    end
+
+
     def initialize(id, products)
       @id = id
       @products = products
@@ -51,10 +69,9 @@ module Grocery
 
     end
   end
+
+  class Order < OnlineOrder
+  end
+
+
 end
-
-#with a class method you don't need the instance of the class
-#Grocery::Order.all
- last_order = CSV.open('support/orders.csv', 'r').to_a
-
- ap last_order[1]

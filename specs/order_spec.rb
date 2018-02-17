@@ -107,7 +107,7 @@ describe "Order Wave 2" do
 
 
   describe "Order.all" do
-    xit "Returns an array of all orders" do
+    it "Returns an array of all orders" do
       # TODO: Your test code here!
       #arrange
        # not neccessary for class methods
@@ -121,7 +121,7 @@ describe "Order Wave 2" do
       #each element is an instance and has right number of orders
     end
 
-    xit "Returns accurate information about the first order" do
+    it "Returns accurate information about the first order" do
       # TODO: Your test code here!
       #act
       first_order = CSV.open('support/orders.csv', 'r') { |csv| csv.first }
@@ -139,17 +139,35 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
+      #act
+      first_order = CSV.open('support/orders.csv', 'r').to_a[0]
+      #assert
+      first_order = Grocery::Order.find(1)
+
     end
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
+      #act
+      last_order = CSV.open('support/orders.csv', 'r').to_a[-1]
+      #assert
+      last_order = Grocery::Order.find(-1)
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    it "Returns nil for an order that does not exist" do
       # TODO: Your test code here!
+      #raiseargumenterror
+      #act
+      #order ='a'
+      order = 1000000000000
+      #order = 0
+
+      #assert
+      Grocery::Order.find(order).must_be_nil
+
     end
   end
 end
