@@ -107,8 +107,17 @@ describe "Order Wave 2" do
 
     end
 
-    it "Returns accurate information about the first order" do
+    xit "Returns accurate information about the first order" do
 
+    end
+
+    xit "Returns accurate information about the last order" do
+
+    end
+  end
+
+  describe "Order.find" do
+    it "Can find the first order from the CSV" do
       # Order #1 on file:
       orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[0][0]
 
@@ -119,22 +128,27 @@ describe "Order Wave 2" do
       orders.must_equal find[0]
     end
 
-    xit "Returns accurate information about the last order" do
-      # TODO: Your test code here!
-    end
-  end
+    it "Can find the last order from the CSV" do
+      # Order #1 on file:
+      orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[99][0]
 
-  describe "Order.find" do
-    xit "Can find the first order from the CSV" do
-      # TODO: Your test code here!
-    end
+      # Create all orders on Grocery module and search for the order #100:
+      Grocery::Order.all
+      find =  Grocery::Order.find(100)
 
-    xit "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      orders.must_equal find[0]
     end
 
     xit "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      # Order that doesnt exists on file:
+      orders = "Order doesn't exist!"
+      # Create all orders on Grocery module and search for the order #101 - doesnt exist!:
+      Grocery::Order.all
+      find =  Grocery::Order.find(101)
+
+      orders.must_equal find[0]
+
+
     end
   end
 end
