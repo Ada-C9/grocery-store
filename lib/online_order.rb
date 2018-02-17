@@ -13,14 +13,26 @@ module Grocery
       super(id, products)
       @customer_id = customer_id
       @status = status
-      @shipping_fee = 10
     end
 
     # Modify total method to include shipping fee
     def total
-     return super + @shipping_fee
+      shipping_fee = 10
+      if super != 0
+        return super + shipping_fee
+      else
+        return super
+      end
     end
 
+    # Modify add_method
+    def add_product(product_name, product_price)
+      if @status == "pending" || @status == "paid"
+        super
+      else
+        ArgumentError
+      end
+    end
 
 
     # return an array of OnlineOrder s
@@ -47,6 +59,6 @@ module Grocery
 
 end # module Grocery ends
 
-  # ap OnlineOrder.all
+# ap OnlineOrder.all
 
-  # Customer.find(OnlineOrder.customer_id)
+# Customer.find(OnlineOrder.customer_id)
