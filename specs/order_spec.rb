@@ -134,13 +134,10 @@ describe "Order Wave 2" do
                    "Bran" => "14.72",
         "UnbleachedFlour" => "80.59"
     })
-
     end
 
     it "Returns nil for an order that doesn't exist" do
       Grocery::Order.find("150").must_be_nil
-
-
     end
   end
 end

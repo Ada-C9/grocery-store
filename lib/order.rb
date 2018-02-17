@@ -1,8 +1,6 @@
 require "csv"
 require "ap"
 
-
-
 module Grocery
   class Order
     attr_accessor :id, :products
@@ -10,7 +8,6 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
-
     end
 
     def total
@@ -54,26 +51,3 @@ module Grocery
     end
   end
 end
-
-#
-# Update the Order class to be able to handle all of the fields from the CSV file used as input
-csv_array_data = CSV.read("support/orders.csv", "r")
-
-
-
-
-
-
-
-
-
-
-# To try it out, manually choose the data from the first line of the CSV file and ensure you can create a new instance of your Order using that data
-# Add the following class methods to your existing Order class
-# self.all - returns a collection of Order instances, representing all of the Orders described in the CSV. See below for the CSV file specifications
-# Determine if the data structure you used in Wave 1 will still work for these new requirements
-# Note that to parse the product string from the CSV file you will need to use the split method
-# self.find(id) - returns an instance of Order where the value of the id field in the CSV matches the passed parameter.
-# Error Handling
-# What should your program do if Order.find is called with an ID that doesn't exist?
-# CSV Data File

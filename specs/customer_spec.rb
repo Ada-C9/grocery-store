@@ -1,21 +1,26 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require_relative "../lib/customer"
+require "csv"
 
 # TODO: uncomment the next line once you start wave 3
 # require_relative '../lib/customer'
 
-xdescribe "Customer" do
+describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
-      # TODO: Your test code here!
+    object =  Grocery::Customer.new(35, "winirarrazaval@gmail.com", "7622 SE 22nd St" )
+    object.id.must_equal 35
+    object.email.must_equal "winirarrazaval@gmail.com"
+    object.delivery_address.must_equal "7622 SE 22nd St"
     end
   end
 
   describe "Customer.all" do
     it "Returns an array of all customers" do
       # TODO: Your test code here!
-      # Useful checks might include:
+      # Useful checks might include:ls
       #   - Customer.all returns an array
       #   - Everything in the array is a Customer
       #   - The number of orders is correct
