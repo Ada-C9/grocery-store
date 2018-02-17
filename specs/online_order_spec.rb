@@ -189,14 +189,33 @@ describe "OnlineOrder" do
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       # TODO: Your test code here!
+      orders_for_customer = Grocery::OnlineOrder.find_by_customer(20)
+
+      orders_for_customer.length.must_equal 7
+      orders_for_customer.class.must_equal Array
+      orders_for_customer.each do |order|
+        order.class.must_equal Grocery::OnlineOrder
+        order.customer_id.must_equal 20
+      end
     end
 
     it "Raises an error if the customer does not exist" do
       # TODO: Your test code here!
+      orders_for_customer = Grocery::OnlineOrder.find_by_customer(50)
+
+      orders_for_customer.must_be_nil
     end
 
     it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
+      no_orders_for_customer_1 = Grocery::OnlineOrder.find_by_customer(16)
+      no_orders_for_customer_2 = Grocery::OnlineOrder.find_by_customer(22)
+
+
+      no_orders_for_customer_1.class.must_equal Array
+      no_orders_for_customer_2.class.must_equal Array
+      no_orders_for_customer_1.must_equal []
+      no_orders_for_customer_2.must_equal []
     end
   end
 end

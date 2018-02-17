@@ -46,6 +46,21 @@ module Grocery
       @@all_online_orders
     end
 
+    def self.find_by_customer(customer_id)
+      customer = Customer.find(customer_id)
+      customers_orders = []
+      if customer == nil
+        return nil
+      else
+        self.all.each do |online_order|
+          if online_order.customer_id == customer_id
+            customers_orders << online_order
+          end
+        end
+      end
+      return customers_orders
+    end
+
   end
 end
 #

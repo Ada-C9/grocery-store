@@ -36,7 +36,7 @@ module Grocery
       end
       nil
     end
-    
+
   end
 
 end
