@@ -11,6 +11,7 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
+
     end
 
     def total
@@ -38,30 +39,32 @@ module Grocery
     def self.all
       all_orders = []
       CSV.open(FILE_NAME, 'r').each do |order|
-        hash = {}
         id = order[0].to_i
-        order[1].split(";").each do |pair|
-          new_pair = pair.split(":")
-          key = new_pair[0]
-          value = new_pair[1].to_f
-          hash[key] = value
+        products = {}
+        produce = order[1].split(";")
+        produce.each do |items|
+          pair = items.split(":")
+          keys = pair[0]
+          value = pair[1].to_f
+          products[keys] = value
         end
-        new_order = Order.new(id, hash)
+    
+        new_order = Order.new(id, products)
         all_orders << new_order
       end
       return all_orders
     end
 
-    def self.find(passed_id)
-      error = "That ID doesn't exist"
-      self.all.each do |order|
-        if order.id == passed_id
-            error = order
+    def self.find(id)
+      array_ids = []
+      all_orders = Grocery::Order.all
+      all_orders.each do |arr|
+        array_ids << arr.id
+        if array_ids.include? id
+          return Order.new(arr.id, arr.products)
         end
       end
-      return error
+      return NIL
     end
   end
 end
-# ap Grocery::Order.all
-ap Grocery::Order.find(30)
