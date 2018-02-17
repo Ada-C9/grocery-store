@@ -55,11 +55,16 @@ module Grocery
       # single_order = all_orders[id.to_i - 1]
       #
       # return single_order
+      order = nil
 
-      if all_orders.include?("id")
-        return all_orders[id - 1]
-      else
-        return nil
+      all_orders.each do |order_array|
+        if order_array[id - 1] == id
+          order = all_orders[id -1][1]
+          # return all_orders[id -1][1]
+        # else
+        #   return nil
+        end
+        return order
       end
 
     end
