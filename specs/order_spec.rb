@@ -139,16 +139,15 @@ describe "Order Wave 2" do
       orders.must_equal find[0]
     end
 
-    xit "Raises an error for an order that doesn't exist" do
+    it "Raises an error for an order that doesn't exist" do
       # Order that doesnt exists on file:
-      orders = "Order doesn't exist!"
+      error = "Order doesn't exist!"
       # Create all orders on Grocery module and search for the order #101 - doesnt exist!:
       Grocery::Order.all
       find =  Grocery::Order.find(101)
 
-      orders.must_equal find[0]
-
-
+      error.must_equal find
+      
     end
   end
 end
