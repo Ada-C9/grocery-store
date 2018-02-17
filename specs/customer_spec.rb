@@ -20,7 +20,7 @@ describe "Customer" do
   describe "Customer.all" do
     it "Returns an array of all customers" do
     array = Grocery::Customer.all
-    array.must_be_kind_of Array
+    array.length.must_equal 35
     end
   end
 
