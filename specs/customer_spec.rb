@@ -29,7 +29,8 @@ describe "Customer" do
 
       customer.must_respond_to :address
       # asserts that a state id exsists in the address string
-      assert_match(/\b[A-Z]{2}/, customer.address)
+      # assert_match(/\b[A-Z]{2}/, customer.address)
+
     end
   end
 
@@ -68,7 +69,10 @@ describe "Customer" do
       #assert
       Grocery::Customer.all[0].id.must_equal "1"
       Grocery::Customer.all[0].email.must_equal "leonard.rogahn@hagenes.org"
-      Grocery::Customer.all[0].address.must_equal "71596 Eden Route,Connellymouth,LA,98872-9105"
+      # Grocery::Customer.all[0].address.must_equal "71596 Eden Route,Connellymouth,LA,98872-9105"
+      Grocery::Customer.all[0].address.street.must_equal "71596 Eden Route"
+      Grocery::Customer.all[0].address.city.must_equal "Connellymouth"
+      Grocery::Customer.all[0].address.state.must_equal "LA"
     end
 
     it "returns accurate information about the last order" do
@@ -79,8 +83,19 @@ describe "Customer" do
       #assert
       Grocery::Customer.all[-1].id.must_equal "35"
       Grocery::Customer.all[-1].email.must_equal "rogers_koelpin@oconnell.org"
-      Grocery::Customer.all[-1].address.must_equal "7513 Kaylee Summit,Uptonhaven,DE,64529-2614"
+      # Grocery::Customer.all[-1].address.must_equal "7513 Kaylee Summit,Uptonhaven,DE,64529-2614"
+      Grocery::Customer.all[-1].address.street.must_equal "7513 Kaylee Summit"
+      Grocery::Customer.all[-1].address.city.must_equal "Uptonhaven"
+      Grocery::Customer.all[-1].address.state.must_equal "DE"
+    end
 
+    it "returns address as a hash of a hash" do
+      # arrange
+      # No arrange needed
+      # act
+      Grocery::Customer.all
+      #assert
+      Grocery::Customer.all.address.must_be_kind_of Hash
     end
   end
 
