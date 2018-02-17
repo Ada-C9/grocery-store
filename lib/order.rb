@@ -68,4 +68,31 @@ module Grocery
     end
 
   end
+
+  class Customer
+
+    attr_reader :id, :email, :address
+
+    def initialize(customer_id, email, address)
+      @id = customer_id
+      @email = email
+      @address = address
+    end
+
+    def self.all
+      customers = []
+      CSV.read("/Users/brandyaustin/ada/week2/grocery_store/grocery-store/support/customers.csv").each do |row|
+        id = row[0].to_i
+        products = {}
+        products_array = row[1].split(";")
+
+        products_array.each do |item|
+          name, price = item.split(':')
+          products[name] = price.to_f
+        end
+        orders_entered << Order.new(id, products)
+      end
+      return orders_entered
+    end
+
 end
