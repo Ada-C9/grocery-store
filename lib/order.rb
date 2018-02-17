@@ -36,23 +36,25 @@ module Grocery
       return products
     end
 
+
     # Populates itself with the whole order.csv file:
     def self.all
       # Read file:
       orders = []
-      CSV.read('../support/orders.csv', 'r').each do |row|
 
-        #Select the order number and assign it:
+      # ???? why on rake I need to have the whole path here??
+      CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r').each do |row|
+      # CSV.read('../support/orders.csv', 'r').each do |row|
+
+        #Select the order id number from the file and assign it:
         order_id = row[0]
 
-        # Select the order element [product, price] and assign it:
-        elements_of_order = "#{row[1]}".split(';')
+        # Separete the elements after the first comma (index[1]) into {product_name, product_price} and assign it to a products variable:
+        products = separate("#{row[1]}".split(';'))
+        # example => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
 
-        # Separete the elements into {product_name, product_price}:
-        products = separate(elements_of_order)
-
-        # Push this order to the array od orders
-        orders << [order_id, products] # => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
+        # Push this order (order id, products(itens, price)) to the array of orders
+        orders << [order_id, products]
       end
       return orders
     end
@@ -95,6 +97,6 @@ module Grocery
 end
 
 # order = Grocery::Order.separate
-order = Grocery::Order.all
-ap order.class
-ap order
+# order = Grocery::Order.all
+# ap order.class
+# ap order
