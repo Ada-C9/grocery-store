@@ -20,5 +20,19 @@ module Grocery
       end
       return all_customers
     end
+
+    def self.find(id)
+      all_customers = self.all
+      all_customers.each do |customer|
+        if id == customer.id
+          return customer
+        elsif id == "first"
+          return all_customers[0]
+        elsif id == "last"
+          return all_customers[-1]
+        end
+      end
+      return nil
+    end
   end
 end
