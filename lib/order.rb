@@ -44,7 +44,6 @@ module Grocery
     def self.all
       orders_entered = []
       CSV.read("/Users/brandyaustin/ada/week2/grocery_store/grocery-store/support/orders.csv").each do |row|
-
         id = row[0].to_i
         products = {}
         products_array = row[1].split(";")
@@ -53,29 +52,20 @@ module Grocery
           name, price = item.split(':')
           products[name] = price.to_f
         end
-        @orders_entered << Order.new(id, products)
+        orders_entered << Order.new(id, products)
       end
-      puts orders_entered
       return orders_entered
     end
 
     def self.find(id)
-      @orders_entered.each do |order|
+      orders_entered = self.all
+      orders_entered.each do |order|
         if order.id == id
           return order
-        else
-          return nil
         end
       end
+      return nil
     end
 
   end
 end
-
-
-puts "ALL.."
-puts Grocery::Order.all
-puts Grocery::Order.all.inspect
-
-puts "FIND..."
-puts Grocery::Order.find(2)

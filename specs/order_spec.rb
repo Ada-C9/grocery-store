@@ -76,35 +76,61 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
- end
-#
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# xdescribe "Order Wave 2" do
-#   describe "Order.all" do
-#     it "Returns an array of all orders" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Returns accurate information about the first order" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Returns accurate information about the last order" do
-#       # TODO: Your test code here!
-#     end
-#   end
-#
-#   describe "Order.find" do
-#     it "Can find the first order from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Can find the last order from the CSV" do
-#       # TODO: Your test code here!
-#     end
-#
-#     it "Raises an error for an order that doesn't exist" do
-#       # TODO: Your test code here!
-#     end
-#   end
-# end
+end
+
+describe "Order Wave 2" do
+  describe "Order.all" do
+    it "Returns an array of all orders" do
+      orders_entered = Grocery::Order.all
+
+      orders_entered.class.must_equal Array
+
+      count = 0
+      orders_entered.each do |order|
+        count += 1
+      end
+
+       count.must_equal 100
+    end
+
+    it "Returns accurate information about the first order" do
+      orders_entered = Grocery::Order.all
+      first_order = orders_entered[0]
+
+      first_order.id.must_equal 1
+
+      first_order.products.must_equal({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
+    end
+     #
+    it "Returns accurate information about the last order" do
+      orders_entered = Grocery::Order.all
+      last_order = orders_entered[-1]
+
+      last_order.id.must_equal 100
+
+      last_order.products.must_equal({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
+    end
+  end
+
+  describe "Order.find" do
+    it "Can find the first order from the CSV" do
+      first_order = Grocery::Order.find(1)
+
+      first_order.id.must_equal 1
+      first_order.products.must_equal({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
+    end
+
+    it "Can find the last order from the CSV" do
+      last_order = Grocery::Order.find(100)
+
+      last_order.id.must_equal 100
+      last_order.products.must_equal({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
+    end
+
+    it "Returns nil for an order that doesn't exist" do
+      fake_order = Grocery::Order.find(150)
+
+      fake_order.must_be_nil
+    end
+  end
+end
