@@ -1,6 +1,8 @@
 require 'awesome_print'
 require 'csv'
 
+
+
 # manually choose the data from the first line of the CSV file and ensure you can create a new instance of your Order using that data
 
 module Grocery
@@ -54,7 +56,7 @@ module Grocery
       #
       # return single_order
 
-      if all_orders.include?(id)
+      if all_orders.include?("id")
         return all_orders[id - 1]
       else
         return nil
