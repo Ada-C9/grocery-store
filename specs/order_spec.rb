@@ -93,12 +93,13 @@ describe "Order Wave 2" do
     it "Returns accurate information about the first order" do
       Grocery::Order.all_orders.first.products.class.must_equal Hash
       Grocery::Order.all_orders.first.products.length.must_equal 3
+      #add more tests
     end
 
     it "Returns accurate information about the last order" do
       Grocery::Order.all_orders.last.products.class.must_equal Hash
       Grocery::Order.all_orders.last.products.length.must_equal 3
-
+      #add more tests
     end
   end
 
