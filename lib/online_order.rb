@@ -1,7 +1,9 @@
 require 'csv'
 require 'awesome_print'
+require 'money'
 require_relative '../lib/order'
 require_relative '../lib/customer'
+I18n.enforce_available_locales = false
 
 module Grocery
   class OnlineOrder < Order
@@ -11,6 +13,12 @@ module Grocery
       super(id, products)
       @customer_id = customer_id
       @status = status
+    end
+
+    def total
+      sum_with_tax_fee = super + Money.new(1000, "USD")
+      # call .format on sum_with_tax_fee to format the instance of money
+      return sum_with_tax_fee
     end
 
     def self.all
@@ -39,3 +47,9 @@ module Grocery
   end
 
 end
+
+test_order = Grocery::OnlineOrder.new(11, {"Pinto Beans"=>10.45, "Apples"=>8.01}, 4, :pending)
+
+tots = test_order.total
+
+puts tots

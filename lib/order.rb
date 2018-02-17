@@ -1,5 +1,7 @@
 require 'csv'
 require 'awesome_print'
+require 'money'
+I18n.enforce_available_locales = false
 
 module Grocery
   class Order
@@ -15,7 +17,9 @@ module Grocery
       @products.values.each do |price|
         sum += price
       end
-      sum_with_tax = (0.075 * sum + sum).round(2)
+      cents_with_tax = (sum + (sum * 0.075))*100.round
+      sum_with_tax = Money.new(cents_with_tax, "USD")
+      # call .format on sum_with_tax to format the instance of money
       return sum_with_tax
     end
 
@@ -28,7 +32,6 @@ module Grocery
       end
     end
 
-  # must add tests for this function
     def remove_product(product_name)
       if @products.has_key?(product_name)
         @products.delete(product_name)

@@ -24,7 +24,8 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       sum = products.values.inject(0, :+)
-      expected_total = sum + (sum * 0.075).round(2)
+      cents_total = (sum + (sum * 0.075))*100.round
+      expected_total = Money.new(cents_total, "USD")
 
       order.total.must_equal expected_total
     end
@@ -32,7 +33,9 @@ describe "Order Wave 1" do
     it "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
 
-      order.total.must_equal 0
+      zero_with_money = Money.new(0, "USD")
+
+      order.total.must_equal zero_with_money
     end
   end
 
