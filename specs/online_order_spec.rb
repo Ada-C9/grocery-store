@@ -13,21 +13,33 @@ Minitest::Reporters.use!
 # we effectively get all that testing for free! Here we'll
 # only test things that are different.
 
-xdescribe "OnlineOrder" do
+describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
-      # Check that an OnlineOrder is in fact a kind of Order
-
+      # arrange
+      id = 1337
       # Instatiate your OnlineOrder here
-      # online_order =
-      # online_order.must_be_kind_of Grocery::Order
+      order = Grocery::Order.new(id, {})
+      online_order = Grocery::OnlineOrder.new
+      # act
+
+      # assert
+      order.must_respond_to :id
+      order.id.must_equal id
+      order.id.must_be_kind_of Integer
+
+      order.must_respond_to :products
+      order.products.length.must_equal 0
+
+      # Check that an OnlineOrder is in fact a kind of Order
+      online_order.must_be_kind_of Grocery::Order
     end
 
-    it "Can access Customer object" do
+    xit "Can access Customer object" do
       # TODO: Your test code here!
     end
 
-    it "Can access the online order status" do
+    xit "Can access the online order status" do
       # TODO: Your test code here!
     end
   end
