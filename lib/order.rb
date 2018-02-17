@@ -3,6 +3,7 @@ require 'awesome_print'
 
 module Grocery
   class Order
+
     attr_reader :id, :products
 
     def initialize(id, products)
@@ -46,18 +47,14 @@ module Grocery
     end
 
     def self.all
-      # Read contents of file into array of arrays
-      csv_array = CSV.read('support/orders.csv')
-      # Convert strings in array to hashes
-      orders = Order.string_to_hash(csv_array)
-      return orders
+      return Order.parse_csv
     end
 
     # Helper method to convert strings in array to hashes
-    def self.string_to_hash(arr_of_arrs)
+    def self.parse_csv
+      arr_of_arrs = CSV.read('support/orders.csv')
       orders = []
       arr_of_arrs.each do |row|
-        # Convert products string into Hash
         product_string = row[1].split(";")
         product_hash = product_string.map do |x|
           x = x.split(":")
@@ -65,7 +62,6 @@ module Grocery
         end
         product_hash = product_hash.reduce(:merge)
 
-        # Create new order and push into orders
         id = row[0].to_i
         products = product_hash
         orders << Order.new(id, products)

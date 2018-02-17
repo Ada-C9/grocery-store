@@ -1,5 +1,6 @@
 require 'csv'
 require 'awesome_print'
+require_relative 'order'
 
 class OnlineOrder < Grocery::Order
   attr_reader :id, :products, :customer, :status

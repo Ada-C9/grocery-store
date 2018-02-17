@@ -14,10 +14,11 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(id, {})
 
       order.must_respond_to :id
-      order.id.must_equal id
+      order.id.must_equal 1337
       order.id.must_be_kind_of Integer
 
       order.must_respond_to :products
+      order.products.must_be_instance_of Hash
       order.products.length.must_equal 0
     end
   end
@@ -118,65 +119,69 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
-  before do
-    order_array = CSV.read('support/orders.csv')
-    @orders = Grocery::Order.string_to_hash(order_array)
-  end
 
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
 
-      orders.each_index do |i|
-        orders[i].id.must_equal @orders[i].id
-        orders[i].products.must_equal @orders[i].products
+      orders.must_be_instance_of Array
+      orders.each do |order|
+        order.must_be_instance_of Grocery::Order
       end
-    end
-
-    it "Returns right number of oders" do
-      orders = Grocery::Order.all
-
-      orders.count.must_equal @orders.count
+      orders.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
+      first_order = orders.first
 
-      orders[0].id.must_equal @orders[0].id
-      orders[0].products.must_equal @orders[0].products
+      # 1,Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9
+      first_order.id.must_equal 1
+      first_order.products["Slivered Almonds"].must_equal 22.88
+      first_order.products["Wholewheat flour"].must_equal 1.93
+      first_order.products["Grape Seed Oil"].must_equal 74.9
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
       orders = Grocery::Order.all
+      last_order = orders.last
 
-      orders.last.id.must_equal @orders.last.id
-      orders.last.products.must_equal @orders.last.products
+      # 100,Allspice:64.74;Bran:14.72;UnbleachedFlour:80.59
+      last_order.id.must_equal 100
+      last_order.products["Allspice"].must_equal 64.74
+      last_order.products["Bran"].must_equal 14.72
+      last_order.products["UnbleachedFlour"].must_equal 80.59
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
-      order_find = Grocery::Order.find(1)
+      products_found = Grocery::Order.find(1)
 
-      order_find.must_equal @orders[0].products
+      # 1,Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9
+      products_found["Slivered Almonds"].must_equal 22.88
+      products_found["Wholewheat flour"].must_equal 1.93
+      products_found["Grape Seed Oil"].must_equal 74.9
     end
 
     it "Can find the last order from the CSV" do
       # TODO: Your test code here!
-      order_find = Grocery::Order.find(100)
+      products_found = Grocery::Order.find(100)
 
-      order_find.must_equal @orders[99].products
+      products_found["Allspice"].must_equal 64.74
+      products_found["Bran"].must_equal 14.72
+      products_found["UnbleachedFlour"].must_equal 80.59
     end
 
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
-      order_find = Grocery::Order.find(101)
+      products_found = Grocery::Order.find(101)
 
-      order_find.must_be_nil
+      products_found.must_be_nil
     end
   end
 end

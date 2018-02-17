@@ -1,10 +1,9 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-
-# TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/online_order'
-# You may also need to require other classes here
+require_relative '../lib/online_order'
+require 'awesome_print'
+require 'csv'
 
 # Because an OnlineOrder is a kind of Order, and we've
 # already tested a bunch of functionality on Order,

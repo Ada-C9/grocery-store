@@ -38,7 +38,7 @@ describe "Customer" do
     #   - The ID, email address of the first and last
     #       customer match what's in the CSV file
     # Feel free to split this into multiple tests if needed
-    it "Returns an array of customers with right number of elements" do
+    it "Returns an array of all customers" do
       customers = Grocery::Customer.all
 
       customers.must_be_instance_of Array
