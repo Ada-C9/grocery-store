@@ -7,44 +7,49 @@ module Grocery
 
     FILE_NAME = "support/orders.csv"
 
+    @@orders = []
+
     def initialize(id, products)
       @id = id
       @products = products
     end
 
-    def find(id)
-      @orders.each do |order|
+    def self.find(id)
+      @@orders.each do |order|
         if order.id == id
-          return order 
-        else
-          return "ERROR: order does not exist"
+          return order
         end
       end
+      return "ERROR: order does not exist"
     end
 
     def self.all
       # returns a collection of Order instances,
       # representing all of the Orders described
       # in the CSV
-      CSV.open(FILE_NAME, 'r') do |file|
-        @orders = []
-        file.each do |line_item|
+      if @@orders.empty?
+        CSV.open(FILE_NAME, 'r') do |file|
+          file.each do |line_item|
 
-          id = line_item[0]
-          items_string = line_item[1]
-          products = {} #will take k/v pairs delimited by colon
+            id = line_item[0]
+            items_string = line_item[1]
+            products = {} #will take k/v pairs delimited by colon
 
-          semicolon_split = items_string.split(';')
+            semicolon_split = items_string.split(';')
 
-          semicolon_split.each do |string|
-            key_value_split = string.split(':')
-            products[key_value_split[0]] = key_value_split[1]
+            semicolon_split.each do |string|
+              key_value_split = string.split(':')
+              products[key_value_split[0]] = key_value_split[1]
+            end
+            @@orders << Order.new(id,products)
           end
-          @orders << Order.new(id,products)
+          return @@orders
         end
-        return @orders
+      else
+        return @@orders
       end
     end
+
 
     def total
       sum = 0
