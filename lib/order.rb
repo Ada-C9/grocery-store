@@ -12,28 +12,6 @@ module Grocery
       @products = products
     end
 
-    def self.all
-      all_orders = []
-      CSV.read(FILE_NAME, 'r').each do |order|
-        id = order[0].to_i
-        product_hash = {}
-        order[1].split(";").each do |product|
-          product_array = product.split(":")
-          product_hash[product_array[0]] = product_array[1].to_f
-        end
-        order_instance = Order.new(id, product_hash)
-        all_orders << order_instance
-      end
-      all_orders
-    end
-
-
-
-    def self.find(id)
-      all_orders = self.all .each do |product|
-
-    end
-
     def total
       result = 0
       @products.each_value do |value|
@@ -60,10 +38,38 @@ module Grocery
         return false
       end
     end
+
+    def self.all
+      all_orders = []
+      CSV.read(FILE_NAME, 'r').each do |order|
+        id = order[0].to_i
+        product_hash = {}
+        order[1].split(";").each do |product|
+          product_array = product.split(":")
+          product_hash[product_array[0]] = product_array[1].to_f
+        end
+        all_orders << self.new(id, product_hash)
+      end
+      all_orders
+    end
+
+    def self.find(id)
+      requested_order = nil
+      self.all.each do |order|
+        if order.id == id
+          requested_order = order.products
+        end
+      end
+      return requested_order
+    end
   end
 end
-
 # Testing for Wave 1
 # firstOrder = Grocery::Order.new(1, {"Almonds": 22.8, "Wholewheat flour": 1.93, "Grape Seed Oil": 74.9})
 # print firstOrder
-ap Grocery::Order.all
+
+# Testing
+# self.all
+# self.find
+# ap Grocery::Order.find(80)
+# ap Grocery::Order.find(101)
