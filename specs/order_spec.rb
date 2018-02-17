@@ -104,20 +104,19 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      order = Grocery::Order.find(1)
+      order = Grocery::Order.find("1")
       order.must_be_kind_of Grocery::Order
       order.id.must_equal "1"
     end
 
     it "Can find the last order from the CSV" do
-      order = Grocery::Order.find(100)
+      order = Grocery::Order.find("100")
       order.must_be_kind_of Grocery::Order
       order.id.must_equal "100"
     end
 
-    xit "Return nil for an order that doesn't exist" do
+    it "Return nil for an order that doesn't exist" do
       order = Grocery::Order.find(101)
-      order.must_be_kind_of Grocery::Order
       order.must_be_nil
     end
   end

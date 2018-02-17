@@ -69,11 +69,22 @@ module Grocery
       return products
     end
 
-    def find
-
+    def self.find(id)
+      order_id = nil
+      self.all.each do |order|
+        if order.id == id
+          order_id = order
+        end
+      end
+      if order_id == nil
+        return nil
+      else
+        return order_id
+      end
     end
   end
 end
+
 
 ap Grocery::Order.all
 #   puts " Product #{product[0]}: #{product[1]}"
