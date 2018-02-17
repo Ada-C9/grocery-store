@@ -64,11 +64,11 @@ module Grocery
     end
   end
 end
-# Testing for Wave 1
-# firstOrder = Grocery::Order.new(1, {"Almonds": 22.8, "Wholewheat flour": 1.93, "Grape Seed Oil": 74.9})
+# Running Wave 1
+firstOrder = Grocery::Order.new(1, {"Slivered Almonds":22.88, "Wholewheat flour":1.93, "Grape Seed Oil":74.9})
 # print firstOrder
 
-# Testing
+# Running Wave 2
 # self.all
 # self.find
 # ap Grocery::Order.find(80)
