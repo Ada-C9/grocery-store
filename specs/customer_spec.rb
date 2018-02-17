@@ -24,6 +24,7 @@ describe "Customer" do
       customer.email.must_include "@"
 
       customer.must_respond_to :address
+      # asserts that a state id exsists in the address string
       assert_match(/\b[A-Z]{2}/, customer.address)
     end
   end
