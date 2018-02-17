@@ -1,5 +1,6 @@
 require 'csv'
 require 'awesome_print'
+require 'pry'
 
 
 module Grocery
@@ -35,11 +36,14 @@ module Grocery
       CSV.read("../support/orders.csv").each do |order| # order - array
 
         products_hash = {}
-        products_split = order[1].split(';') # products_split - array
+        products_split = order[1].split(';')
+
+        # products_split - array of product/ price
         products_split.each do |pair|
           split = pair.split(':')
           products_hash[split[0]] = split[1].to_f
         end
+
         new_order = self.new(order[0], products_hash)
         all_orders << new_order
       end
@@ -49,4 +53,4 @@ module Grocery
 end
 
 
-ap Grocery::Order.all
+ 
