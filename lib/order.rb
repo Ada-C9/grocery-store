@@ -6,7 +6,7 @@ module Grocery
   class Order
     attr_reader :id, :products
 
-    @@all_orders = []
+    # @@all_orders = []
 
 
     # Initialize class Order:
@@ -15,8 +15,8 @@ module Grocery
       @products = products
     end
 
-    def self.all
 
+    def self.all
       # Read file:
       orders = []
       CSV.read('../support/orders.csv', 'r').each do |row|
@@ -28,15 +28,15 @@ module Grocery
         # Selec the order element (product, price) and assign it:
         elements_of_order = "#{row[1]}".split(';')
 
-        ap elements_of_order.class
-        ap elements_of_order
+        # ap elements_of_order.class
+        # ap elements_of_order
 
         # Separete the elements into (product_name, product_price):
-        products = []
+        products = {}
         elements_of_order.each do |item|
 
           # Assign the product of this element in this order:
-          product =  "#{item.split(':')[0]}".split.map(&:capitalize).join(' ')
+          product =  "#{item.split(':')[0]}" #.split.map(&:capitalize).join(' ')
           # puts "product : #{product}"
 
           # Assign the price of this element in this order:
@@ -44,7 +44,7 @@ module Grocery
           # puts "price : #{price}"
 
           #Push the Product and the Price into the array products for this order:
-          products << {"#{product}" => price}
+          products["#{product}"] = price.to_f
           # puts "products: #{products}"
 
         end
@@ -53,8 +53,11 @@ module Grocery
         orders << [order_id, products]
         # puts products # = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
       end
-      puts orders
+      ap orders
+      return orders
     end
+
+
 
     # Total of order with tax:
     def total
