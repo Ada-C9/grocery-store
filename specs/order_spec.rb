@@ -80,35 +80,34 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       array_of_orders = Grocery::Order.all
 
+      array_of_orders.must_be_kind_of Array
       array_of_orders.length.must_equal 100
-
-      # - all emements are orders
-      # - returns an array
 
     end
 
     it "Returns accurate information about the first order" do
       array_of_orders = Grocery::Order.all
       first_id = array_of_orders[0][0]
-      first_order_items = array_of_orders[0][1]
+      first_products = array_of_orders[0][1]
 
       first_id.must_equal 1
-      first_order_items.length.must_equal 3
+      first_products.length.must_equal 3
+      first_products["Wholewheat flour"].must_equal 1.93
     end
 
     it "Returns accurate information about the last order" do
       array_of_orders = Grocery::Order.all
       last_id = array_of_orders[-1][0]
-      last_order_items = array_of_orders[-1][1]
+      last_products = array_of_orders[-1][1]
 
       last_id.must_equal 100
-      last_order_items.length.must_equal 3
+      last_products.length.must_equal 3
+      last_products["Bran"].must_equal 14.72
     end
 
   end
@@ -127,7 +126,6 @@ describe "Order Wave 2" do
     end
 
     it "Raises an error for an order that doesn't exist" do
-
       assert_raises NotImplementedError do
         nonexistant_order = Grocery::Order.find(200)
       end

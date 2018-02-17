@@ -30,7 +30,7 @@ module Grocery
 
     def self.all
       @@all_orders = []
-      CSV.foreach("../support/orders.csv") do |row|
+      CSV.foreach("support/orders.csv") do |row|
         row[0] = row[0].to_i
         row[1] = row[1].split(";")
 
@@ -58,21 +58,3 @@ module Grocery
 
   end
 end
-
-
-
-ap Grocery::Order.all
-
-
-
-
-###potentially add to order.all ###
-
-
-
-
-#     hash = { i[0] => i[1].to_f }
-#   end
-# end
-#  return @@all_orders
-#end
