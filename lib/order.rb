@@ -6,84 +6,50 @@ module Grocery
   class Order
     attr_reader :id, :products
 
-    # @orders = []
-    #
-    # CSV.read('support/orders.csv', 'r').each do |row|
-    #     @orders << row
-    # end
-
-
     @@all_orders = []
 
 
-    # Initialize Method
+    # Initialize class Order:
     def initialize(id, products)
       @id = id
-      @products = []
-
-      # products.count.times do |i|
-      #   element = "#{products[i]}".split(':')
-      #   @products << element
-      # end
-
-      # @item =  @products[0]
-      # @price = @products[1]
-      #
+      @products = products
     end
 
-    # Add the following class methods to your existing Order class
-    # self.all - returns a collection of Order instances, representing all of the Orders described in the CSV. See below for the CSV file specifications
-    # Determine if the data structure you used in Wave 1 will still work for these new requirements
-    # Note that to parse the product string from the CSV file you will need to use the split method
     def self.all
-      if @@all_orders.empty?
 
-        full_order = []
-        products = []
+      # Read file:
+      orders = []
+      CSV.read('../support/orders.csv', 'r').each do |row|
+          orders << row
 
-        CSV.read('../support/orders.csv', 'r').each do |row|
+      #Select the order number and assign it:
+      order_id = row[0]
+      ap order_id
 
-          id = row[0].to_i
-          full_order << "#{row[1]}".split(';')
+      # Selec the order element (product, price) and assign it:
+      elements_of_order = "#{row[1]}".split(';')
+      puts "elements of order:"
+      ap elements_of_order.class
+      ap elements_of_order
 
-
-          full_order.each do |order_array|
-
-            order_array.each do |element|
-            element = "#{element}".split(':')
-            # ap element
-            products << element
-
-          end
-
-          end
-
-          @@all_orders << Order.new(id, products)
-        end
-        # ap full_order[0]
-
-        # ap "PRODUCTS : #{products}"
-        return @@all_orders
+      # Separete the elements into (product_name, product_price)
+      products = []
+      elements_of_order.each do |item|
+        # puts "products: #{products}"
+        product =  "#{item.split(':')[0]}"
+        # puts "product : #{product}"
+        price =  "#{item.split(':')[1]}"
+        # puts "price : #{price}"
+        products << {"#{product}" => price}
+        # puts "products: #{products}"
       end
+      return products
 
-
-      return
     end
-    # order = "#{orders[0][1]}".split(';')
-    # # puts "order: #{order}"
-    #
-    # element = "#{order[0]}".split(':')
-    # # puts "element: #{element}"
-    #
-    #
-    # product = element[0]
-    # # puts "product: #{product}"
-    #
-    #
-    # price = element[1]
-    # # puts "price: #{price}"
 
-    # Total Method
+    end
+
+    # Total of order with tax:
     def total
       sum = 0
       @products.values.each do |price|
@@ -95,7 +61,7 @@ module Grocery
     end
 
 
-    # add_product method
+    # Add a new product to order:
     def add_product(product_name, product_price)
       if @products.keys.include?(product_name)
         return false
@@ -105,7 +71,7 @@ module Grocery
       end
     end
 
-    # Remove product
+    # Remove product from order:
     def remove_product(product_name)
       @products.delete(product_name)
       if @products.values.include?(product_name)
@@ -118,37 +84,4 @@ module Grocery
   end
 end
 
-orders = []
-
-CSV.read('../support/orders.csv', 'r').each do |row|
-  orders << row
-end
-
-id = orders[0][0]
-# id = orders[i][0]
-# puts "id : #{id}"
-
-order = "#{orders[0][1]}".split(';')
-# order = "#{orders[i][1]}".split(';')
-# puts "order: #{order}"
-
-# element = "#{order[0]}".split(':')
-# # puts "element: #{element}"
-#
-#
-# product = element[0]
-# # puts "product: #{product}"
-#
-#
-# price = element[1]
-# # puts "price: #{price}"
-
-this_order = Grocery::Order.new(id, order)
-ap Grocery::Order.all
-# ap this_order.products
-# ap this_order.products
-
-# puts this_order.total
-
-
-# first_order = Grocery::Order.new(orders[0], products)
+order = Grocery::Order.all
