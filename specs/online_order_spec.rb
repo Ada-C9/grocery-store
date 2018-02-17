@@ -1,7 +1,9 @@
+require 'pry'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require 'awesome_print'
+
 
 # TODO: uncomment the next line once you start wave 3
 require_relative '../lib/online_order'
@@ -84,49 +86,63 @@ describe "OnlineOrder" do
 
       online_order = Grocery::OnlineOrder.new(id, products, customer, status)
 
-      online_order.add_product(:complete).must_equal "invalid"
+      online_order.add_product("Annatto seed", 58.38).must_be_nil
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+      online_order = Grocery::OnlineOrder.new(1, {"Lobster" => 17.18, "Camomile" => 83.21}, 25, :pending)
+
+      online_order.add_product("Annatto seed", 58.38).must_equal true
+      online_order.products.length.must_equal 3
     end
   end
-  #
-  # describe "OnlineOrder.all" do
-  #   it "Returns an array of all online orders" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   it "Returns accurate information about the first online order" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   it "Returns accurate information about the last online order" do
-  #     # TODO: Your test code here!
-  #   end
-  # end
-  #
-  # describe "OnlineOrder.find" do
-  #   it "Will find an online order from the CSV" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   it "Raises an error for an online order that doesn't exist" do
-  #     # TODO: Your test code here!
-  #   end
-  # end
-  #
-  # describe "OnlineOrder.find_by_customer" do
-  #   it "Returns an array of online orders for a specific customer ID" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   it "Raises an error if the customer does not exist" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   it "Returns an empty array if the customer has no orders" do
-  #     # TODO: Your test code here!
-  #   end
-  # end
+
+  describe "OnlineOrder.all" do
+    it "Returns an array of all online orders" do
+      Grocery::OnlineOrder.all_orders.must_be_kind_of Array
+      Grocery::OnlineOrder.all_orders.length.must_equal 100
+    end
+
+    it "Returns accurate information about the first online order" do
+      Grocery::OnlineOrder.all_online_orders.first.id.must_equal "1"
+      Grocery::OnlineOrder.all_online_orders.first.products.length.must_equal 3
+    end
+
+    it "Returns accurate information about the last online order" do
+      Grocery::OnlineOrder.all_online_orders.last.id.must_equal "100"
+      Grocery::OnlineOrder.all_online_orders.last.products.length.must_equal 3
+    end
+  end
+
+  describe "OnlineOrder.find" do
+    it "Will find an online order from the CSV" do
+      Grocery::OnlineOrder.find_online_order("1").customer.must_equal "25"
+      Grocery::OnlineOrder.find_online_order("25").products.must_equal ({"Cabbage"=>"52.42", "Tea"=>"54.52", "Custard ApplesDaikon"=>"7.65", "Wheat"=>"59.56"})
+    end
+
+    it "Raises an error for an online order that doesn't exist" do
+      Grocery::OnlineOrder.find_online_order("0").must_be_nil
+      Grocery::OnlineOrder.find_online_order("205").must_be_nil
+    end
+  end
+
+  describe "OnlineOrder.find_by_customer" do
+    it "Returns an array of online orders for a specific customer ID" do
+      Grocery::OnlineOrder.find_by_customer("28").products.must_equal ({"Cabbage"=>"52.42", "Tea"=>"54.52", "Custard ApplesDaikon"=>"7.65", "Wheat"=>"59.56"})
+
+      Grocery::OnlineOrder.find_by_customer("35").id.must_equal "4"
+    end
+
+    it "Raises an error if the customer does not exist" do
+      Grocery::OnlineOrder.find_by_customer("300").must_be_nil
+      Grocery::OnlineOrder.find_by_customer("0").must_be_nil
+    end
+
+    # it "Returns an empty array if the customer has no orders" do
+    #   online_order = Grocery::OnlineOrder.new("150", {}, "150", :pending)
+    #
+    #   online_order.find_by_customer("150").must_be_nil
+    # end
+  end
 end
+binding.pry
