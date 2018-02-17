@@ -1,4 +1,4 @@
-#Lily Sky Grocery Store
+#Lily Sky Grocery Store - Order
 #Ada C9
 
 require 'awesome_print'
@@ -26,12 +26,6 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      # A
-      # if valid_entry = @products.has_key?(product_name) == false
-      #   @products[product_name] = product_price
-      # end
-      # return valid_entry
-      # or B
       if @products.has_key?(product_name)
         return false
       else
@@ -80,7 +74,7 @@ module Grocery
 
   # ap Order.all_orders[0]
   # ap Order.all_orders
-  ap Order.find_order("200")
+  # ap Order.find_order("200")
     # ap Order.all_orders
 
 
