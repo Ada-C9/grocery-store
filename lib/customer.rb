@@ -15,20 +15,32 @@ module Grocery
     def self.all
       all_customers = []
       CSV.read("/Users/brandyaustin/ada/week2/grocery_store/grocery-store/support/customers.csv").each do |row|
-        puts row.inspect
-        # id = row[0].to_i
-        # products = {}
-        # products_array = row[1].split(";")
-        #
-        # products_array.each do |item|
-        #   name, price = item.split(':')
-        #   products[name] = price.to_f
-      end
-      all_customers << Order.new(id, products)
-    end
-    #return all_customers
-  end
+        address = {}
+        customer_id = row[0].to_i
+        email = row[1]
+        address[:street] = row[2]
+        address[:city] = row[3]
+        address[:state] = row[4]
+        address[:zip_code] = row[5]
+        puts address
 
+        all_customers << Customer.new(customer_id, email, address)
+
+      end
+      return all_customers
+    end
+
+    def self.find(id)
+      all_customers = self.all
+      all_customers.each do |customer|
+        if customer.id == id
+          return customer
+        end
+      end
+      return nil
+    end
+
+  end
 end
 
-Grocery::Customer.all
+puts Grocery::Customer.all.inspect
