@@ -5,14 +5,13 @@ module Grocery
   class Order
     attr_reader :id, :products
 
-    @@all = 1
-    @@instance_of_order = []
+    # @@orders = []
+    # @@instance_of_order = []
 
     def initialize(id, products)
       @id = id
       @products = products
-      @@all += 1
-      # @@instance_of_order = @products.id
+      # @@orders << [@id, @products]
 
     end
 
@@ -40,45 +39,35 @@ module Grocery
     end
 
     def self.all
-      return @@all
+
+      orders = []
+
+      CSV.read('support/orders.csv', 'r', header_converters: :symbol ).each do |line|
+        groceries = []
+        products = line[1].split(';')
+        products.each do |items|
+          groceries << items.split(':')
+          products = groceries.to_h
+          products.each {|key, val| products[key] = val.to_f}
+        end
+
+        orders << Grocery::Order.new(line[0], products)
+      end
+
+      return orders
     end
 
-    # def self.find(id)
-    #   @id = id
-    #
-    #
-    # end
+    def self.find(id)
+      return all.find { |order| order.id == id }
+    end
 
   end
 end
-
-# order_1 = [1, { "Silvered Almonds" => 22.88 } ]
-#
-# first_order = Grocery::Order.new(order_1[0], order_1[1])
-#
-# print first_order
-
-headers = ["id", "products", "product_name", "product_price"]
-
-orders = []
-
-
-CSV.read('../support/orders.csv', 'r', headers: true, header_converters: :symbol ).each do |line|
-  groceries = []
-  products = line[1].split(';')
-  products.each do |items|
-    groceries << items.split(':')
-    products = groceries.to_h
-    products.each {|key, val| products[key] = val.to_f}
-  end
-
-  orders << Grocery::Order.new(line[0], products)
-end
-
-#.to_h to convert to a hash
-
-puts "Total orders = #{Grocery::Order.all}"
 
 # puts "Find id 1: #{Grocery::Order.find(1)}"
 
-ap orders
+# DONE
+# ap orders
+# Grocery::Order.all
+
+ap Grocery::Order.find("7")
