@@ -4,8 +4,8 @@ require 'minitest/skip_dsl'
 require_relative '../lib/order'
 require 'csv'
 
-describe "Order Wave 1" do
-  describe "#initialize" do
+xdescribe "Order Wave 1" do
+describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -80,57 +80,64 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
-    it "Returns an array of all orders" do
-      # Arrange
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      products2 = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
-      order = Grocery::Order.new(1337, products)
-      order2 = Grocery::Order.new(23, products2)
+    xit "Returns an array of all orders" do
+      # # Arrange
+      # products = { "banana" => 1.99, "cracker" => 3.00 }
+      # products2 = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # order = Grocery::Order.new(1337, products)
+      # order2 = Grocery::Order.new(23, products2)
+      # order_list = [order, order2]
 
       # Act
       result = Grocery::Order.all
 
       # Assert
       result.must_be_kind_of Array
-      result.length.must_be 2
+
     end
 
-    it "Returns accurate information about the first order" do
+    xit "Returns accurate information about the first order" do
       #Arrange
-      id = 1
-      products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
-      id2 = 2
-      products2 = {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}
+      # id = 1
+      # products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # id2 = 2
+      # products2 = {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}
+      # order = Grocery::Order.new(id, products)
+      # order2 = Grocery::Order.new(id2, products2)
+      # order_list = [order, order2]
 
       # Act
-      order = Grocery::Order.new(id, products)
-      order2 = Grocery::Order.new(id2, products2)
+
+      result = Grocery::Order.all[0]
+
 
       # Assert
-      order.id.must_equal 1
-      order.total.must_equal 107.19
+
+      result.id.must_equal 1
+      result.total.must_equal 107.19
+
     end
 
     it "Returns accurate information about the last order" do
       #Arrange
-      id = 1
-      products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
-      id2 = 2
-      products2 = {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}
-
-      # Act
-      order = Grocery::Order.new(id, products)
-      order2 = Grocery::Order.new(id2, products2)
-
+      # # id = 1
+      # # products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # # id2 = 2
+      # # products2 = {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}
+      #
+      # # Act
+      # order = Grocery::Order.new(id, products)
+      # order2 = Grocery::Order.new(id2, products2)
+      result = Grocery::Order.all[-1]
       # Assert
-      order2.id.must_equal 2
-      order2.total.must_equal 156.18
+      result.id.must_equal Grocery::Order.all.length
+      result.total.must_equal 172.05
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       #Arrange
       FILE_NAME = 'support/orders.csv'
