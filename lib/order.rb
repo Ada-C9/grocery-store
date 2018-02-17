@@ -4,7 +4,9 @@ require 'awesome_print'
 module Grocery
   class Order
     attr_reader :id, :products
+
     FILE_NAME = "support/orders.csv"
+
     def initialize(id, products)
       @id = id
       @products = products
@@ -15,23 +17,23 @@ module Grocery
       # representing all of the Orders described
       # in the CSV
       CSV.open(FILE_NAME, 'r') do |file|
-      orders = []
+        orders = []
+        file.each do |line_item|
 
-      file.each do |line_item|
+          id = line_item[0]
+          items_string = line_item[1]
+          products = {} #will take k/v delineated by colon
 
-        id = line_item[0]
-        items_string = line_item[1]
-        products = {} #will take k/v delineated by semicolon
+          semicolon_split = items_string.split(';')
 
-        semicolon_split = items_string.split(';')
-
-        semicolon_split.each do |string|
-          key_value_split = string.split(':')
-          products[key_value_split[0]] = key_value_split[1]
+          semicolon_split.each do |string|
+            key_value_split = string.split(':')
+            products[key_value_split[0]] = key_value_split[1]
+          end
+          orders << Order.new(id,products)
         end
-        orders << Order.new(id,products)
+        return orders
       end
-      return orders
     end
 
     def total
@@ -54,12 +56,5 @@ module Grocery
 
   end
 end
-
-
-# data = CSV.read(FILE_NAME)
-
-# orders_hash = {}
-
-
 
 # array_of_orders << # Order instance (i.e., NOT collection of hashes)
