@@ -6,13 +6,14 @@ module Grocery
   class Order
     attr_reader :id, :products
 
-    # @@all_orders = []
+    # @@all_orders = self.all
 
 
     # Initialize class Order:
     def initialize(id, products)
       @id = id
       @products = products
+      @all_orders = []
     end
 
 
@@ -39,12 +40,13 @@ module Grocery
 
     # Populates itself with the whole order.csv file:
     def self.all
-      # Read file:
-      orders = []
 
+      @all_orders = []
+
+      # Read file:
       # ???? why on rake I need to have the whole path here??
       CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r').each do |row|
-      # CSV.read('../support/orders.csv', 'r').each do |row|
+        # CSV.read('../support/orders.csv', 'r').each do |row|
 
         #Select the order id number from the file and assign it:
         order_id = row[0]
@@ -54,11 +56,22 @@ module Grocery
         # example => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
 
         # Push this order (order id, products(itens, price)) to the array of orders
-        orders << [order_id, products]
+        @all_orders << [order_id, products]
       end
-      return orders
+      return @all_orders
     end
 
+    #?
+    def self.find(find_id)
+      @all_orders.count.times do |order|
+        if (order + 1) == find_id
+          return @all_orders[order]
+          # "Order #{@all_orders[order][0]}: products: #{@all_orders[order][1]}"
+        end
+      end
+      return "Order doesn't exist!"
+      #   return @@all_orders.find { |order| order.id == requested_id }
+    end
 
 
     # Total of order with tax:
@@ -96,7 +109,12 @@ module Grocery
   end
 end
 
+
+order = Grocery::Order.all
+find_id = Grocery::Order.find(100)
+ap "#{find_id}"
+
 # order = Grocery::Order.separate
 # order = Grocery::Order.all
-# ap order.class
 # ap order
+# ap order.class
