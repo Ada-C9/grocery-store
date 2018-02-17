@@ -16,9 +16,21 @@ module Grocery
     end
 
     def total
-      total = super() + 10.00
-      total = total.round(2)
-      return total
+      unless super() == 0
+        total = super() + 10.00
+        total = total.round(2)
+        return total
+      else
+        return total = 0.00
+      end
+    end
+
+    def add_product(item, price)
+      unless @fill_status == (:pending || :paid)
+        return nil
+      else
+        super()
+      end
     end
 
   end # onlineorder
