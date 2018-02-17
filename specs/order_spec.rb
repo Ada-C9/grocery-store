@@ -107,16 +107,16 @@ describe "Order Wave 2" do
 
     end
 
-    xit "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-      # orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[0]
-      #
-      # # id = orders[0]
-      # # products = Grocery::Order.separate("#{orders[1]}".split(';'))
-      # # order = Grocery::Order.new(id , products)
-      # # first_order = Grocery::Order.all[0]
-      # # file_order = Grocery::Order.new(first_order[0], first_order[1])
-      # # file_order.must_equal order
+    it "Returns accurate information about the first order" do
+
+      # Order #1 on file:
+      orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[0][0]
+
+      # Create all orders on Grocery module and search for the order #1:
+      Grocery::Order.all
+      find =  Grocery::Order.find(1)
+
+      orders.must_equal find[0]
     end
 
     xit "Returns accurate information about the last order" do
