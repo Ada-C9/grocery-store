@@ -16,7 +16,7 @@ describe "Customer" do
       # act
       customer =Grocery::Customer.new(id, email, address)
       # assert
-      customer.id.must_respond_to :id
+      customer.must_respond_to :id
       customer.id.must_equal id
       customer.id.must_be_kind_of Integer
 
