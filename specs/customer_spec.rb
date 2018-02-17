@@ -14,7 +14,7 @@ describe "Customer" do
       address = "221B Baker St, London NW1, 6XE, UK"
 
       #Act
-      customer = Grocery::Grocery.new(id, email, address)
+      customer = Grocery::Customer.new(id, email, address)
 
       #Assert
       customer.must_respond_to :id

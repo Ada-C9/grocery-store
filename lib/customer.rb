@@ -2,6 +2,12 @@ require 'pry'
 require 'csv'
 require 'awesome_print'
 module Grocery
+  class CustomerError < ArgumentError
+    def initialize(msg="Error: CustomerID not found")
+      super
+    end
+  end
+
   class Customer
     attr_reader :customer_id, :email, :address
     def initialize(id, email, address)
@@ -22,9 +28,16 @@ module Grocery
       return customer_list
     end # Customer.all
 
-    def self.find(id)
-      #TODO: returns an instance of Customer where the value of the id field in the CSV matches the passed parameter
-    end
+    def self.find(customer_id)
+      self.all.each do |customer|
+        if customer_id > all.length
+          raise Grocery::CustomerError.new
+        elsif
+          customer.customer_id == customer_id
+          return customer
+        end
+      end # self.all.each do
+    end # Order.find
   end
 end
 
