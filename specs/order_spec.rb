@@ -2,7 +2,6 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 require 'minitest/skip_dsl'
-require 'awesome_print'
 require_relative '../lib/order'
 
 describe "Order Wave 1" do
@@ -115,14 +114,14 @@ describe "Order Wave 2" do
       expected_last_order_products = {"Allspice"=>64.74, "Bran"=>14.72,
         "UnbleachedFlour"=>80.59}
 
-      first_order = Grocery::Order.all.last
+      last_order = Grocery::Order.all.last
 
-      first_order.id.must_be_kind_of Integer
-      first_order.id.must_equal expected_last_order_id
+      last_order.id.must_be_kind_of Integer
+      last_order.id.must_equal expected_last_order_id
 
 
-      first_order.products.must_be_kind_of Hash
-      first_order.products.must_equal expected_last_order_products
+      last_order.products.must_be_kind_of Hash
+      last_order.products.must_equal expected_last_order_products
     end
   end
 
@@ -133,7 +132,7 @@ describe "Order Wave 2" do
       expected_first_order_products = {"Slivered Almonds"=>22.88,
         "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
 
-      first_order = Grocery::Order.find(1)
+      first_order = Grocery::Order.find(expected_first_order_id)
 
       first_order.must_respond_to :id
       first_order.id.must_be_kind_of Integer
@@ -151,7 +150,7 @@ describe "Order Wave 2" do
       expected_last_order_products = {"Allspice"=>64.74, "Bran"=>14.72,
         "UnbleachedFlour"=>80.59}
 
-      last_order = Grocery::Order.find(100)
+      last_order = Grocery::Order.find(expected_last_order_id)
 
       last_order.must_respond_to :id
       last_order.id.must_be_kind_of Integer
