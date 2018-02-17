@@ -13,7 +13,7 @@ module Grocery
 
     def self.all
       all_customers = []
-      CSV.read("../support/customers.csv").each do |row|
+      CSV.read("/Users/brandyaustin/ada/week2/grocery_store/grocery-store/support/customers.csv").each do |row|
         address = {}
         customer_id = row[0].to_i
         email = row[1]

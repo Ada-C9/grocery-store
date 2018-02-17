@@ -23,7 +23,7 @@ module Grocery
 
     def self.all
       online_orders_entered = []
-      CSV.read("../support/online_orders.csv").each do |row|
+      CSV.read("/Users/brandyaustin/ada/week2/grocery_store/grocery-store/support/online_orders.csv").each do |row|
         id = row[0].to_i
         products = {}
         products_array = row[1].split(";")
