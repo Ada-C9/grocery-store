@@ -4,6 +4,17 @@ require 'awesome_print'
 
 
 module Grocery
+  # begin
+  # rescue Grocery::FindError > e
+  # end
+
+  class FindError < ArgumentError
+    def initialize(msg="Error: Order has not been created yet")
+      super
+    # rescue
+    end
+  end
+
   class Order
     attr_reader :id, :products
 
@@ -56,7 +67,16 @@ module Grocery
       return list_all
     end # Order.all
 
-
+    def self.find(id)
+      self.all.each do |order|
+        if id > all.length
+          raise Grocery::FindError.new
+        elsif
+          order.id == id
+          return order
+        end
+      end # self.all.each do
+    end # Order.find
   end # Order
 end # Grocery
 

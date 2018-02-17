@@ -137,39 +137,41 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
-      #Arrange
-      FILE_NAME = 'support/orders.csv'
-      csv_file = CSV.read(FILE_NAME, 'r', headers: true, header_converters: :symbol)
-
-      # Act
-      order = Grocery::Order.new(csv_file.first[:id], csv_file.first[:products])
+      # #Arrange
+      # FILE_NAME = 'support/orders.csv'
+      # csv_file = CSV.read(FILE_NAME, 'r', headers: true, header_converters: :symbol)
+      #
+      # # Act
+      # order = Grocery::Order.new(csv_file.first[:id], csv_file.first[:products])
+      result = Grocery::Order.find(1)
 
       # Assert
-      order.id.must_equal 1
-      order.must_be_kind_of Grocery::Order
+      result.id.must_equal 1
+      result.must_be_kind_of Grocery::Order
 
   end
     it "Can find the last order from the CSV" do
-      # Arrange
-      FILE_NAME = 'support/orders.csv'
-      csv_file = CSV.read(FILE_NAME, 'r', headers: true, header_converters: :symbol)
-
-      # Act
-      order = Grocery::Order.new(csv_file[-1][:id], csv_file[-1][:products])
+      # # Arrange
+      # FILE_NAME = 'support/orders.csv'
+      # csv_file = CSV.read(FILE_NAME, 'r', headers: true, header_converters: :symbol)
+      #
+      # # Act
+      # order = Grocery::Order.new(csv_file[-1][:id], csv_file[-1][:products])
+      result = Grocery::Order.find(100)
 
       # Assert
-      order.id.must_equal 100
-      order.must_be_kind_of Grocery::Order
+      result.id.must_equal 100
+      result.must_be_kind_of Grocery::Order
     end
 
     it "Raises an error for an order that doesn't exist" do
       # Arrange
       # Act
       # Assert
-      assert_raise do #Fails no exceptions are raised
-        ap order101
+      assert_raises do #Fails no exceptions are raised
+        Grocery::Order.find(101)
       end
 
     end
