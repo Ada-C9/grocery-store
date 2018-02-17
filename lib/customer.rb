@@ -22,7 +22,6 @@ module Grocery
         address[:city] = row[3]
         address[:state] = row[4]
         address[:zip_code] = row[5]
-        puts address
 
         all_customers << Customer.new(customer_id, email, address)
 
@@ -43,4 +42,4 @@ module Grocery
   end
 end
 
-puts Grocery::Customer.all.inspect
+# puts Grocery::Customer.all.inspect

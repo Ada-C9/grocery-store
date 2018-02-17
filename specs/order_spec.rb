@@ -76,6 +76,40 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+
+  describe "#remove_product" do
+
+    it "Removes the product from the list" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("banana")
+
+      count = 0
+      products.each do |order|
+        count += 1
+      end
+      count.must_equal 1
+    end
+  end
+
+  it "Returns true if the product was present and removed" do
+    products = { "banana" => 1.99, "cracker" => 3.00 }
+    order = Grocery::Order.new(1330, products)
+
+    value = order.remove_product("banana")
+
+    value.must_equal true
+  end
+
+  it "Returns false if the product was absent and not removed" do
+    products = { "banana" => 1.99, "cracker" => 3.00 }
+    order = Grocery::Order.new(1330, products)
+
+    value = order.remove_product("pear")
+
+    value.must_equal false
+  end
 end
 
 describe "Order Wave 2" do
@@ -90,7 +124,7 @@ describe "Order Wave 2" do
         count += 1
       end
 
-       count.must_equal 100
+      count.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
@@ -101,7 +135,7 @@ describe "Order Wave 2" do
 
       first_order.products.must_equal({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
     end
-     #
+
     it "Returns accurate information about the last order" do
       orders_entered = Grocery::Order.all
       last_order = orders_entered[-1]
