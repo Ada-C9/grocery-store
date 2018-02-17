@@ -7,7 +7,7 @@ require 'csv'
 require 'awesome_print'
 
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -30,7 +30,7 @@ xdescribe "Order Wave 1" do
 
       #act
       sum = products.values.inject(0, :+)
-      expected_total = sum + (sum *0.075).round(2)
+      expected_total = sum + ((sum )* 0.075).round(2)
 
       #assert
       order.total.must_equal expected_total
@@ -57,7 +57,7 @@ xdescribe "Order Wave 1" do
 
      #tests remove product method
     describe "#remove_product" do
-      xit "Decreases the number of products" do
+      it "Decreases the number of products" do
         #arrange
         products = {"banana" => 1.99, "cracker" => 3.00}
         before_count = products.count
@@ -71,7 +71,7 @@ xdescribe "Order Wave 1" do
       end
     end
 
-    xit "Is added to the collection of products" do
+    it "Is added to the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
@@ -79,7 +79,7 @@ xdescribe "Order Wave 1" do
       order.products.include?("sandwich").must_equal true
     end
 
-    xit "Returns false if the product is already present" do
+    it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
 
       order = Grocery::Order.new(1337, products)
@@ -92,7 +92,7 @@ xdescribe "Order Wave 1" do
       before_total.must_equal after_total
     end
 
-    xit "Returns true if the product is new" do
+    it "Returns true if the product is new" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
@@ -126,7 +126,7 @@ describe "Order Wave 2" do
       #act
       first_order = CSV.open('support/orders.csv', 'r') { |csv| csv.first }
       #assert
-      first_order = (Grocery::Order.all).first
+      first_order == (Grocery::Order.all).first
     end
 
     it "Returns accurate information about the last order" do
@@ -135,7 +135,7 @@ describe "Order Wave 2" do
       last_order = CSV.open('support/orders.csv', 'r').to_a
 
       #assert - checks last element in both arrays
-      last_order[-1] = (Grocery::Order.all)[-1]
+      last_order[-1] == (Grocery::Order.all)[-1]
     end
   end
 
@@ -145,7 +145,7 @@ describe "Order Wave 2" do
       #act
       first_order = CSV.open('support/orders.csv', 'r').to_a[0]
       #assert
-      first_order = Grocery::Order.find(1)
+      first_order == Grocery::Order.find(1)
 
     end
 
@@ -154,7 +154,7 @@ describe "Order Wave 2" do
       #act
       last_order = CSV.open('support/orders.csv', 'r').to_a[-1]
       #assert
-      last_order = Grocery::Order.find(-1)
+      last_order == Grocery::Order.find(-1)
     end
 
     it "Returns nil for an order that does not exist" do

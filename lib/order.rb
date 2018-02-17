@@ -1,6 +1,7 @@
 require 'csv'
 require 'awesome_print'
 
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -57,6 +58,7 @@ module Grocery
         return false
       else
         @products[product_name] = product_price
+        return true 
         # TODO: implement add_product
       end
     end
@@ -69,9 +71,5 @@ module Grocery
 
     end
   end
-
-  class Order < OnlineOrder
-  end
-
 
 end
