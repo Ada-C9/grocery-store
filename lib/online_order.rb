@@ -34,7 +34,6 @@ module Grocery
       end
     end
 
-
     # return an array of OnlineOrder s
     def self.all
       online_orders = []
@@ -54,6 +53,46 @@ module Grocery
       end
       return online_orders
     end # self.all method ends
+
+    def self.find(id)
+      correct_order = nil
+      self.each do |each_order|
+        if each_order.id == id
+          correct_order = each_order
+        end
+      end  # Q: return an instance of OnlineOrder rather than Order
+
+      if correct_order != nil
+        return correct_order
+      else
+        return nil
+      end
+
+    end # self.find method ends
+
+
+    def self.find_by_customer(customer_id)
+      target_customer = []
+      self.each do |each_order|
+        if each_order.customer_id == customer_id
+          target_customer << each_order.id
+          target_customer << each_order.products
+          target_customer << each_order.customer_id
+          target_customer << each_order.status
+        end
+      end
+
+      if target_customer != []
+        return target_customer
+      elsif
+        target_customer[1] = nil
+        return
+        target_customer = []
+      else
+        ArgumentError
+      end
+
+    end # self.find_by_customer emthod ends
 
   end # class OnlineOrder ends
 
