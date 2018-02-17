@@ -70,9 +70,9 @@ describe "Customer" do
       Grocery::Customer.all[0].id.must_equal "1"
       Grocery::Customer.all[0].email.must_equal "leonard.rogahn@hagenes.org"
       # Grocery::Customer.all[0].address.must_equal "71596 Eden Route,Connellymouth,LA,98872-9105"
-      Grocery::Customer.all[0].address.street.must_equal "71596 Eden Route"
-      Grocery::Customer.all[0].address.city.must_equal "Connellymouth"
-      Grocery::Customer.all[0].address.state.must_equal "LA"
+      Grocery::Customer.all[0].address[:street].must_equal "71596 Eden Route"
+      Grocery::Customer.all[0].address[:city].must_equal "Connellymouth"
+      Grocery::Customer.all[0].address[:state].must_equal "LA"
     end
 
     it "returns accurate information about the last order" do
@@ -84,9 +84,9 @@ describe "Customer" do
       Grocery::Customer.all[-1].id.must_equal "35"
       Grocery::Customer.all[-1].email.must_equal "rogers_koelpin@oconnell.org"
       # Grocery::Customer.all[-1].address.must_equal "7513 Kaylee Summit,Uptonhaven,DE,64529-2614"
-      Grocery::Customer.all[-1].address.street.must_equal "7513 Kaylee Summit"
-      Grocery::Customer.all[-1].address.city.must_equal "Uptonhaven"
-      Grocery::Customer.all[-1].address.state.must_equal "DE"
+      Grocery::Customer.all[-1].address[:street].must_equal "7513 Kaylee Summit"
+      Grocery::Customer.all[-1].address[:city].must_equal "Uptonhaven"
+      Grocery::Customer.all[-1].address[:state].must_equal "DE"
     end
 
     it "returns address as a hash of a hash" do
@@ -95,7 +95,7 @@ describe "Customer" do
       # act
       Grocery::Customer.all
       #assert
-      Grocery::Customer.all.address.must_be_kind_of Hash
+      Grocery::Customer.all[0].address.must_be_kind_of Hash
     end
   end
 
