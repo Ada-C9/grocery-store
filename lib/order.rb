@@ -65,4 +65,5 @@ module Grocery
 end#end Grocery module
 
 products = { "banana" => 1.99, "cracker" => 3.00 }
-online_order = OnlineOrder.new(1,products)
+order = Grocery::Order.new(1337, products)
+ap order.total
