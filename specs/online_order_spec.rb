@@ -168,11 +168,21 @@ describe "OnlineOrder" do
   xdescribe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       # TODO: Your test code here!
-      
+      # 23,Garlic:15.18;Pecorino:63.11,20,paid
+
+      found_order = Grocery::OnlineOrder.find(23)
+
+      found_order.class.must_equal Grocery::OnlineOrder
+      found_order.id.must_equal 23
+      found_order.customer_id.must_equal 20
+      found_order.status.must_equal :paid
     end
 
     it "Raises an error for an online order that doesn't exist" do
       # TODO: Your test code here!
+      found_order = Grocery::OnlineOrder.find(105)
+
+      found_order.must_be_nil
     end
   end
 
