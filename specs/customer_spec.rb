@@ -5,10 +5,21 @@ require 'minitest/skip_dsl'
 # TODO: uncomment the next line once you start wave 3
 # require_relative '../lib/customer'
 
-xdescribe "Customer" do
+describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
-      # TODO: Your test code here!
+      #Arrange
+      id = 1
+      email = "test@gmail.com"
+      address = "221B Baker St, London NW1, 6XE, UK"
+
+      #Act
+      customer = Grocery::Grocery.new(id, email, address)
+
+      #Assert
+      customer.must_respond_to :id
+      customer.customer_id.must_equal id
+      customer.customer_id.must_be_kind_of Integer
     end
   end
 
