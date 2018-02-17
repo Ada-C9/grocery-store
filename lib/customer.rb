@@ -1,4 +1,3 @@
-require 'pry'
 require 'csv'
 require 'awesome_print'
 module Grocery
@@ -40,5 +39,3 @@ module Grocery
     end # Order.find
   end
 end
-
-binding.pry
