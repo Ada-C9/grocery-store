@@ -23,7 +23,7 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      if status == "pending" || status == "paid"
+      if status == :pending || status == :paid
         super(product_name, product_price)
       else
         raise ArgumentError.new("A new product can be added ONLY if the status is either pending or paid (no other statuses permitted).")
@@ -32,7 +32,7 @@ module Grocery
     end
 
   end
-
+end
 
   # Running initialization
   new_order = Grocery::OnlineOrder.new(101, {"Bananas": 22.8, "Wholewheat flour": 1.93}, 30, :pending)
@@ -44,4 +44,5 @@ module Grocery
   # Running the total method
     # ap new_order.total
 
-  # 
+  # Running the add product method
+    # ap new_order.add_product("apples", 2.99) >> true
