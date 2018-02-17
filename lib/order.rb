@@ -1,7 +1,7 @@
 require "csv"
 require "awesome_print"
 
-FILE_NAME = "support/orders.csv"
+FILE_NAME = "../support/orders.csv"
 
 module Grocery
   class Order
