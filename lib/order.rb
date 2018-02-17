@@ -58,6 +58,10 @@ module Grocery
       all_orders.each do |order|
         if order.id == id
           return order
+        elsif id == "first"
+          return all_orders[0]
+        elsif id == "last"
+          return all_orders[-1]
         end
       end
       return nil
