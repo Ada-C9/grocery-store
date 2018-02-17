@@ -107,11 +107,60 @@ describe "Order Wave 2" do
 
     end
 
-    xit "Returns accurate information about the first order" do
+    it "Returns accurate information about the first order" do
+      first_order_index = 0
 
+      # Order #1 on file:
+      file_order = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[first_order_index]
+
+      # Create all_orders on Grocery module
+      Grocery::Order.all
+      find =  Grocery::Order.all
+
+      # Create string of the order #1:
+      order = ""
+      products = find[first_order_index][1].keys
+      price = find[first_order_index][1].values
+
+      (products.size - 1).times do |i|
+        order += "#{products[i]}:#{price[i]};"
+      end
+
+      order += "#{products.last}:#{price.last}"
+
+      # create array of the first_order:
+      first_order = [find[first_order_index][0], order]
+
+      # evaluate:
+      file_order.must_equal first_order
     end
 
-    xit "Returns accurate information about the last order" do
+    it "Returns accurate information about the last order" do
+      last_order_index = 99
+
+      # Order #1 on file:
+      file_order = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[last_order_index]
+
+      # Create all_orders on Grocery module
+      Grocery::Order.all
+      find =  Grocery::Order.all
+
+      # Create string of the order #1:
+      order = ""
+      products = find[last_order_index][1].keys
+      price = find[last_order_index][1].values
+
+      (products.size - 1).times do |i|
+        order += "#{products[i]}:#{price[i]};"
+      end
+
+      order += "#{products.last}:#{price.last}"
+
+      # create array of the first_order:
+      first_order = [find[last_order_index][0], order]
+
+      # evaluate:
+      file_order.must_equal first_order
 
     end
   end
@@ -147,7 +196,7 @@ describe "Order Wave 2" do
       find =  Grocery::Order.find(101)
 
       error.must_equal find
-      
+
     end
   end
 end
