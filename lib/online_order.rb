@@ -6,13 +6,13 @@ require_relative './customer.rb'
 module Grocery
 
   class OnlineOrder < Grocery::Order
-    attr_reader :order_id, :customer_id, :customer
+    attr_reader :id, :customer_id, :customer
     attr_accessor :fill_status, :prducts
 
     ONLINE_ORDERS = "support/online_orders.csv"
 
     def initialize(order_id, products, cust_id, fill_status)
-      @order_id = order_id.to_i
+      @id = order_id.to_i
       @products = products
       @customer_id = cust_id.to_i
       @fill_status = fill_status.to_sym

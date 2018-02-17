@@ -15,12 +15,12 @@ require_relative '../lib/customer'
 
 describe "OnlineOrder" do
   before do
-    @order_id = 3
+    @id = 3
     @products = {"Ramen" => 0.99, "Sake" => 7.99}
     @cust_id = 22
     @fill_status = "processing"
 
-    @online_order = Grocery::OnlineOrder.new(@order_id, @products, @cust_id, @fill_status)
+    @online_order = Grocery::OnlineOrder.new(@id, @products, @cust_id, @fill_status)
 
   end
 
@@ -47,12 +47,12 @@ describe "OnlineOrder" do
 
     it "Doesn't add a shipping fee if there are no products" do
       order_total = 0
-      order_id = 3
+      id = 3
       products = {}
       cust_id = 22
       fill_status = "pending"
 
-      new_order = Grocery::OnlineOrder.new(order_id, products, cust_id, fill_status)
+      new_order = Grocery::OnlineOrder.new(id, products, cust_id, fill_status)
       new_order.total.must_equal order_total
     end
   end
@@ -84,23 +84,38 @@ describe "OnlineOrder" do
       first_product_hash = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
       first_customer_id = 25
       first_order_status = :complete
-      Grocery::OnlineOrder.all.first.order_id.must_equal first_id
+      Grocery::OnlineOrder.all.first.id.must_equal first_id
       Grocery::OnlineOrder.all.first.products.must_equal first_product_hash
       Grocery::OnlineOrder.all.first.customer_id.must_equal first_customer_id
       Grocery::OnlineOrder.all.first.fill_status.must_equal first_order_status
     end
 
-    xit "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+    it "Returns accurate information about the last online order" do
+      last_id = 100
+      last_product_hash = {"Amaranth" => 83.81, "Smoked Trout" => 70.6, "Cheddar" => 5.63}
+      last_customer_id = 20
+      last_order_status = :pending
+
+      Grocery::OnlineOrder.all.last.id.must_equal last_id
+      Grocery::OnlineOrder.all.last.products.must_equal last_product_hash
+      Grocery::OnlineOrder.all.last.customer_id.must_equal last_customer_id
+      Grocery::OnlineOrder.all.last.fill_status.must_equal last_order_status
     end
   end
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      id = 34
+      product_hash = {"Brown Flour" => 16.12, "Choy Sum" => 87.67}
+      customer_id = 7
+      fill_status = :processing
+      Grocery::OnlineOrder.find(34).id.must_equal id
+      Grocery::OnlineOrder.find(34).products.must_equal product_hash
+      Grocery::OnlineOrder.find(34).customer_id.must_equal customer_id
+      Grocery::OnlineOrder.find(34).fill_status.must_equal fill_status
     end
 
-    it "Raises an error for an online order that doesn't exist" do
+    xit "Raises an error for an online order that doesn't exist" do
       # TODO: Your test code here!
     end
   end
