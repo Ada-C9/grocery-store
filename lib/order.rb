@@ -16,6 +16,27 @@ module Grocery
     end
 
 
+    # Separete the elements into (product_name, product_price):
+    def self.separate(elements_of_order)
+      products = {}
+      elements_of_order.each do |item|
+        # Assign the product of this element in this order:
+        product =  "#{item.split(':')[0]}" #.split.map(&:capitalize).join(' ')
+        # puts "product : #{product}"
+
+        # Assign the price of this element in this order:
+        price =  "#{item.split(':')[1]}"
+        # puts "price : #{price}"
+
+        #Push the Product and the Price into the array products for this order:
+        products["#{product}"] = price.to_f
+        # puts "products: #{products}"
+      end
+      # ap "this is products #{products}"
+      return products
+    end
+
+    # Populates itself with the whole order.csv file:
     def self.all
       # Read file:
       orders = []
@@ -23,37 +44,16 @@ module Grocery
 
         #Select the order number and assign it:
         order_id = row[0]
-        # ap order_id
 
-        # Selec the order element (product, price) and assign it:
+        # Select the order element [product, price] and assign it:
         elements_of_order = "#{row[1]}".split(';')
 
-        # ap elements_of_order.class
-        # ap elements_of_order
-
-        # Separete the elements into (product_name, product_price):
-        products = {}
-        elements_of_order.each do |item|
-
-          # Assign the product of this element in this order:
-          product =  "#{item.split(':')[0]}" #.split.map(&:capitalize).join(' ')
-          # puts "product : #{product}"
-
-          # Assign the price of this element in this order:
-          price =  "#{item.split(':')[1]}"
-          # puts "price : #{price}"
-
-          #Push the Product and the Price into the array products for this order:
-          products["#{product}"] = price.to_f
-          # puts "products: #{products}"
-
-        end
+        # Separete the elements into {product_name, product_price}:
+        products = separate(elements_of_order)
 
         # Push this order to the array od orders
-        orders << [order_id, products]
-        # puts products # = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
+        orders << [order_id, products] # => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
       end
-      # ap orders
       return orders
     end
 
@@ -94,5 +94,7 @@ module Grocery
   end
 end
 
-# order = Grocery::Order.all
-# ap order.class
+# order = Grocery::Order.separate
+order = Grocery::Order.all
+ap order.class
+ap order
