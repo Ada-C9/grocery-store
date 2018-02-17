@@ -61,7 +61,7 @@ module Grocery
       return @all_orders
     end
 
-    #?
+    # Find order where the value of the id fiedl matches the passed parameter
     def self.find(find_id)
       @all_orders.count.times do |order|
         if (order + 1) == find_id
@@ -70,7 +70,6 @@ module Grocery
         end
       end
       return "Order doesn't exist!"
-      #   return @@all_orders.find { |order| order.id == requested_id }
     end
 
 
@@ -110,9 +109,10 @@ module Grocery
 end
 
 
-order = Grocery::Order.all
-find_id = Grocery::Order.find(100)
-ap "#{find_id}"
+# order = Grocery::Order.all
+# find_id = Grocery::Order.find(100)
+# ap "#{find_id}"
+# puts "#{find_id}"
 
 # order = Grocery::Order.separate
 # order = Grocery::Order.all
