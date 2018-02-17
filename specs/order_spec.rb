@@ -80,18 +80,20 @@ describe "Order Wave 1" do
 end
 
 describe "Order Wave 2" do
-  # all_order = Grocery::Order.all
+  before do
+    @all_orders = Grocery::Order.all
+  end
+  
   describe "Order.all" do
     it "Returns an array of all orders" do
-      all_orders = Grocery::Order.all
-      all_orders.must_be_kind_of Array
-      all_orders.each do |order|
+      @all_orders.must_be_kind_of Array
+      @all_orders.each do |order|
         order.must_be_kind_of Grocery::Order
       end
     end
 
     it "Returns accurate information about the first order" do
-      first_item = Grocery::Order.all.first
+      first_item = @all_orders.first
       first_item.id.must_equal "1"
       first_item.products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
       # first_item.products["Slivered Almonds"].must_equal "22.88"
@@ -99,7 +101,7 @@ describe "Order Wave 2" do
 
     it "Returns accurate information about the last order" do
       # is the first element == {items}?
-      last_item = Grocery::Order.all.last
+      last_item = @all_orders.last
       last_item.id.must_equal "100"
       last_item.products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
     end
@@ -108,6 +110,7 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       binding.pry
+
     end
 
     it "Can find the last order from the CSV" do
