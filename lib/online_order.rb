@@ -50,7 +50,7 @@ module Grocery
       customer = Customer.find(customer_id)
       customers_orders = []
       if customer == nil
-        return nil
+        raise ArgumentError
       else
         self.all.each do |online_order|
           if online_order.customer_id == customer_id

@@ -55,7 +55,7 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.add_product("sandwich", 4.25)
-      
+
       order.products.include?("sandwich").must_equal true
     end
 
@@ -181,9 +181,9 @@ describe "Order Wave 2" do
     it "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
 
-      found_order = Grocery::Order.find(101)
+      # found_order = Grocery::Order.find(101)
 
-      found_order.must_be_nil
+      proc { Grocery::Order.find(101) }.must_raise ArgumentError
     end
   end
 end

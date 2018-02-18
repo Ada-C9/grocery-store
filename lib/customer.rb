@@ -34,7 +34,7 @@ module Grocery
           return customer
         end
       end
-      nil
+      raise ArgumentError
     end
 
   end

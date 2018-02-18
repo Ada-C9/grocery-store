@@ -144,9 +144,9 @@ describe "Customer" do
 
     it "Raises an error for a customer that doesn't exist" do
       # TODO: Your test code here!
-      found_customer = Grocery::Customer.find(101)
+      # found_customer = Grocery::Customer.find(101)
 
-      found_customer.must_be_nil
+      proc { Grocery::Customer.find(101) }.must_raise ArgumentError
     end
   end
 end

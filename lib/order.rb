@@ -77,7 +77,7 @@ module Grocery
           return order
         end
       end
-      nil
+      raise ArgumentError
     end
   end
 

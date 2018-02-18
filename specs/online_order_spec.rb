@@ -117,8 +117,8 @@ describe "OnlineOrder" do
       online_order_1 = Grocery::OnlineOrder.new(1234, products, 10, :pending)
       online_order_2 = Grocery::OnlineOrder.new(1234, products, 10, :paid)
 
-      some_action_1 = online_order_1.add_product("sandwich", 2.34)
-      some_action_1 = online_order_2.add_product("sandwich", 2.34)
+      online_order_1.add_product("sandwich", 2.34)
+      online_order_2.add_product("sandwich", 2.34)
 
       online_order_1.products.include?("sandwich").must_equal true
       online_order_2.products.include?("sandwich").must_equal true
@@ -180,9 +180,9 @@ describe "OnlineOrder" do
 
     it "Raises an error for an online order that doesn't exist" do
       # TODO: Your test code here!
-      found_order = Grocery::OnlineOrder.find(105)
+      # found_order = Grocery::OnlineOrder.find(105)
 
-      found_order.must_be_nil
+      proc { Grocery::OnlineOrder.find(105) }.must_raise ArgumentError
     end
   end
 
@@ -201,21 +201,21 @@ describe "OnlineOrder" do
 
     it "Raises an error if the customer does not exist" do
       # TODO: Your test code here!
-      orders_for_customer = Grocery::OnlineOrder.find_by_customer(50)
+      # orders_for_customer = Grocery::OnlineOrder.find_by_customer(50)
 
-      orders_for_customer.must_be_nil
+      proc { Grocery::OnlineOrder.find_by_customer(50) }.must_raise ArgumentError
     end
 
     it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
       no_orders_for_customer_1 = Grocery::OnlineOrder.find_by_customer(16)
-      no_orders_for_customer_2 = Grocery::OnlineOrder.find_by_customer(22)
+      # no_orders_for_customer_2 = Grocery::OnlineOrder.find_by_customer(22)
 
 
       no_orders_for_customer_1.class.must_equal Array
-      no_orders_for_customer_2.class.must_equal Array
+      # no_orders_for_customer_2.class.must_equal Array
       no_orders_for_customer_1.must_equal []
-      no_orders_for_customer_2.must_equal []
+      # no_orders_for_customer_2.must_equal []
     end
   end
 end
