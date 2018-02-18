@@ -3,7 +3,6 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
-
 Minitest::Reporters.use!
 
 describe "Order Wave 1" do
@@ -87,7 +86,7 @@ describe "Order Wave 2" do
 
   describe "Order.all" do
 
-      it "returns an array of orders" do
+      it "returns an array of Orders" do
 
         Grocery::Order.all.must_be_kind_of Array
         #Loop and check all elements of array
