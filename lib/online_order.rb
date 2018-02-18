@@ -57,6 +57,11 @@ module Grocery
       end
       all_online_orders
     end
+
+    def self.find(id)
+
+    end
+
   end
 end
 

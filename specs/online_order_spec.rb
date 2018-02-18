@@ -91,13 +91,13 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find(1).must_equal Grocery::OnlineOrder.all[0]
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find(101).must_raise Error
     end
   end
 
