@@ -48,7 +48,7 @@ module Grocery
           value = pair[1].to_f
           products[keys] = value
         end
-    
+
         new_order = Order.new(id, products)
         all_orders << new_order
       end

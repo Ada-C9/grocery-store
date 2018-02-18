@@ -7,7 +7,7 @@ require_relative '../lib/order'
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
-      id = 1337
+      id = 5
       order = Grocery::Order.new(id, {})
 
       order.must_respond_to :id
