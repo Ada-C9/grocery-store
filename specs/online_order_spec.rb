@@ -2,8 +2,9 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
+require_relative '../lib/online_order'
+
 # TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/online_order'
 # You may also need to require other classes here
 
 # Because an OnlineOrder is a kind of Order, and we've
@@ -11,38 +12,68 @@ require 'minitest/skip_dsl'
 # we effectively get all that testing for free! Here we'll
 # only test things that are different.
 
-xdescribe "OnlineOrder" do
+describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
 
+
+    online_order = Grocery::Online_Orders.new(10, {}, 20,:paid)
+      online_order.must_be_kind_of Grocery::Online_Orders
       # Instatiate your OnlineOrder here
       # online_order =
       # online_order.must_be_kind_of Grocery::Order
     end
 
     it "Can access Customer object" do
-      # TODO: Your test code here!
+    #   # TODO: Your test code here!
+    id = 6
+    products = { "peaches" => 46.34}
+    customer_id = 14
+    fullfillment_status = :pending
+
+    online_order = Grocery::Online_Orders.new(id, products, customer_id, fullfillment_status)
+    online_order.customer_id.must_equal 14
+
     end
 
     it "Can access the online order status" do
       # TODO: Your test code here!
+    id = 12
+    products = { "peaches" => 46.34}
+    customer_id = 1
+    fullfillment_status = :pending
+
+    online_order = Grocery::Online_Orders.new(id, products, customer_id, fullfillment_status)
+    online_order.fullfillment_status.must_equal :pending
     end
+
   end
 
   describe "#total" do
     it "Adds a shipping fee" do
       # TODO: Your test code here!
+      products = { "peaches" => 46.34 }
+      order = Grocery::Online_Orders.new(6, products, 14, :pending)
+      sum= products.values.inject(0, :+)
+      shipping_fee = 10
+      expected_total = sum + (sum * 0.075).round(2) + shipping_fee
+
+      order.total.must_equal expected_total
     end
 
     it "Doesn't add a shipping fee if there are no products" do
       # TODO: Your test code here!
+
+      order = Grocery::Online_Orders.new(6, {}, 14, :pending)
+      order.total.must_equal 0
     end
   end
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
       # TODO: Your test code here!
+
     end
 
     it "Permits action for pending and paid satuses" do
