@@ -10,6 +10,14 @@ module Grocery
        @status = status.to_sym
      end
 
+     def total
+       total = super
+       if total != 0.00
+         total += 10.00
+       end
+       return total
+     end
+
 
   end # OnlineOrder class
 end # Grocery module

@@ -54,13 +54,34 @@ describe "OnlineOrder" do
 
   end # describe initialize
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Adds a shipping fee" do
       # TODO: Your test code here!
+      # arrange
+      order = Grocery::Order.new(9,{"Iceberg lettuce"=>88.51,"Rice paper"=>66.35, "Amaranth"=>1.5, "Walnut"=>65.26})
+      order_total = order.total
+      order_total_plus_shipping = order_total + 10.00
+
+      # act
+      online_order = Grocery::OnlineOrder.new(9,{"Iceberg lettuce"=>88.51,"Rice paper"=>66.35, "Amaranth"=>1.5, "Walnut"=>65.26},14,"paid"
+)
+
+      # assert
+      online_order.total.must_equal order_total_plus_shipping
     end
 
     it "Doesn't add a shipping fee if there are no products" do
       # TODO: Your test code here!
+      # arrange
+      order = Grocery::Order.new(9,{})
+      order_total = order.total
+
+      # act
+      online_order = Grocery::OnlineOrder.new(9,{},14,"pending"
+)
+
+      # assert
+      online_order.total.must_equal order_total
     end
   end
 
