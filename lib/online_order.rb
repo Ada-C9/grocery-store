@@ -62,17 +62,7 @@ module Grocery
       return all_online_orders
     end
 
-    def self.find(id)
-      array_ids = []
-      all_online_orders = Grocery::Online_Orders.all
-      all_online_orders.each do |arr|
-        array_ids << arr.id
-        if array_ids.include? id
-          return Online_Orders.new(arr.id, arr.products, arr.customer_id, arr.fullfillment_status)
-        end
-      end
-      return NIL
-    end
+    # def self.find(id) inherits from class Order 
 
     def self.find_by_customer(customer_id)
       if customer_id == 0 || customer_id > Grocery::Customers.all.length

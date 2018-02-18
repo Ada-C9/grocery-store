@@ -120,12 +120,12 @@ describe "OnlineOrder" do
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       # TODO: Your test code here!
-      Grocery::Online_Orders.find(1).must_be_instance_of Grocery::Online_Orders
+      Grocery::Order.find(1).must_be_instance_of Grocery::Order
     end
 
     it "Raises an error for an online order that doesn't exist" do
       # TODO: Your test code here!
-      result = Grocery::Online_Orders.find(110)
+      result = Grocery::Order.find(110)
       result.must_be_nil
     end
   end
