@@ -23,9 +23,8 @@ describe "OnlineOrder" do
       online_order.must_be_kind_of Grocery::Order
     end
 
-    xit "Can access Customer object" do
-      id = online_order.customer_id
-      customer = Grocery::OnlineOrder.find(id)
+    it "Can access Customer object" do
+      customer = online_order.customer
       customer.must_be_kind_of Grocery::Customer
     end
 
@@ -54,7 +53,7 @@ describe "OnlineOrder" do
 
     shipped_order = Grocery::OnlineOrder.new(3,products,3,"shipped")
     completed_order = Grocery::OnlineOrder.new(3,products,3,"completed")
-    processing_order = Grocery::OnlineOrder.new(3,products,3,"completed")
+    processing_order = Grocery::OnlineOrder.new(3,products,3,"processing")
     pending_order = Grocery::OnlineOrder.new(3,products,3,"pending")
     paid_order = Grocery::OnlineOrder.new(3,products,3,"paid")
 
@@ -122,7 +121,7 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       result = Grocery::OnlineOrder.find(23)
       result.must_be_kind_of Grocery::OnlineOrder
@@ -136,7 +135,7 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       result = Grocery::OnlineOrder.find_by_customer(8)
 
@@ -149,8 +148,12 @@ describe "OnlineOrder" do
       result.must_be_nil
     end
 
-    # it "Returns an empty array if the customer has no orders" do
-    #
-    # end
+    it "Returns an empty array if the customer has no orders" do
+      result = Grocery::OnlineOrder.find_by_customer(22)
+
+      result.must_be_kind_of Array
+      result.length.must_equal 0
+
+    end
   end
 end

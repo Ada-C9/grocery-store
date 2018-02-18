@@ -29,9 +29,21 @@ module  Grocery
     end
 
     def add_product(name, price)
-      if [:pending, :paid].include?(@status)
+      if @status == :pending || @status == :paid
         super(name,price)
       end
+    end
+
+    def customer
+      return_value = nil
+
+      Grocery::Customer.all.each do |customer|
+        if customer.id == @customer_id
+          return_value = customer
+        end
+      end
+
+      return return_value
     end
 
     def self.all
@@ -53,6 +65,26 @@ module  Grocery
       end
       return all_orders
     end
+
+    def self.find_by_customer(cust_id)
+      cust_array = Grocery::Customer.all
+      id_array = []
+      cust_array.each do |customer|
+        id_array << customer.id
+      end
+
+      return_value = []
+      if id_array.include?(cust_id)
+        self.all.each do |online_order|
+          if online_order.customer_id == cust_id
+            return_value << online_order
+          end
+        end # all.each do
+        return return_value
+      else
+        return nil
+      end # if statement
+    end # method - find my customer
 
   end
 end
