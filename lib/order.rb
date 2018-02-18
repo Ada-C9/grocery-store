@@ -31,7 +31,6 @@ module Grocery
     def self.all
       @@all_orders = []
       CSV.foreach("support/orders.csv") do |row|
-        row[0] = row[0].to_i
         row[1] = row[1].split(";")
 
         products_hash = {}
@@ -41,7 +40,7 @@ module Grocery
           products_hash[products[0]] = products[1].to_f
         end
 
-        @@all_orders << [row[0], products_hash]
+        @@all_orders << [row[0].to_i, products_hash]
 
       end
       return @@all_orders
