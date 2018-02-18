@@ -1,8 +1,6 @@
 require "csv"
 require "awesome_print"
 
-FILE_NAME = "../support/orders.csv"
-
 module Grocery
   class Order
     attr_reader :id, :products
@@ -41,7 +39,7 @@ module Grocery
 
     def self.all
       all_orders = []
-      CSV.read(FILE_NAME, 'r').each do |order|
+      CSV.read("support/orders.csv", 'r').each do |order|
         id = order[0].to_i
         product_hash = {}
         order[1].split(";").each do |product|
@@ -70,7 +68,7 @@ end
 #   ap firstOrder.remove_product("Slivered Almonds")
 #   ap firstOrder
 # Running Wave 2
-# self.all
-# self.find
-# ap Grocery::Order.find(80)
-# ap Grocery::Order.find(101)
+   # ap Grocery::Order.all
+  # self.find
+  # ap Grocery::Order.find(80)
+  # ap Grocery::Order.find(101)

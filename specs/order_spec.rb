@@ -76,6 +76,7 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+
   describe "#remove_product" do
     it "Decreases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
