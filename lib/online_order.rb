@@ -2,7 +2,7 @@ require 'csv'
 require 'awesome_print'
 require_relative 'order.rb'
 
-
+module Grocery
 class OnlineOrder < Grocery::Order
   attr_reader :id, :products, :customer, :status
 
@@ -37,9 +37,10 @@ class OnlineOrder < Grocery::Order
   end
 
 end
+end
 
 products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
-online_order = OnlineOrder.new(1, products, 25, "complete")
+online_order = Grocery::OnlineOrder.new(1, products, 25, "complete")
 
 ap online_order.total
 ap online_order.status
