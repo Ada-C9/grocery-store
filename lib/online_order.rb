@@ -4,10 +4,10 @@ require_relative 'order.rb'
 
 module Grocery
 class OnlineOrder < Grocery::Order
-  attr_reader :id, :products, :customer, :status
+  attr_reader :id, :products, :customer_id, :status
 
   def initialize(id, products, customer_id, status = :pending)
-    @oline_id = id
+    @online_id = id
     @products = products
     @customer_id = customer_id
     @status = status #pending, paid, processing, shipped or complete
