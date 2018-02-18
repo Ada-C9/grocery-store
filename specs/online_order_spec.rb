@@ -25,9 +25,9 @@ describe "OnlineOrder" do
       online_order.must_be_kind_of Grocery::Order
     end
 
-    xit "Can access Customer object" do
-      # TODO: Your test code here!
-    end
+    # it "Can access Customer object" do
+    #   # TODO: Your test code here!
+    # end
 
     it "Can access the online order status" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
@@ -53,8 +53,8 @@ describe "OnlineOrder" do
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
       products1 = { "banana" => 1.99, "cracker" => 3.00 }
-      products2 = { "Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93" }
-      products3 = { "Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59" }
+      products2 = { "Slivered Almonds"=> 22.88, "Wholewheat flour"=> 1.93 }
+      products3 = { "Allspice"=> 64.74, "Bran"=> 14.72 , "UnbleachedFlour"=> 80.59 }
       online_order1 = Grocery::OnlineOrder.new(1,products1,1, :processing)
       online_order2 = Grocery::OnlineOrder.new(2,products2,2, :shipped)
       online_order3 = Grocery::OnlineOrder.new(3,products3,3, :completed)
@@ -66,50 +66,59 @@ describe "OnlineOrder" do
 
     it "Permits action for pending and paid statuses" do
       products1 = { "banana" => 1.99, "cracker" => 3.00 }
-      products2 = { "Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93" }
+      products2 = { "Slivered Almonds"=> 22.88, "Wholewheat flour"=> 1.93 }
       online_order1 = Grocery::OnlineOrder.new(1,products1,1, :pending)
       online_order2 = Grocery::OnlineOrder.new(2,products2,2, :paid)
 
       online_order1.add_product("turkey",7.50).must_be_kind_of TrueClass
-      online_order2.add_product("Slivered Almonds", "22.88").must_be_kind_of FalseClass
+      online_order2.add_product("Slivered Almonds", 22.88).must_be_kind_of FalseClass
     end
   end
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.all.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+      product_list = {"Lobster"=>"17.18", "Annatto seed"=>"58.38", "Camomile"=>"83.21"}
+      Grocery::OnlineOrder.all.first.id.must_equal 1
+      Grocery::OnlineOrder.all.first.products.must_equal product_list
+      Grocery::OnlineOrder.all.first.customer_id.must_equal 25
+      Grocery::OnlineOrder.all.first.order_status.must_equal :complete
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
-    end
-  end
+      product_list = {"Amaranth"=>"83.81", "Smoked Trout"=>"70.6", "Cheddar"=>"5.63"}
+      Grocery::OnlineOrder.all.last.id.must_equal 100
+      Grocery::OnlineOrder.all.last.products.must_equal product_list
+      Grocery::OnlineOrder.all.last.customer_id.must_equal 20
+      Grocery::OnlineOrder.all.last.order_status.must_equal :pending
 
-  describe "OnlineOrder.find" do
-    it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
     end
+  end#end self.all method tests
 
-    it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
-    end
-  end
+  # describe "OnlineOrder.find" do
+  #   it "Will find an online order from the CSV" do
+  #     # TODO: Your test code here!
+  #   end
+  #
+  #   it "Raises an error for an online order that doesn't exist" do
+  #     # TODO: Your test code here!
+  #   end
+  # end
 
-  describe "OnlineOrder.find_by_customer" do
-    it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
-    end
-
-    xit "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
-    end
-
-    xit "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
-    end
-  end
+  # describe "OnlineOrder.find_by_customer" do
+  #   it "Returns an array of online orders for a specific customer ID" do
+  #     # TODO: Your test code here!
+  #   end
+  #
+  #   xit "Raises an error if the customer does not exist" do
+  #     # TODO: Your test code here!
+  #   end
+  #
+  #   xit "Returns an empty array if the customer has no orders" do
+  #     # TODO: Your test code here!
+  #   end
+  # end
 end

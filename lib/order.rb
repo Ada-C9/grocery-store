@@ -2,7 +2,7 @@ require 'csv'
 require 'awesome_print'
 require 'pry'
 
-FILE_NAME = 'support/orders.csv'
+ORDER_FILE_NAME = 'support/orders.csv'
 
 module Grocery
   class Order
@@ -36,7 +36,7 @@ module Grocery
     def self.all
       orders = []
       #opening CSV
-      CSV.read(FILE_NAME, 'r').each do |order|
+      CSV.read(ORDER_FILE_NAME, 'r').each do |order|
 
         step1 = order[1].split(";")
         step2 = []
