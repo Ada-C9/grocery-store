@@ -44,7 +44,7 @@ module Grocery
 
     def self.all
       all_online_orders = []
-      CSV.read("support/online_orders.csv", "r").each do |order|
+      CSV.read("../support/online_orders.csv", "r").each do |order|
         id = order[0].to_i
         product_hash = {}
         order[1].split(";").each do |product|
@@ -69,6 +69,16 @@ module Grocery
         online_order_summary << self.all[id-1].status
         online_order_summary
       end
+    end
+
+    def self.find_by_customer(id)
+      online_orders = []
+      self.all.each do |order|
+        if order.customer_id == id
+          online_orders << order
+        end
+      end
+      online_orders
     end
   end
 end
@@ -96,3 +106,6 @@ end
 
   # Running self.find
   # ap Grocery::OnlineOrder.find(100)
+
+  # Running self.find_by_customer
+    ap Grocery::OnlineOrder.find_by_customer(14)
