@@ -6,8 +6,16 @@ module Grocery
   class Order
     attr_reader :id, :products
 
+    @@total_order = 0 
+
+    def initialize(id, products)
+      @id = id
+      @products = products
+    end
+
+
     def self.all
-      print "This is a class method."
+      # "This is a class method."
       #returns the csv file to an array with headers
       #orders_csv = CSV.read('support/orders.csv', 'r')
       orders_csv = CSV.read("support/orders.csv", 'r',headers: true).to_a
@@ -35,13 +43,11 @@ module Grocery
     end
 
 
-    def initialize(id, products)
-      @id = id
-      @products = products
-    end
 
+    #don't need change everything to reflect the self.total, assumes self.total
     def total
       sum = 0
+      #put in a class level variable for total
       if !(@products.empty?) || @products !=  nil
         @products.each do |product, cost|
           sum += cost
@@ -49,8 +55,13 @@ module Grocery
         sales_tax = 0.075
         sum = (sum + (sum * sales_tax)).round(2)
       end
+      @@total_order = sum
       return sum
-      # TODO: implement total
+      # TODO: make changes where sum is returned
+    end
+
+    def self.total_order
+      return @@total_order
     end
 
     def add_product(product_name, product_price)
@@ -58,7 +69,7 @@ module Grocery
         return false
       else
         @products[product_name] = product_price
-        return true 
+        return true
         # TODO: implement add_product
       end
     end
@@ -70,6 +81,7 @@ module Grocery
       end
 
     end
-  end
 
+
+  end
 end
