@@ -39,8 +39,8 @@ class OnlineOrder < Grocery::Order
 end
 end
 
-products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
-online_order = Grocery::OnlineOrder.new(1, products, 25, "complete")
-
-ap online_order.total
-ap online_order.status
+# products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+# online_order = Grocery::OnlineOrder.new(1, products, 25, "complete")
+#
+# ap online_order.total
+# ap online_order.status
