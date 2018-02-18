@@ -15,17 +15,35 @@ module Grocery
       @status = status
     end
 
+    #returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter.
+    def self.find_by_customer(customer_id)
+      online_orders_csv = CSV.read("support/online_orders.csv", 'r',headers: true).to_a
+
+      if customer_id > online_orders_csv.length
+        return nil
+      end
+
+      if customer_id >=1
+        specific_online_order = online_orders_csv [customer_id-1]
+      elsif customer_id < 0
+        specific_online_order = online_orders_csv[customer_id]
+      else
+        return nil
+      end
+      return specific_online_order
+    end
+
 
     #overwrites all method for Order
     def self.all
-      osnline_online_orders_csv = CSV.read("support/online_orders.csv", 'r',headers: true).to_a
+      osnline_orders_csv = CSV.read("support/online_orders.csv", 'r',headers: true).to_a
 
       return online_orders_csv
     end
 
     #overwrites .find method for Order class
     def self.find(id)
-      online_online_orders_csv = CSV.read("support/online_orders.csv", 'r',headers: true).to_a
+      online_sorders_csv = CSV.read("support/online_orders.csv", 'r',headers: true).to_a
 
       if id > online_orders_csv.length
         return nil
@@ -74,6 +92,10 @@ module Grocery
       end
 
     end
+
   end
 
 end
+
+custidfind = Grocery::OnlineOrder.find_by_customer(25)
+puts custidfind
