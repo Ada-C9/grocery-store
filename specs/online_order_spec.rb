@@ -10,11 +10,11 @@ require_relative '../lib/online_order'
 
 describe "OnlineOrder" do
     fake_customer_id = 42
-    fake_email = "adalovelace.gmail.com"
-    fake_address = {street: "42 Baker Street", city: "Seattle", state: "WA",
-      zip_code: "98101-1820"}
+    # fake_email = "adalovelace.gmail.com"
+    # fake_address = {street: "42 Baker Street", city: "Seattle", state: "WA",
+      # zip_code: "98101-1820"}
 
-    fake_customer = Grocery::Customer.new(fake_customer_id, fake_email, fake_address)
+    # fake_customer = Grocery::Customer.new(fake_customer_id, fake_email, fake_address)
 
     test_order_id = 121
     test_order_products = {"banana" => 1.99, "cracker" => 3.00}
@@ -22,10 +22,10 @@ describe "OnlineOrder" do
     fake_online = Grocery::OnlineOrder.new(test_order_id,
       test_order_products, 42, :pending)
 
-    real_customer_id = 29
-    real_customer_email = "sister@mertz.co"
-    real_customer_address = {street: "943 Rasheed Walks", city: "Port Kara",
-      state: "AK",zip_code: "79531"}
+    # real_customer_id = 29
+    # real_customer_email = "sister@mertz.co"
+    # real_customer_address = {street: "943 Rasheed Walks", city: "Port Kara",
+    #   state: "AK",zip_code: "79531"}
 
 
   describe "#initialize" do
@@ -171,8 +171,8 @@ describe "OnlineOrder" do
 
       actual_product_array = Grocery::OnlineOrder.find_by_customer(14)
 
-      actual_product_array.customer.id.must_be_kind_of Array
-      actual_product_array.customer.id.must_equal expected_product_array
+      actual_product_array.must_be_kind_of Array
+      actual_product_array.must_equal expected_product_array
 
     end
 
