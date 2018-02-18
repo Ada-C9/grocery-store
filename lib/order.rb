@@ -63,7 +63,9 @@ module Grocery
           return order
         end
       end
-      return nil
+      raise StandardError.new("Error: No orders exist with that ID.")
+    rescue StandardError => e
+      puts e.message
     end
 
   end

@@ -162,10 +162,9 @@ describe "Order Wave 2" do
       last_order.products.must_equal({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
     end
 
-    it "Returns nil for an order that doesn't exist" do
-      fake_order = Grocery::Order.find(150)
-
-      fake_order.must_be_nil
+    it "Raises an error for an order that doesn't exist" do
+      Grocery::Order.find(150).must_raise StandardError
     end
+
   end
 end

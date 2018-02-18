@@ -76,10 +76,9 @@ describe "Customer" do
       last_customer.address.must_equal({:street=>"7513 Kaylee Summit", :city=>"Uptonhaven", :state=>"DE", :zip_code=>"64529-2614"})
     end
 
-    it "Returns nil for a customer that doesn't exist" do
-      fake_customer = Grocery::Customer.find(45)
-
-      fake_customer.must_be_nil
+    it "Raises an error for a customer that doesn't exist" do
+      Grocery::Customer.find(45).must_raise StandardError
     end
+
   end
 end

@@ -23,13 +23,16 @@ module Grocery
       return sum_with_tax_fee
     end
 
-    def add_product(product_name, product_price, status)
+    def add_product(product_name, product_price)
       if @status == :pending || @status == :paid
         true_false = super(product_name, product_price)
-        #true if product added, false if product not added
+        # true if product added, false if product not added
         return true_false
       end
-      return nil
+      # unsure how to make this an argument error instead of a standard error
+      raise StandardError.new("Error: Can't add product. Order status is #{@status}.")
+    rescue StandardError => e
+      puts e.message
     end
 
     def self.all
@@ -58,7 +61,7 @@ module Grocery
         end
         online_orders_entered << OnlineOrder.new(id, products, customer, status)
       end
-        return online_orders_entered
+      return online_orders_entered
     end
 
     def self.find(id)
@@ -68,18 +71,31 @@ module Grocery
           return online_order
         end
       end
-      return nil
+      raise StandardError.new("Error: No online orders exists with that ID.")
+    rescue StandardError => e
+      puts e.message
     end
 
     def self.find_by_customer(customer_id)
-      online_orders_entered = self.all
-      customers_online_orders = []
-      online_orders_entered.each do |online_order|
-        if online_order.customer.id == customer_id
-          customers_online_orders << online_order
+      valid = false
+      Grocery::Customer.all.each do |customer|
+        if customer.id == customer_id
+            valid = true
         end
       end
-      return customers_online_orders
+      if valid == true
+        online_orders_entered = self.all
+        customers_online_orders = []
+        online_orders_entered.each do |online_order|
+          if online_order.customer.id == customer_id
+            customers_online_orders << online_order
+          end
+        end
+        return customers_online_orders
+      end
+        raise StandardError.new("Error: No customer exists with that ID.")
+      rescue StandardError => e
+        puts e.message
     end
 
   end

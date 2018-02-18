@@ -62,17 +62,6 @@ describe "OnlineOrder" do
   end
 
   describe "#add_product" do
-    it "Does not permit action for processing, shipped or completed statuses" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
-
-      status = [:processing, :shipped, :completed]
-      status.each do |status|
-        online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
-        online_order.add_product("salad", 4.25, status).must_be_nil
-      end
-    end
-
     it "Permits action for pending and paid satuses" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
@@ -80,9 +69,21 @@ describe "OnlineOrder" do
       status = [:pending, :paid]
       status.each do |status|
         online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
-        online_order.add_product("salad", 4.25, status).wont_be_nil
+        online_order.add_product("salad", 4.25).wont_be_nil
       end
     end
+
+    it "Does not permit action for processing, shipped or completed statuses" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
+
+      status = [:processing, :shipped, :complete]
+      status.each do |status|
+        online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
+        online_order.add_product("salad", 4.25).must_raise StandardError
+      end
+    end
+
   end
 
   describe "OnlineOrder.all" do
@@ -99,7 +100,6 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the first online order" do
-
       online_orders_entered = Grocery::OnlineOrder.all
       first_order = online_orders_entered[0]
 
@@ -133,7 +133,7 @@ describe "OnlineOrder" do
     it "Raises an error for an online order that doesn't exist" do
       fake_order = Grocery::OnlineOrder.find(500)
 
-      fake_order.must_be_nil
+      fake_order.must_raise StandardError
     end
   end
 
@@ -145,16 +145,17 @@ describe "OnlineOrder" do
       customers_online_orders.class.must_equal Array
     end
 
-    # it "Raises an error if the customer does not exist" do
-    #   customers_online_orders = Grocery::OnlineOrder.find_by_customer(150)
-    #
-    #   customers_online_orders.must_be_nil
-    # end
+    it "Raises an error if the customer does not exist" do
+      customers_online_orders = Grocery::OnlineOrder.find_by_customer(150)
+
+      customers_online_orders.must_raise StandardError
+    end
 
     it "Returns an empty array if the customer has no orders" do
       customers_online_orders = Grocery::OnlineOrder.find_by_customer(22)
 
       customers_online_orders.must_be_empty
     end
+
   end
 end
