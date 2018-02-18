@@ -74,10 +74,26 @@ describe "OnlineOrder" do
     it "Does not permit action for processing, shipped or completed statuses" do
       # TODO: Your test code here!
 
+    online_order_shipped = Grocery::Online_Orders.new(27, {"Apples" => 61.87, "Garlic" => 64.36}, 27, :shipped)
+    online_order_shipped.add_product("apple", 12.3).must_be_nil
+
+    online_order_processing = Grocery::Online_Orders.new(16, {"Ricemilk" => 5.07}, 10, :processing)
+    online_order_processing.add_product("apple", 12.3).must_be_nil
+
+    online_order_complete = Grocery::Online_Orders.new(38, {"Kale" => 90.99, "Miso" => 90.2}, 2, :complete)
+    online_order_complete.add_product("apple", 12.3).must_be_nil
+
     end
 
     it "Permits action for pending and paid satuses" do
       # TODO: Your test code here!
+     online_order_pending = Grocery::Online_Orders.new(6, {"Peaches" => 46.34}, 14, :pending)
+     online_order_pending.must_respond_to(:add_product)
+     online_order_pending.add_product("apple", 12.3).must_equal true
+
+     online_order_paid = Grocery::Online_Orders.new(13, {"Lettuce" => 37.94, "Paper" => 23.93, "Flaxseed" => 23.67}, 19, :paid)
+     online_order_paid.must_respond_to(:add_product)
+     online_order_paid.add_product("apple", 12.3).must_equal true
     end
   end
 

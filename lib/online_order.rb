@@ -33,12 +33,12 @@ module Grocery
 
     fullfillment_status = [:pending, :paid, :processing, :shipped, :complete]
 
-    def add_product
-      if @products.keys.include? (product_name)
-        return false
-      elsif fullfillment_status == :pending || fullfillment_status == :paid
+    def add_product(product_name, product_price)
+      if fullfillment_status == :pending || fullfillment_status == :paid
         @products[product_name] = product_price
         return true
+      else
+        return nil
       end
     end
 
@@ -80,9 +80,3 @@ module Grocery
 
   end #class
 end #module
-
-# online_order = Grocery::Online_Orders.new(5, {"product":10, "product2":5}, 3, "paid")
-# #
-# # ap Grocery::Online_Orders.all
-# #
-# # puts online_order.total
