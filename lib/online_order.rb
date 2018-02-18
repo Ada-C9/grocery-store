@@ -44,7 +44,7 @@ module Grocery
 
     def self.all
       all_online_orders = []
-      CSV.read("support/online_orders.csv", "r").each do |order|
+      CSV.read("../support/online_orders.csv", "r").each do |order|
         id = order[0].to_i
         product_hash = {}
         order[1].split(";").each do |product|
@@ -58,10 +58,14 @@ module Grocery
       all_online_orders
     end
 
+    # Should return the customer id and order status in addition to products/prices
     def self.find(id)
-
+      online_order_summary = []
+      online_order_summary << super
+      online_order_summary << self.all[id-1].customer_id
+      online_order_summary << self.all[id-1].status
+      online_order_summary
     end
-
   end
 end
 
@@ -82,5 +86,8 @@ end
     # ap new_order.remove_product("Bananas")
     # ap new_order
 
-  # Running .self
+  # Running self.all
   # ap Grocery::OnlineOrder.all
+
+  # Running self.find
+    ap Grocery::OnlineOrder.find(1)
