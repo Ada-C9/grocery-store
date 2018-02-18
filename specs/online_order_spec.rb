@@ -100,14 +100,27 @@ describe "OnlineOrder" do
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       # TODO: Your test code here!
+      array = Grocery::Online_Orders.all
+      array.must_be_instance_of Array
+
     end
 
     it "Returns accurate information about the first online order" do
       # TODO: Your test code here!
+    first_order = Grocery::Online_Orders.all[0]
+    first_order.id.must_equal 1
+
+    expected_products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+    first_order.products.must_equal expected_products
     end
 
     it "Returns accurate information about the last online order" do
       # TODO: Your test code here!
+    last_order = Grocery::Online_Orders.all[-1]
+    last_order.id.must_equal 100
+
+    expected_products = {"Amaranth" => 83.81, "Smoked Trout" => 70.6, "Cheddar" => 5.63 }
+    last_order.products.must_equal expected_products
     end
   end
 
