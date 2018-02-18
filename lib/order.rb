@@ -11,7 +11,7 @@ module Grocery
     attr_reader :id
     attr_accessor :products
 
-    @@raw = CSV.parse(File.read('../support/orders.csv'))
+    @@raw = nil
     @@array_of_processed_orders = []
     @@all_order_instances = []
 
@@ -46,6 +46,7 @@ module Grocery
     end
 
     def self.all
+      @@raw = CSV.parse(File.read('../support/orders.csv'))
       @@raw.each do |initial_order_data|
         processed_entry = process_order_csv(initial_order_data)
         @@array_of_processed_orders << processed_entry
@@ -56,7 +57,6 @@ module Grocery
       end
       return @@all_order_instances
     end
-
 
   end
 end
