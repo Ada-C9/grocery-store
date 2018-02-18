@@ -81,9 +81,9 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      list = Grocery::OrderOnline.all
+      list = Grocery::OnlineOrder.all
       list.must_be_kind_of Array
       list[0].must_be_kind_of Grocery::OnlineOrder
     end
@@ -91,10 +91,10 @@ describe "OnlineOrder" do
     it "Returns accurate information about the first online order" do
 
       list_item = Grocery::OnlineOrder.all[0]
-      sv_row = CSV.read('support/online_order.csv')[0]
+      csv_row = CSV.read('support/online_orders.csv')[0]
       csv_row[0].to_i.must_equal list_item.id
-      csv_row[2].must_equal list_item.customer_id
-      csv_row[2].to_sym.must_equal list_item.status
+      csv_row[2].to_i.must_equal list_item.customer_id
+      csv_row[3].to_sym.must_equal list_item.status
       products_string = ""
       list_item.products.each do |k, v|
         products_string += "#{k}:#{v};"
@@ -108,10 +108,10 @@ describe "OnlineOrder" do
     it "Returns accurate information about the last online order" do
 
       list_item = Grocery::OnlineOrder.all[-1]
-      sv_row = CSV.read('support/online_order.csv')[-1]
+      csv_row = CSV.read('support/online_orders.csv')[-1]
       csv_row[0].to_i.must_equal list_item.id
-      csv_row[2].must_equal list_item.customer_id
-      csv_row[2].to_sym.must_equal list_item.status
+      csv_row[2].to_i.must_equal list_item.customer_id
+      csv_row[3].to_sym.must_equal list_item.status
       products_string = ""
       list_item.products.each do |k, v|
         products_string += "#{k}:#{v};"
