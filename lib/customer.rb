@@ -1,29 +1,46 @@
-require_relative '../lib/online_order'
+require_relative '../lib/order'
 require 'csv'
-
+require 'awesome_print'
 module Grocery
 
-  class Customer < Grocery::OnlineOrder
+  class Customer < Grocery::Order
+      attr_reader :id, :email, :delivery
 
-    #do we need this? Are we already intialziing or i
-    #is it diff for factory
-    # def initialize(position)
-    #   @position = position
-    # end
+      #overriding initiazize method from Order class
+      #self.initialize
+      def initialize(id, email, address1, city, state, zipcode)
+        @id = id
+        @email = email
+        @address1 = address1
+        @city = city
+        @state = state
+        @zipcode = zipcode
+      end
 
-    # This is the class method, it starts with self.
-    # It is only called on the class directly Pawn.make_row
+
     def self.all
-      #id
-      #email address
-      #delivery address information
+      #overriding the self.all method of super classes
+      customer_info_csv=CSV.read("support/customers.csv", 'r',headers: true).to_a
+
+      return customer_info_csv
+    end
+
+    #overrides order class method .find
+    def self.find(id)
       customer_info_csv = CSV.read("support/customers.csv", 'r',headers: true).to_a
 
-      # customer = []
-      # customer_info_csv.each do |line|
-      #   # Here we call the new method of the current class
-      #   customer << self.all
-      return customer_info_csv
+      if id > customer_info_csv.length
+        return nil
+      end
+
+      if id >=1
+        specific_customer = customer_info_csv [id-1]
+      elsif id < 0
+        specific_customer = customer_info_csv[id]
+      else
+        return nil
+      end
+      return specific_customer
     end
 
 
@@ -32,8 +49,10 @@ module Grocery
 
 
 end
-array = Grocery::Customer.all
 
-ap array
+customer = Grocery::Customer.new(5, 'bbb@gm', 'there', 'tt', 'oo', 'pp')
 
-puts "this is something"
+#ap Grocery::Customer.all
+#ap customer_info_csv
+puts Grocery::Customer.find(5)
+#array = Grocery::Customer.all
