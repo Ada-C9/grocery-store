@@ -47,6 +47,7 @@ describe "Order Wave 1" do
 
       order.add_product("salad", 4.25)
       expected_count = before_count + 1
+
       order.products.count.must_equal expected_count
     end
 
@@ -55,6 +56,7 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.add_product("sandwich", 4.25)
+
       order.products.include?("sandwich").must_equal true
     end
 
@@ -63,7 +65,6 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       before_total = order.total
-
       result = order.add_product("banana", 4.25)
       after_total = order.total
 
@@ -76,6 +77,7 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       result = order.add_product("salad", 4.25)
+
       result.must_equal true
     end
   end
@@ -88,7 +90,7 @@ describe "Order Wave 1" do
       order.remove_product("banana")
 
       count = 0
-      products.each do |order|
+      products.each do |single_order|
         count += 1
       end
       count.must_equal 1
@@ -120,7 +122,6 @@ describe "Order Wave 2" do
       orders_entered = Grocery::Order.all
 
       orders_entered.class.must_equal Array
-
       count = 0
       orders_entered.each do |order|
         count += 1
@@ -130,19 +131,19 @@ describe "Order Wave 2" do
 
     it "Returns accurate information about the first order" do
       orders_entered = Grocery::Order.all
+
       first_order = orders_entered[0]
 
       first_order.id.must_equal 1
-
       first_order.products.must_equal({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
     end
 
     it "Returns accurate information about the last order" do
       orders_entered = Grocery::Order.all
+
       last_order = orders_entered[-1]
 
       last_order.id.must_equal 100
-
       last_order.products.must_equal({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
     end
   end

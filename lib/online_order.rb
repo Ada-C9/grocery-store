@@ -32,7 +32,7 @@ module Grocery
       # unsure how to make this an argument error instead of a standard error
       raise StandardError.new("Error: Can't add product. Order status is #{@status}.")
     rescue StandardError => e
-      puts e.message
+      return e.message
     end
 
     def self.all
@@ -73,7 +73,7 @@ module Grocery
       end
       raise StandardError.new("Error: No online orders exists with that ID.")
     rescue StandardError => e
-      puts e.message
+      return e.message
     end
 
     def self.find_by_customer(customer_id)
@@ -83,6 +83,7 @@ module Grocery
             valid = true
         end
       end
+
       if valid == true
         online_orders_entered = self.all
         customers_online_orders = []
@@ -93,9 +94,10 @@ module Grocery
         end
         return customers_online_orders
       end
+
         raise StandardError.new("Error: No customer exists with that ID.")
       rescue StandardError => e
-        puts e.message
+        return e.message
     end
 
   end

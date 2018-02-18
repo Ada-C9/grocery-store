@@ -8,7 +8,6 @@ require_relative '../lib/customer'
 describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
-
       products = { "banana" => 1.99, "cracker" => 3.00 }
       customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
 
@@ -40,23 +39,22 @@ describe "OnlineOrder" do
     it "Adds a shipping fee" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
-
       online_order = Grocery::OnlineOrder.new(1325, products, customer, :complete)
 
       sum = products.values.inject(0, :+)
       cents_total_fee = (sum + (sum * 0.075))*100.round + 1000
-
       total_with_money = online_order.total
+
       total_with_money.must_equal Money.new(cents_total_fee, "USD")
     end
 
     it "Doesn't add a shipping fee if there are no products" do
       products = {}
       customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
-
       online_order = Grocery::OnlineOrder.new(1325, products, customer, :complete)
 
       total_with_money = online_order.total
+
       total_with_money.must_equal Money.new(0, "USD")
     end
   end
@@ -66,9 +64,10 @@ describe "OnlineOrder" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
 
-      status = [:pending, :paid]
-      status.each do |status|
+      permitted_statuses = [:pending, :paid]
+      permitted_statuses.each do |status|
         online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
+
         online_order.add_product("salad", 4.25).wont_be_nil
       end
     end
@@ -77,9 +76,10 @@ describe "OnlineOrder" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
 
-      status = [:processing, :shipped, :complete]
-      status.each do |status|
+      prohibited_statuses = [:processing, :shipped, :complete]
+      prohibited_statuses.each do |status|
         online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
+
         online_order.add_product("salad", 4.25).must_raise StandardError
       end
     end
@@ -91,9 +91,8 @@ describe "OnlineOrder" do
       online_orders_entered = Grocery::OnlineOrder.all
 
       online_orders_entered.class.must_equal Array
-
       count = 0
-      online_orders_entered.each do |order|
+      online_orders_entered.each do |single_order|
         count += 1
       end
       count.must_equal 100
@@ -111,12 +110,13 @@ describe "OnlineOrder" do
 
     it "Returns accurate information about the last online order" do
       online_orders_entered = Grocery::OnlineOrder.all
-      first_order = online_orders_entered[-1]
 
-      first_order.id.must_equal 100
-      first_order.products.must_equal({"Amaranth"=>83.81, "Smoked Trout"=>70.6, "Cheddar"=>5.63})
-      first_order.customer.id.must_equal 20
-      first_order.status.must_equal :pending
+      last_order = online_orders_entered[-1]
+
+      last_order.id.must_equal 100
+      last_order.products.must_equal({"Amaranth"=>83.81, "Smoked Trout"=>70.6, "Cheddar"=>5.63})
+      last_order.customer.id.must_equal 20
+      last_order.status.must_equal :pending
     end
   end
 

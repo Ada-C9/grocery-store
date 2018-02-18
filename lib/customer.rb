@@ -23,7 +23,6 @@ module Grocery
         address[:zip_code] = row[5]
 
         all_customers << Customer.new(customer_id, email, address)
-
       end
       return all_customers
     end
@@ -37,7 +36,7 @@ module Grocery
       end
       raise StandardError.new("Error: No customer exists with that ID.")
     rescue StandardError => e
-      puts e.message
+      return e.message
     end
 
   end

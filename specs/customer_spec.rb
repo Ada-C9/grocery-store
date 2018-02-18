@@ -6,9 +6,9 @@ require_relative '../lib/customer'
 describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
-
       id = 25
       email = "summer@casper.io"
+
       customer = Grocery::Customer.new(id, email, {})
 
       customer.must_respond_to :id
@@ -31,7 +31,6 @@ describe "Customer" do
       customers_entered = Grocery::Customer.all
 
       customers_entered.class.must_equal Array
-
       count = 0
       customers_entered.each do |order|
         count += 1
@@ -42,6 +41,7 @@ describe "Customer" do
 
     it "Returns accurate information about the first customer" do
       all_customers = Grocery::Customer.all
+
       first_customer = all_customers[0]
 
       first_customer.id.must_equal 1
@@ -51,6 +51,7 @@ describe "Customer" do
 
     it "Returns accurate information about the last customer" do
       all_customers = Grocery::Customer.all
+
       last_customer = all_customers[-1]
 
       last_customer.id.must_equal 35
@@ -69,7 +70,7 @@ describe "Customer" do
     end
 
     it "Can find the last customer from the CSV" do
-      last_customer = first_customer = Grocery::Customer.find(35)
+      last_customer = Grocery::Customer.find(35)
 
       last_customer.id.must_equal 35
       last_customer.email.must_equal "rogers_koelpin@oconnell.org"
