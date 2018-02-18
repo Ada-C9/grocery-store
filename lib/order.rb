@@ -1,11 +1,12 @@
 require 'csv'
-require 'pry'
+# require 'pry'
+require 'awesome_print'
 # TODO: what to do about had initialize values??
 
 module Grocery
   class Order
 
-    @@all = []
+    @@all_orders = []
 
     attr_reader :id, :products
 
@@ -36,22 +37,22 @@ module Grocery
     # end
 
     def self.all
-      # if @@all.empty? # TODO: uncomment these when done!!
+      if @@all_orders.empty? # TODO: uncomment these when done!!
         CSV.read("../support/orders.csv").each do |order_line|
           order_id = order_line[0].to_i
           product_hash = {}
           order_line[1].scan(/[^\;]+/).each do |order|
-              name, price = order.split(":")
-              product_hash["#{name}"] = price.to_f
+            name, price = order.split(":")
+            product_hash["#{name}"] = price.to_f
           end
-          @@all << Order.new(order_id, product_hash)
+          @@all_orders << Grocery::Order.new(order_id, product_hash)
         end
-      # end
-      return @@all
+      end
+      return @@all_orders
     end
 
     def self.find(requested_id) # TODO: index - 1 = id and then use binary search?
-      return @@all.find { |order| order.id == requested_id }
+      return all.find { |order| order.id == requested_id }
     end
 
 
@@ -112,6 +113,8 @@ private
 
   end
 end
+
+# binding.pry
 
 # This version of self breaks up products for initializing new orders.
 # def self.all
