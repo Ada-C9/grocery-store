@@ -380,19 +380,26 @@ require 'awesome_print'
 ####  Ok. Tested fine with giving Order.new the outputs of this method as
 ####  first_test[0] and first_test[1]
 
-####  Now, I think we're ready to start automating.
+#####  Now, I'm going to put the single-row test data here, for archival
+#####  purposes:
+
+#### SINGLE ROW TEST DATA:
+#### test_order = [
+####  "1",
+####  "Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"
+#### ]
+
+
+####  Because  I think we're ready to start automating.
 ####  Sounds like commit o'clock again.
 
-### SINGLE ROW TEST DATA:
-##test_order = [
-##  "1",
-##  "Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"
-##]
-
-all_orders_initial = CSV.parse(File.read('../support/orders.csv'))
-ap all_orders_initial
-puts all_orders_initial.inspect
-
+#
+#
+#
+# all_orders_initial = CSV.parse(File.read('../support/orders.csv'))
+# #ap all_orders_initial
+# #puts all_orders_initial.inspect
+#
 #
 #
 #
@@ -409,42 +416,189 @@ puts all_orders_initial.inspect
 #   return processed_order
 # end
 #
-#
-#
-#
-#
-#
-# module Grocery
-#
-#   class Order
-#     attr_reader :id
-#     attr_accessor :products
-#
-#     def initialize(id, products)
-#       @id = id
-#       @products = products
-#     end
-#     def self.all
-#     end
-#     def add_product(product, price)
-#       before_count = @products.count
-#       if !@products.include?(product)
-#         @products = @products.merge(product => price)
-#       end
-#       before_count + 1 == @products.count
-#     end
-#     def remove_product(product)
-#       before_count = @products.count
-#       @products.delete(product)
-#       before_count - 1 == @products.count
-#     end
-#     def total
-#       sum = @products.values.inject(0, :+)
-#       sum_with_tax = expected_total = sum + (sum * 0.075).round(2)
-#       return sum_with_tax
-#     end
-#   end
+# array_of_processed_orders = []
+# all_orders_initial.each do |initial_order_data|
+#   processed_entry = process_order_csv(initial_order_data)
+#   array_of_processed_orders << processed_entry
 # end
+
+#puts array_of_processed_orders.inspect
+
+#ap array_of_processed_orders
+
+#### This worked fine.  Now, I need to be able to instances of Order out of
+#### this data.
+=begin
+original CSV-parsing code:
+
+  all_orders_initial = CSV.parse(File.read('../support/orders.csv'))
+
+=end
+
+# def convert_CSV_to_array_of_Order_instances (CSV_file_name)
+#     all_orders_initial = CSV.parse(File.read('CSV_file_name'))
+#
+#     def process_order_csv(raw_order_array)
+#       processed_order = []
+#       processed_order[0] = raw_order_array[0]
+#       separated_products = raw_order_array[1].split(";")
+#       product_price_array = []
+#       separated_products.each do |product_with_price|
+#         product_price_pair = product_with_price.split(":")
+#         product_price_array << product_price_pair
+#       end
+#       processed_order[1] = product_price_array.to_h
+#       return processed_order
+#     end
+#     def make_order_instances (fully_processed_order_data)
+#         array_of_instances = []
+#         fully_processed_order_data.each do |individual_order_array|
+#           order_designation = Order.new(individual_order_array[0], individual_order_array[1]
+#           array_of_instances << order_designation
+#         end
+#       end
+#
+#
+#
+#     array_of_processed_orders = []
+#     all_orders_initial.each do |initial_order_data|
+#       processed_entry = process_order_csv(initial_order_data)
+#       array_of_processed_orders << processed_entry
+#     end
+
+##JUST FOR TESTING:
+#puts array_of_processed_orders.inspect
+#ap array_of_processed_orders
+#
+##### When combined with the above, and the existing Grocery module,
+##### the following made an array of class instances just fine.
+#
+# def make_order_instances (fully_processed_order_data)
+#   array_of_instances = []
+#   fully_processed_order_data.each do |individual_order_array|
+#     temporary_order = Grocery::Order.new(individual_order_array[0], individual_order_array[1])
+#     array_of_instances << temporary_order
+#   end
+#   return array_of_instances
+# end
+#
+# i_hope_this_ends_up_full_of_instances = make_order_instances(array_of_processed_orders)
+#
+# puts i_hope_this_ends_up_full_of_instances.inspect
+#
+# ap i_hope_this_ends_up_full_of_instances
+
+#### So now, it's time to make it into a class method.
+
+
+#   ../support/orders.csv
+
+## THIS STUFF DOESN'T WORK.
+# def read_csv_orders (file_name)
+# filename_string = file_name
+# all_orders_initial = CSV.parse(File.read('../support/orders.csv'))
+# return all_orders_initial
+# end
+#
+# testing_testing = read_csv_orders (../support/orders.csv)
+#
+# ap testing_testing
+
+#ap all_orders_initial
+#puts all_orders_initial.inspect
+
+# def process_order_csv(raw_order_array)
+#   processed_order = []
+#   processed_order[0] = raw_order_array[0]
+#   separated_products = raw_order_array[1].split(";")
+#   product_price_array = []
+#   separated_products.each do |product_with_price|
+#     product_price_pair = product_with_price.split(":")
+#     product_price_array << product_price_pair
+#   end
+#   processed_order[1] = product_price_array.to_h
+#   return processed_order
+# end
+#
+# array_of_processed_orders = []
+# all_orders_initial.each do |initial_order_data|
+#   processed_entry = process_order_csv(initial_order_data)
+#   array_of_processed_orders << processed_entry
+# end
+
+module Grocery
+
+  class Order
+    attr_reader :id
+    attr_accessor :products, :raw
+
+    @@raw = "A" #CSV.parse(File.read('../support/orders.csv'))
+
+    def initialize(id, products)
+      @id = id
+      @products = products
+    end
+    # def process_order_csv.all
+    #
+    # def self.all
+    #   # This reads the CSV into a raw array
+    #   all_orders_initial = CSV.parse(File.read('../support/orders.csv'))
+    #   # The method below converts an individual CSV order entry into something
+    #   # that can be used for making new instances of Order.
+    #   def process_order_csv(raw_order_array)
+    #     processed_order = []
+    #     processed_order[0] = raw_order_array[0]
+    #     separated_products = raw_order_array[1].split(";")
+    #     product_price_array = []
+    #     separated_products.each do |product_with_price|
+    #       product_price_pair = product_with_price.split(":")
+    #       product_price_array << product_price_pair
+    #     end
+    #     processed_order[1] = product_price_array.to_h
+    #     return processed_order
+    #   end
+    #   # The instuctions below use the method above to generate
+    #   # an array of usable entries from the CSV.
+    #   array_of_processed_orders = []
+    #   all_orders_initial.each do |initial_order_data|
+    #     processed_entry = process_order_csv(initial_order_data)
+    #     array_of_processed_orders << processed_entry
+    #   end
+    #   # The method below processes an individual entry in the array of usable
+    #   # order entries generated above into an instance of Order and stores it
+    #   # in an array.
+    #   def make_order_instances (fully_processed_order_data)
+    #     array_of_instances = []
+    #     fully_processed_order_data.each do |individual_order_array|
+    #       temporary_order = Order.new(individual_order_array[0], individual_order_array[1])
+    #       array_of_instances << temporary_order
+    #     end
+    #     return array_of_instances
+    #   end
+    #   array_of_order_instances = make_order_instances(array_of_processed_orders)
+    #   return array_of_order_instances
+    # end
+    def add_product(product, price)
+      before_count = @products.count
+      if !@products.include?(product)
+        @products = @products.merge(product => price)
+      end
+      before_count + 1 == @products.count
+    end
+
+    def remove_product(product)
+      before_count = @products.count
+      @products.delete(product)
+      before_count - 1 == @products.count
+    end
+
+    def total
+      sum = @products.values.inject(0, :+)
+      sum_with_tax = expected_total = sum + (sum * 0.075).round(2)
+      return sum_with_tax
+    end
+  end
+end
 
 ##MISC STUFF FOR TESTING
 #first_order = Grocery::Order.new(first_test[0], first_test[1])
@@ -452,3 +606,5 @@ puts all_orders_initial.inspect
 #puts first_order.products.inspect
 #puts first_order.id.inspect
 #ap first_order
+
+ap Grocery::Order.raw
