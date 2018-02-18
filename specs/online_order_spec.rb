@@ -20,18 +20,24 @@ describe "OnlineOrder" do
       # arrange
       id = 1337
       products = { "banana" => 1.99, "cracker" => 3.00 }
+      customer = []
+      status = :paid
       # act
       # Instatiate your OnlineOrder here
       Grocery::Order.new(id, products)
-      online_order = Grocery::OnlineOrder.new(id, {})
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
 
       # assert
       # Check that an OnlineOrder is in fact a kind of Order
       online_order.must_be_kind_of Grocery::Order
     end
 
-    xit "Can access Customer object" do
-      # TODO: Your test code here!
+    it "Can access Customer object" do
+      # arrange
+      # No arrange needed; pulling from customer
+      # act
+      Grocery::Order.new(id, products)
+      # assert
     end
 
     xit "Can access the online order status" do
