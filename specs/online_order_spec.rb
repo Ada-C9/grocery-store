@@ -191,17 +191,48 @@ describe "OnlineOrder" do
     end
   end # describe OnlineOrder.find
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       # TODO: Your test code here!
+      # arrange
+      orders_count = 0
+      orders = Grocery::OnlineOrder.all
+      orders.each do |order|
+        if order.customer.id == 20
+          orders_count += 1
+        end
+      end
+
+      # act
+      same_customer_orders = Grocery::OnlineOrder.find_by_customer(20)
+
+      # assert
+      same_customer_orders.length.must_equal orders_count
+      same_customer_orders.must_be_kind_of Array
     end
 
     it "Raises an error if the customer does not exist" do
       # TODO: Your test code here!
+      # arrange
+      # act
+      nonexistent_customer = proc { Grocery::OnlineOrder.find_by_customer(59) }
+
+      # assert
+      nonexistent_customer.must_raise ArgumentError
+
     end
 
     it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
+      # arrange
+
+      # act
+      same_customer_orders = Grocery::OnlineOrder.find_by_customer(22)
+
+      # assert
+      same_customer_orders.length.must_equal 0
+      same_customer_orders.must_be_kind_of Array
+      same_customer_orders.must_equal []
     end
 
   end # describe .find_by_customer

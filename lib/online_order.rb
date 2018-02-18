@@ -60,6 +60,24 @@ module Grocery
        return order_found
      end
 
+     def self.find_by_customer(customer_id)
+       customer = Customer.find(customer_id)
+       if customer.nil?
+         raise ArgumentError.new("Customer #{customer_id} does not exist in our records.")
+       else
+         all_orders = self.all
+         customer_orders = []
+         all_orders.each do |order|
+           if order.customer.id == customer.id
+             customer_orders << order
+           end
+         end
+       end
+
+       return customer_orders
+
+     end
+
 
   end # OnlineOrder class
 end # Grocery module
@@ -68,9 +86,14 @@ end # Grocery module
 # )
 #
 # puts online_order.status
-
+# array = []
 # Grocery::OnlineOrder.all.each do |order|
-#   puts order.status
+#   array << order.customer.id
 # end
+# puts array.include?(59)
 #
 # puts Grocery::OnlineOrder.find(2).status
+
+# Grocery::OnlineOrder.find_by_customer(59).each do |order|
+#   puts order.id
+# end
