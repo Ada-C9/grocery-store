@@ -92,27 +92,27 @@ describe "Order Wave 2" do
     it "Returns accurate information about the first order" do
         Grocery::Order.all.must_be_kind_of(Array)
         first = Grocery::Order.all.first
-        first.id.must_equal "1"
+        first.id.must_equal 1
     end
 
     it "Returns accurate information about the last order" do
       Grocery::Order.all.must_be_kind_of(Array)
       last = Grocery::Order.all[-1]
-      last.id.must_equal "100"
+      last.id.must_equal 100
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      order = Grocery::Order.find("1")
+      order = Grocery::Order.find(1)
       order.must_be_kind_of Grocery::Order
-      order.id.must_equal "1"
+      order.id.must_equal 1
     end
 
     it "Can find the last order from the CSV" do
-      order = Grocery::Order.find("100")
+      order = Grocery::Order.find(100)
       order.must_be_kind_of Grocery::Order
-      order.id.must_equal "100"
+      order.id.must_equal 100
     end
 
     it "Return nil for an order that doesn't exist" do
