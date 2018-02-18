@@ -122,25 +122,39 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      specific_order = Grocery::OnlineOrder.find(5)
+
+      specific_order.id.must_equal 5
+      specific_order.products.must_equal({"Sour Dough Bread"=>35.11})
+      specific_order.customer.id.must_equal 21
+      specific_order.status.must_equal :shipped
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      fake_order = Grocery::OnlineOrder.find(500)
+
+      fake_order.must_be_nil
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      customers_online_orders = Grocery::OnlineOrder.find_by_customer(15)
+
+      customers_online_orders.length.must_equal 3
+      customers_online_orders.class.must_equal Array
     end
 
-    it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
-    end
+    # it "Raises an error if the customer does not exist" do
+    #   customers_online_orders = Grocery::OnlineOrder.find_by_customer(150)
+    #
+    #   customers_online_orders.must_be_nil
+    # end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      customers_online_orders = Grocery::OnlineOrder.find_by_customer(22)
+
+      customers_online_orders.must_be_empty
     end
   end
 end

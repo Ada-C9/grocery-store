@@ -62,14 +62,20 @@ module Grocery
     end
 
     def self.find(id)
-      super(id)
+      online_orders_entered = self.all
+      online_orders_entered.each do |online_order|
+        if online_order.id == id
+          return online_order
+        end
+      end
+      return nil
     end
 
     def self.find_by_customer(customer_id)
       online_orders_entered = self.all
       customers_online_orders = []
       online_orders_entered.each do |online_order|
-        if online_orders.customer_id == customer_id
+        if online_order.customer.id == customer_id
           customers_online_orders << online_order
         end
       end
@@ -78,5 +84,3 @@ module Grocery
 
   end
 end
-
-puts Grocery::OnlineOrder.all.inspect
