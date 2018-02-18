@@ -43,7 +43,7 @@ module Grocery
         subtotal += price.to_f
       end
       return (subtotal * 1.075).round(2)
-    end
+     end
 
     def add_product(product_name, product_price)
       if @products.key?(product_name)
@@ -52,7 +52,7 @@ module Grocery
         @products[product_name] = product_price
         return true
       end
-    end
+     end
 
     def remove_product(product_name)
       if @products.key?(product_name)
@@ -61,11 +61,8 @@ module Grocery
       else
         return false
       end
-    end
-
+     end
 
   end
-
-puts Order.find("45")
 
 end
