@@ -113,17 +113,15 @@ describe "OnlineOrder" do
       first_order.fulfillment_status.must_equal :complete
     end
 
-    xit "Returns accurate information about the last online order" do
-      # 100,Amaranth:;Smoked Trout:70.6;Cheddar:5.63,20,pending
-
+    it "Returns accurate information about the last online order" do
 
       expected_last_order_products = {"Amaranth"=>83.81,
         "Smoked Trout"=>70.6, "Cheddar"=>5.63}
 
-      last_order = Grocery::OnlineOrder.all.
+      last_order = Grocery::OnlineOrder.all.last
 
       last_order.id.must_be_kind_of Integer
-      last_order.id.must_equal 1
+      last_order.id.must_equal 100
 
       last_order.products.must_be_kind_of Hash
       last_order.products.must_equal expected_last_order_products
@@ -137,23 +135,49 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      expected_last_order_products = {"Amaranth"=>83.81,
+        "Smoked Trout"=>70.6, "Cheddar"=>5.63}
+
+      last_order = Grocery::OnlineOrder.find(100)
+
+      last_order.id.must_be_kind_of Integer
+      last_order.id.must_equal 100
+
+      last_order.products.must_be_kind_of Hash
+      last_order.products.must_equal expected_last_order_products
+
+      last_order.customer.id.must_be_kind_of Integer
+      last_order.customer.id.must_equal 20
+
+
+      last_order.fulfillment_status.must_be_kind_of Symbol
+      last_order.fulfillment_status.must_equal :pending
+
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      assert_raises{Grocery::OnlineOrder.find(9999999)}
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      expected_product_array =[{"Peaches"=>46.34}, {"Iceberg lettuce"=>88.51,
+        "Rice paper"=>66.35, "Amaranth"=>1.5, "Walnut"=>65.26},
+        {"Soymilk"=>47.55, "Longan"=>14.86, "Fish Sauce"=>85.19,
+        "Cashews"=>28.49}]
+
+      actual_product_array = Grocery::OnlineOrder.find_by_customer(14)
+
+      actual_product_array.customer.id.must_be_kind_of Array
+      actual_product_array.customer.id.must_equal expected_product_array
+
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+        assert_raises{Grocery::OnlineOrder.find_by_customer(9999999)}
     end
 
     it "Returns an empty array if the customer has no orders" do
