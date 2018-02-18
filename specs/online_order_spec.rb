@@ -103,15 +103,16 @@ describe "OnlineOrder" do
 
   xdescribe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find_by_customer(25).must_be_instance_of Array
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+      proc { Grocery::OnlineOrder.find_by_customer(36) }.must_raise ArgumentError
     end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      empty_order = Grocery::OnlineOrder.new(1337, {}, 10, :pending)
+      Grocery::OnlineOrder.find_by_customer(10).must_equal []
     end
   end
 end
