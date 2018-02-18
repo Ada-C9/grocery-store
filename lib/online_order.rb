@@ -44,7 +44,7 @@ module Grocery
 
     def self.all
       all_online_orders = []
-      CSV.read("../support/online_orders.csv", "r").each do |order|
+      CSV.read("support/online_orders.csv", "r").each do |order|
         id = order[0].to_i
         product_hash = {}
         order[1].split(";").each do |product|
@@ -60,14 +60,19 @@ module Grocery
 
     # Should return the customer id and order status in addition to products/prices
     def self.find(id)
-      online_order_summary = []
-      online_order_summary << super
-      online_order_summary << self.all[id-1].customer_id
-      online_order_summary << self.all[id-1].status
-      online_order_summary
+      if id > self.all.length
+        raise ArgumentError.new("id does not exist")
+      else
+        online_order_summary = []
+        online_order_summary << super
+        online_order_summary << self.all[id-1].customer_id
+        online_order_summary << self.all[id-1].status
+        online_order_summary
+      end
     end
   end
 end
+
 
   # Running initialization
   # new_order = Grocery::OnlineOrder.new(101, {"Bananas"=>22.8, "Wholewheat flour"=>1.93}, 30, :processing)
@@ -77,17 +82,17 @@ end
   # ap new_order.status
 
   # Running the total method
-    # ap new_order.total
+  # ap new_order.total
 
   # Running the add product method
-    # ap new_order.add_product("apples", 2.99) >> true
+  # ap new_order.add_product("apples", 2.99) >> true
 
   # Running the remove product method
-    # ap new_order.remove_product("Bananas")
-    # ap new_order
+  # ap new_order.remove_product("Bananas")
+  # ap new_order
 
   # Running self.all
   # ap Grocery::OnlineOrder.all
 
   # Running self.find
-    ap Grocery::OnlineOrder.find(1)
+  # ap Grocery::OnlineOrder.find(100)

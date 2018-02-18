@@ -93,11 +93,11 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      Grocery::OnlineOrder.find(1).must_equal Grocery::OnlineOrder.all[0]
+      Grocery::OnlineOrder.find(1).must_include Grocery::OnlineOrder.all.first.products
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      Grocery::OnlineOrder.find(101).must_raise Error
+      proc { Grocery::OnlineOrder.find(101) }.must_raise ArgumentError
     end
   end
 
