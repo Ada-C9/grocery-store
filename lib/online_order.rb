@@ -1,6 +1,7 @@
 require 'csv'
 require 'awesome_print'
 require_relative 'order.rb'
+require_relative 'customer.rb'
 
 FILE_NAME2 = 'support/online_orders.csv'
 
@@ -9,14 +10,15 @@ module Grocery
   class Online_Orders < Order
     attr_reader :id, :products, :customer_id, :fullfillment_status
 
-    # all possible status
+    # all possible status for fuillfillment
+    FUILLFILLMENT_STATUS = [:pending, :paid, :processing, :shipped, :complete]
 
     # set pending as the default fullfillment_status and set the variable into a symbol type
-    def initialize (id, products, customer_id, fullfillment_status = :pending )
+    def initialize(id, products, customer_id, fullfillment_status = :pending)
       @id = id
       @products = products
       @customer_id = customer_id
-      @fullfillment_status = fullfillment_status
+      @fullfillment_status = fullfillment_status.to_sym
     end
 
 
@@ -31,15 +33,13 @@ module Grocery
       end
     end
 
-    fullfillment_status = [:pending, :paid, :processing, :shipped, :complete]
 
     def add_product(product_name, product_price)
-      if fullfillment_status == :pending || fullfillment_status == :paid
+      if @fullfillment_status == :pending || @fullfillment_status == :paid
         @products[product_name] = product_price
         return true
-      else
-        return nil
       end
+      return nil
     end
 
     def self.all
@@ -74,9 +74,18 @@ module Grocery
       return NIL
     end
 
-    #     def self.find_by_customer(customer_id)
-    # # # # returns a list of OnlineOrder instances where the value of
-    # the customer's ID matches the passed parameter.
-
-  end #class
-end #module
+    def self.find_by_customer(customer_id)
+      if customer_id == 0 || customer_id > Grocery::Customers.all.length
+        return NIL
+      end
+      all_online_orders = Grocery::Online_Orders.all
+      array_orders_per_customer = []
+      all_online_orders.each do |customer_order|
+        if customer_order.customer_id == customer_id
+          array_orders_per_customer << customer_order
+        end
+      end
+      return array_orders_per_customer
+    end
+  end
+end

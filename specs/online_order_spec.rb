@@ -4,6 +4,7 @@ require 'minitest/skip_dsl'
 
 require_relative '../lib/online_order'
 
+
 # TODO: uncomment the next line once you start wave 3
 # You may also need to require other classes here
 
@@ -140,14 +141,23 @@ describe "OnlineOrder" do
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       # TODO: Your test code here!
+    orders_per_customer = Grocery::Online_Orders.find_by_customer(10)
+    orders_per_customer.must_be_instance_of Array
+
+    Grocery::Online_Orders.find_by_customer(10).length.must_equal 4
     end
 
     it "Raises an error if the customer does not exist" do
       # TODO: Your test code here!
+    Grocery::Online_Orders.find_by_customer(40).must_be_nil
+    Grocery::Online_Orders.find_by_customer(0).must_be_nil
     end
 
     it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
+    # I look the online_orders.csv file and manually
+    # look for a customer id with no orders. And an example is customer id # 22 
+    Grocery::Online_Orders.find_by_customer(22).must_be_empty
     end
   end
 end
