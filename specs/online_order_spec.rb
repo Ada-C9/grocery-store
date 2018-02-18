@@ -1,9 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-
-# TODO: uncomment the next line once you start wave 3
 require_relative '../lib/online_order'
+
 # You may also need to require other classes here
 
 # Because an OnlineOrder is a kind of Order, and we've
@@ -23,11 +22,23 @@ describe "OnlineOrder" do
     end
 
     it "Can access Customer object" do
-      # TODO: Your test code here!
+      id = 1337
+      customer_id = 25
+      products = {}
+      online_order = Grocery::OnlineOrder.new(id, products, customer_id, status = :pending)
+
+      online_order.must_respond_to :customer_id
+      online_order.customer_id.must_equal customer_id
+      online_order.customer_id.must_be_kind_of Integer
     end
 
     it "Can access the online order status" do
-      # TODO: Your test code here!
+      id = 1337
+      customer_id = 25
+      products = {}
+      online_order = Grocery::OnlineOrder.new(id, products, customer_id, status = :pending)
+      online_order.must_respond_to :products
+      online_order.products.length.must_equal 0
     end
   end
 
