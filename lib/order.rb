@@ -6,8 +6,8 @@ module Grocery
       @id = id
       @products = products
       @tax = 0.075
-      @name = name
-      @price = price
+      # @name = name
+      # @price = price
     end
 
     def total
@@ -23,39 +23,30 @@ module Grocery
       return rounded_decimal
     end
 
+
     def add_product (name,price)
        if @products.key? name
-         return
-         false
+         return false
        else
          @products[name] = price
-        return
-         true
-
-
+        return true
       end
     end
   end
 end
 
 
+our_order = Grocery::Order.new(9, {"Cucumber" => 5.72,"Yoghurt" => 28.55} )
+#
+puts our_order.id
+puts our_order.products
 
-
-    #  for each product get the value of each product and
-    # the number of values
-
-     # for each product get the price and the
-     # the number of the item ordered
-     #describe "#total" do
-      # it "Returns the total from the collection of products" do
-      #   products = { "banana" => 1.99, "cracker" => 3.00 }
-      #3   order = Grocery::Order.new(1337, products)
-     #
-      #   sum = products.values.inject(0, :+)
-      #   expected_total = sum + (sum * 0.075).round(2)
-
-      #   order.total.must_equal expected_total
-       #end
+#
+# our_string = Inventory::String.new("green", 100)
+# ruby_string = String.new("ruby string")
+#
+# puts our_string.class
+# puts ruby_string.class
 
 
 
@@ -63,16 +54,9 @@ end
 
 
 
-       #puts
 
 
-  #  end
 
-  #  def add_product(product_name, product_price)
-
-  #  end
-#  end
-#end
 
 # order = Grocery::Order.new( 1337, {})
 # products = { "banana" => 1.99, "cracker" => 3.00 }
