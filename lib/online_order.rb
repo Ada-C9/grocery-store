@@ -18,6 +18,15 @@ module Grocery
        return total
      end
 
+     def add_product(product_name, product_price)
+       case @status
+       when :processing, :shipped, :complete
+         raise ArgumentError.new("You cannot add another product because your order is #{@status}.")
+       when :pending, :paid
+         super
+       end
+     end
+
 
   end # OnlineOrder class
 end # Grocery module

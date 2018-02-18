@@ -83,17 +83,35 @@ describe "OnlineOrder" do
       # assert
       online_order.total.must_equal order_total
     end
-  end
+  end # describe total
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
       # TODO: Your test code here!
+      # arrange
+      # act
+      online_order_processing = Grocery::OnlineOrder.new(9,{"Iceberg lettuce"=>88.51},14,"processing")
+      online_order_shipped = Grocery::OnlineOrder.new(9,{"Iceberg lettuce"=>88.51},14,"shipped")
+      online_order_complete = Grocery::OnlineOrder.new(9,{"Iceberg lettuce"=>88.51},14,"complete")
+
+      # assert
+      proc { online_order_processing.add_product("Rice paper", 66.35) }.must_raise ArgumentError
+      proc { online_order_shipped.add_product("Rice paper", 66.35) }.must_raise ArgumentError
+      proc { online_order_complete.add_product("Rice paper", 66.35) }.must_raise ArgumentError
     end
 
     it "Permits action for pending and paid satuses" do
       # TODO: Your test code here!
+      # arrange
+      # act
+      online_order_pending = Grocery::OnlineOrder.new(9,{"Iceberg lettuce"=>88.51},14,"pending")
+      online_order_paid = Grocery::OnlineOrder.new(9,{"Iceberg lettuce"=>88.51},14,"paid")
+
+      # assert
+      online_order_pending.add_product("Rice paper", 66.35).must_equal true
+      online_order_paid.add_product("Rice paper", 66.35).must_equal true
     end
-  end
+  end # describe add_product
 
   xdescribe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
