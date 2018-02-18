@@ -137,8 +137,44 @@ require 'awesome_print'
 #### Now, what we need to be able to do is turn these arrays-of-two-things into
 #### key-value pairs.
 
-#### 
+#### Looking at the ruby docs, it appears that there is an array method,
+#### called as .to_h, that I can call on the whole frakking output of the split
+#### to turn it into key-value pairs. So, let's try it!!!! Wooo!!!
 
+# split_n_hash_testing_array = ["Slivered Almonds:22.88", "Wholewheat flour:1.93", "Grape Seed Oil:74.9"]
+#
+# product_price_array = []
+# split_n_hash_testing_array.each do |product_w_price|
+#    product_price_pair = product_w_price.split(':')
+#    product_price_array << product_price_pair
+# end
+#
+# hopefully_hashed_product_price_pairs = product_price_array.to_h
+
+#puts product_price_array.inspect
+#ap product_price_array
+
+# puts hopefully_hashed_product_price_pairs.inspect
+#
+# ap hopefully_hashed_product_price_pairs
+
+#### And that worked, too!  Huzzah!
+
+#### Here's what awesome_print saw:
+####
+#### {
+####    "Slivered Almonds" => "22.88",
+####    "Wholewheat flour" => "1.93",
+####      "Grape Seed Oil" => "74.9"
+#### }
+####
+#### and here's what .inspect saw:
+####
+#### {"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"}
+####
+####  Now that we've gotten to the end of the structure we need to create,
+####  we need to start working backwards.  (And hey, it's the end of something,
+####  so let's COMMIT!)
 
 
 
