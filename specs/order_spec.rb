@@ -99,13 +99,13 @@ describe "Order Wave 2" do
 
     it "Returns accurate information about the first order" do
       test_order = Grocery::Order.all
-      test_order[0].id.must_equal "1"
+      test_order[0].id.must_equal 1
       test_order[0].products.must_equal "Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9
     end
 
     it "Returns accurate information about the last order" do
       test_order = Grocery::Order.all
-      test_order[99].id.must_equal "100"
+      test_order[99].id.must_equal 100
       test_order[99].products.must_equal "Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59
     end
   end
@@ -113,18 +113,18 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       expected_order = Grocery::Order.all[0]
-      first_order = Grocery::Order.find("1")
+      first_order = Grocery::Order.find(1)
       first_order.must_equal expected_order
     end
 
     it "Can find the last order from the CSV" do
       expected_order = Grocery::Order.all[99]
-      last_order = Grocery::Order.find("100")
+      last_order = Grocery::Order.find(100)
       last_order.must_equal expected_order
     end
 
     it "Raises an error for an order that doesn't exist" do
-      search_nonexistent = Grocery::Order.find("500")
+      search_nonexistent = Grocery::Order.find(500)
       expected_message = "Error: Order ID does not exist"
       search_nonexistent.must_equal expected_message
     end
