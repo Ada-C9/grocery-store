@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
+Minitest::Test.make_my_diffs_pretty!
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
@@ -127,20 +128,40 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      expected_first_order_id = 1
-      # TODO: What happens this if this changes??
-      expected_first_order_products = {"Slivered Almonds"=>22.88,
-        "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+      # expected_first_order_id = 1
+      # expected_first_order_products = {"Slivered Almonds"=>22.88,
+      #   "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
 
-      first_order = Grocery::Order.find(expected_first_order_id)
+      # first_order = Grocery::Order.find(1)
+
+      first_order = Grocery::Order.find(1)
+      expected_first_order = Grocery::Order.all[0]
+
+
+
+      first_order.must_be_kind_of Grocery::Order
+      expected_first_order.must_be_kind_of Grocery::Order
 
       first_order.must_respond_to :id
       first_order.id.must_be_kind_of Integer
-      first_order.id.must_equal expected_first_order_id
+      # first_order.id.must_equal expected_first_order_id
+      first_order.id.must_equal expected_first_order.id
 
       first_order.must_respond_to :products
       first_order.products.must_be_kind_of Hash
-      first_order.products.must_equal expected_first_order_products
+      first_order.products.must_equal expected_first_order.products
+
+
+      first_order.must_equal expected_first_order
+      # first_order.must_respond_to :id
+      # first_order.id.must_be_kind_of Integer
+      # # first_order.id.must_equal expected_first_order_id
+      # first_order.id.must_equal expected_first_order.id
+      #
+      # first_order.must_respond_to :products
+      # first_order.products.must_be_kind_of Hash
+      # first_order.products.must_equal expected_first_order.products
+      # first_order.products.must_equal expected_first_order_products
 
     end
 
