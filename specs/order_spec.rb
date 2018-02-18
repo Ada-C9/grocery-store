@@ -83,15 +83,18 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
-    it "Returns an array of all orders" do
+    xit "Returns an array of all orders" do
       #act
-      results = []
+      results = Grocery::Order.all
+      # print results
       #assert
-      results.must_equal Grocery::Order.all
+      results.must_be_kind_of Array
+      results[0].must_be_kind_of Grocery::Order
     end
 
   xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
+      line = ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
     end
 
     xit "Returns accurate information about the last order" do
