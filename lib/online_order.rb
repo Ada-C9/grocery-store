@@ -20,7 +20,6 @@ module Grocery
       if sum_with_tax_fee != Money.new(0, "USD")
         sum_with_tax_fee += Money.new(1000, "USD")
       end
-      # call .format on sum_with_tax_fee to format the instance of money
       return sum_with_tax_fee
     end
 
@@ -45,13 +44,19 @@ module Grocery
           products[name] = price.to_f
         end
 
-        customer_id = row[2].to_i
+        customer = "placeholder"
+        Grocery::Customer.all.each do |customer_object|
+          if customer_object.id == row[2].to_i
+            customer = customer_object
+          end
+        end
+
         if row[3].nil?
           status = :pending
         else
           status = row[3].to_sym
         end
-        online_orders_entered << OnlineOrder.new(id, products, customer_id, status)
+        online_orders_entered << OnlineOrder.new(id, products, customer, status)
       end
         return online_orders_entered
     end
@@ -73,3 +78,5 @@ module Grocery
 
   end
 end
+
+puts Grocery::OnlineOrder.all.inspect

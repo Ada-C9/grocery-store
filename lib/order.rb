@@ -19,7 +19,6 @@ module Grocery
       end
       cents_with_tax = (sum + (sum * 0.075))*100.round
       sum_with_tax = Money.new(cents_with_tax, "USD")
-      # call .format on sum_with_tax to format the instance of money
       return sum_with_tax
     end
 

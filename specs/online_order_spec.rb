@@ -23,7 +23,7 @@ describe "OnlineOrder" do
 
       online_order = Grocery::OnlineOrder.new(1325, products, customer, :complete)
 
-      online_order.customer.must_be_kind_of Grocery::Customer
+      online_order.customer.must_be_instance_of Grocery::Customer
     end
 
     it "Can access the online order status" do
@@ -63,25 +63,60 @@ describe "OnlineOrder" do
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
+
+      status = [:processing, :shipped, :completed]
+      status.each do |status|
+        online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
+        online_order.add_product("salad", 4.25, status).must_be_nil
+      end
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      customer = Grocery::Customer.new(1, "leonard.rogahn@hagenes.org", {:street=>"71596 Eden Route", :city=>"Connellymouth", :state=>"LA", :zip_code=>"98872-9105"})
+
+      status = [:pending, :paid]
+      status.each do |status|
+        online_order = Grocery::OnlineOrder.new(1325, products, customer, status)
+        online_order.add_product("salad", 4.25, status).wont_be_nil
+      end
     end
   end
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
+      online_orders_entered = Grocery::OnlineOrder.all
+
+      online_orders_entered.class.must_equal Array
+
+      count = 0
+      online_orders_entered.each do |order|
+        count += 1
+      end
+      count.must_equal 100
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+
+      online_orders_entered = Grocery::OnlineOrder.all
+      first_order = online_orders_entered[0]
+
+      first_order.id.must_equal 1
+      first_order.products.must_equal({"Lobster"=>17.18, "Annatto seed"=>58.38, "Camomile"=>83.21})
+      first_order.customer.id.must_equal 25
+      first_order.status.must_equal :complete
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+      online_orders_entered = Grocery::OnlineOrder.all
+      first_order = online_orders_entered[-1]
+
+      first_order.id.must_equal 100
+      first_order.products.must_equal({"Amaranth"=>83.81, "Smoked Trout"=>70.6, "Cheddar"=>5.63})
+      first_order.customer.id.must_equal 20
+      first_order.status.must_equal :pending
     end
   end
 

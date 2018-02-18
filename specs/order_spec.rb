@@ -125,7 +125,6 @@ describe "Order Wave 2" do
       orders_entered.each do |order|
         count += 1
       end
-
       count.must_equal 100
     end
 
