@@ -34,10 +34,16 @@ describe "OnlineOrder" do
 
     it "Can access Customer object" do
       # arrange
-      # No arrange needed; pulling from customer
+      id = 1337
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      customer = Grocery::Order.find("1")
+      status = :paid
       # act
       Grocery::Order.new(id, products)
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
       # assert
+      online_order.customer.must_be_kind_of Array
+      online_order.customer.email.must_equal "leonard.rogahn@hagenes.org"
     end
 
     xit "Can access the online order status" do
