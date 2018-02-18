@@ -15,8 +15,10 @@ module Grocery
     end
 
     def total
-      while @products.count >= 0
-        super + 10
+      if @products != {}
+        super + 10.00
+      else
+        super + 0.00
       end
     end
 

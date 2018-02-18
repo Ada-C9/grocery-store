@@ -29,7 +29,7 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      Grocery::OnlineOrder.find(1).total.must_equal 180.68
+      Grocery::OnlineOrder.new(1337, {"Bananas" => 2.99}, 10, :pending).total.must_equal 13.21
     end
 
     it "Doesn't add a shipping fee if there are no products" do
@@ -73,41 +73,45 @@ describe "OnlineOrder" do
     end
   end
 
-    xdescribe "OnlineOrder.all" do
-      it "Returns an array of all online orders" do
-        # TODO: Your test code here!
-      end
-
-      it "Returns accurate information about the first online order" do
-        # TODO: Your test code here!
-      end
-
-      it "Returns accurate information about the last online order" do
-        # TODO: Your test code here!
-      end
+  describe "OnlineOrder.all" do
+    it "Returns an array of all online orders" do
+      Grocery::OnlineOrder.all.must_be_instance_of(Array)
     end
 
-    xdescribe "OnlineOrder.find" do
-      it "Will find an online order from the CSV" do
-        # TODO: Your test code here!
-      end
-
-      it "Raises an error for an online order that doesn't exist" do
-        # TODO: Your test code here!
-      end
+    it "Returns accurate information about the first online order" do
+      Grocery::OnlineOrder.all.first.id.must_equal 1
+      Grocery::OnlineOrder.all.first.customer_id.must_equal 25
+      Grocery::OnlineOrder.all.first.status.must_equal :complete
     end
 
-    xdescribe "OnlineOrder.find_by_customer" do
-      it "Returns an array of online orders for a specific customer ID" do
-        # TODO: Your test code here!
-      end
-
-      it "Raises an error if the customer does not exist" do
-        # TODO: Your test code here!
-      end
-
-      it "Returns an empty array if the customer has no orders" do
-        # TODO: Your test code here!
-      end
+    it "Returns accurate information about the last online order" do
+      Grocery::OnlineOrder.all.last.id.must_equal 100
+      Grocery::OnlineOrder.all.last.customer_id.must_equal 20
+      Grocery::OnlineOrder.all.last.status.must_equal :pending
     end
   end
+
+  xdescribe "OnlineOrder.find" do
+    it "Will find an online order from the CSV" do
+      # TODO: Your test code here!
+    end
+
+    it "Raises an error for an online order that doesn't exist" do
+      # TODO: Your test code here!
+    end
+  end
+
+  xdescribe "OnlineOrder.find_by_customer" do
+    it "Returns an array of online orders for a specific customer ID" do
+      # TODO: Your test code here!
+    end
+
+    it "Raises an error if the customer does not exist" do
+      # TODO: Your test code here!
+    end
+
+    it "Returns an empty array if the customer has no orders" do
+      # TODO: Your test code here!
+    end
+  end
+end
