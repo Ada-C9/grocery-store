@@ -68,4 +68,14 @@ end
 #puts first_order.id.inspect
 #ap first_order
 
-ap Grocery::Order.all
+# ap Grocery::Order.all
+
+puts Grocery::Order.all[0].inspect
+
+puts Grocery::Order.all[99].inspect
+
+# ap Grocery::Order.all
+#
+# ap Grocery::Order.all
+
+puts Grocery::Order.all.length
