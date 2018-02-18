@@ -162,15 +162,34 @@ describe "OnlineOrder" do
     end
   end # describe OnlineOrder.all
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       # TODO: Your test code here!
+      # arrange
+      second_order_details = {"Sun dried tomatoes"=>90.16, "Mastic"=>52.69, "Nori"=>63.09, "Cabbage"=>5.35}
+      second_order = Grocery::OnlineOrder.new(2, second_order_details, 10, "paid")
+
+      # act
+      second_order_found = Grocery::OnlineOrder.find(2)
+
+      # assert
+      second_order_found.id.must_equal second_order.id
+      second_order_found.products.must_equal second_order_details
+      second_order_found.customer.id.must_equal 10
+      second_order_found.status.must_equal :paid
+      second_order_found.must_be_instance_of Grocery::OnlineOrder
     end
 
     it "Raises an error for an online order that doesn't exist" do
       # TODO: Your test code here!
+      # arrange
+      # act
+      nonexistent_order = proc { Grocery::OnlineOrder.find(123) }
+
+      # assert
+      nonexistent_order.must_raise ArgumentError
     end
-  end
+  end # describe OnlineOrder.find
 
   xdescribe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
