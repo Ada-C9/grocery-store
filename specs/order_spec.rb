@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'pry'
 require_relative '../lib/order'
 
 Minitest::Reporters.use!
@@ -134,15 +135,18 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
+
+
+
     it "Returns an array of all orders" do
       # wait don't I need to put an "arrange" statement here??
 
       all_orders = Grocery::Order.all
-      all_orders.must_be_kind_of Array
-      # or all_orders.class.must_equal Array
+      # all_orders.must_be_kind_of Array
+      all_orders.class.must_equal Array
 
       all_orders.each do |order|
-        order.must_be_kind_of Order
+        order.must_be_instance_of Grocery::Order
       end
 
       all_orders.count.must_equal 100
@@ -151,49 +155,50 @@ describe "Order Wave 2" do
     it "Returns accurate information about the first order" do
 
       all_orders = Grocery::Order.all
+      # binding.pry
 
-      all_orders[0][0].must_equal 1
-      all_orders[0][1].must_be_kind_of Hash
+
+      all_orders[0].id.must_equal 1
+
+      all_orders[0].products.must_be_kind_of Hash
 
 
     end
 
-    xit "Returns accurate information about the last order" do
+    it "Returns accurate information about the last order" do
       all_orders = Grocery::Order.all
 
-      all_orders[0][99].must_equal 100
-      all_orders[0][1].must_be_kind_of Hash
+      all_orders[-1].id.must_equal 100
+      all_orders[-1].products.must_be_kind_of Hash
 
 
     end
   end
 
   describe "Order.find" do
+
+  before do
+    @order_class = Grocery::Order
+  end
+
+
     it "Can find the first order from the CSV" do
-      all_orders = Grocery::Order.all
 
-      all_orders.find[1].must_equal true
-
-      first_order.must_equal all_orders[0][0]
-
+      @order_class.find(1).must_be_instance_of Grocery::Order
 
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
-      all_orders = Grocery::Order.all
 
-      last_order = all_orders.find[100]
-
-      last_order.must_equal true
-
-      last_order.must_equal all_orders[0][-1]
-
+      @order_class.find(100).must_be_instance_of Grocery::Order
 
     end
 
-    xit "Returns nil for an order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Returns nil for an order that doesn't exist" do
+
+      @order_class.find(101).must_be_nil
+
+
     end
   end
 end

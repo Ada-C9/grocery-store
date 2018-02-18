@@ -31,17 +31,17 @@ module Grocery
 
     def self.all
       array_of_orders = []
-      CSV.open("../support/orders.csv", 'r').each do |line|
+      CSV.open("support/orders.csv", 'r').each do |line|
         # for each line I need to take the index[0] and make it a key of a hash and the value of that hash is then another hash (which is index[1] of the array) with key: product name , value: product price
         # first step is turning two elements of an array into a hash. second step is taking the value of that hash and turning it into another hash
-        line[0].to_i
+
         product_list = line[1].split(';')
         product_hash = {}
         product_list.each do |item|
           product = item.split(':')
           product_hash[product[0]] = product[1]
         end
-        array_of_orders << Grocery::Order.new(line[0], product_hash)
+        array_of_orders << Grocery::Order.new(line[0].to_i, product_hash)
       end
       array_of_orders
     end
@@ -51,22 +51,16 @@ module Grocery
       #to call this Class method: Grocery::Order.find(id)
 
       all_orders = Grocery::Order.all
-      #
-      # single_order = all_orders[id.to_i - 1]
-      #
-      # return single_order
+
       order = nil
 
-      all_orders.each do |order_array|
-        if order_array[id - 1] == id
-          order = all_orders[id -1][1]
-          # return all_orders[id -1][1]
-        # else
-        #   return nil
-        end
-        return order
-      end
+      all_orders.each do |single_order|
 
+        if single_order.id == id
+          order = single_order
+        end
+      end
+      return order
     end
 
 
@@ -104,10 +98,7 @@ module Grocery
 
 end #end of module
 
-all_orders = Grocery::Order.all
+#all_orders = Grocery::Order.all
 
-# puts "\n#{all_orders}\n\n"
-
-
-
-puts all_orders.find("3")
+# # puts "\n#{all_orders}\n\n"
+# puts all_orders.find(3)
