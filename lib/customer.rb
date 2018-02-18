@@ -4,7 +4,7 @@ require 'awesome_print'
 module Grocery
 
   class Customer < Grocery::Order
-      attr_reader :id, :email, :delivery
+      attr_reader :id, :email, :address1, :city, :state, :zipcode
 
       #overriding initiazize method from Order class
       #self.initialize
@@ -45,14 +45,16 @@ module Grocery
 
 
 
+
+
   end
 
 
 end
 
-customer = Grocery::Customer.new(5, 'bbb@gm', 'there', 'tt', 'oo', 'pp')
+#customer = Grocery::Customer.new(5, 'bbb@gm', 'there', 'tt', 'oo', 'pp')
 
 #ap Grocery::Customer.all
 #ap customer_info_csv
-puts Grocery::Customer.find(5)
+#puts Grocery::Customer.find(5)
 #array = Grocery::Customer.all
