@@ -4,7 +4,7 @@ require_relative "customer.rb"
 module Grocery
   class OnlineOrder < Order
     attr_reader :id, :products, :customer, :status
-     def initialize(id, products, customer_id, status)
+     def initialize(id, products, customer_id, status=:pending)
        super(id, products)
        @customer = Customer.find(customer_id)
        @status = status.to_sym
