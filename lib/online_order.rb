@@ -14,8 +14,11 @@ class OnlineOrder < Grocery::Order
   end
 
   #  The total method should be the same, except it will add a $10 shipping fee
+  # it "Doesn't add a shipping fee if there are no products" do
   def total
-    return 10 + super
+    if @products != nil
+      return 10 + super
+    end
   end
 
   def add_product

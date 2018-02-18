@@ -44,11 +44,10 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      
+
       online_order = Grocery::OnlineOrder.new(1, {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}, 25, "complete")
 
       products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
-      order = Grocery::Order.new(1337, products)
       sum = products.values.inject(0, :+)
       order_total = (sum + (sum * 0.075)).round(2)
 
@@ -58,7 +57,11 @@ describe "OnlineOrder" do
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
+
+      online_order = Grocery::OnlineOrder.new(1, nil, 25, "complete")
+
+      online_order.total.must_equal nil
+
     end
   end
 

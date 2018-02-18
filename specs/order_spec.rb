@@ -99,7 +99,7 @@ describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
 
-      orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')
+      orders = CSV.read('support/orders.csv', 'r')
 
       Grocery::Order.all.length.must_equal orders.length
 
@@ -111,7 +111,7 @@ describe "Order Wave 2" do
       first_order_index = 0
 
       # Order #1 on file:
-      file_order = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[first_order_index]
+      file_order = CSV.read('support/orders.csv', 'r')[first_order_index]
 
       # Create all_orders on Grocery module
       Grocery::Order.all
@@ -139,7 +139,7 @@ describe "Order Wave 2" do
       last_order_index = 99
 
       # Order #1 on file:
-      file_order = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[last_order_index]
+      file_order = CSV.read('support/orders.csv', 'r')[last_order_index]
 
       # Create all_orders on Grocery module
       Grocery::Order.all
@@ -168,7 +168,7 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # Order #1 on file:
-      orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[0][0]
+      orders = CSV.read('support/orders.csv', 'r')[0][0]
 
       # Create all orders on Grocery module and search for the order #1:
       Grocery::Order.all
@@ -179,7 +179,7 @@ describe "Order Wave 2" do
 
     it "Can find the last order from the CSV" do
       # Order #1 on file:
-      orders = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')[99][0]
+      orders = CSV.read('support/orders.csv', 'r')[99][0]
 
       # Create all orders on Grocery module and search for the order #100:
       Grocery::Order.all
