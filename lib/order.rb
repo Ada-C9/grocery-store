@@ -1,9 +1,11 @@
+require 'awesome_print'
+require 'csv'
 module Grocery
   class Order
     attr_reader :id, :products
 
     def initialize(id, products)
-      @id = id
+      @id = id.to_i
       @products = products
     end
 
@@ -44,7 +46,7 @@ module Grocery
         products_hash.each do |product|
           split_product = product.split(":")
           item = split_product[0]
-          price = split_product[1]
+          price = split_product[1].to_f
           product_hash = {item => price}
           products.merge!(product_hash)
         end
@@ -57,11 +59,8 @@ module Grocery
       self.all.each do |order|
         return order if order.id == id
       end
-      raise ArgumentError.new("An order with the ID #{id} does not exist.")
+      return nil
     end
 
   end
 end
-  # order = Grocery::Order.new(1, "{Slivered Almonds:22.88, Wholewheat flour:1.93,Grape Seed Oil:74.9
-  # }")
-  # puts order

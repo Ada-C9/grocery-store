@@ -1,3 +1,4 @@
+require 'csv'
 module Grocery
   class Customer
     attr_reader :id, :email, :address
@@ -10,7 +11,7 @@ module Grocery
 
     def self.all
       all_customers =  CSV.read("support/customers.csv").map do |customer|
-        Grocery::Customer.new(customer[0].to_i, customer[1], customer[2..5].join(", "))
+        Grocery::Customer.new(customer[0], customer[1], customer[2..5].join(", "))
       end
       return all_customers
     end
