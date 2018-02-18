@@ -21,9 +21,17 @@ module  Grocery
 
 
     def total
-      old_total = super()
-      new_total = old_total + 10
-      return new_total.round(2)
+      if @products.length > 0
+        return (super()+10).round(2)
+      else
+        return 0
+      end
+    end
+
+    def add_product(name, price)
+      if [:pending, :paid].include?(@status)
+        super(name,price)
+      end
     end
 
   end

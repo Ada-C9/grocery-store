@@ -64,9 +64,9 @@ describe "OnlineOrder" do
       completed_order.add_product("oranges", 4.32)
       processing_order.add_product("oranges", 4.32)
 
-      shipped_order.product.length.must_equal 3
-      completed_order.product.length.must_equal 3
-      processing_order.product.length.must_equal 3
+      shipped_order.products.length.must_equal 3
+      completed_order.products.length.must_equal 3
+      processing_order.products.length.must_equal 3
 
     end
 
@@ -75,13 +75,13 @@ describe "OnlineOrder" do
       pending_order.add_product("oranges", 4.32)
       paid_order.add_product("oranges", 4.32)
 
-      pending_order.product.length.must_equal 4
-      paid_order.product.length.must_equal 4
+      pending_order.products.length.must_equal 4
+      paid_order.products.length.must_equal 4
 
     end
   end
 
-  describe "OnlineOrder.all" do
+  xdescribe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       list = Grocery::OrderOnline.all
       list.must_be_kind_of Array
@@ -122,7 +122,7 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "OnlineOrder.find" do
+  xdescribe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       result = Grocery::OnlineOrder.find(23)
       result.must_be_kind_of Grocery::OnlineOrder
@@ -136,7 +136,7 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "OnlineOrder.find_by_customer" do
+  xdescribe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       result = Grocery::OnlineOrder.find_by_customer(8)
 
