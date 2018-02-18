@@ -60,8 +60,8 @@ describe "Order Wave 1" do
 
     it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
-
       order = Grocery::Order.new(1337, products)
+
       before_total = order.total
 
       result = order.add_product("banana", 4.25)
@@ -81,7 +81,6 @@ describe "Order Wave 1" do
   end
 
   describe "#remove_product" do
-
     it "Removes the product from the list" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)

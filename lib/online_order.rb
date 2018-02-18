@@ -7,16 +7,19 @@ I18n.enforce_available_locales = false
 
 module Grocery
   class OnlineOrder < Order
-    attr_reader :id, :products, :customer_id, :status
+    attr_reader :id, :products, :customer, :status
 
-    def initialize(id, products, customer_id, status)
+    def initialize(id, products, customer, status)
       super(id, products)
-      @customer_id = customer_id
+      @customer = customer
       @status = status
     end
 
     def total
-      sum_with_tax_fee = super + Money.new(1000, "USD")
+      sum_with_tax_fee = super
+      if sum_with_tax_fee != Money.new(0, "USD")
+        sum_with_tax_fee += Money.new(1000, "USD")
+      end
       # call .format on sum_with_tax_fee to format the instance of money
       return sum_with_tax_fee
     end
@@ -64,14 +67,9 @@ module Grocery
         if online_orders.customer_id == customer_id
           customers_online_orders << online_order
         end
-      return customers_online_orders  
+      end
+      return customers_online_orders
     end
 
   end
 end
-
-test_order = Grocery::OnlineOrder.new(11, {"Pinto Beans"=>10.45, "Apples"=>8.01}, 4, :pending)
-
-tots = test_order.total
-
-puts tots
