@@ -5,6 +5,7 @@ require 'minitest/skip_dsl'
 # TODO: uncomment the next line once you start wave 3
 require_relative '../lib/online_order'
 # You may also need to require other classes here
+require 'csv'
 
 # Because an OnlineOrder is a kind of Order, and we've
 # already tested a bunch of functionality on Order,
@@ -113,19 +114,53 @@ describe "OnlineOrder" do
     end
   end # describe add_product
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       # TODO: Your test code here!
+      # arrange
+      online_orders_row_count = 0
+      CSV.open("support/online_orders.csv", "r").each do |order|
+        online_orders_row_count += 1
+      end
+
+      # act
+      online_orders_array = Grocery::OnlineOrder.all
+      online_orders_array_length = online_orders_array.length
+
+      # assert
+      online_orders_array_length.must_equal online_orders_row_count
     end
 
     it "Returns accurate information about the first online order" do
       # TODO: Your test code here!
+      # arrange
+      first_order_details = {"Lobster"=>17.18, "Annatto seed"=>58.38, "Camomile"=>83.21}
+
+      # act
+      first_order = Grocery::OnlineOrder.all[0]
+
+      # assert
+      first_order.id.must_equal 1
+      first_order.products.must_equal first_order_details
+      first_order.customer.id.must_equal 25
+      first_order.status.must_equal :complete
     end
 
     it "Returns accurate information about the last online order" do
       # TODO: Your test code here!
+      # arrange
+      last_order_details = {"Amaranth"=>83.81, "Smoked Trout"=>70.6, "Cheddar"=>5.63}
+
+      # act
+      last_order = Grocery::OnlineOrder.all[99]
+
+      # assert
+      last_order.id.must_equal 100
+      last_order.products.must_equal last_order_details
+      last_order.customer.id.must_equal 20
+      last_order.status.must_equal :pending
     end
-  end
+  end # describe OnlineOrder.all
 
   xdescribe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
