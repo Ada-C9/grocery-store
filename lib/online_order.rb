@@ -8,13 +8,14 @@ require_relative './customer'
 module Grocery
 
   class OnlineOrder < Order
-    attr_reader :customer, :fulfillment, :id, :products
+    attr_reader :customer, :fulfillment_status, :id, :products
     @@all = []
 
-    def initialize(initial_id, initial_products, initial_customer, initial_fulfillment)
+    def initialize(initial_id, initial_products, initial_customer,
+      initial_fulfillment = :pending)
       super(initial_id, initial_products)
       @customer = initial_customer
-      @fulfillment = initial_fulfillment
+      @fulfillment_status = set_initial_fulfillment_status(initial_fulfillment)
 
         # A fulfillment status (stored as a Symbol)
         # pending, paid, processing, shipped or complete
@@ -22,7 +23,8 @@ module Grocery
     end
 
     def total
-      return 10.0 + super
+      total_order_cost = super
+      return total_order_cost > 0.0 ? total_order_cost + 10.0 : total_order_cost
     end
 
     def add_product
@@ -32,6 +34,17 @@ module Grocery
       # do I have to call super at this point??
     end
 
+    private
+
+    def set_initial_fulfillment_status(possible_status)
+      return is_valid_fulfillment_status?(possible_status) ? possible_status : :pending
+    end
+
+
+    def is_valid_fulfillment_status?(possible_status)
+      return possible_status.class == Symbol && %i[pending paid processing
+        shipped complete].any?(possible_status)
+    end
 
   end
 
