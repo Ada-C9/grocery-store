@@ -15,30 +15,16 @@ describe "OnlineOrder" do
 
     test_customer = Grocery::Customer.new(customer_id, email, address)
 
-    test_order_id = 21
+    test_order_id = 121
     test_order_products = {"banana" => 1.99, "cracker" => 3.00}
 
     test_online_order = Grocery::OnlineOrder.new(test_order_id,
-      test_order_products, test_customer, "pending")
+      test_order_products, test_customer, :pending)
 
 
 
   describe "#initialize" do
     it "Is a kind of Order" do
-    #   customer_id = 42
-    #   email = "adalovelace.gmail.com"
-    #   address = {street: "42 Baker Street", city: "Seattle", state: "WA",
-    #     zip_code: "98101-1820"}
-    #
-    #   test_customer = Grocery::Customer.new(customer_id, email, address)
-    #
-    #   test_order_id = 21
-    #   test_order_products = {"banana" => 1.99, "cracker" => 3.00}
-    #
-    #   test_online_order = Grocery::OnlineOrder.new(test_order_id,
-    #     test_order_products, test_customer, "Pending")
-    #
-    #
       test_online_order.must_be_kind_of Grocery::Order
 
     end
@@ -49,18 +35,26 @@ describe "OnlineOrder" do
     end
 
     it "Can access the online order status" do
-      test_online_order.fulfillment.must_be_kind_of String
-      test_online_order.fulfillment.must_equal "pending"
+      test_online_order.fulfillment_status.must_be_kind_of Symbol
+      test_online_order.fulfillment_status.must_equal :pending
     end
   end
 
   describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
+      test_online_order = Grocery::OnlineOrder.new(test_order_id,
+        test_order_products, test_customer, :pending)
+        expected_total = ((1.99 + 3.0) + ((1.99 + 3.0) * 0.075)).round(2) + 10.0
+
+      test_online_order.total.must_be_kind_of Float
+      test_online_order.total.must_equal expected_total
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
+      test_online_order = Grocery::OnlineOrder.new(test_order_id,
+        {}, test_customer, :pending)
+        test_online_order.total.must_be_kind_of Float
+        test_online_order.total.must_equal 0.0
     end
   end
 
