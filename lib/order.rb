@@ -5,8 +5,7 @@ module Grocery
   class Order
     attr_reader :id, :products
 
-    # @@orders = []
-    # @@instance_of_order = []
+    @@orders = []
 
     def initialize(id, products)
       @id = id
@@ -40,10 +39,9 @@ module Grocery
 
     def self.all
 
-      orders = []
-
-      CSV.read('support/orders.csv', 'r', header_converters: :symbol ).each do |line|
+      CSV.read('support/orders.csv', 'r').each do |line|
         groceries = []
+        line[0] = line[0].to_i
         products = line[1].split(';')
         products.each do |items|
           groceries << items.split(':')
@@ -51,14 +49,20 @@ module Grocery
           products.each {|key, val| products[key] = val.to_f}
         end
 
-        orders << Grocery::Order.new(line[0], products)
+        @@orders << Grocery::Order.new(line[0], products)
+
       end
 
-      return orders
+      return @@orders
     end
 
     def self.find(id)
-      return all.find { |order| order.id == id }
+      find_result = all.find { |order| order.id == id }
+      if find_result == nil
+        return "Error: Order ID does not exist"
+      else
+        return find_result
+      end
     end
 
   end
@@ -68,6 +72,13 @@ end
 
 # DONE
 # ap orders
-# Grocery::Order.all
+# ap Grocery::Order.all
+#
+# ap Grocery::Order.find("1")
+# ap Grocery::Order.all[0]
 
-ap Grocery::Order.find("7")
+# ap Grocery::Order.find("112")
+# ap Grocery::Order.find("1")
+# first_order = Grocery::Order.all[0]
+# ap first_order.add_product("salad", 4.25)
+# ap first_order
