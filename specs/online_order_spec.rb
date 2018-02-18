@@ -94,19 +94,19 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.all.last.products.must_equal product_list
       Grocery::OnlineOrder.all.last.customer_id.must_equal 20
       Grocery::OnlineOrder.all.last.order_status.must_equal :pending
-
     end
   end#end self.all method tests
 
-  # describe "OnlineOrder.find" do
-  #   it "Will find an online order from the CSV" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   it "Raises an error for an online order that doesn't exist" do
-  #     # TODO: Your test code here!
-  #   end
-  # end
+  describe "OnlineOrder.find" do
+    # it "Will find an online order from the CSV" do
+    #
+    #   Grocery::OnlineOrder.find(1).must_be_kind_of Grocery::OnlineOrder
+    # end
+    #
+    # it "Raises an error for an online order that doesn't exist" do
+    #   Grocery::OnlineOrder.find(190).must_equal nil
+    # end
+  end
 
   # describe "OnlineOrder.find_by_customer" do
   #   it "Returns an array of online orders for a specific customer ID" do

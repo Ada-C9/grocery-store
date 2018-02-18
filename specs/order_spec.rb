@@ -105,20 +105,19 @@ describe "Order Wave 2" do
     it "Can find the first order from the CSV" do
 
       products_list = {"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"}
-      Grocery::Order.all[0].id.must_equal 1
-      Grocery::Order.all[0].products.must_equal products_list
+      Grocery::Order.find(1).id.must_equal 1
+      Grocery::Order.find(1).products.must_equal products_list
       end
-
     end
 
     it "Can find the last order from the CSV" do
       products_list = product_list = {"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"}
-      Grocery::Order.all[-1].id.must_equal 100
-      Grocery::Order.all[-1].products.must_equal products_list
+      Grocery::Order.find(100).id.must_equal 100
+      Grocery::Order.find(100).products.must_equal products_list
 
     end
 
     it "Raises an error for an order that doesn't exist" do
-      Grocery::Order.all[190].must_equal nil
+      Grocery::Order.find(190).must_equal nil
     end
 end

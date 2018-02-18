@@ -52,8 +52,8 @@ module Grocery
       return orders #array of instances of Order
     end
 
-    def self.find()
-    end
+    # def self.find()
+    # end
   end#end class OnlineOrder
 end#end Grocery module
 

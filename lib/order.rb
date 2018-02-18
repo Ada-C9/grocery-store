@@ -52,18 +52,26 @@ module Grocery
 
     # returns an instance of Order where the value of the id field in the
     # CSV matches the passed parameter.
-    def self.find(id)
+    def self.find(find_id)
       return_val = nil
-      if all.include? id
-        return_val = all[id-1]
+
+      all.each do |order|
+        return_val = all[find_id-1] if order.id == find_id  
       end
+
       return return_val
+
     end#self.find method
 
   end#end Order class
 
 end#end Grocery module
 
-products = { "banana" => 1.99, "cracker" => 3.00 }
-order = Grocery::Order.new(1337, products)
-ap order.total
+# products = { "banana" => 1.99, "cracker" => 3.00 }
+# order = Grocery::Order.new(1337, products)
+# ap order.total
+info = Grocery::Order.all[1]
+ap Grocery::Order.find(1)
+ap info
+
+Grocery::Order.find(0)
