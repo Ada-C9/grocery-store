@@ -32,7 +32,31 @@ describe "OnlineOrder" do
       online_order.must_be_kind_of Grocery::Order
     end
 
-    it "Can access Customer object" do
+    it "Takes an ID, collection of products, customer, and status" do
+      # arrange
+      id = 1337
+      products = {}
+      customer = []
+      status = :paid
+      # act
+      Grocery::Order.new(id, products)
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+      # assert
+      online_order.must_respond_to :id
+      online_order.id.must_equal id
+      online_order.id.must_be_kind_of Integer
+
+      online_order.must_respond_to :products
+      online_order.products.length.must_equal 0
+
+      online_order.must_respond_to :customer
+      online_order.customer.must_be_kind_of Array
+
+      online_order.must_respond_to :status
+      online_order.must_be_kind_of Symbol
+    end
+
+    xit "Can access Customer object" do
       # arrange
       id = 1337
       products = { "banana" => 1.99, "cracker" => 3.00 }
@@ -47,7 +71,9 @@ describe "OnlineOrder" do
     end
 
     xit "Can access the online order status" do
-      # TODO: Your test code here!
+      # arrange
+      # act
+      # assert
     end
   end
 
