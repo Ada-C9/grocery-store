@@ -6,14 +6,22 @@ require_relative 'customer'
 
 
 module Grocery
+
+# Custom ArgumentError because it's fun, could also be done at the point of raising the ArgumentError using syntax ArgumentError.new("Custom Error Message")
+  class CartError < ArgumentError
+    def initialize(msg="Error: Items cannot be added to this order based on its current status")
+      super
+    end
+  end
+
   class OnlineOrder < Order
-    attr_accessor :customer, :status
+    attr_reader :customer, :status
+    @@customers = []
 
     def initialize(id, products, customer_id, status = :pending)
-      @id = id
-      @products = products
-      @customer = Grocery::Customer.find(customer_id)
-      @customer_id = customer_id
+      #Use the itialize attributes from the parent class Order
+      super(id, products)
+      @customer = customer_id
       @status = status.to_sym
     end # Initialize
 
@@ -23,38 +31,59 @@ module Grocery
       end
     end
 
-    def add_product
-      super
-      # TODO: permit a new product to be added ONLY if the status is either pending or paid (no other statuses permitted) Otherwise it should raise an ArgumentError (maybe a custom one, why not?)
+    def add_product(product_name, product_price)
+      if @status == :paid || @status == :pending
+        super
+      else
+        begin
+          raise CartError
+        rescue
+        end
+      end
+    end
+
+    def self.customers
+      return @@customers
     end
 
     def self.all
-      online_list_all = []
-      CSV.open('support/online_orders.csv', 'r').each do |row|
+      list_all = []
+      CSV.open('support/online_orders.csv', 'r', headers: true, header_converters: :symbol).each do |row|
         products = {}
-        id = row[0].to_i
-        status = row[-1]
-        customer_id = row[-2].to_i
-        row[1].split(';').each do |item|
-          product = item.split(':')
-          name = product[0]
-          price = product[1].to_f
-          products[name] = price
+        id = row[:id].to_i
+        customer_id = row[:customer_id].to_i
+        status = row[:status].to_sym
+        row[:products].split(';').each do |item|
+          name, price = item.split(':')
+          products[name] = price.to_f
         end
-        online_list_all << self.new(id, products, customer_id, status)
+        list_all << index = self.new(id, products, customer_id, status)
+        @@customers << Grocery::Customer.find(customer_id)
       end
-      return online_list_all
+      return list_all
     end # OnlineOrder.all
 
     def self.find(id)
-      #TODO determine how this differs from the Order find method
+      super
     end
 
-    def self.find_by_customer(customer_id)
-      #TODO returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter
-    end
+    def self.find_by_customer(cust_id)
+      orders_by_customer = []
+
+      all.each do |order|
+        if order.customer > Grocery::Customer.all.length
+          raise Grocery::CustomerError.new
+        elsif
+          order.customer == cust_id
+          orders_by_customer << order
+        end # if order.customer
+      end #all.each do |order|
+      return orders_by_customer
+    end #self.find_by_customer
 
   end # OnlineOrder
 end # Grocery
+
+Grocery::OnlineOrder.all
 
 binding.pry
