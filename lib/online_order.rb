@@ -12,5 +12,9 @@ module Grocery
       @customer = customer
       @status = status
     end
+
+    def self.all
+
+    end
   end
 end

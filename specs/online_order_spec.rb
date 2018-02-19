@@ -86,6 +86,39 @@ describe "OnlineOrder" do
     end
   end
 
+  describe "OnlineOrder.all" do
+    it "Returns an array of all online orders" do
+      # arrange
+      # no arrange needed (pulling data from csv and other classes)
+      # act
+      Grocery::OnlineOrder.all
+      # assert
+      Grocery::OnlineOrder.all.must_be_kind_of Array
+    end
+
+    it "Returns accurate information about the first online order" do
+      # arrange
+      # no arrange needed (pulling data from csv and other classes)
+      # act
+      Grocery::OnlineOrder.all
+      # assert
+      Grocery::OnlineOrder.all[0].id.must_equal "1"
+      Grocery::OnlineOrder.all[0].status.must_equal :complete
+      Grocery::OnlineOrder.all[0].customer.id.must_equal "25"
+    end
+
+    it "Returns accurate information about the last online order" do
+      # arrange
+      # no arrange needed (pulling data from csv and other classes)
+      # act
+      Grocery::OnlineOrder.all
+      # assert
+      Grocery::OnlineOrder.all[-1].id.must_equal "100"
+      Grocery::OnlineOrder.all[-1].status.must_equal :pending
+      Grocery::OnlineOrder.all[-1].customer.id.must_equal "20"
+    end
+  end
+
   describe "#total" do
     it "Adds a shipping fee" do
       # TODO: Your test code here!
@@ -102,20 +135,6 @@ describe "OnlineOrder" do
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
-    end
-  end
-
-  describe "OnlineOrder.all" do
-    it "Returns an array of all online orders" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the last online order" do
       # TODO: Your test code here!
     end
   end

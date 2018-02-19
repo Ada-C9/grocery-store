@@ -130,7 +130,7 @@ describe "Customer" do
       # arrange
       # No arrange needed
       # act
-      ap Grocery::Customer.find("1")
+      Grocery::Customer.find("1")
       #assert
       Grocery::Customer.find("1").id.must_equal Grocery::Customer.all[0].id
       Grocery::Customer.find("1").email.must_equal Grocery::Customer.all[0].email
