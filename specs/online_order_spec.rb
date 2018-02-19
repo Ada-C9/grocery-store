@@ -162,7 +162,7 @@ describe "OnlineOrder" do
 
       paid_online_order.add_product("chocolate", 4)
       pending_online_order.add_product("wine", 8)
-      
+
       # assert
       paid_online_order.products.keys.length.must_equal 5
       paid_online_order.products.keys.must_include "chocolate"
@@ -174,11 +174,20 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      online_order = Grocery::OnlineOrder.find("50")
+
+      online_order.must_be_instance_of Grocery::OnlineOrder
+
+      online_order.id.must_equal "50"
+
+      online_order.products.keys.must_include "Star Fruit"
+      online_order.status.must_equal :processing
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      online_order = Grocery::OnlineOrder.find("500")
+
+      online_order.must_raise ArgumentError
     end
   end
 
