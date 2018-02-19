@@ -37,10 +37,9 @@ describe "OnlineOrder" do
       id = 1337
       products = {}
       customer = Grocery::Customer.find("1")
-      status = "paid"
       # act
       Grocery::Order.new(id, products)
-      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+      online_order = Grocery::OnlineOrder.new(id, products, customer)
       # assert
       online_order.must_respond_to :id
       online_order.id.must_equal id
@@ -54,6 +53,7 @@ describe "OnlineOrder" do
 
       online_order.must_respond_to :status
       online_order.status.must_be_kind_of Symbol
+      online_order.status.must_equal :pending
     end
 
     xit "Can access Customer object" do

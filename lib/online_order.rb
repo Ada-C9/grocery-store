@@ -6,10 +6,11 @@ module Grocery
     attr_reader :id, :customer, :status
     attr_accessor :products
 
-    def initialize(id, products, customer, status)
+    # set to pending as the default
+    def initialize(id, products, customer, status = :pending)
       super(id, products)
       @customer = customer
-      @status = status.to_sym
+      @status = status
     end
   end
 end
