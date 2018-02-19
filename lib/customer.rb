@@ -20,16 +20,19 @@ module Grocery
       end
 
       all_customers = []
+      # Parses info about customer id, email, and address
       list.each do |row|
         custormer_id = row[0].to_i
         customer_email = row[1]
         address = row[2..4].join(", ") + " " + row[5]
+        # Creates a new customer instance. Adds instance to array of Customer instances
         new_customer = Grocery::Customer.new(custormer_id, customer_email, address)
         all_customers << new_customer
       end
       return all_customers
     end
 
+    # Searches customer_list array for one Customer with customer_id. If customer does not exist, returns nil
     def self.find(customer_id)
       customer_list = Customer.all
       customer_list.each do |customer|
@@ -42,25 +45,3 @@ module Grocery
   end
 
 end
-
-# one_customer = Grocery::Customer.find(1)
-# ap one_customer.address
-
-# list = []
-# CSV.open("../support/customers.csv", 'r').each do |row|
-#   list << row
-# end
-#
-# all_customers = []
-# list.each do |row|
-#   custormer_id = row[0]
-#   # ap custormer_id
-#   customer_email = row[1]
-#   # ap customer_email
-#   address = row[2..4].join(", ") + " " + row[5]
-#   # ap address
-#   new_customer = Grocery::Customer.new(custormer_id, customer_email, address)
-#   all_customers << new_customer
-# end
-
-# ap all_customers
