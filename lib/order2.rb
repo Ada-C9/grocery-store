@@ -1,10 +1,9 @@
 require 'csv'
 # require 'pry'
-require 'awesome_print'
 # TODO: what to do about had initialize values??
 
-module Grocery
-  class Order
+module GroceryTwo
+  class OrderTwo
 
     @@all_orders = []
 
@@ -21,12 +20,6 @@ module Grocery
       return cost_without_sales_tax + get_sales_tax(cost_without_sales_tax)
     end
 
-    # def add_product(product_name, product_cost)
-    #   is_new_product = is_valid_new_product?(product_name, product_cost)
-    #   add_new_product(product_name, product_cost) if is_new_product
-    #   return is_new_product
-    # end
-
     def add_product(product_name, product_cost)
       return successfully_add_product?(product_name, product_cost)
     end
@@ -38,14 +31,14 @@ module Grocery
 
     def self.all
       if @@all_orders.empty? # TODO: uncomment these when done!!
-        CSV.read("../support/orders.csv").each do |order_line|
+        CSV.read("../support/orders2.csv").each do |order_line|
           order_id = order_line[0].to_i
           product_hash = {}
           order_line[1].scan(/[^\;]+/).each do |order|
             name, price = order.split(":")
             product_hash["#{name}"] = price.to_f
           end
-          @@all_orders << Grocery::Order.new(order_id, product_hash)
+          @@all_orders << GroceryTwo::OrderTwo.new(order_id, product_hash)
         end
       end
       return @@all_orders
@@ -90,8 +83,6 @@ private
 
     #
     def add_product_if_valid_and_non_duplicate(name, cost)
-      # @products.push({name: new_name, price: new_cost }) if
-      #   is_valid_new_product?(new_name, new_cost)
       @products["#{name}"] = cost if is_valid_new_product?(name, cost)
     end
 
@@ -113,24 +104,3 @@ private
 
   end
 end
-
-# binding.pry
-
-# This version of self breaks up products for initializing new orders.
-# def self.all
-#   if @@all.empty?
-#     CSV.read("../support/orders.csv").each do |order|
-#       order_id = order[0]
-#       order_products = []
-#       list_of_each_product_as_sting = order[1].split(";")
-#       list_of_each_product_as_sting.each do |product_as_string|
-#       # order[1].split(";").each do |product_as_string|
-#         name_and_price = product_as_string.split(":")
-#         product = { name: name_and_price[0], price: name_and_price[1] }
-#         order_products.push(product)
-#       end
-#     @@all << Order.new(order_id, order_products)
-#     end
-#   end
-#   return @@all
-# end

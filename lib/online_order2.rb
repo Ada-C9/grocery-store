@@ -1,16 +1,16 @@
 require 'csv'
 require 'faker'
 
-require_relative '../lib/order'
-require_relative '../lib/customer'
-# require_relative './order'
-# require_relative './customer'
+require_relative '../lib/order2'
+require_relative '../lib/customer2'
+# require_relative './order2'
+# require_relative './customer2'
 
 
 
-module Grocery
+module GroceryTwo
 
-  class OnlineOrder < Order
+  class OnlineOrderTwo < OrderTwo
     attr_reader :customer, :fulfillment_status#, :id, :products
 
     @@all_online_orders = []
@@ -54,7 +54,7 @@ module Grocery
     #
     def self.all
       if @@all_online_orders.empty? # TODO: uncomment these when done!!
-        CSV.read("../support/online_orders.csv").each do |order_line|
+        CSV.read("../support/online_orders2.csv").each do |order_line|
           order_id = order_line[0].to_i
           product_hash = {}
           order_line[1].scan(/[^\;]+/).each do |order|
@@ -63,7 +63,7 @@ module Grocery
           end
           customer_id = order_line[2].to_i
           order_status = order_line[3].to_sym
-          @@all_online_orders << Grocery::OnlineOrder.new(order_id, product_hash, customer_id,
+          @@all_online_orders << GroceryTwo::OnlineOrderTwo.new(order_id, product_hash, customer_id,
             order_status)
         end
       end
@@ -81,7 +81,7 @@ module Grocery
 
     #
     def self.find_by_customer(requested_customer_id)
-      return if Grocery::OnlineOrder.find(requested_customer_id).nil?
+      return if GroceryTwo::OnlineOrderTwo.find(requested_customer_id).nil?
       orders_of_customer = []
       all.each do |order|
         orders_of_customer << order.products if order.customer.id == requested_customer_id
@@ -93,9 +93,9 @@ module Grocery
 
     #
     def get_customer(customer_id)
-      order_customer = Grocery::Customer.find(customer_id)
+      order_customer = GroceryTwo::CustomerTwo.find(customer_id)
       if order_customer.nil? # creates a new fake customer if can't find id
-        order_customer = Grocery::Customer.new(customer_id, Faker::Internet.email,
+        order_customer = GroceryTwo::CustomerTwo.new(customer_id, Faker::Internet.email,
         {street: Faker::Address.street_address, city:Faker::Address.city,
           state: Faker::Address.state_abbr, zip_code: Faker::Address.zip_code})
       end
