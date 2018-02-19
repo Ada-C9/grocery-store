@@ -92,13 +92,21 @@ describe "Order Wave 2" do
       results[0].must_be_kind_of Grocery::Order
     end
 
-  xit "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-      line = ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
+    it "Returns accurate information about the first order" do
+      # Arrange - feed information for method to work with
+
+      products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93,"Grape Seed Oil" => 74.9}
+
+      Grocery::Order.all.first.id.must_equal "1"
+      Grocery::Order.all.first.products.must_equal products
+
     end
 
     xit "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      products = {"Allspice" => 64.74, "Bran" => 14.72,"Unbleached Flour" => 80.59}
+      Grocery::Order.all.last.id.must_equal "100"
+      Grocery::Order.all.last.products.must_equal products
+
     end
   end
 
