@@ -5,8 +5,8 @@ require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-xdescribe "Order Wave 1" do
-  xdescribe "#initialize" do
+describe "Order Wave 1" do
+  describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -97,19 +97,22 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
-     it "Returns an array of all orders" do
+    it "Returns an array of all orders" do
        Grocery::Order.all.count.must_equal 100
-#       expected_count = array.length
-#       expected_count == 100
     end
 
-    xit "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-
+    it "Returns accurate information about the first order" do
+      Grocery::Order.all[0].id.must_equal "1"
+      Grocery::Order.all[0].products.must_include("Slivered Almonds")
+      Grocery::Order.all[0].products.must_include("Wholewheat flour")
+      Grocery::Order.all[0].products.must_include("Grape Seed Oil")
     end
 
-    xit "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+    it "Returns accurate information about the last order" do
+      Grocery::Order.all.last.id.must_equal "100"
+      Grocery::Order.all.last.products.must_include("Allspice")
+      Grocery::Order.all.last.products.must_include("Bran")
+      Grocery::Order.all.last.products.must_include("UnbleachedFlour")
     end
   end
 

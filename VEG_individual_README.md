@@ -138,33 +138,13 @@
 
                                 PART TWO:  TESTS  
 
-  TEST REQUIREMENTS:  
-
-        1.   Tests to use:  
-
-              A.  Use the suite of tests provided.  
-
-                  *  initialize -- AYE
-                  *  add_product -- AYE
-                  *  total -- AYE
-
-
-              B.  Write new tests for the REMOVE_PRODUCT method.
-
-                  * remove_product tests:
-
-                    - Decreases the number of products
-                    - returns FALSE if the product is still present
-                    - returns FALSE if the product is already absent
-
-        2.    To run tests:  
-
-              A.  Run tests from the command line using the 'Rake' command;
-
-              B.  All tests provided should be passing at the end
-                  of your work on Wave 1.
 
     WAVE II:   (Due at same time as Wave 3)  
+
+
+  0.  CSV-WRANGLING:  
+
+    1.  Convert the CSV into an array, and then use that array to generate 100 instances of Order, which will then be stored in an array()
 
   A.  TESTING:  
 
@@ -181,7 +161,12 @@
         a. In preparation:
 
             i.  Manually choose the data from the first line of the CSV File
+
+              YUP
+
             ii. Make sure you can create a new instance of your Order using that data.
+
+
 
         b. Modifications to order:  
 
@@ -191,10 +176,41 @@
 
                     A.  self.all ---
 
+                        (referred to in 18-2-16 am clarifying lecture as
+                          Order.all)
+
                         1.  Returns: a collection of order instances,
                             representing all the Orders described in the CSV
 
+                                -- Notes from 18-2-16 am clarifying lecture
+                                    -- reads from the CSV
+                                        -- will get a string of orders and
+                                           prices
+                                    -- needs to split up a string to create
+                                       a hash of orders and prices
+                                       -- Restating:  You have to break up
+                                          the second field in each row into
+                                          a hash of products
+                                    -- will probably use ???.split???
+                                    -- When you test Order.all:
+                                        --  Need to call Order.all and get the
+                                            list
+                                        --  Test the number of orders
+                                        --  Test whether you're getting an
+                                            array
+                                        --  Test whether what you have are
+                                            instances of Order  
+                                            -- Will probably need to loop
+                                               through the file to test all
+                                               elements  
+                                           --  Test to make sure first order
+                                               and last order are right
+                                                  -- Make sure attributes have
+                                                     the right values  
+
                         2.   Notes:
+
+                          A.  From the READMEs:
 
                               a.  To parse the product string from the CSV
                                   you will need to use the split method.
@@ -208,10 +224,44 @@
                                       The list of products in the following format:      
                                             name:price;nextname:nextprice
 
+                            B. From 18-2-16 am clarifying lecture
+
+                                i.   reads from the CSV
+                                ii.   will get a string of orders and prices
+                                      a.  Needs to split up that string to create
+                                       a hash of orders and prices
+                                                   -- Restating:  You have to break up
+                                                      the second field in each row into
+                                                      a hash of products
+                                                -- will probably use ???.split???
+                                                -- When you test Order.all:
+                                                    --  Need to call Order.all and get the
+                                                        list
+                                                    --  Test the number of orders
+                                                    --  Test whether you're getting an
+                                                        array
+                                                    --  Test whether what you have are
+                                                        instances of Order  
+                                                        -- Will probably need to loop
+                                                           through the file to test all
+                                                           elements  
+                                                       --  Test to make sure first order
+                                                           and last order are right
+                                                              -- Make sure attributes have
+                                                                 the right values                        
+
 
                     B.  self.find(id) -
 
                         1.  Returns:  an instance of Order where the value of the id field in the CSV matches the passed parameter.
+
+                        2. Notes from 18-2-16 am clarifying lecture:
+                                  -- Takes one parameter (an ID)
+                                  -- Returns one order from the CSV with the
+                                     given ID
+                                     -- Testing:  
+                                        -- Should return nil if it can't
+                                           find the given ID.
 
               II. Determine if the data structure used in Wave 1 will still
                   work
@@ -228,3 +278,10 @@
 
                 A.  Determine what should your program do if Order.find
                     is called with an ID that doesn't exist.
+
+WAVE III:  
+
+    Clarifying lecture 18-2-16:
+        --  the class Online Order will inherit from Orders
+        -- Online Order will have overwritten methods as described in the
+           assignment  
