@@ -3,8 +3,7 @@ require "awesome_print"
 
 module Grocery
   class OnlineOrder < Order
-    attr_reader :id, :customer, :status
-    attr_accessor :products
+    attr_reader :id, :customer, :products, :status
 
     # set to pending as the default
     def initialize(id, products, customer, status = :pending)
@@ -21,13 +20,21 @@ module Grocery
         product_hash = {}
         products.each do |string|
           product = string.split(':')
-          product_hash[product[0]] = product[1]
+          product_hash[product[0]] = product[1].to_f
         end
         customer = Grocery::Customer.find(row[2])
         # csv rows: row[0] => id, row[1] => products, row[2] => customer, row[3] => status
-        online_orders_all << self.new(row[0], products, customer, row[3].to_sym)
+        online_orders_all << self.new(row[0], product_hash, customer, row[3].to_sym)
       end
       return online_orders_all
+    end
+
+    def total
+      if @products.count >0
+        return super + 10
+      else
+        return super
+      end
     end
   end
 end
