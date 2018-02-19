@@ -60,11 +60,12 @@ describe "Order Wave 1" do
     it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
+      before_total = order.total
 
       result = order.add_product("banana", 4.25)
       after_total = order.total
       result.must_equal false
-      before_total.must_equal after_totalgithub
+      before_total.must_equal after_total
     end
 
     it "Returns true if the product is new" do

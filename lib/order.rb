@@ -43,7 +43,21 @@ module Grocery
       end
       return all_order_instances
     end
-
+    def add_product(product, price)
+      before_count = @products.count
+      @products = @products.merge(product => price)
+      before_count + 1 == @products.count
+    end
+    def remove_product(product)
+      before_count = @products.count
+      @products.delete(product)
+      before_count - 1 == @products.count
+    end
+    def total
+      sum = @products.values.inject(0, :+)
+      sum_with_tax = expected_total = sum + (sum * 0.075).round(2)
+      return sum_with_tax
+    end
   end
 end
 
@@ -54,10 +68,8 @@ end
 #puts first_order.id.inspect
 #ap first_order
 
-ap Grocery::Order.all
-
-puts Grocery::Order.all[0].inspect
-
-puts Grocery::Order.all[99].inspect
-
-puts Grocery::Order.all.length
+# MISC STUFF FOR TESTING WAVE 2
+# ap Grocery::Order.all
+# puts Grocery::Order.all[0].inspect
+# puts Grocery::Order.all[99].inspect
+# puts Grocery::Order.all.length
