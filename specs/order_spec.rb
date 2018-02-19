@@ -83,118 +83,116 @@ Minitest::Reporters.use!
 #     end
 #   end
 # end
-  describe 'remove_product' do
-
-    it "returns true if the product is removed" do
-      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25}
-      order = Grocery::Order.new(1337, products)
-
-      result = order.remove_product("salad")
-      result.must_equal true
-      products.length.must_equal 2
-    end
-  end
-end
-
-
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-# xdescribe "Order Wave 2" do
-#   xdescribe "Order.all" do
-#     it "Returns an array of all orders" do
-#       # TODO:
-#         result = Grocery::Order.all
-#         result.must_be_instance_of Array
-#          #result.each do |order|
-#         #   order.must_be_an_instance_of Grocery::Order
-#         # end
-#         #order.must_equal 100
-#       #end
-#     end
+#   describe 'remove_product' do
 #
+#     it "returns true if the product is removed" do
+#       products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25}
+#       order = Grocery::Order.new(1337, products)
 #
-#
-#     it "Returns accurate information about the first order" do
-#       # TODO:
-#       # Arrange
-#       products={"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93,
-#          "Grape Seed Oil"=>74.9}
-#       # Act
-#       orders = Grocery::Order.all
-#       first_order = orders[0]
-#
-#       # Assert
-#       first_order.id.must_be_same_as 1
-#       first_order.products.must_equal products
-#
-#     end
-#
-#     it "Returns accurate information about the last order" do
-#       # TODO:
-#       # Arrange
-#       products = {"Allspice" => 64.74,
-#         "Bran" => 14.72, "UnbleachedFlour" =>80.59}
-#
-#         #Act
-#       orders = Grocery::Order.all
-#       last_order = orders.last
-#
-#         # Assert
-#       last_order.id.must_be_same_as 100
-#       last_order.products.must_equal products
-#
-#       end
-#
-#
-#   end
-#
-#
-#   describe "Order.find" do
-#     xit "Can find the first order from the CSV" do
-#       # TODO: Your test code here!
-#     # Arrange
-#
-#     first_order_id= 1
-#     first_order_products = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93,
-#        "Grape Seed Oil"=>74.9}
-#
-#     # Act
-#       result_id = Grocery::Order.find(1).id
-#       result_product =Grocery::Order.find(1).products
-#
-#     # Arrange
-#      first_order_id.must_be_same_as result_id
-#      first_order_products.must_equal result_product
-#     end
-#
-#     xit "Can find the last order from the CSV" do
-#       # TODO: Your test code here!
-#       # Arrange
-#       last_order_id = 100
-#       last_order_product = {"Allspice" => 64.74,
-#         "Bran" => 14.72, "UnbleachedFlour" =>80.59}
-#       # Act
-#       result_id = Grocery::Order.find(100).id
-#       result_product = Grocery::Order.find(100).products
-#
-#       # Assert
-#       last_order_id.must_be_same_as result_id
-#       last_order_product.must_equal result_product
-#
-#     end
-#
-#     it "Raises an error for an order that doesn't exist" do
-#       # TODO: Your test code here!
-#     # Arrange
-#     id = 206
-#
-#     # Act
-#      Grocery::Order.find(id)
-#
-#     # Assert
-#     proc { Grocery::Order.find(id) }.must_raise ArgumentError
-#
-#
-#
+#       result = order.remove_product("salad")
+#       result.must_equal true
+#       products.length.must_equal 2
 #     end
 #   end
 # end
+
+
+# TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Order Wave 2" do
+  describe "Order.all" do
+    it "Returns an array of all orders" do
+      # TODO:
+      result = Grocery::Order.all
+      result.must_be_instance_of Array
+
+    end
+
+
+
+    it "Returns accurate information about the first order" do
+      # TODO:
+      # Arrange
+      products={"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93,
+               "Grape Seed Oil"=>74.9}
+      # Act
+      orders = Grocery::Order.all
+      first_order = orders[0]
+
+      # Assert
+      first_order.id.must_be_same_as 1
+      first_order.products.must_equal products
+
+    end
+
+    it "Returns accurate information about the last order" do
+      # TODO:
+      # Arrange
+      products = {"Allspice" => 64.74,
+                 "Bran" => 14.72, "UnbleachedFlour" =>80.59}
+
+        #Act
+      orders = Grocery::Order.all
+      last_order = orders.last
+
+        # Assert
+      last_order.id.must_be_same_as 100
+      last_order.products.must_equal products
+
+    end
+
+
+  end
+
+
+  describe "Order.find" do
+    it "Can find the first order from the CSV" do
+      # TODO: Your test code here!
+    # Arrange
+
+      first_order_id= 1
+      first_order_products = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93,
+       "Grape Seed Oil"=>74.9}
+
+    # Act
+      result = Grocery::Order.find(1)
+      result_id = Grocery::Order.find(1).id
+      result_product =Grocery::Order.find(1).products
+
+    # Arrange
+    result.must_be_instance_of Grocery::Order
+     first_order_id.must_be_same_as result_id
+     first_order_products.must_equal result_product
+    end
+
+    it "Can find the last order from the CSV" do
+      # TODO: Your test code here!
+      # Arrange
+      last_order_id = 100
+      last_order_product = {"Allspice" => 64.74,
+        "Bran" => 14.72, "UnbleachedFlour" =>80.59}
+      # Act
+      result = Grocery::Order.find(100)
+      result_id = Grocery::Order.find(100).id
+      result_product = Grocery::Order.find(100).products
+
+      # Assert
+      result.must_be_instance_of Grocery::Order
+      last_order_id.must_be_same_as result_id
+      last_order_product.must_equal result_product
+
+    end
+
+    it "Raises an error for an order that doesn't exist" do
+      # TODO: Your test code here!
+    # Arrange
+    #  id = 206
+
+    # Act
+      #result = Grocery::Order.find(206)
+
+    # Assert
+      proc {Grocery::Order.find(206)}.must_raise ArgumentError
+
+    end
+  end
+end
