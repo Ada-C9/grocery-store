@@ -10,7 +10,16 @@ require_relative '../lib/online_order'
 # we effectively get all that testing for free! Here we'll
 # only test things that are different.
 
+
+
+#_______________ WAVE 3 _______________
+
+
 describe "OnlineOrder" do
+
+  #############################################################################################
+  # INITIALIZES OnlineOrder:
+
   describe "#initialize" do
     it "Is a kind of Order" do
       id = 1337
@@ -42,6 +51,9 @@ describe "OnlineOrder" do
     end
   end
 
+  #############################################################################################
+  # ADDS SHIPPING FEE TO TOTAL OF ORDER:
+
   describe "#total" do
     it "Adds a shipping fee" do
 
@@ -58,12 +70,15 @@ describe "OnlineOrder" do
 
     it "Doesn't add a shipping fee if there are no products" do
 
-      online_order = Grocery::OnlineOrder.new(1, nil, 25, "complete")
+      online_order = Grocery::OnlineOrder.new(nil, nil, nil)
 
       online_order.total.must_equal nil
 
     end
   end
+
+  #############################################################################################
+  # ADDS PRODUCT TO ORDER:
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
@@ -74,6 +89,9 @@ describe "OnlineOrder" do
       # TODO: Your test code here!
     end
   end
+
+  #############################################################################################
+  # READS FILE OF ALL ORDERS AND ADDS THEM:
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
@@ -88,6 +106,9 @@ describe "OnlineOrder" do
       # TODO: Your test code here!
     end
   end
+
+  #############################################################################################
+  # FINDS ORDER:
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do

@@ -2,12 +2,16 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
-
 Minitest::Reporters.use!
 
 
+#_______________ WAVE 1 _______________
 
 describe "Order Wave 1" do
+
+  #############################################################################################
+  # INITIALIZES Order:
+
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -21,6 +25,9 @@ describe "Order Wave 1" do
       order.products.length.must_equal 0
     end
   end
+
+  #############################################################################################
+  # CALCULATES TOTAL OF ORDER:
 
   describe "#total" do
     it "Returns the total from the collection of products" do
@@ -40,6 +47,9 @@ describe "Order Wave 1" do
     end
   end
 
+  #############################################################################################
+  # REMOVES PRODUCT OF ORDER:
+
   describe "remove_product" do
     it "Decreses the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
@@ -51,6 +61,9 @@ describe "Order Wave 1" do
       order.products.count.must_equal expected_count
     end
   end
+
+  #############################################################################################
+  # ADDS PRODUCT TO ORDER:
 
   describe "#add_product" do
     it "Increases the number of products" do
@@ -94,8 +107,14 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
+
+#_______________ WAVE 2_______________
+
 describe "Order Wave 2" do
+
+  #############################################################################################
+  # READS FILE OF ALL ORDERS AND ADDS THEM:
+
   describe "Order.all" do
     it "Returns an array of all orders" do
 
@@ -164,6 +183,9 @@ describe "Order Wave 2" do
 
     end
   end
+
+  #############################################################################################
+  # FINDS ORDER:
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
