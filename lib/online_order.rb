@@ -1,4 +1,3 @@
-require "awesome_print"
 require "csv"
 require_relative "order"
 require_relative "customer"
@@ -25,10 +24,13 @@ module Grocery
       end
     end
 
-    # Modify add_method
+    # Modify add_method from parent class
+    # Only permit one new product to be added when status is pending or paid
     def add_product(product_name, product_price)
       if @status == "pending" || @status == "paid"
-        super
+        if !@products.keys.include?(product_name)
+          @products[product_name] = product_price
+        end
       else
         ArgumentError
       end
@@ -69,7 +71,6 @@ module Grocery
       end
 
     end # self.find method ends
-
 
     def self.find_by_customer(customer_id)
       target_customer = []
