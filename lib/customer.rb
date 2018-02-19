@@ -16,7 +16,7 @@ module Grocery
 
     def self.all
       all_customers = []
-      CSV.read("support/customers.csv", 'r').each do |customer|
+      CSV.read("../support/customers.csv", 'r').each do |customer|
         id = customer[0].to_i
         email = customer[1]
         address = customer[2]
@@ -28,6 +28,20 @@ module Grocery
       end
       return all_customers
     end
+
+    def self.find(id)
+      found_customer = nil
+      self.all.each do |customer|
+        if customer.id == id
+          found_customer = customer
+        end
+      end
+      if found_customer != nil
+        return found_customer
+      else
+        raise ArgumentError.new("customer id does not exist")
+      end
+    end
   end
 end
 
@@ -35,3 +49,4 @@ end
 # firstCustomer = Grocery::Customer.new(36, "email@email.com", "100 address st", "Seattle", "WA", 98144)
 # ap firstCustomer
 # ap Grocery::Customer.all
+ap Grocery::Customer.find(36)
