@@ -65,15 +65,16 @@ module Grocery
     end
 
 
-    # def self.find(find_id)
-    #   find_product = all
-    #   find_product.each do |order|
-    #     if find_id == order.id
-    #     end
-    #     return order.product
-    #   end
-    # end
-
+    def self.find(find_id)
+      find_product = all
+      return_value = nil
+      find_product.each do |order|
+        if find_id == order.id
+          return_value = order
+        end
+      end
+      return return_value
+    end
 
 end # class Order
 
@@ -104,7 +105,7 @@ end # module Grocery
 # puts result
 
 
-list_all_order = Grocery::Order.all
+list_all_order = Grocery::Order.find(101)
 ap list_all_order
 # binding.pry
 
