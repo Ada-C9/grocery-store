@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
-# require 'csv'
+
 Minitest::Reporters.use!
 
 describe "Order Wave 1" do
@@ -113,20 +113,20 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
-    #SOMETIMES DOES NOT PASS BC TESTS NOT RUN IN ORDER.
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
       all_orders = Grocery::Order.all
       expected_length = all_orders.length
 
       expected_length.must_equal 100
+      # Checks that all orders are of class Order
+      all_orders.each do |order|
+        order.must_be_kind_of Grocery::Order
+      end
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
       first_order = Grocery::Order.new(1, {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9})
       id = first_order.id
       products = first_order.products
@@ -139,7 +139,6 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
       last_order = Grocery::Order.new(100, {"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59})
       id = last_order.id
       products = last_order.products
@@ -154,7 +153,6 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
       first_order = Grocery::Order.find(1)
       first_order_id = first_order.id
       first_order_products = first_order.products
@@ -164,7 +162,6 @@ describe "Order Wave 2" do
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
       last_order = Grocery::Order.find(100)
       last_order_id = last_order.id
       last_order_products = last_order.products
@@ -174,10 +171,8 @@ describe "Order Wave 2" do
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
       no_such_order = Grocery::Order.find(101)
-
-      assert_nil(no_such_order, "There is no order with that id")
+      assert_nil(no_such_order, "ERROR: There is no order with that id")
     end
   end
 end
