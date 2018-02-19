@@ -1,6 +1,8 @@
 require "csv"
 require "awesome_print"
 
+require_relative '../lib/order'
+
 module Grocery
   class Customer
     attr_reader :id
