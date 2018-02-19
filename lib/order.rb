@@ -44,12 +44,10 @@ module Grocery
       end
       return all_order_instances
     end
-    def self.find
+    def self.find(query_id)
+      found_order = Grocery::Order.all.find {|order_instance| order_instance.id == query_id}
+      return found_order
     end
-
-    #     found_planet = @planets.find {|planet| planet.name == user_input}
-    # return found_planet
-
 
     def add_product(product, price)
       before_count = @products.count
