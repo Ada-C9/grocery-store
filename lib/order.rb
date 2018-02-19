@@ -44,16 +44,13 @@ module Grocery
       # end
     end
 
-    # def to_s
-    #   return "#{@id}: #{@product}"
-    # end
-
     def self.all
-      all_order = []
       order_product = []
       result = {}
+      all_order = []
       CSV.open(FILE_NAME, 'r').each do |product|
         order_product << "#{product[1]}"
+        id = product[0].to_i
         order_product.each do |product_string|
           result = Hash[
             product_string.split(';').map do |pair|
@@ -62,16 +59,23 @@ module Grocery
             end
           ]
         end
-        all_order << Grocery::Order.new(product[0].to_i, result)
+        all_order << Grocery::Order.new(id, result)
       end
       return all_order
     end
 
 
-    def self.find(id)
-    end
+    # def self.find(find_id)
+    #   find_product = all
+    #   find_product.each do |order|
+    #     if find_id == order.id
+    #     end
+    #     return order.product
+    #   end
+    # end
 
-  end # class Order
+
+end # class Order
 
 end # module Grocery
 
@@ -83,22 +87,25 @@ end # module Grocery
 # puts order.products
 # puts order.total
 
-# ui to test wave 2
+# ui to test wave 2 changes
 # products = []
 # CSV.open(FILE_NAME, 'r').each do |product|
 #   puts "Order ##{product[0]} include: #{product[1]}"
 #   products << Order.new(product[0])
 # end
-#
-list_all_order = Grocery::Order.all
-ap list_all_order
-# puts list_all_order[4]
+# first_order = Grocery::Order.all
+# ap first_order
+# puts first_order[4]
 # order_id = first_order[0].split(", ")
 # puts order_id[0]
 # result = first_order[0].split(";")
 # result = result.map{|x| x = x.split(":"); Hash[x.first.to_sym, x.last] }
 # result = result.reduce(:merge)
 # puts result
+
+
+list_all_order = Grocery::Order.all
+ap list_all_order
 # binding.pry
 
 
