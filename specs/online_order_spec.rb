@@ -1,8 +1,9 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/order'
+# require classes
 require_relative '../lib/online_order'
+
 require "csv"
 
 require 'awesome_print'
@@ -117,7 +118,14 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
+      # arrage
+      # Done by csv
+      # act
+      first_order_products = Grocery::OnlineOrder.all[0].products
+      sum = first_order_products.values.inject(0,:+)
+      expected_total = (sum + (sum * 0.075)).round(2) + 10
+      # assert
+      first_order.total.must_equal expected_total
     end
 
     it "Doesn't add a shipping fee if there are no products" do
