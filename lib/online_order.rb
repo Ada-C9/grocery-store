@@ -23,6 +23,7 @@ class OnlineOrder < Grocery::Order
         raise ArgumentError.new("You can only add products to orders with a status of 'Pending' or 'Paid'")
       rescue ArgumentError => e
         puts e.message
+        return
       end
     end
     super
@@ -68,9 +69,9 @@ class OnlineOrder < Grocery::Order
 end
 
 puts OnlineOrder.ancestors.inspect
-my_prods = [{"Caramel" => 12.00}]
-my_order = OnlineOrder.new(101,123,"complete",my_prods)
-my_order.add_product("apple",3.20)
+my_order = OnlineOrder.find(13)
+ap my_order.add_product("apple",3.20)
+ap my_order
 # puts my_order.inspect
 # puts my_order.status.class
 # ap OnlineOrder.all
