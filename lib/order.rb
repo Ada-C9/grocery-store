@@ -1,5 +1,6 @@
 require 'csv'
 require 'awesome_print'
+require 'pry'
 
 FILENAME = "support/orders.csv"
 
@@ -44,34 +45,36 @@ module Grocery
       data = CSV.read(FILENAME)
       # data and put into order format
       orders = []
-      products = {}
+      # create and empty products hash
+      list = {}
+      # take each line and grab the id number
       data.each do |line|
-        id = line#[0]
+        id = line[0].to_i
         # ap line
-        i = 1
-        products_strings = line[i].split(";")#[1]
-        ap products_strings
-          products_strings.each do |string|
-             string.split(",")#[0]
-            #  ap string.split
-             product_data = string.split(":")#[0]
-             product_data.each do |x|
-               product_name = product_data#[0]
-               product_price = product_data#[1]
-               products[product_name] = product_price
-             end
-            #  ap product_data
-        i += 1
-          end
-          #  ap products
+        # take each string under the id number and split it at the ;
+        products = line[1].split(";")#[1]
+        products.each do |items|# take the string split at the : and assign them to key value pairs
+          # ap products
+          products = items.split(":")
+          # orders << products
+          # ap orders
+
+          product_name = items[0]
+          product_price = items[1].to_i
+          
+          # products[product_name] = product_price
           orders << Order.new(id, products)
-          return orders
+        end
       end
+      return orders
+
     end
   end
 end
 
-# Grocery::Order.all
+
+# binding.pry
+Grocery::Order.all
 
 # display a the first product
 # CSV.open(FILENAME,'r') do |file|
