@@ -4,13 +4,13 @@ require_relative '../lib/order'
 
 module Grocery
   class OnlineOrder < Grocery::Order
-    attr_reader :id, :products, :customer_id, :status, :total2
+    attr_reader :id, :products, :customer_id, :status, :total
 
     FILE_NAME = "support/online_orders.csv"
 
     @@online_orders = []
 
-    def initialize(id, products, customer_id, status)
+    def initialize(id, products, customer_id, status = :pending)
       #need super
       @id = id.to_i
       @products = products
@@ -26,7 +26,7 @@ module Grocery
             id = line_item[0]
             items_string = line_item[1]
             customer_id = line_item[2]
-            status = line_item[3]
+            status = line_item[3].to_sym
 
             products = {} #will take k/v pairs delimited by colon
 
@@ -54,8 +54,8 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      if status == "processing" || "shipped" || "complete"
-        return "Cannot modify your order"
+      if status == :processing || :shipped || :complete
+        return nil
       else
         super()
       end

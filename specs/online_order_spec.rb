@@ -12,7 +12,7 @@ require_relative '../lib/online_order'
 describe "OnlineOrder" do
   before do
     @all_online_orders = Grocery::Order.all
-    @online_order = Grocery::OnlineOrder.new(1,{"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21},25,"complete")
+    @online_order = Grocery::OnlineOrder.new(1,{"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21},25,:complete)
 
   end
   describe "#initialize" do
@@ -23,7 +23,7 @@ describe "OnlineOrder" do
     end
 
     it "Can access the online order status" do
-      @online_order.status.must_equal "complete"
+      @online_order.status.must_equal :complete
     end
   end
 
@@ -44,7 +44,7 @@ describe "OnlineOrder" do
 
       @online_order.add_product("coconut", 20.01)
       @online_order.products.count.must_equal before_count
-      @online_order.products.include?("coconut").must_equal false
+      @online_order.products.has_key?("coconut").must_equal false
     end
 
     it "Permits action for pending and paid satuses" do
@@ -81,7 +81,7 @@ describe "OnlineOrder" do
       # TODO: Your test code here!
     end
 
-    it "Raises an error if the customer does not exist" do
+    it "Returns an empty array if the customer does not exist" do
       # TODO: Your test code here!
     end
 
