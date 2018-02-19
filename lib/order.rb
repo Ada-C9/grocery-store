@@ -47,7 +47,7 @@ module Grocery
       products = {}
       data.each do |line|
         id = line#[0]
-        ap line
+        # ap line
         i = 1
         products_strings = line[i].split(";")#[1]
         ap products_strings
@@ -65,12 +65,13 @@ module Grocery
           end
           #  ap products
           orders << Order.new(id, products)
+          return orders
       end
     end
   end
 end
 
-Grocery::Order.all
+# Grocery::Order.all
 
 # display a the first product
 # CSV.open(FILENAME,'r') do |file|
