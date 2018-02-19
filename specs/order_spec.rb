@@ -96,7 +96,7 @@ describe "Order Wave 2" do
     it "Returns accurate information about the first order" do
       first_item = @all_orders.first
       first_item.id.must_equal 1
-      first_item.products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
+      first_item.products.must_equal ({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
       # first_item.products["Slivered Almonds"].must_equal "22.88"
     end
 
@@ -104,7 +104,7 @@ describe "Order Wave 2" do
       # is the first element == {items}?
       last_item = @all_orders.last
       last_item.id.must_equal 100
-      last_item.products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
+      last_item.products.must_equal ({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
     end
   end
 
@@ -112,13 +112,13 @@ describe "Order Wave 2" do
     it "Can find the first order from the CSV" do
       first_item = @orders.find(1)
       first_item.id.must_equal 1
-      first_item.products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
+      first_item.products.must_equal ({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
     end
 
     it "Can find the last order from the CSV" do
       last_item = @orders.find(100)
       last_item.id.must_equal 100
-      last_item.products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
+      last_item.products.must_equal ({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
     end
 
 

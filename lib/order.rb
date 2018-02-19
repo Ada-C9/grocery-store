@@ -40,7 +40,7 @@ module Grocery
 
             semicolon_split.each do |string|
               key_value_split = string.split(':')
-              products[key_value_split[0]] = key_value_split[1]
+              products[key_value_split[0]] = key_value_split[1].to_f
             end
             @@orders << Order.new(id,products)
           end
@@ -58,7 +58,7 @@ module Grocery
         sum += price
       end
       total = (sum * 1.075).round(2)
-      return total 
+      return total
     end
 
     def add_product(product_name, product_price)

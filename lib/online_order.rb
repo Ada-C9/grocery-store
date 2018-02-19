@@ -4,7 +4,7 @@ require_relative '../lib/order'
 
 module Grocery
   class OnlineOrder < Grocery::Order
-    attr_reader :id, :products, :customer_id, :status, :total
+    attr_reader :id, :products, :customer_id, :status, :total, :add_product
 
     FILE_NAME = "support/online_orders.csv"
 
@@ -16,6 +16,15 @@ module Grocery
       @products = products
       @customer_id = customer_id
       @status = status
+    end
+
+    def self.find(id)
+      @@online_orders.each do |order|
+        if order.id == id
+          return order
+        end
+      end
+      return "ERROR: Order not found"
     end
 
     def self.all
@@ -34,7 +43,7 @@ module Grocery
 
             semicolon_split.each do |string|
               key_value_split = string.split(':')
-              products[key_value_split[0]] = key_value_split[1]
+              products[key_value_split[0]] = key_value_split[1].to_f
             end
             @@online_orders << OnlineOrder.new(id,products, customer_id, status)
           end
@@ -54,12 +63,11 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
-      if status == :processing || :shipped || :complete
+      unless [:pending, :paid].include?(status)
         return nil
       else
-        super()
+        @products[product_name] = product_price
       end
-
     end
 
 
