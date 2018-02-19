@@ -12,7 +12,7 @@ module Grocery
     end
     def self.all
       all_customers = []
-      CSV.read('../support/customers.csv').each do |customer|
+      CSV.read('support/customers.csv').each do |customer|
         #puts customer.inspect
 
         customer_id = customer[0].to_i
@@ -29,7 +29,7 @@ module Grocery
 
       end
 
-        return all_customers
+      return all_customers
 
     end
 
@@ -46,4 +46,4 @@ module Grocery
 end
 
 Grocery::Customer.all
-ap Grocery::Customer.find(3)
+ap Grocery::Customer.find(1)
