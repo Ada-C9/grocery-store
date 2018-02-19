@@ -79,7 +79,9 @@ describe "Customer" do
 
     it "Raises an error for a customer that doesn't exist" do
       # TODO: Your test code here!
-      
+      no_such_customer = Grocery::Customer.find(36)
+
+      assert_nil(no_such_customer, "There is no customer with that id")
     end
   end
 end
