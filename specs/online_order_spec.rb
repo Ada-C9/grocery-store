@@ -141,11 +141,34 @@ describe "OnlineOrder" do
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+      # arrange
+      # CSV data
+      # act
+      complete_online_order = Grocery::OnlineOrder.all[0]
+      processing_online_order = Grocery::OnlineOrder.all[2]
+      shipped_online_order = Grocery::OnlineOrder.all[4]
+
+      # assert
+      [complete_online_order, processing_online_order,shipped_online_order].each do |online_order|
+        proc {online_order.add_product("marshmellows",2) }.must_raise ArgumentError
+      end
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+      # arrange
+      # act
+      paid_online_order =  Grocery::OnlineOrder.all[1]
+      pending_online_order = Grocery::OnlineOrder.all[5]
+
+      add_chocolate = paid_online_order.add_product("chocolate", 4)
+      add_wine = pending_online_order.add_product("wine", 8)
+
+      # assert
+      add_chocolate.product.keys.length.must_equal 4
+      add_chocolate.product.keys.must_include "chocolate"
+      add_wine.product.keys.length.must_equal 2
+      add_wine.product.keys.must_include "wine"
+
     end
   end
 
