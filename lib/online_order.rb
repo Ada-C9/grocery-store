@@ -33,12 +33,29 @@ class OnlineOrder < Order
     array_of_orders
   end
 
-  def self.find(id)
-
-  end
+  # (shouldn't need to rewrite out a new find method since it inherits from Order class and should work the same.)
+  # def self.find(id)
+  #   all_orders = Grocery::OnlineOrder.all
+  #   order = nil
+  #
+  #   all_orders.each do |single_order|
+  #
+  #     if single_order.id == id
+  #       order = single_order
+  #     end
+  #   end
+  #   return order
+  # end
 
   def self.find_by_customer(customer_id)
+    all_orders = Grocery::OnlineOrder.all
 
+    all_orders.each do |single_order|
+      order_list = []
+      if single_order[2] == customer_id
+         order_list << single_order
+    end
+    return order_list
   end
 
   def total

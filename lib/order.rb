@@ -13,7 +13,6 @@ module Grocery
     # id: Integer, represents unique identifier
     # input_products: hash that represents products with keys of product name and values of price (Float)
 
-
     def initialize(id, products)
       @id = id
       @products = products
@@ -21,13 +20,6 @@ module Grocery
 
     # "../support/orders.csv " #change path back to this when opening this file in ruby instead of through rake
 
-    # def self.all
-    #   array_of_orders = []
-    #   CSV.open("support/orders.csv", 'r').each do |line|
-    #     array_of_orders << line
-    #   end
-    #   return array_of_orders
-    # end
 
     def self.all
       array_of_orders = []
@@ -92,13 +84,7 @@ module Grocery
       end
     end
 
-  end #end of class
-
+  end #end of Order class
 
 
 end #end of module
-
-#all_orders = Grocery::Order.all
-
-# # puts "\n#{all_orders}\n\n"
-# puts all_orders.find(3)
