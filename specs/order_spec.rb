@@ -123,17 +123,23 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      find_id = Grocery::Order.find(1)
+
+      find_id.must_be_kind_of Grocery::Order
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      find_id = Grocery::Order.find(100)
+
+      find_id.must_be_kind_of Grocery::Order
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      find_id = Grocery::Order.find(101)
+
+      find_id.must_be_kind_of NilClass
     end
   end
 end
