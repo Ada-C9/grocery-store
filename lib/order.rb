@@ -43,6 +43,13 @@ module Grocery
       end
       return all_order_instances
     end
+    def self.find
+    end
+
+    #     found_planet = @planets.find {|planet| planet.name == user_input}
+    # return found_planet
+
+
     def add_product(product, price)
       before_count = @products.count
         if !@products.include?(product)
@@ -63,14 +70,14 @@ module Grocery
   end
 end
 
-##MISC STUFF FOR TESTING
+##MISC STUFF FOR TESTING WAVE 1
 #first_order = Grocery::Order.new(first_test[0], first_test[1])
 ##puts first_order.add_product("seagull", 12.50).inspect
 #puts first_order.products.inspect
 #puts first_order.id.inspect
 #ap first_order
 
-# MISC STUFF FOR TESTING WAVE 2
+#MISC STUFF FOR TESTING WAVE 2
 # ap Grocery::Order.all
 # puts Grocery::Order.all[0].inspect
 # puts Grocery::Order.all[99].inspect

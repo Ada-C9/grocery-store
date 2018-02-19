@@ -5,7 +5,7 @@ require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -60,8 +60,8 @@ describe "Order Wave 1" do
     it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
-      before_total = order.total
 
+      before_total = order.total
       result = order.add_product("banana", 4.25)
       after_total = order.total
       result.must_equal false
@@ -97,7 +97,7 @@ end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
-  describe "Order.all" do
+  xdescribe "Order.all" do
     it "Returns an array of all orders" do
        Grocery::Order.all.count.must_equal 100
     end
@@ -107,6 +107,7 @@ describe "Order Wave 2" do
       Grocery::Order.all[0].products.must_include("Slivered Almonds")
       Grocery::Order.all[0].products.must_include("Wholewheat flour")
       Grocery::Order.all[0].products.must_include("Grape Seed Oil")
+      Grocery::Order.all[0].products.count.must_equal 3
     end
 
     it "Returns accurate information about the last order" do
@@ -114,20 +115,23 @@ describe "Order Wave 2" do
       Grocery::Order.all.last.products.must_include("Allspice")
       Grocery::Order.all.last.products.must_include("Bran")
       Grocery::Order.all.last.products.must_include("UnbleachedFlour")
+      Grocery::Order.all.last.products.count.must_equal 3
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::Order.find("1").must_equal Grocery::Order.all[0]
+      Grocery::Order.find("1").products.must_include("Slivered Almonds")
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::Order.find("100").must_equal Grocery::Order.all[99]
+      Grocery::Order.find("100").products.must_include("Allspice")
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      Grocery::Order.find("102").must_be_nil
     end
   end
 end
