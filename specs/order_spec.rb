@@ -91,7 +91,6 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
@@ -101,12 +100,10 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
       first_order = Grocery::Order.all[0]
       first_order.id.must_equal 1
 
-      expected_products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9 }
-      first_order.products.must_equal expected_products
+      first_order.products.must_equal ({"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9 })
 
     end
 

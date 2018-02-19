@@ -36,6 +36,7 @@ module Grocery
       end
     end
 
+    # Class methods
     def self.all
       all_orders = []
       CSV.open(FILE_NAME, 'r').each do |order|
