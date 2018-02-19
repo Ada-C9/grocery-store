@@ -21,10 +21,10 @@ module Grocery
         sum += price.to_f
       end
 
-      # subtotal = new_array.inject{ |a,b| a + b }
       total = (sum * 1.075).round(2)
       return total
     end
+    
     #An add_product method that adds the data to the product collection
     def add_product(product_name, product_price)
       product_exists = @products.has_key?(product_name) == false
@@ -48,6 +48,7 @@ module Grocery
         products = step2.to_h
         orders << Grocery::Order.new(order[0].to_i,products)
       end#reads and parses through CSV file
+
       return orders #array of instances of Order
     end#self.all method
 

@@ -22,6 +22,7 @@ describe "OnlineOrder" do
       #Instatiate your OnlineOrder here
       products = { "banana" => 1.99, "cracker" => 3.00 }
       online_order = Grocery::OnlineOrder.new(1,products,3)
+
       online_order.must_be_kind_of Grocery::Order
     end
 
@@ -32,6 +33,7 @@ describe "OnlineOrder" do
     it "Can access the online order status" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       online_order = Grocery::OnlineOrder.new(1,products,3)
+
       online_order.order_status.must_equal :pending
     end
   end
@@ -40,12 +42,14 @@ describe "OnlineOrder" do
     it "Adds a shipping fee" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       online_order = Grocery::OnlineOrder.new(1,products,3)
+
       online_order.total.must_equal 15.36
     end
 
     it "Doesn't add a shipping fee if there are no products" do
       products = {}
       online_order = Grocery::OnlineOrder.new(2,products,4)
+
       online_order.total.must_equal 0
     end
   end
@@ -108,10 +112,11 @@ describe "OnlineOrder" do
     end
   end
 
-  # describe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      Grocery::OnlineOrder.find_by_customer(25).must_be_kind_of Array
       Grocery::OnlineOrder.find_by_customer(25).length.must_equal 6
+      Grocery::OnlineOrder.find_by_customer(25).must_be_kind_of Array
+
     end
 
     it "Raises an error if the customer does not exist" do
@@ -119,7 +124,6 @@ describe "OnlineOrder" do
     end
 
   #   xit "Returns an empty array if the customer has no orders" do
-
   #   end
-  # end
+  end
 end
