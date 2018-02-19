@@ -18,7 +18,7 @@ module Grocery
 
     def total
       if super() > 0
-      return super() +10
+        return super() +10
       end
     end
 
@@ -29,8 +29,6 @@ module Grocery
         return super(product_name, product_price)
       end
     end
-
-    # "1", "Lobster:17.18; Annatto seed:58.38; Camomile:83.21", "25", "complete"
 
     def self.all_online_orders
       orders = []
@@ -45,31 +43,51 @@ module Grocery
         products = sorted_list_2.to_h
         orders << Grocery::OnlineOrder.new(line[0], products, line[2], line[3].to_sym)
       end
-        return orders
+      return orders
     end
 
     def self.find_online_order(id)
       OnlineOrder.all_online_orders.each do |item|
         if item.id == id
-        return item
+          return item
         end
       end
       return nil
     end
 
     def self.find_by_customer(customer)
+      all_orders = []
+      valid_cust = false
       OnlineOrder.all_online_orders.each do |item|
         if item.customer == customer
-          # if item == {"nil"=>"0"}
-          #   return []
-          # end
-          return item
-          # end
+          all_orders << item
+          valid_cust = true
         end
       end
-      return nil
+      if valid_cust == true
+        return all_orders
+      else
+        return nil
+      end
     end
-  end
 
-  ap OnlineOrder.find_by_customer("26")
+  end
+  # ap self.find_by_customer("36")
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##
