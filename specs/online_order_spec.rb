@@ -3,8 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 require_relative '../lib/online_order'
-# You may also need to require other classes here
-
+require_relative '../lib/customer'
 # Because an OnlineOrder is a kind of Order, and we've
 # already tested a bunch of functionality on Order,
 # we effectively get all that testing for free! Here we'll
@@ -93,7 +92,9 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      Grocery::OnlineOrder.find(1).must_include Grocery::OnlineOrder.all.first.products
+      Grocery::OnlineOrder.find(1).id.must_equal Grocery::OnlineOrder.all.first.id
+      Grocery::OnlineOrder.find(1).products.must_equal Grocery::OnlineOrder.all.first.products
+      Grocery::OnlineOrder.find(1).status.must_equal Grocery::OnlineOrder.all.first.status
     end
 
     it "Raises an error for an online order that doesn't exist" do
@@ -101,7 +102,7 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       Grocery::OnlineOrder.find_by_customer(25).must_be_instance_of Array
     end
@@ -111,8 +112,7 @@ describe "OnlineOrder" do
     end
 
     it "Returns an empty array if the customer has no orders" do
-      empty_order = Grocery::OnlineOrder.new(1337, {}, 10, :pending)
-      Grocery::OnlineOrder.find_by_customer(10).must_equal []
+      Grocery::OnlineOrder.find_by_customer(22).must_equal []
     end
   end
 end

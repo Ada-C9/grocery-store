@@ -16,7 +16,7 @@ module Grocery
 
     def self.all
       all_customers = []
-      CSV.read("../support/customers.csv", 'r').each do |customer|
+      CSV.read("support/customers.csv", 'r').each do |customer|
         id = customer[0].to_i
         email = customer[1]
         address = customer[2]
@@ -44,9 +44,3 @@ module Grocery
     end
   end
 end
-
-
-# firstCustomer = Grocery::Customer.new(36, "email@email.com", "100 address st", "Seattle", "WA", 98144)
-# ap firstCustomer
-# ap Grocery::Customer.all
-ap Grocery::Customer.find(36)

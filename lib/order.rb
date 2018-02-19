@@ -29,7 +29,7 @@ module Grocery
     end
 
     def remove_product(product_name)
-      if @products.has_key?(product_name)
+      if @products.key?(product_name)
         @products.delete(product_name)
         return true
       else
@@ -62,13 +62,3 @@ module Grocery
     end
   end
 end
-# Running Wave 1
-# firstOrder = Grocery::Order.new(1, {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
-#   ap firstOrder.total
-#   ap firstOrder.remove_product("Slivered Almonds")
-#   ap firstOrder
-# Running Wave 2
-   # ap Grocery::Order.all
-  # self.find
-  # ap Grocery::Order.find(20)
-  # ap Grocery::Order.find(101)
