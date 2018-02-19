@@ -11,12 +11,15 @@ class OnlineOrder < Grocery::Order
     @status = status
     @products = products
     @id = id
+    @tax = 0.075
   end
 
   def total
-    # super() figure out how to get order
+    shipping_fee = 10.00
+    super + shipping_fee
   end
 
+  # http://blog.honeybadger.io/a-beginner-s-guide-to-exceptions-in-ruby/
   def add_product(product_name, product_price)
     unless self.status == "pending" || self.status == "paid"
       begin
@@ -68,13 +71,16 @@ class OnlineOrder < Grocery::Order
 
 end
 
-puts OnlineOrder.ancestors.inspect
-my_order = OnlineOrder.find(13)
-ap my_order.add_product("apple",3.20)
-ap my_order
+# puts OnlineOrder.ancestors.inspect
+# ap OnlineOrder.find(13)
+# ap my_order = Grocery::Order.find(13)
+# ap my_order.total
+
+# ap my_order.add_product("apple",3.20)
+# ap my_order.total
 # puts my_order.inspect
 # puts my_order.status.class
 # ap OnlineOrder.all
 # ap my_order.inspect
-# ap OnlineOrder.find(16)
+ap my_online = OnlineOrder.find(16).total
 # ap OnlineOrder.find_by_customer(25)
