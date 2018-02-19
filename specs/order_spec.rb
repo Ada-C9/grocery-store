@@ -1,8 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/order'
-# require_relative '../support/orders'
+
 
 describe "Order Wave 1" do
   describe "#initialize" do

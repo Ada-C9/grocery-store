@@ -82,7 +82,10 @@ module  Grocery
       else
         return nil
       end # if statement
-    end # method - find my customer
 
-  end
-end
+    end # method - find by customer
+
+
+  end # Class - OnlineOrder
+
+end # Module - Grocery

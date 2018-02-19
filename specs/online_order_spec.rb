@@ -1,9 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-
 require_relative '../lib/online_order'
-require_relative '../lib/customer'
+
 # You may also need to require other classes here
 
 # Because an OnlineOrder is a kind of Order, and we've

@@ -56,7 +56,8 @@ module Grocery
         all_orders << new_order
       end
       return all_orders
-    end
+      
+    end # Method self.all
 
     def self.find(passed_id)
       return_value = nil
@@ -64,9 +65,11 @@ module Grocery
         if order.id == passed_id
           return_value = order
         end
-      end
+      end # all.each do
       return return_value
-    end
 
-  end
-end
+    end # Method self.find
+
+  end # Class - Order
+
+end # Module - Grocery
