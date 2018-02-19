@@ -10,11 +10,12 @@ module Grocery
     @@orders = []
 
     def initialize(id, products)
-      @id = id
+      @id = id.to_i
       @products = products
     end
 
     def self.find(id)
+      # finds an order in the collection of Order instances
       @@orders.each do |order|
         if order.id == id
           return order
@@ -56,8 +57,8 @@ module Grocery
       @products.each do |product, price|
         sum += price
       end
-      total = sum * 1.075
-      return total.round(2)
+      total = (sum * 1.075).round(2)
+      return total 
     end
 
     def add_product(product_name, product_price)
