@@ -55,6 +55,7 @@ class OnlineOrder < Grocery::Order
     return all_online_orders
   end
 
+  #finds one online order out of array of online orders
   def self.find(online_order_id)
     online_orders = OnlineOrder.all
     online_orders.each do |online_order|
@@ -65,16 +66,22 @@ class OnlineOrder < Grocery::Order
     return nil
   end
 
-  # def self.find_by_customer(customer_id)
-  #   customer_orders = []
-  #   i = 0
-  #   while i < 100
-  #     if OnlineOrder(customer_id) != nil
-  #       customer_orders << OnlineOrder(customer_id)
-  #     end
-  #   end
-  #
-  # end
+  def self.find_by_customer(customer_id)
+    #check if customer_id exists
+    if customer_id > 35 && customer_id > 0
+      return nil
+    end
+
+    customer_orders = []
+    online_orders = OnlineOrder.all
+    online_orders.each do |order|
+      if order.customer.id == customer_id
+        customer_orders << order
+      end
+    end
+    return customer_orders
+
+  end
 
 end
 

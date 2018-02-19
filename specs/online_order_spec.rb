@@ -138,7 +138,7 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
       # TODO: Your test code here!
       customer_id = 25
@@ -153,9 +153,11 @@ describe "OnlineOrder" do
       assert_nil(customer_orders, "ERROR: That customer does not exist.")
     end
 
-    xit "Returns an empty array if the customer has no orders" do
+    it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
-
+      customer_id = 16
+      customer_orders = OnlineOrder.find_by_customer(customer_id)
+      customer_orders.must_equal []
     end
   end
 end
