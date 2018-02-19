@@ -1,6 +1,5 @@
 require 'csv'
 require 'awesome_print'
-require 'pry'
 module Grocery
   class CustomerError < ArgumentError
     def initialize(msg="Error: CustomerID not found")
@@ -40,4 +39,3 @@ module Grocery
     end # Order.find
   end
 end
-binding.pry

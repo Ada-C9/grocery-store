@@ -47,7 +47,6 @@ module Grocery
 
     def self.all
       list_all = []
-      headers = ["id", "products"]
       CSV.open('support/orders.csv', 'r', headers: true, header_converters: :symbol).each do |row|
         products = {}
         id = row[:id].to_i
