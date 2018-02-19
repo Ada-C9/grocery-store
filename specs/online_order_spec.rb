@@ -72,9 +72,12 @@ describe "OnlineOrder" do
 
     it "Can access the online order status" do
       # arrange
+      id = 1337
+      products = {}
+      customer = Grocery::Customer.find("1")
+      # act
       Grocery::Order.new(id, products)
       online_order_no_staus = Grocery::OnlineOrder.new(id, products, customer)
-      # act
       # assert
       online_order.must_respond_to :status
       online_order.status.must_be_instance_of Symbol
