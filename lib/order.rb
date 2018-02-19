@@ -22,7 +22,7 @@ module Grocery
 
     def add_product(product_name, product_price)
 
-      if @products.key? product_name
+      if @products.keys.include?(product_name)
         return false
       else
         @products[product_name] = product_price
@@ -30,27 +30,35 @@ module Grocery
       end
     end
 
-
     def self.all
       all_orders = []
-      CSV.read("../support/orders.csv").each do |order| # order - array
+      CSV.read("support/orders.csv").each do |row| # order - array
 
-        products_hash = {}
-        products_split = order[1].split(';')
-
-        # products_split - array of product/ price
-        products_split.each do |pair|
-          split = pair.split(':')
-          products_hash[split[0]] = split[1].to_f
+        id = row[0].to_i # make id an integer
+        products_split = row[1].split(';') # products_split - array of product/price
+        products_hash = {} # this will become @products when making new instances
+        products_split.each do |product|# loop through products array
+          product_pair = product.split(':')
+          #put all in a hash
+          products_hash[product_pair[0]] = product_pair[1].to_f
         end
-
-        new_order = self.new(order[0], products_hash)
+        new_order = Order.new(id, products_hash)
         all_orders << new_order
       end
       return all_orders
     end
-  end
-end
 
+    def self.find(id)
+      all_orders = Order.all
+      all_orders.each do |entry|
+        if entry.id == id
+          return entry.products
+        end
+      end
+      return nil
+    end #end self find method
 
- 
+  end # end Order class
+end # end Grocery module
+
+binding.pry

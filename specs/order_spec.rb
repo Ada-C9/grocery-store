@@ -2,7 +2,8 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
-require 'pry'
+require 'awesome_print'
+require 'csv'
 
 Minitest::Reporters.use!
 
@@ -85,44 +86,45 @@ end
 # TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
-    it "Returns an array of all orders" do
-      Grocery::Order.all.must_be_kind_of Array
-      Grocery::Order.all.each do |item|
-        item.must_be_kind_of Grocery::Order
 
-      end
+    it "Returns an array of all orders" do
+
+      Grocery::Order.all.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first order" do
-      Grocery::Order.all.must_be_kind_of Array
-      first = Grocery::Order.all.first
-      first.id.must_equal "1"
+
+      products_hash = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+      Grocery::Order.all.first.id.must_equal 1
+      Grocery::Order.all.first.products.must_equal products_hash
     end
 
     it "Returns accurate information about the last order" do
-      Grocery::Order.all.must_be_kind_of Array
-      last = Grocery::Order.all.last
-      last.id.must_equal "100"
-    end
-end
-    describe "Order.find" do
-    it "Can find the first order from the CSV" do
-      order = Grocery::Order.find(1)
-      order.must_be_kind_of Grocery::Order
-      order.id.must_equal "1"
-    end
 
+      products_hash ={"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+      Grocery::Order.all.last.id.must_equal 100
+      Grocery::Order.all.last.products.must_equal products_hash
+    end
   end
 
-    it "Can find the last order from the CSV" do
-      order = Grocery::Order.find(100)
-      order.must_be_kind_of Grocery::Order
-      order.id.must_equal "100"
+  describe "Order.find" do
+    it "Can find the first order from the CSV" do
+
+      products_hash = {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+      Grocery::Order.all[0].id.must_equal 1
+      Grocery::Order.all[0].products.must_equal products_hash
+    end
+
+
+  it "Can find the last order from the CSV" do
+
+    products_hash = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+     Grocery::Order.all[-1].id.must_equal 100
+     Grocery::Order.all[-1].products.must_equal products_hash
+end
 
     it "Raises an error for an order that doesn't exist" do
-      order = Grocery::Order.find(101)
-      order.must_be_kind_of Grocery::Order
-      order.id.must_equal "nill"
+      Grocery::Order.all[101].must_equal nil
     end
   end
 end
