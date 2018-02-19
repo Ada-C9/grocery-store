@@ -28,7 +28,6 @@ module Grocery
       return all_customers
     end
 
-
     def self.find(id)
       array_customers = []
       all_customers = Grocery::Customers.all
