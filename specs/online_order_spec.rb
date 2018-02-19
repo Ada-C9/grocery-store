@@ -78,6 +78,7 @@ describe "OnlineOrder" do
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       Grocery::OnlineOrder.all.must_be_kind_of Array
+      Grocery::OnlineOrder.all[0].must_be_kind_of Grocery::OnlineOrder
     end
 
     it "Returns accurate information about the first online order" do
@@ -98,27 +99,27 @@ describe "OnlineOrder" do
   end#end self.all method tests
 
   describe "OnlineOrder.find" do
-    # it "Will find an online order from the CSV" do
-    #
-    #   Grocery::OnlineOrder.find(1).must_be_kind_of Grocery::OnlineOrder
-    # end
-    #
-    # it "Raises an error for an online order that doesn't exist" do
-    #   Grocery::OnlineOrder.find(190).must_equal nil
-    # end
+    it "Will find an online order from the CSV" do
+      Grocery::OnlineOrder.find(1).must_be_kind_of Grocery::OnlineOrder
+    end
+
+    it "Raises an error for an online order that doesn't exist" do
+      Grocery::OnlineOrder.find(190).must_equal nil
+    end
   end
 
   # describe "OnlineOrder.find_by_customer" do
-  #   it "Returns an array of online orders for a specific customer ID" do
-  #     # TODO: Your test code here!
-  #   end
-  #
-  #   xit "Raises an error if the customer does not exist" do
-  #     # TODO: Your test code here!
-  #   end
-  #
+    it "Returns an array of online orders for a specific customer ID" do
+      Grocery::OnlineOrder.find_by_customer(25).must_be_kind_of Array
+      Grocery::OnlineOrder.find_by_customer(25).length.must_equal 6
+    end
+
+    it "Raises an error if the customer does not exist" do
+      Grocery::OnlineOrder.find_by_customer(32409).must_be_nil
+    end
+
   #   xit "Returns an empty array if the customer has no orders" do
-  #     # TODO: Your test code here!
+
   #   end
   # end
 end

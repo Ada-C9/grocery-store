@@ -20,6 +20,7 @@ module Grocery
       subtotal.each do |price|
         sum += price.to_f
       end
+
       # subtotal = new_array.inject{ |a,b| a + b }
       total = (sum * 1.075).round(2)
       return total
@@ -56,22 +57,10 @@ module Grocery
       return_val = nil
 
       all.each do |order|
-        return_val = all[find_id-1] if order.id == find_id  
+        return_val = all[find_id-1] if order.id == find_id
       end
 
       return return_val
-
     end#self.find method
-
   end#end Order class
-
 end#end Grocery module
-
-# products = { "banana" => 1.99, "cracker" => 3.00 }
-# order = Grocery::Order.new(1337, products)
-# ap order.total
-info = Grocery::Order.all[1]
-ap Grocery::Order.find(1)
-ap info
-
-Grocery::Order.find(0)

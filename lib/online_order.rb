@@ -51,10 +51,24 @@ module Grocery
       end#reads and parses through CSV file
       return orders #array of instances of Order
     end
-
-    # def self.find()
+    #
+    # def self.find(find_id)
+    #   super(find_id)
     # end
+
+    def self.find_by_customer(cust_id)
+      order_list = Grocery::OnlineOrder.all
+      cust_array = []
+      order_list.each do |order|
+        if order.customer_id == cust_id
+          cust_array << order
+        end
+      end
+      return nil if cust_array == []
+      return cust_array
+    end
+
   end#end class OnlineOrder
 end#end Grocery module
 
-  # ap Grocery::OnlineOrder.all
+  
