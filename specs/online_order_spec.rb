@@ -87,7 +87,7 @@ describe "OnlineOrder" do
       # arrange
       # no arrange needed (pulling data from csv and other classes)
       # act
-      ap Grocery::OnlineOrder.all
+      Grocery::OnlineOrder.all
       # assert
       Grocery::OnlineOrder.all.must_be_kind_of Array
     end
