@@ -160,14 +160,14 @@ describe "OnlineOrder" do
       paid_online_order =  Grocery::OnlineOrder.all[1]
       pending_online_order = Grocery::OnlineOrder.all[5]
 
-      add_chocolate = paid_online_order.add_product("chocolate", 4)
-      add_wine = pending_online_order.add_product("wine", 8)
-
+      paid_online_order.add_product("chocolate", 4)
+      pending_online_order.add_product("wine", 8)
+      
       # assert
-      add_chocolate.product.keys.length.must_equal 4
-      add_chocolate.product.keys.must_include "chocolate"
-      add_wine.product.keys.length.must_equal 2
-      add_wine.product.keys.must_include "wine"
+      paid_online_order.products.keys.length.must_equal 5
+      paid_online_order.products.keys.must_include "chocolate"
+      pending_online_order.products.keys.length.must_equal 2
+      pending_online_order.products.keys.must_include "wine"
 
     end
   end
