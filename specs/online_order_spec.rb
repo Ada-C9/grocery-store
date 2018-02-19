@@ -2,18 +2,14 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
-# TODO: uncomment the next line once you start wave 3
 require_relative '../lib/onlineorder'
 
 Minitest::Reporters.use!
 # You may also need to require other classes here
 require_relative '../lib/order.rb'
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
 
 describe "OnlineOrder" do
+
   before do
     @test_id = 123
     @products = {"apple" => 2.5}
@@ -32,7 +28,6 @@ describe "OnlineOrder" do
     end
 
     it "Can access Customer object" do
-      # TODO: Your test code here!
       online_order = OnlineOrder.new(@test_id, @products, @customer, @fulfillment_status)
 
       customer_obj = online_order.customer
@@ -43,7 +38,6 @@ describe "OnlineOrder" do
     end
 
     it "Can access the online order status" do
-      # TODO: Your test code here!
       online_order = OnlineOrder.new(@test_id, @products, @customer, @fulfillment_status)
 
       online_order_status = online_order.fulfillment_status
@@ -53,14 +47,12 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
       online_order = OnlineOrder.new(@test_id, @products, @customer, @fulfillment_status)
       total = online_order.total
       total.must_equal 12.69
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
       online_order = OnlineOrder.new(@test_id, {}, @customer, @fulfillment_status)
       total = online_order.total
       total.must_equal 0
@@ -69,26 +61,31 @@ describe "OnlineOrder" do
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
-      online_order = OnlineOrder.new(@test_id, @products, @customer, 'processing')
-      assert_raises(ArgumentError) {online_order.add_product("banana", 1.25)}
+      online_order_proccessing = OnlineOrder.new(@test_id, @products, @customer, 'processing')
+      online_order_shipped = OnlineOrder.new(@test_id, @products, @customer, 'shipped')
+      online_order_completed = OnlineOrder.new(@test_id, @products, @customer, 'completed')
+
+      assert_raises(ArgumentError) {online_order_proccessing.add_product("banana", 1.25)}
+      assert_raises(ArgumentError) {online_order_shipped.add_product("banana", 1.25)}
+      assert_raises(ArgumentError) {online_order_completed.add_product("banana", 1.25)}
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
       paid_online_order = OnlineOrder.new(@test_id, @products, @customer, 'paid')
       pending_online_order = OnlineOrder.new(@test_id, @products, @customer)
+
       paid_online_order.add_product("banana", 1.25).must_equal true
       pending_online_order.add_product("cookies", 1.5).must_equal true
     end
   end
 
   describe "OnlineOrder.all" do
+
     before do
       @online_orders = OnlineOrder.all
     end
+
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
       @online_orders.each do |order|
         order.must_be_kind_of OnlineOrder
       end
@@ -96,8 +93,8 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
       first_order = @online_orders[0]
+
       first_order.id.must_equal 1
       first_order.products.must_equal ({"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21})
       first_order.customer.must_be_kind_of Grocery::Customer
@@ -108,8 +105,8 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
       last_order = @online_orders[99]
+
       last_order.id.must_equal 100
       last_order.products.must_equal ({"Amaranth" => 83.81, "Smoked Trout" => 70.6, "Cheddar" => 5.63})
       last_order.customer.must_be_kind_of Grocery::Customer
@@ -122,7 +119,6 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
       one_order = OnlineOrder.find(3)
       one_order.id.must_equal 3
       one_order.products.must_equal ({"Vegetable spaghetti" => 37.83, "Dates" => 90.88, "WhiteFlour" => 3.24, "Caraway Seed" => 54.29})
@@ -131,30 +127,26 @@ describe "OnlineOrder" do
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
       id = 200
       order = OnlineOrder.find(id)
-      assert_nil(order, "There is no online order with that ID.")
+      assert_nil(order, "ERROR: There is no online order with that ID.")
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
       customer_id = 25
       customer_orders = OnlineOrder.find_by_customer(customer_id)
       customer_orders.must_be_kind_of Array
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
       customer_id = 40
       customer_orders = OnlineOrder.find_by_customer(customer_id)
       assert_nil(customer_orders, "ERROR: That customer does not exist.")
     end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
       customer_id = 16
       customer_orders = OnlineOrder.find_by_customer(customer_id)
       customer_orders.must_equal []

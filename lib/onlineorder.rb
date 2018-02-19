@@ -4,17 +4,19 @@ require_relative 'order.rb'
 require_relative 'customer.rb'
 
 class OnlineOrder < Grocery::Order
+
+  NUM_OF_CUSTOMERS = 35
+
   attr_reader :id, :products, :customer, :fulfillment_status
+
   def initialize(id, products, customer, fulfillment_status = 'pending')
     @id = id
-    # super (products)
     @products = products
-    # super(products)
-
     @customer = customer
     @fulfillment_status = fulfillment_status
   end
 
+  # Adds a product only if fulfillment_status equals pending or paid
   def add_product(product_name, product_price)
     if @fulfillment_status == "pending" || @fulfillment_status == "paid"
       return super
@@ -23,6 +25,7 @@ class OnlineOrder < Grocery::Order
     end
   end
 
+  # If the total from Order.total = 0, do not add the shipping fee
   def total
     if super == 0
       return 0
@@ -37,6 +40,7 @@ class OnlineOrder < Grocery::Order
     end
 
     all_online_orders = []
+    # Parses out online_order_id, products, customer_id, and fulfillment_status
     list.each do |row|
       id = row[0].to_i
       groceries = []
@@ -47,15 +51,17 @@ class OnlineOrder < Grocery::Order
          products.each {|key,val| products[key] = val.to_f}
       end
       customer_id = row[2].to_i
+      # Uses Customer.find class method to return one instance of a Customer
       customer = Grocery::Customer.find(customer_id)
       status = row[3]
+      # Creates one instnace of Online Order and adds it to an Array of OnlineOrders
       new_online_order = OnlineOrder.new(id, products, customer, status)
       all_online_orders << new_online_order
     end
     return all_online_orders
   end
 
-  #finds one online order out of array of online orders
+  # Finds one online order out of array of online orders. Returns nil if the OnlineOrder does not exist
   def self.find(online_order_id)
     online_orders = OnlineOrder.all
     online_orders.each do |online_order|
@@ -67,57 +73,20 @@ class OnlineOrder < Grocery::Order
   end
 
   def self.find_by_customer(customer_id)
-    #check if customer_id exists
-    if customer_id > 35 && customer_id > 0
+    # Check if customer_id exists based on knowledge on how many customers exist
+    if customer_id > NUM_OF_CUSTOMERS || customer_id < 0
       return nil
     end
 
     customer_orders = []
     online_orders = OnlineOrder.all
+    # Iterates through array of OnlineOrders to find all orders that have customer_id. Adds these OnlineOrders to customer_orders
     online_orders.each do |order|
       if order.customer.id == customer_id
         customer_orders << order
       end
     end
     return customer_orders
-
   end
 
 end
-
-# online_orders = OnlineOrder.all
-# one_order = OnlineOrder.find(3)
-# ap one_order
-
-# ap online_orders
-#
-# test_id = 123
-# test_email = "test@email.com"
-# test_address = "test address"
-# customer = Grocery::Customer.new(test_id, test_email, test_address)
-# # ap customer
-# test_case = OnlineOrder.new(123, {"apple"=>1.00}, customer, "processing")
-# # ap test_case
-# ap test_case.add_product("banana", 1.25)
-
-# list = []
-# CSV.open("../support/online_orders.csv", 'r').each do |row|
-#   list << row
-# end
-#
-# list.first(2).each do |row|
-#   id = row[0].to_i
-#   groceries = []
-#   products = row[1].split(";")
-#   products.each do |item|
-#      groceries << item.split(":")
-#      products = groceries.to_h
-#      products.each {|key,val| products[key] = val.to_f}
-#   end
-#   customer_id = row[2].to_i
-#   status = row[3]
-#   # ap id
-#   # ap products
-#   # ap customer_id
-#   # ap status
-# end
