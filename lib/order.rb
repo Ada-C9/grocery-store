@@ -51,19 +51,20 @@ module Grocery
     def self.all
       all_order = []
       order_product = []
+      result = {}
       CSV.open(FILE_NAME, 'r').each do |product|
         order_product << "#{product[1]}"
-        all_order << "#{product[0]}"
-      end
-      order_product.each do |product_string|
-      result = Hash[
-        product_string.split(';').map do |pair|
-          k, v = pair.split(':', 2)
-          [k, v.to_i]
+        order_product.each do |product_string|
+          result = Hash[
+            product_string.split(';').map do |pair|
+              product, price = pair.split(':', 2)
+              [product, price.to_i]
+            end
+          ]
         end
-      ]
-      puts result
-    end
+        all_order << Grocery::Order.new(product[0].to_i, result)
+      end
+      return all_order
     end
 
 
@@ -90,7 +91,7 @@ end # module Grocery
 # end
 #
 list_all_order = Grocery::Order.all
-list_all_order[0]
+ap list_all_order
 # puts list_all_order[4]
 # order_id = first_order[0].split(", ")
 # puts order_id[0]
