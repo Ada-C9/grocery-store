@@ -42,7 +42,3 @@ module  Grocery
   end # Class - Customer
 
 end # Module - Grocery
-
-# ap Grocery::Customer.all
-
-ap Grocery::Customer.find(23)
