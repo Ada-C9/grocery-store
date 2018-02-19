@@ -23,6 +23,7 @@ module Grocery
       product_price_array = []
       separated_products.each do |product_with_price|
         product_price_pair = product_with_price.split(":")
+        product_price_pair[1] = product_price_pair[1].to_f #not sure if I need this, but it was driving me nuts
         product_price_array << product_price_pair
       end
       processed_order[1] = product_price_array.to_h
@@ -78,7 +79,7 @@ end
 #ap first_order
 
 #MISC STUFF FOR TESTING WAVE 2
-# ap Grocery::Order.all
-# puts Grocery::Order.all[0].inspect
-# puts Grocery::Order.all[99].inspect
-# puts Grocery::Order.all.length
+ap Grocery::Order.all
+puts Grocery::Order.all[0].inspect
+puts Grocery::Order.all[99].inspect
+puts Grocery::Order.all.length
