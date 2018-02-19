@@ -71,9 +71,9 @@ module Grocery
 
     def self.find(id)
       orders = Order.all
-      orders.each do |entry|
-        if entry.id == id
-          return entry.products
+      orders.each do |order|
+        if order.id == id
+          return order.products
         end
       end
       return nil

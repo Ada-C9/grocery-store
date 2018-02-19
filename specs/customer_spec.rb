@@ -5,7 +5,7 @@ require_relative '../lib/customer'
 require 'awesome_print'
 require 'csv'
 
-describe "Customer" do
+xdescribe "Customer" do
 
   describe "#initialize" do
     it "Takes an ID, email and address info" do
