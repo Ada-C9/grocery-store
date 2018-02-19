@@ -1,4 +1,4 @@
-# Beginning WAVE 2 now.
+
 
 require 'csv'
 require 'awesome_print'
@@ -77,7 +77,7 @@ end
 #ap first_order
 
 #MISC STUFF FOR TESTING WAVE 2
-ap Grocery::Order.all
-puts Grocery::Order.all[0].inspect
-puts Grocery::Order.all[99].inspect
-puts Grocery::Order.all.length
+# ap Grocery::Order.all
+# puts Grocery::Order.all[0].inspect
+# puts Grocery::Order.all[99].inspect
+# puts Grocery::Order.all.length
