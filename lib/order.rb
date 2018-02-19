@@ -10,8 +10,6 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
-      # @@orders << [@id, @products]
-
     end
 
     def total
@@ -59,7 +57,7 @@ module Grocery
     def self.find(id)
       find_result = all.find { |order| order.id == id }
       if find_result == nil
-        return "Error: Order ID does not exist"
+        raise ArgumentError.new("Order ID entered does not exist.")
       else
         return find_result
       end
@@ -67,18 +65,3 @@ module Grocery
 
   end
 end
-
-# puts "Find id 1: #{Grocery::Order.find(1)}"
-
-# DONE
-# ap orders
-# ap Grocery::Order.all
-#
-# ap Grocery::Order.find("1")
-# ap Grocery::Order.all[0]
-
-# ap Grocery::Order.find("112")
-# ap Grocery::Order.find("1")
-# first_order = Grocery::Order.all[0]
-# ap first_order.add_product("salad", 4.25)
-# ap first_order
