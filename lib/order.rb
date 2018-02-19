@@ -1,9 +1,9 @@
 require 'csv'
 require 'awesome_print'
 
-FILE_NAME = 'support/orders.csv'
+ORDER_FILE = 'support/orders.csv'
 
-# orders_array = CSV.read(FILE_NAME, 'r')
+# orders_array = CSV.read(ORDER_FILE, 'r')
 # parsed_array = []
 # orders_array.each_with_index do |order, i|
 #   parsed_array[i] =[]
@@ -52,7 +52,7 @@ module Grocery
       end
     end
 
-    def self.all(csv_file=FILE_NAME)
+    def self.all(csv_file=ORDER_FILE)
       csv_array = CSV.read(csv_file, 'r')
       all_orders = []
       csv_array.each do |order|
@@ -64,7 +64,7 @@ module Grocery
       return all_orders
     end
 
-    def self.find(id, csv_file=FILE_NAME) #uses FILE_NAME by default if a different file isn't given
+    def self.find(id, csv_file=ORDER_FILE) #uses ORDER_FILE by default if a different file isn't given
       Order.all(csv_file).each do |object|
         if object.id == id
           return object
