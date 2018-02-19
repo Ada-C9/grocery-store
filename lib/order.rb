@@ -4,7 +4,6 @@
 require 'awesome_print'
 require 'csv'
 
-
 module Grocery
   class Order
     attr_reader :id, :products
@@ -68,19 +67,9 @@ module Grocery
       return nil
     end
 
-
-
   end
-
   # ap Order.all_orders[0]
   # ap Order.all_orders
   # ap Order.find_order("200")
     # ap Order.all_orders
-
-
-
-
-
-
-
 end
