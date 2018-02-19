@@ -70,5 +70,5 @@ end
 # Running Wave 2
    # ap Grocery::Order.all
   # self.find
-  ap Grocery::Order.find(20)
-  ap Grocery::Order.find(101)
+  # ap Grocery::Order.find(20)
+  # ap Grocery::Order.find(101)
