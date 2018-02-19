@@ -55,22 +55,6 @@ module Grocery
       return nil
     end
 
-    # def self.find_by_customer(customer)
-    #   all_orders = []
-    #   valid_cust = false
-    #   OnlineOrder.all_online_orders.each do |item|
-    #     if item.customer == customer
-    #       all_orders << item
-    #       valid_cust = true
-    #     end
-    #   end
-    #   if valid_cust == true
-    #     return all_orders
-    #   else
-    #     return nil
-    #   end
-    # end
-
     def self.find_by_customer(customer)
       all_orders = []
       OnlineOrder.all_online_orders.each do |item|
