@@ -77,6 +77,26 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+
+  describe "#remove_product" do
+    it "Removes a product if the product exists" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+      result = order.remove_product("cracker")
+      order.products.length.must_equal 1
+      result.must_equal true
+    end
+
+    it "Removes a product if the product exists" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+      result = order.remove_product("apple")
+      order.products.length.must_equal 2
+      result.must_equal false
+
+    end
+  end
+
 end
 
 describe "Order Wave 2" do

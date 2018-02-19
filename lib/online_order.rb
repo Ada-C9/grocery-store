@@ -13,8 +13,6 @@ module  Grocery
 
     def initialize(id, products, customer_id, status)
       super(id, products)
-      # @id = id
-      # @products = products
       @customer_id = customer_id
       @status = status.to_sym
     end
@@ -29,7 +27,7 @@ module  Grocery
     end
 
     def add_product(name, price)
-      if @status == :pending || @status == :paid
+      if [:pending, :paid].include?(@status)
         super(name,price)
       end
     end
@@ -44,7 +42,7 @@ module  Grocery
       end
 
       return return_value
-    end
+    end # method - customer
 
     def self.all
       all_orders = []
@@ -64,7 +62,7 @@ module  Grocery
         all_orders << new_order
       end
       return all_orders
-    end
+    end # method - self.all
 
     def self.find_by_customer(cust_id)
       cust_array = Grocery::Customer.all
@@ -88,11 +86,3 @@ module  Grocery
 
   end
 end
-
-new_online_order = Grocery::OnlineOrder.new(434, {"product": 5.50, "apples": 4.50},45,"pending")
-
-puts new_online_order.total
-
-puts new_online_order.products
-
-puts Grocery::Customer.find(new_online_order.customer_id)

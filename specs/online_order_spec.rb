@@ -143,7 +143,7 @@ describe "OnlineOrder" do
       result[0].customer_id.must_equal 8
     end
 
-    it "Returns nil if the customer does not exist" do
+    it "Raises an error if the customer does not exist" do
       result = Grocery::OnlineOrder.find_by_customer(78)
       result.must_be_nil
     end

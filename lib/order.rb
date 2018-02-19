@@ -25,7 +25,15 @@ module Grocery
         @products[product_name] = product_price
         return true
       end
+    end
 
+    def remove_product(product_name)
+      if @products.keys.include?(product_name)
+        @products.delete(product_name)
+        return true
+      else
+        return false
+      end
     end
 
     def to_s
@@ -62,7 +70,3 @@ module Grocery
 
   end
 end
-
-# ap Grocery::Order.all
-
-# ap Grocery::Order.find(9876)
