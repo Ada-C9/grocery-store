@@ -49,16 +49,21 @@ module Grocery
     # end
 
     def self.all
-      my_orders = []
+      all_order = []
+      order_product = []
       CSV.open(FILE_NAME, 'r').each do |product|
-        my_orders << "#{product[1]}"
+        order_product << "#{product[1]}"
+        all_order << "#{product[0]}"
       end
-      # my_orders.each do |index|
-      #   result = index.split("; ")
-      #   result = result.map{|x| x = x.split(": "); Hash[x.first.to_sym, x.last] }
-      #   result = result.reduce(:merge)
-      # end
-      return my_orders
+      order_product.each do |product_string|
+      result = Hash[
+        product_string.split(';').map do |pair|
+          k, v = pair.split(':', 2)
+          [k, v.to_i]
+        end
+      ]
+      puts result
+    end
     end
 
 
@@ -84,15 +89,15 @@ end # module Grocery
 #   products << Order.new(product[0])
 # end
 #
-first_order = Grocery::Order.all
-puts first_order
-puts first_order.class
-puts first_order[0]
-result = first_order[0].split(";")
-result = result.map{|x| x = x.split(":"); Hash[x.first.to_sym, x.last] }
-result = result.reduce(:merge)
-puts result
-puts result[]
+list_all_order = Grocery::Order.all
+list_all_order[0]
+# puts list_all_order[4]
+# order_id = first_order[0].split(", ")
+# puts order_id[0]
+# result = first_order[0].split(";")
+# result = result.map{|x| x = x.split(":"); Hash[x.first.to_sym, x.last] }
+# result = result.reduce(:merge)
+# puts result
 # binding.pry
 
 
