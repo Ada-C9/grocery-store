@@ -120,12 +120,12 @@ describe "OnlineOrder" do
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       # TODO: Your test code here!
-      Grocery::Order.find(1).must_be_instance_of Grocery::Order
+      Grocery::Online_Orders.find(1).must_be_instance_of Grocery::Online_Orders
     end
 
     it "Raises an error for an online order that doesn't exist" do
       # TODO: Your test code here!
-      result = Grocery::Order.find(110)
+      result = Grocery::Online_Orders.find(110)
       result.must_be_nil
     end
   end
@@ -136,14 +136,15 @@ describe "OnlineOrder" do
       orders_per_customer = Grocery::Online_Orders.find_by_customer(10)
       orders_per_customer.must_be_instance_of Array
 
-      # I counted manually how many orders customer of id #10 have and it was 4.
+      # To check that returns the correct amount of orders in the array,
+      # I took as sample customer_id #10 and manually counted its orders which are 4.
       Grocery::Online_Orders.find_by_customer(10).length.must_equal 4
     end
 
     it "Raises an error if the customer does not exist" do
       # TODO: Your test code here!
 
-      # I tested with customer id's that don't exist
+      # I tested with customer_id's that don't exist like 40 and 0.
       Grocery::Online_Orders.find_by_customer(40).must_be_nil
       Grocery::Online_Orders.find_by_customer(0).must_be_nil
     end
@@ -151,7 +152,8 @@ describe "OnlineOrder" do
     it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
 
-# I look the online_orders.csv file and manually look for a customer id with no orders. And an example is customer id # 22
+      # I look the online_orders.csv file and manually look for a customer id with no orders.
+      # And an example is customer_id # 22
       Grocery::Online_Orders.find_by_customer(22).must_be_empty
     end
   end

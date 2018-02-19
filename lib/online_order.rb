@@ -7,14 +7,20 @@ FILE_NAME2 = 'support/online_orders.csv'
 
 module Grocery
 
-  class Online_Orders < Order
+  # All possible status for fuillfillment as values for a constant.
+  STATUS_1 = :pending
+  STATUS_2 = :paid
+  STATUS_3 = :processing
+  STATUS_4 = :shipped
+  STATUS_5 = :complete
+  
+  class Online_Orders < Grocery::Order
+
     attr_reader :id, :products, :customer_id, :fullfillment_status
 
-    # all possible status for fuillfillment
-    FUILLFILLMENT_STATUS = [:pending, :paid, :processing, :shipped, :complete]
-
-    # set pending as the default fullfillment_status and set the variable into a symbol type
-    def initialize(id, products, customer_id, fullfillment_status = :pending)
+    # Set pending as the default fullfillment_status
+    # and set the variable fullfillment_status into a symbol type
+    def initialize(id, products, customer_id, fullfillment_status = STATUS_1)
       @id = id
       @products = products
       @customer_id = customer_id
@@ -35,7 +41,7 @@ module Grocery
 
 
     def add_product(product_name, product_price)
-      if @fullfillment_status == :pending || @fullfillment_status == :paid
+      if @fullfillment_status == STATUS_1 || @fullfillment_status == STATUS_2
         @products[product_name] = product_price
         return true
       end
@@ -62,8 +68,21 @@ module Grocery
       return all_online_orders
     end
 
-    # def self.find(id) inherits from class Order 
 
+    def self.find(id)
+      array_ids = []
+      all_online_orders = Grocery::Online_Orders.all
+      all_online_orders.each do |arr|
+        array_ids << arr.id
+        if array_ids.include? id
+          return Online_Orders.new(arr.id, arr.products, arr.customer_id, arr.fullfillment_status)
+        end
+      end
+      return NIL
+    end
+
+    # Here I used the self.allf from Customers to know the customers that exists.
+    # and then be able to test if the customer does not exist return NIL.
     def self.find_by_customer(customer_id)
       if customer_id == 0 || customer_id > Grocery::Customers.all.length
         return NIL
