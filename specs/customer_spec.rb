@@ -7,10 +7,9 @@ require 'csv'
 describe "Customer" do
   let(:all) {Grocery::Customer.all}
 
-let(:first_customer) {Grocery::Customer.new(1,"leonard.rogahn@hagenes.org", "71596 Eden Route, Connellymouth, LA, 98872-9105")}
-let(:last_customer) {Grocery::Customer.new(35,"rogers_koelpin@oconnell.org", "7513 Kaylee Summit, Uptonhaven, DE, 64529-2614" )}
-
-
+  let(:first_customer) {Grocery::Customer.new(1,"leonard.rogahn@hagenes.org", "71596 Eden Route, Connellymouth, LA, 98872-9105")}
+  let(:last_customer) {Grocery::Customer.new(35,"rogers_koelpin@oconnell.org", "7513 Kaylee Summit, Uptonhaven, DE, 64529-2614" )}
+  
   describe "#initialize" do
     it "Takes an ID, email and address info" do
       id = 26

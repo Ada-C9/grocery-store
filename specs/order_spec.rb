@@ -123,9 +123,9 @@ end
 describe "Order Wave 2" do
   let(:all) {Grocery::Order.all}
 
-let(:first_order) {Grocery::Order.new(1, {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})}
+  let(:first_order) {Grocery::Order.new(1, {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})}
 
-let(:last_order) {Grocery::Order.new(100, {" Allspice"=>64.74, "Bran"=>1.93, "UnbleachedFlour"=>74.9})}
+  let(:last_order) {Grocery::Order.new(100, {" Allspice"=>64.74, "Bran"=>1.93, "UnbleachedFlour"=>74.9})}
 
   describe "Order.all" do
     it "Returns an array of all orders" do

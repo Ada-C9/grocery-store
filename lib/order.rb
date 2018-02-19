@@ -1,5 +1,5 @@
-require 'awesome_print'
 require 'csv'
+require 'awesome_print'
 module Grocery
   class Order
     attr_reader :id, :products
