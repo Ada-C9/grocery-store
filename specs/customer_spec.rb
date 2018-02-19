@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require_relative '../lib/customer'
 
 # TODO: uncomment the next line once you start wave 3
 # require_relative '../lib/customer'
@@ -9,7 +10,7 @@ describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do
       #Arrange
-      id = 1
+      id = 1337
       email = "test@gmail.com"
       address = "221B Baker St, London NW1, 6XE, UK"
 
@@ -17,7 +18,7 @@ describe "Customer" do
       customer = Grocery::Customer.new(id, email, address)
 
       #Assert
-      customer.must_respond_to :id
+      customer.must_respond_to :customer_id
       customer.customer_id.must_equal id
       customer.customer_id.must_be_kind_of Integer
     end
@@ -25,6 +26,8 @@ describe "Customer" do
 
   describe "Customer.all" do
     it "Returns an array of all customers" do
+      Grocery::Customer.all.must_be_kind_of Array
+      Grocery::Customer.all[15].must_be_kind_of Grocery::Customer
       # TODO: Your test code here!
       # Useful checks might include:
       #   - Customer.all returns an array

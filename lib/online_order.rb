@@ -1,18 +1,26 @@
-module Grocery
-  class OnlineOrder < Orders
-    attr_accessor :customer
+require 'awesome_print'
+require 'pry'
+require 'csv'
+require_relative 'order'
+require_relative 'customer'
 
-    def initialize(id, products, customer, status = :pending)
-      id = super
-      products = super
-      @customer = customer
-      @customer_id = customer.id
-      @status = status
+
+module Grocery
+  class OnlineOrder < Order
+    attr_accessor :customer, :status
+
+    def initialize(id, products, customer_id, status = :pending)
+      @id = id
+      @products = products
+      @customer = Grocery::Customer.find(customer_id)
+      @customer_id = customer_id
+      @status = status.to_sym
     end # Initialize
 
     def total
-      super
-      # TODO: Add 10 for shipping to inherited method
+      unless @products == 0
+        return super + 10
+      end
     end
 
     def add_product
@@ -21,8 +29,22 @@ module Grocery
     end
 
     def self.all
-      #TODO determine how this should override Order
-    end
+      online_list_all = []
+      CSV.open('support/online_orders.csv', 'r').each do |row|
+        products = {}
+        id = row[0].to_i
+        status = row[-1]
+        customer_id = row[-2].to_i
+        row[1].split(';').each do |item|
+          product = item.split(':')
+          name = product[0]
+          price = product[1].to_f
+          products[name] = price
+        end
+        online_list_all << self.new(id, products, customer_id, status)
+      end
+      return online_list_all
+    end # OnlineOrder.all
 
     def self.find(id)
       #TODO determine how this differs from the Order find method
@@ -34,3 +56,5 @@ module Grocery
 
   end # OnlineOrder
 end # Grocery
+
+binding.pry
