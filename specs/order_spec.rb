@@ -5,7 +5,7 @@ require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-describe "Order Wave 1" do
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -99,10 +99,14 @@ end
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-       Grocery::Order.all.count.must_equal 100
+      Grocery::Order.all.must_be_kind_of Array
+      Grocery::Order.all.each do |element|
+        element.must_be_instance_of Grocery::Order
+      end
+      Grocery::Order.all.count.must_equal 100
     end
 
-    it "Returns accurate information about the first order" do
+    xit "Returns accurate information about the first order" do
       Grocery::Order.all[0].id.must_equal "1"
       Grocery::Order.all[0].products.must_include("Slivered Almonds")
       Grocery::Order.all[0].products.must_include("Wholewheat flour")
@@ -112,7 +116,7 @@ describe "Order Wave 2" do
       # counterpart.
     end
 
-    it "Returns accurate information about the last order" do
+    xit "Returns accurate information about the last order" do
       Grocery::Order.all.last.id.must_equal "100"
       Grocery::Order.all.last.products.must_include("Allspice")
       Grocery::Order.all.last.products.must_include("Bran")
@@ -121,7 +125,7 @@ describe "Order Wave 2" do
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       Grocery::Order.find("1").products.must_include("Slivered Almonds")
     end
