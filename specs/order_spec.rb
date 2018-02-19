@@ -139,9 +139,9 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      result = Grocery::Order.find(23)
+      result = Grocery::Order.find(1)
       result.must_be_kind_of Grocery::Order
-      result.id.must_equal 23
+      result.id.must_equal 1
     end
 
     it "Can find the last order from the CSV" do
