@@ -45,7 +45,9 @@ module Grocery
     end
     def add_product(product, price)
       before_count = @products.count
-      @products = @products.merge(product => price)
+        if !@products.include?(product)
+          @products = @products.merge(product => price)
+        end
       before_count + 1 == @products.count
     end
     def remove_product(product)
