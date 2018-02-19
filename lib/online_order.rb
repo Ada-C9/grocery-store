@@ -2,6 +2,7 @@ require "csv"
 require "awesome_print"
 # require the order.rb file so we can access the super class
 require_relative "order"
+require_relative "customer"
 
 module Grocery
   # Order is a super class and OnlineOrder will inherit behavior from it
@@ -44,7 +45,7 @@ module Grocery
 
     def self.all
       all_online_orders = []
-      CSV.read("../support/online_orders.csv", "r").each do |order|
+      CSV.read("support/online_orders.csv", "r").each do |order|
         id = order[0].to_i
         product_hash = {}
         order[1].split(";").each do |product|
@@ -79,7 +80,7 @@ module Grocery
             online_orders << order
           end
         end
-        online_orders
+        return online_orders
       else
         raise ArgumentError.new("id does not exist")
       end
@@ -108,7 +109,7 @@ end
 # ap Grocery::OnlineOrder.all
 
 # Running self.find
-ap Grocery::OnlineOrder.find(100)
+# ap Grocery::OnlineOrder.find(100)
 
 # Running self.find_by_customer
 # ap Grocery::OnlineOrder.find_by_customer(14)

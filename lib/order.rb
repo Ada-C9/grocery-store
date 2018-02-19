@@ -39,7 +39,7 @@ module Grocery
 
     def self.all
       all_orders = []
-      CSV.read("../support/orders.csv", 'r').each do |order|
+      CSV.read("support/orders.csv", 'r').each do |order|
         id = order[0].to_i
         product_hash = {}
         order[1].split(";").each do |product|
