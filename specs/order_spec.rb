@@ -9,7 +9,7 @@ require 'csv'
 # All provided tests pass
 # Using the appropriate attr_ for instance variables
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
 
   describe "#initialize" do
 
@@ -110,12 +110,16 @@ describe "Order Wave 2" do
       order.must_be_kind_of Array
     end
 
-    xit "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+    it "Returns accurate information about the first order" do
+      order = Grocery::Order.all
+
+      order[0].must_be_kind_of Grocery::Order
     end
 
-    xit "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+    it "Returns accurate information about the last order" do
+      order = Grocery::Order.all
+
+      order[99].must_be_kind_of Grocery::Order
     end
   end
 
