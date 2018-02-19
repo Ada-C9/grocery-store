@@ -124,12 +124,18 @@ describe "OnlineOrder" do
       first_order_products = Grocery::OnlineOrder.all[0].products
       sum = first_order_products.values.inject(0,:+)
       expected_total = (sum + (sum * 0.075)).round(2) + 10
+      first_order = Grocery::OnlineOrder.all[0]
       # assert
       first_order.total.must_equal expected_total
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
+      # arrange
+      products = {}
+      order = Grocery::OnlineOrder.new(1337, products, 1, :pending)
+      # act
+      # assert
+      order.total.must_equal 0
     end
   end
 
