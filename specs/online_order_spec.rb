@@ -56,7 +56,7 @@ describe "OnlineOrder" do
       online_order.status.must_equal :pending
     end
 
-    xit "Can access Customer object" do
+    it "Can access Customer object" do
       # arrange
       id = 1337
       products = { "banana" => 1.99, "cracker" => 3.00 }
@@ -66,7 +66,7 @@ describe "OnlineOrder" do
       Grocery::Order.new(id, products)
       online_order = Grocery::OnlineOrder.new(id, products, customer, status)
       # assert
-      online_order.customer.must_be_kind_of Array
+      online_order.customer.must_be_kind_of Grocery::Customer
       online_order.customer.email.must_equal "leonard.rogahn@hagenes.org"
     end
 
