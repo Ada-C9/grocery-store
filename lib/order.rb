@@ -44,24 +44,29 @@ module Grocery
       data = CSV.read(FILENAME)
       # data and put into order format
       orders = []
+      products = {}
       data.each do |line|
-        id = line[0]
-        products_strings = line[1].split(";")
-        products = {}
-        product_data = products_strings[0].split(":")
-        product_name = product_data[0]
-        product_price = product_data[1]
-        products[product_name] = product_price
-        #last line
-        orders << Order.new(id, products)
-        puts products
-        puts orders
+        id = line#[0]
+        ap line
+        i = 1
+        products_strings = line[i].split(";")#[1]
+        ap products_strings
+          products_strings.each do |string|
+             string.split(",")#[0]
+            #  ap string.split
+             product_data = string.split(":")#[0]
+             product_data.each do |x|
+               product_name = product_data#[0]
+               product_price = product_data#[1]
+               products[product_name] = product_price
+             end
+            #  ap product_data
+        i += 1
+          end
+          #  ap products
+          orders << Order.new(id, products)
       end
-      return orders
     end
-    # def self.find(id)
-    # end
-
   end
 end
 
