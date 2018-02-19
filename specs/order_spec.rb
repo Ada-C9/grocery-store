@@ -95,31 +95,38 @@ describe "Order Wave 2" do
     it "Returns accurate information about the first order" do
       # Arrange - feed information for method to work with
 
-      products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93,"Grape Seed Oil" => 74.9}
+      products_list = [{"Slivered Almonds" => "22.88"}, {"Wholewheat flour" => "1.93"},{"Grape Seed Oil" => "74.9"}]
 
-      Grocery::Order.all.first.id.must_equal "1"
-      Grocery::Order.all.first.products.must_equal products
+      results = Grocery::Order.all
+
+      results.first.id.must_equal 1
+      results.first.products.must_equal products_list[0]
 
     end
 
     xit "Returns accurate information about the last order" do
-      products = {"Allspice" => 64.74, "Bran" => 14.72,"Unbleached Flour" => 80.59}
-      Grocery::Order.all.last.id.must_equal "100"
-      Grocery::Order.all.last.products.must_equal products
+
+      products = ["Allspice" => "64.74", "Bran" => "14.72"],["Unbleached Flour" => "80.59"]
+
+      results = Grocery::Order.all
+
+      results.last.id.must_equal "100"
+      results.last.Order.products.must_equal products
 
     end
   end
 
   describe "Order.find" do
     xit "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+
+    results = Grocery::Order.find
     end
 
     xit "Can find the last order from the CSV" do
       # TODO: Your test code here!
     end
 
-    xit "Raises an error for an order that doesn't exist" do
+    xit "Raises an error/nil for an order that doesn't exist" do
       # TODO: Your test code here!
     end
   end
