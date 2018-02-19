@@ -16,7 +16,7 @@ module Grocery
 
     def self.all
       all_customers = []
-      CSV.read("../support/customers.csv", 'r').each do |customer|
+      CSV.read("support/customers.csv", 'r').each do |customer|
         id = customer[0].to_i
         email = customer[1]
         address = customer[2]
