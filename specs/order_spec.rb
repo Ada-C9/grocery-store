@@ -111,9 +111,11 @@ describe "Order Wave 2" do
       Grocery::Order.all[0].products.must_include("Slivered Almonds")
       Grocery::Order.all[0].products.must_include("Wholewheat flour")
       Grocery::Order.all[0].products.must_include("Grape Seed Oil")
+
       Grocery::Order.all[0].products.count.must_equal 3
-      # I want a sum-up here for the prices as well.  And on the last-order
-      # counterpart.
+
+      #This is experimental at this point.
+      Grocery::Order.all[0].products.values.reduce(:+).must_equal 99.71
     end
 
     xit "Returns accurate information about the last order" do
@@ -121,7 +123,11 @@ describe "Order Wave 2" do
       Grocery::Order.all.last.products.must_include("Allspice")
       Grocery::Order.all.last.products.must_include("Bran")
       Grocery::Order.all.last.products.must_include("UnbleachedFlour")
+
       Grocery::Order.all.last.products.count.must_equal 3
+
+      #This is experimental at this point.
+      Grocery::Order.all.last.products.values.reduce(:+).must_equal 160.05
     end
   end
 
