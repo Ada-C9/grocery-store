@@ -3,12 +3,6 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 require_relative '../lib/online_order'
-# You may also need to require other classes here
-
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
 
 describe "OnlineOrder" do
   describe "#initialize" do
@@ -19,7 +13,7 @@ describe "OnlineOrder" do
     end
 
     it "Can access Customer object" do
-      # this part is optional as Customer class not required
+      # this part is optional
     end
 
     it "Can access the online order status" do
@@ -42,19 +36,30 @@ describe "OnlineOrder" do
     end
 
     it "Doesn't add a shipping fee if there are no products" do
+      products = {}
+      order = Grocery::OnlineOrder.new(1, products, 13, "complete")
+
+      order.total.must_equal 0
 
     end
   end
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      first_order = Grocery::OnlineOrder.all[0]
+      complete_order = Grocery::OnlineOrder.all[0]
+      processing_order = Grocery::OnlineOrder.all[2]
+      shipped_order = Grocery::OnlineOrder.all[4]
 
-      # complete status
-      proc { first_order.add_product("salad", 4.25, "complete") }.must_raise ArgumentError
+      proc { complete_order.add_product("salad", 4.25) }.must_raise ArgumentError
 
-      # shipped status
-      proc { first_order.add_product("salad", 4.25, "shipped") }.must_raise ArgumentError
+      proc { processing_order.add_product("salad", 4.25) }.must_raise ArgumentError
+
+      proc { shipped_order.add_product("salad", 4.25) }.must_raise ArgumentError
+
+      complete_order.products.include?("salad").must_equal false
+      shipped_order.products.include?("salad").must_equal false
+      processing_order.products.include?("salad").must_equal false
+
     end
 
     it "Permits action for pending and paid satuses" do
@@ -62,15 +67,16 @@ describe "OnlineOrder" do
 
       order_1 = Grocery::OnlineOrder.new(1337, products, 2, "pending")
 
-      order_2 = Grocery::OnlineOrder.new(1337, products, 2, "paid")
+      order_2 = Grocery::OnlineOrder.new(1339, products, 4, "paid")
 
       order_1.add_product("lettuce", 2)
 
       order_2.add_product("pork_chops", 15)
 
-      order_1.products.include?("lettuce").must_equal true
+      order_1.products.must_include "lettuce"
 
-      order_2.products.include?("pork_chops").must_equal true
+      order_2.products.must_include "pork_chops"
+
     end
   end
 
@@ -108,9 +114,7 @@ describe "OnlineOrder" do
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      search_nonexistent = Grocery::OnlineOrder.find(500)
-      expected_message = "Error: Order ID does not exist"
-      search_nonexistent.must_equal expected_message
+      proc { Grocery::OnlineOrder.find(500) }.must_raise ArgumentError
     end
   end
 
@@ -124,14 +128,12 @@ describe "OnlineOrder" do
     end
 
     it "Raises an error if the customer does not exist" do
-      search_nonexistent = Grocery::OnlineOrder.find_by_customer(300)
-      expected_message = "Error: Order ID does not exist"
-      search_nonexistent[0].must_equal expected_message
+      # Per Dan, it needs to return empty array
     end
 
     it "Returns an empty array if the customer has no orders" do
-      search_nonexistent = Grocery::OnlineOrder.find_by_customer(300)
-      empty_array = search_nonexistent[1]
+      search_nonexistent = Grocery::OnlineOrder.find_by_customer(367)
+      empty_array = search_nonexistent
       empty_array.must_be_kind_of Array
       empty_array.must_be_empty
     end
