@@ -72,17 +72,13 @@ describe "OnlineOrder" do
 
     it "Can access the online order status" do
       # arrange
-      id = 1337
-      products = {}
-      customer = Grocery::Customer.find("1")
+      # No arrage needed
       # act
-      Grocery::Order.new(id, products)
-      online_order_no_staus = Grocery::OnlineOrder.new(id, products, customer)
+      online_order = Grocery::OnlineOrder.all[0]
       # assert
       online_order.must_respond_to :status
       online_order.status.must_be_instance_of Symbol
       online_order.status.must_equal :complete
-      online_order_no_staus.status.must_equal :pending
     end
   end
 
@@ -91,7 +87,7 @@ describe "OnlineOrder" do
       # arrange
       # no arrange needed (pulling data from csv and other classes)
       # act
-      Grocery::OnlineOrder.all
+      ap Grocery::OnlineOrder.all
       # assert
       Grocery::OnlineOrder.all.must_be_kind_of Array
     end
