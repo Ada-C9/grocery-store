@@ -70,10 +70,16 @@ describe "OnlineOrder" do
       online_order.customer.email.must_equal "leonard.rogahn@hagenes.org"
     end
 
-    xit "Can access the online order status" do
+    it "Can access the online order status" do
       # arrange
+      Grocery::Order.new(id, products)
+      online_order_no_staus = Grocery::OnlineOrder.new(id, products, customer)
       # act
       # assert
+      online_order.must_respond_to :status
+      online_order.status.must_be_instance_of Symbol
+      online_order.status.must_equal :complete
+      online_order_no_staus.status.must_equal :pending
     end
   end
 
