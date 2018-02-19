@@ -2,7 +2,6 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
-# require_relative '../support/orders.csv'
 
 Minitest::Reporters.use!
 
@@ -57,6 +56,7 @@ describe "Order Wave 1" do
 
       order.add_product("sandwich", 4.25)
       order.products.include?("sandwich").must_equal true
+      order.products.count.must_equal 3
     end
 
     it "Returns false if the product is already present" do
@@ -70,6 +70,7 @@ describe "Order Wave 1" do
 
       result.must_equal false
       before_total.must_equal after_total
+      order.products.count.must_equal 2
     end
 
     it "Returns true if the product is new" do
@@ -82,19 +83,12 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
 describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      #Arrange
-      # products = { "banana" => 1.99, "cracker" => 3.00 }
-      # order = Grocery::Order.new(1337, products)
-      # Act
       test_order = Grocery::Order.all
-      # Assert
       test_order.must_be_kind_of Array
       test_order[0].must_be_instance_of Grocery::Order
-
     end
 
     it "Returns accurate information about the first order" do
@@ -108,7 +102,8 @@ describe "Order Wave 2" do
       test_order[99].id.must_equal 100
       test_order[99].products.must_equal "Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59
     end
-  end
+
+end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
@@ -124,9 +119,7 @@ describe "Order Wave 2" do
     end
 
     it "Raises an error for an order that doesn't exist" do
-      search_nonexistent = Grocery::Order.find(500)
-      expected_message = "Error: Order ID does not exist"
-      search_nonexistent.must_equal expected_message
+      proc { Grocery::Order.find(9000) }.must_raise ArgumentError
     end
   end
 end
