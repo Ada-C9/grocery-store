@@ -14,8 +14,7 @@ module Grocery
 
     def self.all
       online_orders_all = []
-      CSV.read('support/online_orders.csv', 'r').each do |row|
-        products = row[1].split(';') # splits products string
+      CSV.read('support/online_orders.csv', 'r').each do |row|products = row[1].split(';') # splits products string
         # turns products array strings into hashes
         product_hash = {}
         products.each do |string|
@@ -35,6 +34,13 @@ module Grocery
       else
         return super
       end
+    end
+
+    def add_product(product_name, product_price)
+      if @status == :pending || @status == :paid
+        return super
+      end
+      raise ArgumentError.new("Error: Products can not be added to orders that are processing, shipped, or complete")
     end
   end
 end
