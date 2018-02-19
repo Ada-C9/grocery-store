@@ -21,7 +21,7 @@ describe "OnlineOrder" do
       id = 1337
       products = { "banana" => 1.99, "cracker" => 3.00 }
       customer = []
-      status = :paid
+      status = "paid"
       # act
       # Instatiate your OnlineOrder here
       Grocery::Order.new(id, products)
@@ -36,8 +36,8 @@ describe "OnlineOrder" do
       # arrange
       id = 1337
       products = {}
-      customer = []
-      status = :paid
+      customer = Grocery::Customer.find("1")
+      status = "paid"
       # act
       Grocery::Order.new(id, products)
       online_order = Grocery::OnlineOrder.new(id, products, customer, status)
@@ -50,18 +50,18 @@ describe "OnlineOrder" do
       online_order.products.length.must_equal 0
 
       online_order.must_respond_to :customer
-      online_order.customer.must_be_kind_of Array
+      online_order.customer.must_be_kind_of Grocery::Customer
 
       online_order.must_respond_to :status
-      online_order.must_be_kind_of Symbol
+      online_order.status.must_be_kind_of Symbol
     end
 
     xit "Can access Customer object" do
       # arrange
       id = 1337
       products = { "banana" => 1.99, "cracker" => 3.00 }
-      customer = Grocery::Order.find("1")
-      status = :paid
+      customer = Grocery::Customer.find("1")
+      status = "paid"
       # act
       Grocery::Order.new(id, products)
       online_order = Grocery::OnlineOrder.new(id, products, customer, status)
