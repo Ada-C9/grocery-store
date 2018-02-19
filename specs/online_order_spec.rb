@@ -133,16 +133,15 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.find_by_customer("28").must_be_kind_of Array
     end
 
-    it "Raises an error if the customer does not exist" do
-      Grocery::OnlineOrder.find_by_customer("300").must_be_nil
-      Grocery::OnlineOrder.find_by_customer("0").must_be_nil
+    it "Returns an empty array if the customer does not exist" do
+      Grocery::OnlineOrder.find_by_customer("300").must_equal []
+      Grocery::OnlineOrder.find_by_customer("0").must_equal []
     end
 
-    xit "Returns an empty array if the customer has no orders" do
-      Grocery::Customer.new("36", "lilyxsky@ada.com", "3016, First Ave, Seattle, WA, 98121")
-      online_order = Grocery::OnlineOrder.new("", {}, "36", :pending)
+    it "Returns an empty array if the customer has no orders" do
+      online_order = Grocery::OnlineOrder.new("101", {}, "36", :pending)
 
-      online_order.find_by_customer("36").must_equal []
+      Grocery::OnlineOrder.find_by_customer("36").must_equal []
     end
   end
 end
