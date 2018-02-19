@@ -63,49 +63,52 @@ module Grocery
       if id > self.all.length
         raise ArgumentError.new("id does not exist")
       else
-        online_order_summary = []
-        online_order_summary << super
-        online_order_summary << self.all[id-1].customer_id
-        online_order_summary << self.all[id-1].status
-        online_order_summary
+        super
       end
     end
 
-    def self.find_by_customer(id)
-      online_orders = []
-      self.all.each do |order|
-        if order.customer_id == id
-          online_orders << order
-        end
+    def self.find_by_customer(chosen_id)
+      customer_ids = []
+      self.all.each do |online_orders|
+        customer_ids << online_orders.customer_id.to_i
       end
-      online_orders
+      if customer_ids.include?(chosen_id)
+        online_orders = []
+        self.all.each do |order|
+          if order.customer_id == chosen_id
+            online_orders << order
+          end
+        end
+        online_orders
+      else
+        raise ArgumentError.new("id does not exist")
+      end
     end
   end
 end
 
+# Running initialization
+# new_order = Grocery::OnlineOrder.new(101, {"Bananas"=>22.8, "Wholewheat flour"=>1.93}, 30, :processing)
+# ap new_order.id
+# ap new_order.products
+# ap new_order.customer_id
+# ap new_order.status
 
-  # Running initialization
-  # new_order = Grocery::OnlineOrder.new(101, {"Bananas"=>22.8, "Wholewheat flour"=>1.93}, 30, :processing)
-  # ap new_order.id
-  # ap new_order.products
-  # ap new_order.customer_id
-  # ap new_order.status
+# Running the total method
+# ap new_order.total
 
-  # Running the total method
-  # ap new_order.total
+# Running the add product method
+# ap new_order.add_product("apples", 2.99) >> true
 
-  # Running the add product method
-  # ap new_order.add_product("apples", 2.99) >> true
+# Running the remove product method
+# ap new_order.remove_product("Bananas")
+# ap new_order
 
-  # Running the remove product method
-  # ap new_order.remove_product("Bananas")
-  # ap new_order
+# Running self.all
+# ap Grocery::OnlineOrder.all
 
-  # Running self.all
-  # ap Grocery::OnlineOrder.all
+# Running self.find
+ap Grocery::OnlineOrder.find(100)
 
-  # Running self.find
-  # ap Grocery::OnlineOrder.find(100)
-
-  # Running self.find_by_customer
-    ap Grocery::OnlineOrder.find_by_customer(14)
+# Running self.find_by_customer
+# ap Grocery::OnlineOrder.find_by_customer(14)

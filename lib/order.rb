@@ -55,7 +55,7 @@ module Grocery
       requested_order = nil
       self.all.each do |order|
         if order.id == id
-          requested_order = order.products
+          requested_order = order
         end
       end
       return requested_order
@@ -70,5 +70,5 @@ end
 # Running Wave 2
    # ap Grocery::Order.all
   # self.find
-  # ap Grocery::Order.find(80)
-  # ap Grocery::Order.find(101)
+  ap Grocery::Order.find(20)
+  ap Grocery::Order.find(101)
