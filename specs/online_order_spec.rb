@@ -38,27 +38,48 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
-    end
+      result = Grocery::OnlineOrder.all[0].total
 
+      result.must_equal 180.68
+
+    end
     it "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
+      products = {}
+      result = Grocery::OnlineOrder.new(101, products, 13)
+      result.total.must_be_nil
     end
   end
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+      # Arrange
+      order = Grocery::OnlineOrder.all[2]
+
+      # Act
+      result = order.add_product("Seaweed Salad", 5.78)
+
+      # Assert
+      result.must_be_nil
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+      # Arrange
+      order = Grocery::OnlineOrder.all[1]
+
+      # Act
+      result = order.add_product("Seaweed Salad", 5.78)
+
+      # Assert
+      result.must_equal true
     end
   end
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
+        result = Grocery::OnlineOrder.all
+        result.must_be_kind_of Array
+        result[1].must_be_kind_of Grocery::Order
+        result[1].must_be_kind_of Grocery::OnlineOrder
     end
 
     it "Returns accurate information about the first online order" do

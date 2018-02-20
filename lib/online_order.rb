@@ -26,7 +26,7 @@ module Grocery
     end # Initialize
 
     def total
-      unless @products == 0
+      unless @products.length == 0
         return super + 10
       end
     end
@@ -85,5 +85,3 @@ module Grocery
 end # Grocery
 
 Grocery::OnlineOrder.all
-
-binding.pry
