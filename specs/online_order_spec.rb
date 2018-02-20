@@ -60,8 +60,6 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      # expected_total = ((9.99 + 1.0) + ((9.99 + 1.0) * 0.075)).round(2) + 10.0
-
       @normal_order.total.must_be_kind_of Float
       @normal_order.total.must_equal @normal_total
     end
@@ -121,17 +119,6 @@ describe "Online Order: All, Find, and Find by Customer" do
       all_online_orders = Grocery::OnlineOrder.all
       all_online_orders.must_be_kind_of Array
       all_online_orders.all? { |order| order.class == Grocery::OnlineOrder }
-    end
-
-    it "Does not return Order.all" do
-      # Grocery::OnlineOrder.build_all
-      # Grocery::Order.build_all
-      # fix!!
-      # all_online_orders = Grocery::OnlineOrder.all
-      # all_orders = Grocery::Order.all
-
-      # all_orders.last.must_not_equal all_online_orders.last
-
     end
 
     it "Returns accurate information about the first online order" do
