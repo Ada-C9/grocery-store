@@ -64,7 +64,8 @@ module Grocery
           return all_orders[-1]
         end
       end
-      return nil
+      # will use proc syntax for testing
+      raise ArgumentError.new("Error: Customer ID does not exist.")
     end
 
   end

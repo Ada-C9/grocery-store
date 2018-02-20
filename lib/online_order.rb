@@ -40,7 +40,10 @@ module Grocery
       if @status == :pending || @status == :paid
         return super
       end
+      # will use proc syntax for testing
       raise ArgumentError.new("Error: Products can not be added to orders that are processing, shipped, or complete")
     end
+
+    #self.find should come from Grocery::Order
   end
 end
