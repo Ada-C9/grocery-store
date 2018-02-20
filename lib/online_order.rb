@@ -79,7 +79,5 @@ module Grocery
         @products[product_name] = product_price
       end
     end
-
-
   end
 end

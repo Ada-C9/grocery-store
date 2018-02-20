@@ -97,7 +97,6 @@ describe "Order Wave 2" do
       first_item = @all_orders.first
       first_item.id.must_equal 1
       first_item.products.must_equal ({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
-      # first_item.products["Slivered Almonds"].must_equal "22.88"
     end
 
     it "Returns accurate information about the last order" do
@@ -127,7 +126,6 @@ describe "Order Wave 2" do
     it "Raises an error for an order that doesn't exist" do
       nonitem = Grocery::Order.find(101)
       nonitem.must_equal "ERROR: order does not exist"
-      # nonitem.must_raise NoMethodError
     end
   end
 end

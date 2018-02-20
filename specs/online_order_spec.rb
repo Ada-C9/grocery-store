@@ -4,15 +4,10 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/online_order'
 
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
-
 describe "OnlineOrder" do
   before do
     @all_online_orders = Grocery::OnlineOrder.all
-    @online_order_blank = Grocery::OnlineOrder
+
     @online_order = Grocery::OnlineOrder.new(1,{"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21},25,:complete)
   end
   describe "#initialize" do
@@ -85,31 +80,33 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      item = @online_order_blank.find(15)
+      item = Grocery::OnlineOrder.find(15)
       item.id.must_equal 15
       item.products.must_equal ({"Cranberry" => 85.36})
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      nonitem = @online_order_blank.find(101)
+      nonitem = Grocery::OnlineOrder.find(101)
       nonitem.must_equal "ERROR: Order not found"
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      items = Grocery::OnlineOrder.find_by_customer(23)      
+      items = Grocery::OnlineOrder.find_by_customer(23)
       items.must_be_kind_of Array
     end
 
-    xit "Returns an empty array if the customer does not exist" do
-      # items = @online_order_blank.find_by_customer(2000)
-      # items.
+    it "Returns an empty array if the customer does not exist" do
+      items = Grocery::OnlineOrder.find_by_customer(2000)
+      items.must_be_kind_of Array
+      items.must_be_empty
     end
 
-    xit "Returns an empty array if the customer has no orders" do
-      # items = @online_order_blank.find_by_customer(2000)
+    it "Returns an empty array if the customer has no orders" do
+      items = Grocery::OnlineOrder.find_by_customer(16)
+      items.must_be_kind_of Array
+      items.must_be_empty
     end
-
   end
 end
