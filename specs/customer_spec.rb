@@ -5,6 +5,13 @@ require 'minitest/skip_dsl'
 
 require_relative '../lib/customer'
 
+
+
+
+
+
+
+
 describe "Customer" do
   describe "#initialize" do
     it "Takes an ID, email and address info" do

@@ -1,39 +1,58 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
-Minitest::Test.make_my_diffs_pretty!
+# Minitest::Test.make_my_diffs_pretty!
 require 'minitest/skip_dsl'
+
 require_relative '../lib/order'
 
+
+# Provides tests for initializing Order and the total and add_product methods.
 describe "Order Wave 1" do
+
+  # Creates a generic, normal instance of Order to run tests on
+  before do
+    @normal_order_products = { "banana" => 1.99, "cracker" => 3.00 }
+    @normal_order_id = 1820
+    @normal_order = Grocery::Order.new(@normal_order_id, @normal_order_products)
+  end
+
+  # Tests if a new Order is initialized with attributes of 'id' and 'products'
   describe "#initialize" do
+    # The id and products of Order must match the values it was given
     it "Takes an ID and collection of products" do
-      id = 1337
-      order = Grocery::Order.new(id, {})
 
-      order.must_respond_to :id
-      order.id.must_equal id
-      order.id.must_be_kind_of Integer
+      # Tests class on normal order
+      @normal_order.must_be_kind_of Grocery::Order
 
-      order.must_respond_to :products
-      order.products.length.must_equal 0
+      # Tests id on normal order
+      @normal_order.must_respond_to :id # must have attr_reader for id
+      @normal_order.id.must_equal @normal_order_id
+      @normal_order.id.must_be_kind_of Integer
+
+      # Tests products on normal order
+      @normal_order.must_respond_to :products # must have attr_reader for products
+      @normal_order.products.must_equal @normal_order_products
+      @normal_order.products.size.must_equal @normal_order_products.size
     end
   end
 
+
+  # Tests if total returns the total cost of the order, including tax and
+  # rounded to two decimal places.
   describe "#total" do
     it "Returns the total from the collection of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      order = Grocery::Order.new(1337, products)
-
-      sum = products.values.inject(0, :+)
+      sum = @normal_order.products.values.inject(0, :+)
       expected_total = sum + (sum * 0.075).round(2)
 
-      order.total.must_equal expected_total
+      @normal_order.total.must_equal expected_total # Must be total + tax and rounded
     end
 
+    # Tests if total returns a the total cost of the order, including tax and
+    # rounded to two decimal places.
     it "Returns a total of zero if there are no products" do
-      order = Grocery::Order.new(1337, {})
-      order.total.must_equal 0
+      empty_order = Grocery::Order.new(1235, {})
+      empty_order.total.must_equal 0.0
     end
   end
 
@@ -80,7 +99,7 @@ describe "Order Wave 1" do
 end
 
 
-describe "Order Wave 2" do
+xdescribe "Order Wave 2" do
   describe "Order.all" do
 
     it "Returns an array of all orders" do
@@ -183,10 +202,14 @@ describe "Order Wave 2" do
     end
 
     it "Return nil for an order that doesn't exist" do
-      not_found = Grocery::Order.find("foo")
-      assert_nil not_found
-
+      assert_nil Grocery::Order.find("foo")
     end
 
   end
 end
+
+# # Destroys the generic, normal instance of Order in case it's existence causes
+# # problems in other tests.
+# after do
+#   @normal_order = nil
+# end
