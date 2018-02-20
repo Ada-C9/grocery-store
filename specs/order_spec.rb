@@ -1,8 +1,8 @@
 require 'minitest/autorun'
+require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
-# require_relative '../support/orders'
-
+require "csv"
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -79,45 +79,65 @@ describe "Order Wave 1" do
   end
 end
 
+
 describe "Order Wave 2" do
   describe "Order.all" do
-
     it "Returns an array of all orders" do
-      list = Grocery::Order.all
-      list.must_be_kind_of Array
-      list[0].must_be_kind_of Grocery::Order
+
+      array = Grocery::Order.all
+
+      array.must_be_instance_of Array
+
     end
 
     it "Returns accurate information about the first order" do
-      list_item = Grocery::Order.all[0]
-      csv_row = CSV.read('support/orders.csv')[0]
-      csv_row[0].to_i.must_equal list_item.id
+
+    first_order = Grocery::Order.all
+
+    first_order.first.id.must_equal 1
+    first_order.first.products.must_equal ({ "Slivered Almonds" => "22.88",
+      "Wholewheat flour" => "1.93",
+        "Grape Seed Oil" => "74.9"})
+
     end
 
     it "Returns accurate information about the last order" do
-      list_item = Grocery::Order.all[-1]
-      csv_row = CSV.read('support/orders.csv')[-1]
-      csv_row[0].to_i.must_equal list_item.id
+
+      last_order = Grocery::Order.all
+
+      last_order.last.id.must_equal 100
+      last_order.last.products.must_equal ({
+               "Allspice" => "64.74",
+                   "Bran" => "14.72",
+        "UnbleachedFlour" => "80.59"
+    })
+
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      result = Grocery::Order.find(23)
-      result.must_be_kind_of Grocery::Order
-      result.id.must_equal 23
+
+        first_order = Grocery::Order.find(1)
+        first_order.id.must_equal  1
+        first_order.products.must_equal ({ "Slivered Almonds" => "22.88",
+          "Wholewheat flour" => "1.93",
+            "Grape Seed Oil" => "74.9"})
+
     end
 
     it "Can find the last order from the CSV" do
-      result = Grocery::Order.find(100)
-      result.must_be_kind_of Grocery::Order
-      result.id.must_equal 100
+      last_order = Grocery::Order.find(100)
+      last_order.id.must_equal  100
+      last_order.products.must_equal ({
+               "Allspice" => "64.74",
+                   "Bran" => "14.72",
+        "UnbleachedFlour" => "80.59"
+    })
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      result = Grocery::Order.find(180)
-      result.must_be_kind_of String
-      result.must_equal "Sorry, that order is not in our records"
+    it "Returns nil for an order that doesn't exist" do
+      Grocery::Order.find(150).must_be_nil
     end
   end
 end

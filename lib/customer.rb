@@ -1,15 +1,9 @@
-require 'csv'
-require 'awesome_print'
+require "csv"
+require "ap"
 
-CUSTOMER_FILE_NAME = 'support/customers.csv'
-
-
-module  Grocery
-
+module Grocery
   class Customer
-
-    attr_reader :id, :email, :delivery_address
-
+    attr_accessor :id, :email, :delivery_address
     def initialize(id, email, delivery_address)
       @id = id
       @email = email
@@ -17,25 +11,29 @@ module  Grocery
     end
 
     def self.all
+      customer_array = CSV.read("support/customers.csv", "r")
       all_customers = []
-      CSV.open(CUSTOMER_FILE_NAME, 'r').each do |line|
-        id = line[0].to_i
-        email = line[1]
-        delivery_address = "#{line[2]}, #{line[3]}, #{line[4]}"
-        new_customer = Customer.new(id,email,delivery_address)
-        all_customers << new_customer
+      customer_array.each do |info|
+        id = info[0].to_i
+        email = info[1].to_s
+        address = "#{info[2]}, #{info[3]}, #{info[4]}, #{info[5]}"
+        all_customers << Customer.new(id, email, address)
       end
-      return all_customers
+      all_customers
     end
 
-    def self.find(good_id)
-          return_value = nil
-          self.all.each do |customer|
-            if customer.id == good_id
-              return_value = customer
-            end
-          end
-          return return_value
+
+    def self.find(id)
+      customer_list = self.all
+      the_customer = nil
+      customer_list.each do |info|
+        if info.id == id
+          the_customer = info
         end
       end
+      return the_customer
     end
+  end
+end
+
+ap Grocery::Customer.find(35)

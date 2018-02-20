@@ -1,85 +1,90 @@
-require 'csv'
-require 'awesome_print'
+require "csv"
+require "ap"
+require_relative "order.rb"
+require_relative "customer.rb"
 
-ONLINE_FILE_NAME = 'support/online_order.csv'
+module Grocery
+  class OnlineOrder < Order
+    attr_accessor :customer, :online_order_id, :products, :fulfillment_status
 
+      @customer = Customer.find(id)
+      @products = products
+      @online_order_id = online_order_id
+      @fulfillment_status = fulfillment_status
 
-module  Grocery
-
-  class Onlineorder < Order
-
-    attr_reader :customer_id, :status
-
-    def initialize(id, products, customer_id, status)
-      super(id, products)
-      @customer_id = customer_id
-      @status = status.to_symbol
-    end
-
-    def total
-      if @products.length > 0
-        return (super()+10).round(2)
-      else
-        return 0
-      end
-    end
-
-    def add_product(product_name, product_price)
-      if [:pending, :paid].include?(@status)
-        super(product_name,product_price)
-      end
-    end
-
-    def customer
-      return_value = nil
-
-      Grocery::Customer.all.each do |customer|
-        if customer.id == @customer_id
-          return_value = customer
-        end
-      end
-
-      return return_value
     end
 
     def self.all
-      all_orders = []
-      CSV.open(ONLINE_FILE_NAME, 'r').each do |num|
-        new_hash = {}
-        id = num[0].to_i
-        customer_id = num[2].to_i
-        status = num[3]
+      online_orders_array = CSV.read("support/online_orders.csv", "r")
+      online_orders = []
 
-        str[1].split(";").each do |items|
-          new_items = items.split(":")
-          key = new_items[0]
-          value = new_items[1].to_f
-          new_hash[key] = value
+      online_orders_array.each do |order|
+        order_id = order[0].to_i
+        products_hash = {}
+        id = order[2].to_i
+        status = order[3].to_sym
+
+        order[1].split(";").each do |product|
+          product.split(":")[0]
+          products_hash[product.split(":")[0]] = product.split(":")[1].to_f
         end
-        new_order = OnlineOrder.new(id, new_hash, customer_id, status)
-        all_orders << new_order
+        online_orders << OnlineOrder.new(order_id, products_hash, id, status)
       end
-      return all_orders
-    end # method - self.all
+      online_orders
+    end
 
-    def self.find_by_customer(customer_id)
-      customer_array = Grocery::Customer.all
-      customer_id_array = []
-      customer_array.each do |customer|
-        customer_id_array << customer.id
+    def total
+      if products != {}
+        super + 10
+      else
+        super
       end
+    end
 
-      return_value = []
-      if customer_id_array.include?(customer_id)
-        self.all.each do |online_order|
-          if online_order.customer_id == customer_id
-            return_value << online_order
+    def add_product(product, price)
+      if @fulfillment_status == (:pending || :paid )
+        super
+      else
+        case @fulfillment_status
+        when :processing
+          raise ArgumentError.new("Your order is processing, you will have to make another order or call costumer services.")
+        when :shipped
+          raise ArgumentError.new("Too late to update, your order is on the way!")
+        when :complete
+          raise ArgumentError.new("This order is completed, should be at the delivery address, if you have not recieved it yet, please call costumer service.")
+        end
+      end
+    end
+
+    def self.find(id_number)
+      orderlist =  self.all
+      the_order = nil
+      orderlist.each do |order|
+        if order.online_order_id == id_number
+          the_order = order
+        end
+      end
+      if the_order == nil
+        raise ArgumentError.new("That order does not exist.")
+      else
+        return the_order
+      end
+    end
+
+    def self.find_by_customer(id)
+      the_customer = Customer.find(id)
+      if the_customer == nil
+        raise ArgumentError.new("The customer does not exist.")
+      else
+        orderlist = self.all
+        the_customer_orders = []
+        orderlist.each do |order|
+          if order.id == id
+            the_customer_orders << order
           end
         end
-        return return_value
-      else
-        return nil
       end
+      return the_customer_orders
     end
   end
 end
