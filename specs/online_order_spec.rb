@@ -51,9 +51,9 @@ describe "OnlineOrder" do
 
     it "Does not permit action for processing, shipped or completed statuses" do
 
-      shipped_order.add_product("oranges", 4.32)
-      completed_order.add_product("oranges", 4.32)
-      processing_order.add_product("oranges", 4.32)
+      shipped_order.add_product("snacks", 5.00)
+      completed_order.add_product("snacks", 5.00)
+      processing_order.add_product("snacks", 5.00)
 
       shipped_order.products.length.must_equal 3
       completed_order.products.length.must_equal 3
@@ -63,8 +63,8 @@ describe "OnlineOrder" do
 
     it "Permits action for pending and paid satuses" do
 
-      pending_order.add_product("oranges", 4.32)
-      paid_order.add_product("oranges", 4.32)
+      pending_order.add_product("oranges", 5.00)
+      paid_order.add_product("oranges", 5.00)
 
       pending_order.products.length.must_equal 4
       paid_order.products.length.must_equal 4

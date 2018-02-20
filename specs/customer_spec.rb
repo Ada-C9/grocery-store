@@ -49,7 +49,7 @@ describe "Customer" do
     end
 
     it "Returns nil for a customer that doesn't exist" do
-      result = Grocery::Customer.find(456)
+      result = Grocery::Customer.find(500)
       result.must_be_nil
     end
   end
