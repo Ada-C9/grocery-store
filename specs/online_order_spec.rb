@@ -4,14 +4,14 @@ require 'minitest/skip_dsl'
 require_relative '../lib/online_order'
 
 
-xdescribe "Onlineorder" do
+describe "Onlineorder" do
   describe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
 
       # Instatiate your OnlineOrder here
-      Online_order = Grocery::Online_order.new(1, {"pickles"=> 3}, {"chips"=> 10}, :pending)
-      Online_order.must_be_kind_of Grocery::Order
+      order = OnlineOrder.new(1, {"pickles"=> 3}, :pending)
+      OnlineOrder.must_be_kind_of Grocery::Order
     end
 
     xit "Can access Customer object" do
@@ -23,8 +23,8 @@ xdescribe "Onlineorder" do
     end
   end
 
-  describe "#total" do
-    it "Adds a shipping fee" do
+  xdescribe "#total" do
+    xit "Adds a shipping fee" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Online_order.new(1337, products)
 
