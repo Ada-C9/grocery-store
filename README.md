@@ -180,6 +180,8 @@ The data for the online order CSV file consists of:
 | Customer ID | Integer | A unique identifier corresponding to a Customer
 | Status | String | A string representing the order's current status
 
+<!--
+-->
 
 ## What We Are Looking For
 Check out the [feedback template](feedback.md) to see what instructors will be looking for.
