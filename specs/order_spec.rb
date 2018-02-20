@@ -4,7 +4,7 @@ require 'minitest/skip_dsl'
 require 'csv'
 require_relative '../lib/order'
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -123,7 +123,7 @@ end # describe order wave 1
 
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
