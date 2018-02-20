@@ -117,11 +117,15 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
+      online_orders = CSV.read('support/online_orders.csv', 'r')
+      
+      Grocery::OnlineOrder.all.length.must_equal online_orders.length
+
+      Grocery::OnlineOrder.all.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+
     end
 
     it "Returns accurate information about the last online order" do

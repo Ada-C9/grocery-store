@@ -13,7 +13,6 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
-      @all_orders = []
     end
 
 
@@ -27,7 +26,7 @@ module Grocery
 
       # Read file:
       # ???? why on rake I need to have the whole path here??
-      read_file = CSV.read('support/orders.csv', 'r')
+      read_file = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')
       read_file.each do |row|
         # CSV.read('../support/orders.csv', 'r').each do |row|
 

@@ -46,10 +46,56 @@ module Grocery
 #############################################################################################
 # ALL ORDERS:
 
-    def self.all
-      # self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
-      # Question Ask yourself, what is different about this all method versus the Order.all method? What is the same?
-    end
+def self.all
+  # self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
+  # Question Ask yourself, what is different about this all method versus the Order.all method? What is the same?
+
+
+
+  @all_orders = []
+
+  # Read file:
+  # ???? why on rake I need to have the whole path here??
+  read_file = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/online_orders.csv', 'r')
+  read_file.each do |row|
+    # CSV.read('../support/orders.csv', 'r').each do |row|
+
+    #Select the order id number from the file and assign it:
+    order_id = row[0]
+    customer_id = row[2]
+    status = row[3]
+
+    # Separete the elements after the first comma (index[1]) into {product_name, product_price} and assign it to a products variable:
+    products = separate("#{row[1]}".split(';'))
+    # example => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
+
+    # Push this order (order id, products(itens, price)) to the array of orders
+    @all_orders << [order_id, products, customer_id, status]
+  end
+  return @all_orders
+end
+
+# Separete the elements into (product_name, product_price):
+def self.separate(elements_of_order)
+  products = {}
+  elements_of_order.each do |item|
+    # Assign the product of this element in this order:
+    product =  "#{item.split(':')[0]}" #.split.map(&:capitalize).join(' ')
+    # puts "product : #{product}"
+
+    # Assign the price of this element in this order:
+    price =  "#{item.split(':')[1]}"
+    # puts "price : #{price}"
+
+    #Push the Product and the Price into the array products for this order:
+    products["#{product}"] = price.to_f
+    # puts "products: #{products}"
+  end
+  # ap "this is products #{products}"
+  return products
+end
+
+
 
 #############################################################################################
 # FIND ORDER:
@@ -73,3 +119,6 @@ end
 # ap online_order.total
 # ap online_order.status
 # ap online_order.add_product("Lobster", 17.18)
+# online_order = Grocery::OnlineOrder.new
+# online_order = Grocery::OnlineOrder.all
+#  ap online_order
