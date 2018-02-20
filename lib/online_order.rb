@@ -6,7 +6,7 @@ ONLINE_FILE_NAME = "../support/online_orders.csv"
 class OnlineOrder < Grocery::Order
   attr_accessor :status, :products
   attr_reader :customer_id, :id
-  def initialize(id,customer_id,status="pending",products)
+  def initialize(id,customer_id,status = :pending,products)
     @customer_id = customer_id
     @status = status
     @products = products
@@ -21,7 +21,7 @@ class OnlineOrder < Grocery::Order
 
   # http://blog.honeybadger.io/a-beginner-s-guide-to-exceptions-in-ruby/
   def add_product(product_name, product_price)
-    unless self.status == "pending" || self.status == "paid"
+    unless self.status == :pending || self.status == :paid
       begin
         raise ArgumentError.new("You can only add products to orders with a status of 'Pending' or 'Paid'")
       rescue ArgumentError => e
@@ -38,7 +38,7 @@ class OnlineOrder < Grocery::Order
     CSV.open(ONLINE_FILE_NAME, "r").each do |line|
 
       id = line[0].to_i
-      status = line[-1]
+      status = line[-1].to_sym
       customer_id = line[-2].to_i
       products = {}
       product_array = line[1].split(";")
@@ -73,14 +73,11 @@ end
 
 # puts OnlineOrder.ancestors.inspect
 # ap OnlineOrder.find(13)
-# ap my_order = Grocery::Order.find(13)
-# ap my_order.total
 
-# ap my_order.add_product("apple",3.20)
-# ap my_order.total
-# puts my_order.inspect
 # puts my_order.status.class
 # ap OnlineOrder.all
 # ap my_order.inspect
-ap my_online = OnlineOrder.find(16).total
+# ap my_online = OnlineOrder.find(36)
+# ap my_online.add_product("apple",5.50)
+# ap my_online
 # ap OnlineOrder.find_by_customer(25)
