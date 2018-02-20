@@ -177,9 +177,7 @@ describe "OnlineOrder" do
       online_order = Grocery::OnlineOrder.find("50")
 
       online_order.must_be_instance_of Grocery::OnlineOrder
-
       online_order.id.must_equal "50"
-
       online_order.products.keys.must_include "Star Fruit"
       online_order.status.must_equal :processing
     end
