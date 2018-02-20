@@ -1,7 +1,5 @@
 require "csv"
 
-# FILE_NAME = "../support/orders.csv"
-
 module Grocery
   class Order
     attr_reader :id, :products
@@ -85,44 +83,3 @@ module Grocery
   end # class Order
 
 end # module Grocery
-
-#
-# # test that Order class can take data in the format found in csv file
-# first_order_info = nil
-# CSV.open("../support/orders.csv", "r") do |file|
-#   first_line = file.readline
-#   first_order_info = first_line
-# end
-#
-# puts "#{first_order_info}"
-# puts first_order_info.class
-# #
-# first_order = Grocery::Order.new(first_order_info)
-#
-# puts "#{first_order.id}"
-# puts "#{first_order.products}"
-# puts "#{first_order.total}"
-
-# testing .all class method
-# puts "#{Grocery::Order.all}"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#

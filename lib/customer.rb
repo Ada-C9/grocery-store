@@ -44,18 +44,3 @@ module Grocery
   end # Customer class
 
 end # Grocery Module
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
