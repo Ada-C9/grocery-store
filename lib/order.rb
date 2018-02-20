@@ -8,11 +8,11 @@ module Grocery
 
     @@all_orders = [] # stores all orders
 
-    def initialize(initial_id, initial_products, is_from_csv = false)
+    def initialize(initial_id, initial_products)
       @id = nil
       @products = {}
-      set_id_if_valid(initial_id, is_from_csv)
-      set_products_if_valid(initial_products, is_from_csv)
+      set_id_if_valid(initial_id)
+      set_products_if_valid(initial_products)
     end
 
     def total
