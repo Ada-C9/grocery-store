@@ -26,7 +26,7 @@ module Grocery
 
       # Read file:
       # ???? why on rake I need to have the whole path here??
-      file_to_read = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/customers.csv', 'r')
+      file_to_read = CSV.read('../support/customers.csv', 'r')
 
       file_to_read.each do |row|
 
