@@ -117,16 +117,3 @@ module Grocery
 
   end
 end
-
-#############################################################################################
-
-# TEMRINAL PERSONAL TESTSING:
-
-# self.all:
-# order = Grocery::Order.all
-# ap order
-
-# self.find:
-# find_id = Grocery::Order.find(100)
-# ap "#{find_id}"
-# puts "#{find_id}"

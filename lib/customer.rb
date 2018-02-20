@@ -63,16 +63,3 @@ module Grocery
 
   end
 end
-
-#############################################################################################
-
-# TEMRINAL PERSONAL TESTSINGs:
-
-# self.all:
-# all_customers = Grocery::Customer.all
-# ap all_customers
-# ap  all_customers[0].costumer_id
-
-# self.find:
-# find_customer = Grocery::Customer.find(2222)
-# ap find_customer

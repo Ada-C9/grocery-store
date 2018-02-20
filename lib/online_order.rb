@@ -121,31 +121,3 @@ module Grocery
     end
   end
 end
-
-
-#############################################################################################
-
-# TEMRINAL PERSONAL TESTSING:
-
-# total:
-# products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
-# online_order = Grocery::OnlineOrder.new(1, products, 25, :paid)
-# ap online_order.total
-# ap online_order.status
-
-# add_product:
-# ap online_order.add_product("Lobster", 17.18)
-
-# self.all:
-# online_order = Grocery::OnlineOrder.all
-#  ap online_order
-
-# self.find:
-# online_order = Grocery::OnlineOrder.all
-# find_id = Grocery::OnlineOrder.find(100)
-# ap "#{find_id}"
-# print "#{find_id}"
-
-# self.find_by_customer:
-# Grocery::OnlineOrder.all
-# ap "BY COSTUMER: #{Grocery::OnlineOrder.find_by_customer(16)}"
