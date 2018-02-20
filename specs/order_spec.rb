@@ -136,8 +136,6 @@ end
 describe "Order Wave 2" do
   describe "Order.all" do
 
-
-
     it "Returns an array of all orders" do
       # wait don't I need to put an "arrange" statement here??
 
@@ -196,7 +194,7 @@ describe "Order Wave 2" do
 
     it "Returns nil for an order that doesn't exist" do
 
-      @order_class.find(101).must_be_nil
+      @order_class.find(500).must_be_nil
 
 
     end
