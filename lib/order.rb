@@ -61,22 +61,31 @@ module Grocery
 
           product_name = items[0]
           product_price = items[1].to_i
-          
+
           # products[product_name] = product_price
           orders << Order.new(id, products)
         end
       end
       return orders
-
     end
-  end
-end
+
+    def self.find(id)
+      self.all.each do |order|
+        if order.id == id
+          return order
+        else
+          return nil
+        end #if statement
+      end #self.all loop
+    end # self.find(id) method
+  end # Class Order
+end # Module Grocery
 
 
 # binding.pry
-Grocery::Order.all
-
-# display a the first product
+# Grocery::Order.all
+#
+# # display a the first product
 # CSV.open(FILENAME,'r') do |file|
 #   first_line = file.readline
 #   puts "first line was #{first_line}"
