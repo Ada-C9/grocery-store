@@ -12,8 +12,7 @@ module Grocery
 
     # Initialize class OnlineOrder:
     def initialize(id, products, customer_id, status = :pending)
-      @online_id = id
-      @products = products
+      super(id, products)
       @customer_id = customer_id
       @status = status #pending, paid, processing, shipped or complete
     end
@@ -38,11 +37,11 @@ module Grocery
     def add_product(product_name, product_price)
       # The add_product method should be updated to permit a new product to be added ONLY if the status is either pending or paid (no other statuses permitted)
       # Otherwise, it should raise an ArgumentError (Google this!)
-      unless @status == "paid" || @status == "pending"
+      unless @status == :paid || @status == :pending
         raise ArgumentError.new("Only paid or pending status is allowed.")
       end
-       super
-    end
+       super(product_name, product_price)
+     end
 
 #############################################################################################
 # ALL ORDERS:
@@ -69,8 +68,8 @@ module Grocery
 end
 
 # products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
-# online_order = Grocery::OnlineOrder.new(1, products, 25, "paid")
-#
+# online_order = Grocery::OnlineOrder.new(1, products, 25, :paid)
+
 # ap online_order.total
 # ap online_order.status
 # ap online_order.add_product("Lobster", 17.18)
