@@ -48,8 +48,8 @@ module Grocery
           products_hash[product_pair[0]] = product_pair[1].to_f
         end
         customer_id = row[2].to_i
-        order_status = row[3].to_sym
-        new_online_order = OnlineOrder.new(id, products_hash, customer_id, order_status)
+        @order_status = row[3].to_sym
+        new_online_order = OnlineOrder.new(id, products_hash, customer_id, @order_status)
         online_orders << new_online_order
       end
       return online_orders
@@ -78,5 +78,3 @@ module Grocery
 
   end
 end
-
-binding.pry
