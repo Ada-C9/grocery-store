@@ -24,18 +24,12 @@ module Grocery
     end
 
     def total
-      # A total method which will calculate the total cost of the order by:
-      # summing up the products
-      # adding a 7.5% tax
-      # ensure the result is rounded to two decimal places
-      # add a $10 shipping for online order
-      product_total = 0
-      sub_total = 0
-      @products.each_value do |prices|
-        sub_total += prices
+      if super == 0
+        return nil
+      else
+        final_total = super + 10
       end
-      product_total = (sub_total * 0.075).round(2) + sub_total.round(2) + 10.00
-      return product_total
+      return final_total
     end
 
     # def add_product(product_name, product_price)
@@ -57,10 +51,14 @@ module Grocery
 end # module Grocery
 
 # ui for initialize method
-products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+# products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+products = {}
 test_online_order = Grocery::OnlineOrder.new(1, products, 25, :complete )
 ap test_online_order
 ap test_online_order.customer_id
 ap test_online_order.products
 ap test_online_order.total
+ap test_online_order.status
+
+# two customer id's with no product 16 and 22
 # binding.pry
