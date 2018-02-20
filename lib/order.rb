@@ -17,16 +17,23 @@ module Grocery
       return product_total
     end
 
+
     def add_product(product_name, product_price)
-      products = {}
+      if @products.include?(product_name)
+
+        return false
+      else
         @products[product_name] = product_price
+
+        return true
+      end
       return products
     end
+
+
+
+
+
+
   end
 end
-
-new_order = Grocery::Order.new(1234, {})
-new_order.add_product("grapes", 3.00)
-new_order.add_product("crackers", 1.00)
-new_order.add_product("yogurt", 0.99)
-new_order.total
