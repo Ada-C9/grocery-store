@@ -15,3 +15,17 @@ module  Grocery
       @email = email
       @delivery_address = delivery_address
     end
+
+    def self.all
+      all_customers = []
+      CSV.open(CUSTOMER_FILE_NAME, 'r').each do |line|
+        id = line[0].to_i
+        email = line[1]
+        delivery_address = "#{line[2]}, #{line[3]}, #{line[4]}"
+        new_customer = Customer.new(id,email,delivery_address)
+        all_customers << new_customer
+      end
+      return all_customers
+    end
+  end
+end
