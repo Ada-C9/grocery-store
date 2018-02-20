@@ -4,11 +4,6 @@ require 'csv'
 
 FILE_NAME = 'support/online_orders.csv'
 
-# The OnlineOrder class will inherit behavior from the Order class
-# and include additional data to track the customer and order status.
-# An instance of the Customer class will be used within each instance
-# of the OnlineOrder class.
-
 module Grocery
 
   class OnlineOrder < Order
