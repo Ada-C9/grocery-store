@@ -5,10 +5,6 @@ require_relative '../lib/order'
 
 require 'csv'
 
-# Wave 1
-# All provided tests pass
-# Using the appropriate attr_ for instance variables
-
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
@@ -87,14 +83,7 @@ describe "Order Wave 1" do
 
 end # describe "Order Wave 1"
 
-# Wave 2
-# All stubbed tests are implemented fully and pass
-# Appropriately parses the product data from CSV file in Order.all
-# Used CSV library only in Order.all (not in Order.find)
-# Used Order.all to get order list in Order.find
-
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       order = Grocery::Order.all
