@@ -80,25 +80,3 @@ module Grocery
   end # class OnlineOrder
 
 end # module Grocery
-
-# # ui for initialize, total, and add_product
-# products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
-# # products = {}
-# test_online_order = Grocery::OnlineOrder.new(1, products, 25, :paid)
-# ap test_online_order
-# ap test_online_order.customer_id
-# ap test_online_order.products
-# ap test_online_order.add_product("takoyaki", 5.00)
-# ap test_online_order
-# ap test_online_order.total
-
-# # ui for self.all method
-# online_order = Grocery::OnlineOrder.all
-# ap online_order
-
-# # ui for self.find() and self.find_by_customer(customer_id) method
-# online_order = Grocery::OnlineOrder.find_by_customer(12)
-# ap online_order
-
-# two customer id's with no product 16 and 22
-# binding.pry
