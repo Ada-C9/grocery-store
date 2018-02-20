@@ -45,5 +45,17 @@ module Grocery
     end
 
     #self.find should come from Grocery::Order
+
+    def self.find_by_customer(customer_id)
+      order_array = []
+      orders = Grocery::OnlineOrder.all
+      orders.each do |order|
+        if order.customer == customer_id
+          order_array << order
+        end
+      end
+      raise ArgumentError.new("Error: Customer ID does not exist.")
+      # return order_array
+    end
   end
 end
