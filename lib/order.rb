@@ -64,7 +64,7 @@ module Grocery
           return all_orders[-1]
         end
       end
-      return nil
+      raise ArgumentError.new("Error: That ID can not be found")
     end
 
   end
