@@ -83,5 +83,4 @@ module Grocery
 
   end # OnlineOrder
 end # Grocery
-binding.pry
 Grocery::OnlineOrder.all
