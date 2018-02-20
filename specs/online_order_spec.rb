@@ -195,7 +195,7 @@ describe "OnlineOrder" do
   end
 
   #############################################################################################
-  # FINDS ORDER:
+  # FINDS ORDER BY ID:
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
@@ -227,18 +227,30 @@ describe "OnlineOrder" do
   end
 
 
+  #############################################################################################
+  # FINDS ORDER BY COSTUMER_ID:
 
-  describe "OnlineOrder.find_by_customer" do
+    describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+
+      online_orders = CSV.read('support/online_orders.csv', 'r')
+      Grocery::OnlineOrder.all
+      Grocery::OnlineOrder.find_by_costumer(1).must_be_kind_of Array
+
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+
+      online_orders = CSV.read('support/online_orders.csv', 'r')
+      Grocery::OnlineOrder.all
+      Grocery::OnlineOrder.find_by_costumer(50).must_equal "Costumer doesn't exist or has no orders!"
+
     end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      # ?
+
+
     end
   end
 end
