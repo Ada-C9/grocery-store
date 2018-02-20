@@ -1,29 +1,6 @@
 require 'csv'
-require 'awesome_print'
 
 ORDER_FILE = 'support/orders.csv'
-
-# orders_array = CSV.read(ORDER_FILE, 'r')
-# parsed_array = []
-# orders_array.each_with_index do |order, i|
-#   parsed_array[i] =[]
-#   parsed_array[i][0] = order[0].to_i
-#   parsed_array[i][1] = Hash[order[1].split(/:|;/).each_slice(2).collect { |k, v| [k,v.to_f] }]
-# end
-#
-# ap parsed_array
-# CSV.open(ORDERS_CSV, 'r')
-#   file.each do |line|
-#     orders_array << line
-#     parsed_array = []
-#     orders_array.each_with_index do |order, i|
-#       parsed_array[i] = []
-#       parsed_array[i][0] = order[0].to_i
-#       parsed_array[i][1] = Hash[order[1].split(/:|;/).each_slice(2).collect{ |k,v| [k,v] }]
-#     end
-#   return parsed_array
-#   end
-# end
 
 module Grocery
   class Order
@@ -34,6 +11,7 @@ module Grocery
       @products = products
     end
 
+    # sums product prices, adds 7.5% tax, and rounds to two decimal places
     def total
       subtotal = 0
       @products.each do |name, price|
@@ -43,6 +21,8 @@ module Grocery
       return total
     end
 
+    # returns false if the product name is already included in the order's products,
+    # adds product to the instance's product hash if not already present and returns true
     def add_product(product_name, product_price)
       if @products.keys.include?(product_name)
         return false
@@ -52,6 +32,9 @@ module Grocery
       end
     end
 
+    # reads csv file (set to orders.csv by default if no other file is given)
+    # iterates through each line (array) of the csv file to parse the id and product data
+    # for each line, creates a new instance of the Order class and adds it to an array of all Order instances
     def self.all(csv_file=ORDER_FILE)
       csv_array = CSV.read(csv_file, 'r')
       all_orders = []
@@ -64,10 +47,12 @@ module Grocery
       return all_orders
     end
 
-    def self.find(id, csv_file=ORDER_FILE) #uses ORDER_FILE by default if a different file isn't given
-      Order.all(csv_file).each do |object|
-        if object.id == id
-          return object
+    # iterates through the array returned by the self.all method to find an order with an id equal to the provided argument
+    # raises an ArgumentError if the provided id does not match an id in the array returned by self.all
+    def self.find(id, csv_file=ORDER_FILE)
+      Order.all(csv_file).each do |order|
+        if order.id == id
+          return order
         end
       end
       raise ArgumentError.new("Order #{id} could not be found in the order database.")

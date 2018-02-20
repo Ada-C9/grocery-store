@@ -80,38 +80,40 @@ describe "Order Wave 1" do
 end
 
 describe "Order Wave 2" do
-  CSV.open('sample.csv', 'w+') do |csv|
-    csv << ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
-    csv << ["2","Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55"]
-    csv << ["3","Lentils:7.17"]
-    csv << ["4","Hiramasa Kingfish:78.37;Oatmeal:10.41;Mahi mahi:35.95;Bean Sprouts:16.5"]
-  end
-
   describe "Order.all" do
-    orders = Grocery::Order.all('sample.csv')
+    # the first four lines of the orders.csv file were used as a sample for all Wave 2 tests
+    before do
+      CSV.open('sample.csv', 'w+') do |csv|
+        csv << ["1","Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"]
+        csv << ["2","Albacore Tuna:36.92;Capers:97.99;Sultanas:2.82;Koshihikari rice:7.55"]
+        csv << ["3","Lentils:7.17"]
+        csv << ["4","Hiramasa Kingfish:78.37;Oatmeal:10.41;Mahi mahi:35.95;Bean Sprouts:16.5"]
+      end
+      @orders = Grocery::Order.all('sample.csv')
+    end
 
     it "Returns an array of all orders" do
-      orders.must_be_kind_of Array
-      orders.length.must_equal 4
-      orders.each do |order|
+      @orders.must_be_kind_of Array
+      @orders.length.must_equal 4
+      @orders.each do |order|
         order.must_be_instance_of Grocery::Order
       end
     end
 
     it "Returns accurate information about the first order" do
-      orders.first.id.must_be_kind_of Integer
-      orders.first.id.must_equal 1
-      orders.first.products.must_be_kind_of Hash
-      orders.first.products.must_equal ({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
-      orders.first.total.must_equal 107.19
+      @orders.first.id.must_be_kind_of Integer
+      @orders.first.id.must_equal 1
+      @orders.first.products.must_be_kind_of Hash
+      @orders.first.products.must_equal ({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
+      @orders.first.total.must_equal 107.19
     end
 
     it "Returns accurate information about the last order" do
-      orders.last.id.must_be_kind_of Integer
-      orders.last.id.must_equal 4
-      orders.last.products.must_be_kind_of Hash
-      orders.last.products.must_equal ({"Hiramasa Kingfish"=>78.37, "Oatmeal"=>10.41, "Mahi mahi"=>35.95, "Bean Sprouts"=>16.5})
-      orders.last.total.must_equal 151.82
+      @orders.last.id.must_be_kind_of Integer
+      @orders.last.id.must_equal 4
+      @orders.last.products.must_be_kind_of Hash
+      @orders.last.products.must_equal ({"Hiramasa Kingfish"=>78.37, "Oatmeal"=>10.41, "Mahi mahi"=>35.95, "Bean Sprouts"=>16.5})
+      @orders.last.total.must_equal 151.82
     end
   end
 
@@ -132,7 +134,7 @@ describe "Order Wave 2" do
        order.products.must_equal ({"Hiramasa Kingfish"=>78.37, "Oatmeal"=>10.41, "Mahi mahi"=>35.95, "Bean Sprouts"=>16.5})
      end
 
-    it "Raise an error for an order that doesn't exist" do
+    it "Raises an error for an order that doesn't exist" do
       error = proc { Grocery::Order.find(5, 'sample.csv') }.must_raise ArgumentError
       error.message.must_match (/Order 5 could not be found in the order database./)
     end

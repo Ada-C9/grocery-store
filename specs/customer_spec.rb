@@ -40,43 +40,45 @@ describe "Customer" do
       customer.must_respond_to :zip
       customer.zip.must_equal zip
       customer.zip.must_be_kind_of String
-
     end
   end
 
   describe "Customer.all" do
-    CSV.open('some.csv', 'w+') do |csv|
-      csv << ["1","leonard.rogahn@hagenes.org","71596 Eden Route","Connellymouth","LA","98872-9105"]
-      csv << ["2","ruben_nikolaus@kreiger.com","876 Kemmer Cove","East Luellatown","AL","21362"]
-      csv << ["3","edison.mclaughlin@hyattjohns.co","96807 Cartwright Points","North Casper","MT","29547"]
-      csv << ["4","cameron_kozey@littlejenkins.net","24030 Mariah Ranch","Wolfbury","TN","41203-5262"]
+    # the first four lines of the customers.csv file were used as a sample for the remaining customer tests
+    before do
+      CSV.open('some.csv', 'w+') do |csv|
+        csv << ["1","leonard.rogahn@hagenes.org","71596 Eden Route","Connellymouth","LA","98872-9105"]
+        csv << ["2","ruben_nikolaus@kreiger.com","876 Kemmer Cove","East Luellatown","AL","21362"]
+        csv << ["3","edison.mclaughlin@hyattjohns.co","96807 Cartwright Points","North Casper","MT","29547"]
+        csv << ["4","cameron_kozey@littlejenkins.net","24030 Mariah Ranch","Wolfbury","TN","41203-5262"]
+      end
+      @customers = Grocery::Customer.all('some.csv')
     end
-    customers = Grocery::Customer.all('some.csv')
 
     it "Returns an array of all customers" do
-      customers.must_be_kind_of Array
-      customers.length.must_equal 4
-      customers.each do |customer|
+      @customers.must_be_kind_of Array
+      @customers.length.must_equal 4
+      @customers.each do |customer|
         customer.must_be_instance_of Grocery::Customer
       end
     end
 
     it "Returns accurate information about the first customer" do
-      customers.first.id.must_equal 1
-      customers.first.email.must_equal "leonard.rogahn@hagenes.org"
-      customers.first.address.must_equal "71596 Eden Route"
-      customers.first.city.must_equal "Connellymouth"
-      customers.first.state.must_equal "LA"
-      customers.first.zip.must_equal "98872-9105"
+      @customers.first.id.must_equal 1
+      @customers.first.email.must_equal "leonard.rogahn@hagenes.org"
+      @customers.first.address.must_equal "71596 Eden Route"
+      @customers.first.city.must_equal "Connellymouth"
+      @customers.first.state.must_equal "LA"
+      @customers.first.zip.must_equal "98872-9105"
     end
 
     it "Returns accurate information about the last customer" do
-      customers.last.id.must_equal 4
-      customers.last.email.must_equal "cameron_kozey@littlejenkins.net"
-      customers.last.address.must_equal "24030 Mariah Ranch"
-      customers.last.city.must_equal "Wolfbury"
-      customers.last.state.must_equal "TN"
-      customers.last.zip.must_equal "41203-5262"
+      @customers.last.id.must_equal 4
+      @customers.last.email.must_equal "cameron_kozey@littlejenkins.net"
+      @customers.last.address.must_equal "24030 Mariah Ranch"
+      @customers.last.city.must_equal "Wolfbury"
+      @customers.last.state.must_equal "TN"
+      @customers.last.zip.must_equal "41203-5262"
     end
   end
 
@@ -99,6 +101,7 @@ describe "Customer" do
     it "Can find the last customer from the CSV" do
       last_customer = Grocery::Customer.find(4,'some.csv')
 
+      last_customer.must_be_instance_of Grocery::Customer
       last_customer.id.must_equal 4
       last_customer.email.must_equal "cameron_kozey@littlejenkins.net"
     end

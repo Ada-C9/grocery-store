@@ -5,6 +5,8 @@ require_relative '../lib/online_order'
 require_relative '../lib/order'
 require_relative '../lib/customer'
 
+# Unlike the order_spec and customer_spec tests, the tests for online orders rely directly on the data provided
+# in the orders.csv, customers.csv, and online_orders.csv files rather than hard coded samples of those files.
 describe "OnlineOrder" do
   describe "#initialize" do
     before do
