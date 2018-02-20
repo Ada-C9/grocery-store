@@ -27,5 +27,18 @@ module  Grocery
       end
       return all_customers
     end
-  end
-end
+
+    def self.find(good_id)
+          return_value = nil
+          self.all.each do |customer|
+            if customer.id == good_id
+              return_value = customer
+            end
+          end
+          return return_value
+        end
+
+
+      end
+
+    end
