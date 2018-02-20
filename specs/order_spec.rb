@@ -126,10 +126,9 @@ describe "Order Wave 2" do
     end
 
     it "Raises an error for an order that doesn't exist" do
-      assert_raises NotImplementedError do
+      assert_raises ArgumentError do
         nonexistant_order = Grocery::Order.find(200)
       end
-
     end
   end
 end

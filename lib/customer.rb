@@ -15,7 +15,7 @@ module Grocery
 
     def self.all
       @@all_customers = []
-      CSV.foreach("../support/customers.csv") do |row|
+      CSV.foreach("support/customers.csv") do |row|
         emails = []
         emails.push(row[2], row[3], row[4], row[5])
         @@all_customers.push([row[0].to_i, row[1], emails])
@@ -30,7 +30,6 @@ module Grocery
       else
         raise NotImplementedError
       end
-      # instance of customer will be used within online order
     end
   end
-end 
+end

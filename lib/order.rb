@@ -32,7 +32,6 @@ module Grocery
       @@all_orders = []
       CSV.foreach("support/orders.csv") do |row|
         row[1] = row[1].split(";")
-
         products_hash = {}
 
         row[1].map! do |products|
@@ -41,7 +40,6 @@ module Grocery
         end
 
         @@all_orders << [row[0].to_i, products_hash]
-
       end
       return @@all_orders
     end
@@ -51,7 +49,7 @@ module Grocery
       if id <= self.all.length
         return specific_order
       else
-        raise NotImplementedError
+        raise ArgumentError
       end
     end
 
