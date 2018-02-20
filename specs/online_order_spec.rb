@@ -4,31 +4,11 @@ require 'minitest/skip_dsl'
 
 require 'csv'
 
-# Wave 3
-# All stubbed tests are implemented fully and pass
-# Used inheritance in the initialize for online order
-# Used inheritance for the total method in online order
-# Appropriately created Customer class and class methods
-#   all & find
-# Use CSV library only in OnlineOrder.all
-# Used all to get order list in find
-# Appropriately searches for Customer orders in find_by_customer
-
-
-# TODO: uncomment the next line once you start wave 3
 require_relative '../lib/online_order'
-# You may also need to require other classes here
-
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
 
 describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
-      # Check that an OnlineOrder is in fact a kind of Order
-      # Instatiate your OnlineOrder here
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
 
@@ -36,7 +16,7 @@ describe "OnlineOrder" do
     end
 
     xit "Can access Customer object" do
-      # TODO: Your test code here!
+      # I skipped the customer class 
     end
 
     it "Can access the online order status" do
@@ -81,7 +61,8 @@ describe "OnlineOrder" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :pending)
 
-      proc { online_order.add_product }.must_raise ArgumentError
+      result = online_order.add_product("salad", 4.25)
+      result.must_equal true
     end
   end
 
@@ -133,7 +114,7 @@ describe "OnlineOrder" do
     end
 
     xit "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      # I skipped the customer class 
     end
   end
 end
