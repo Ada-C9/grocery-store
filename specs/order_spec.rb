@@ -174,13 +174,12 @@ describe "Order Wave 2" do
       Grocery::Order.find("1").products.keys.must_include "Slivered Almonds"
     end
 
-    it "Returns nil for an order that doesn't exist" do
+    it "Raises an error for an online order that doesn't exist" do
       #arrange
       # N/A
       # act
-      Grocery::Order.find("500")
       # assert
-      Grocery::Order.find("500").must_equal nil
+      proc {Grocery::Order.find("500")}.must_raise ArgumentError
     end
   end
 end

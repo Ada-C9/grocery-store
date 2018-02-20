@@ -183,9 +183,9 @@ describe "OnlineOrder" do
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      online_order = Grocery::OnlineOrder.find("500")
+      # online_order = Grocery::OnlineOrder.find("500")
 
-      online_order.must_raise ArgumentError
+      proc {Grocery::OnlineOrder.find("500")}.must_raise ArgumentError
     end
   end
 
