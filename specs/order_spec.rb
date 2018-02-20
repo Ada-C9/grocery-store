@@ -104,24 +104,25 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
       trial = Grocery::Order.new(1337, products)
       order.products.delete_if {|key, value| key >= "banana" }
-
       trial.products.wont_be_same_as order
     end
   end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
+      test_list = Grocery::Order.all
+      test_list.must_be_kind_of Array
+      test_list.length.must_equal 100
+    end
+
+    xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
     end
 
-    it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the last order" do
+    xit "Returns accurate information about the last order" do
       # TODO: Your test code here!
     end
   end
