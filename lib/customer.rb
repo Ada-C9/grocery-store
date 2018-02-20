@@ -2,18 +2,16 @@ require 'csv'
 # require 'pry'
 
 module Grocery
-  class Customer
+    class Customer
     attr_reader :id, :email, :address
 
-    @@all_customers = []
+    @@all_customers = [] # stores all customers
 
     def initialize(initial_id, initial_email, initial_address)
       @id = initial_id
       @email = initial_email
-      @address = initial_address # type: hash
-      # Grocery::Customer.all
+      @address = initial_address
     end
-
 
     def self.all
       if @@all_customers.empty? # TODO: uncomment these when done!!
@@ -25,7 +23,7 @@ module Grocery
           customer_address_hash[:city] = customer_line[3]
           customer_address_hash[:state] = customer_line[4]
           customer_address_hash[:zip_code] = customer_line[5]
-          @@all_customers << Customer.new(customer_id, customer_email, customer_address_hash)
+          @@all_customers << Grocery::Customer.new(customer_id, customer_email, customer_address_hash)
         end
       end
       return @@all_customers
