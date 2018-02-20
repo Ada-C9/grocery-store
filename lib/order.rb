@@ -5,7 +5,6 @@ ORDERS = "support/orders.csv"
 module Grocery
   class Order
     attr_reader :id, :products
-
     # param id - order id (integer)
     # param products - {} of products and costs
     def initialize(id, products)
@@ -41,7 +40,7 @@ module Grocery
       end
     end
 
-    # Create self.all method to read csv files
+    # Create self.all method to read csv file
     def self.all
       csv_orders = []
       CSV.read(ORDERS, "r").each do |order|

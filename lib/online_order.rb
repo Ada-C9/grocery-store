@@ -7,7 +7,6 @@ ONLINEORDERS = "support/online_orders.csv"
 module Grocery
   class OnlineOrder < Grocery::Order
     attr_reader :id, :products, :customer_id, :status
-
     def initialize(id, products, customer_id, status)
       super(id, products)
       @customer_id = customer_id.to_i
@@ -42,7 +41,6 @@ module Grocery
       CSV.read(ONLINEORDERS, "r").each do |online_order|
         id = online_order[0].to_i
         orders = online_order[1].split(%r{;\s*})
-        # To put address info together
         order_hash = {}
         orders.each do |order|
           pair = order.split(%r{:\s*})
@@ -62,7 +60,7 @@ module Grocery
         if each_order.id == id
           correct_order = each_order
         end
-      end  # Q: return an instance of OnlineOrder rather than Order
+      end  # Return an instance of OnlineOrder rather than Order
 
       if correct_order != nil
         return correct_order
@@ -97,5 +95,3 @@ module Grocery
   end # class OnlineOrder ends
 
 end # module Grocery ends
-
-# Customer.find(OnlineOrder.customer_id)
