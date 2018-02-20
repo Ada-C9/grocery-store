@@ -2,6 +2,7 @@
 require 'awesome_print'
 require 'csv'
 require_relative "order.rb"
+require 'pry'
 
 #example
 
@@ -9,23 +10,22 @@ module Grocery
 
   class OnlineOrder < Order
 
-    attr_reader :id, :products :customer_id :status
+    attr_reader :id, :products, :customer_id, :fulfillment_status
 
     def initialize(id, products, customer_id, fulfillment_status)
       @id = id
       @products = products
       @customer_id = customer_id
-      @fulfillment_status = status.to_sym
+      @fulfillment_status = fulfillment_status.to_sym
 
       # tip from Katie: 16 and 22 are the customer id's that exsit but do not have orders
-
-
     end
 
     def self.all
       array_of_orders = []
       CSV.open("support/online_orders.csv", 'r').each do |line|
-
+        customer_id = line[2]
+        fulfillment_status = line[3].to_sym
         product_list = line[1].split(';')
         product_hash = {}
         product_list.each do |item|
@@ -40,9 +40,8 @@ module Grocery
     # (shouldn't need to rewrite out a new self.find method since it inherits from Order class and should work the same.)
 
     def self.find_by_customer(customer_id)
-      all_orders = Grocery::OnlineOrder.all
 
-      all_orders.each do |single_order|
+      OnlineOrder.all.each do |single_order|
         order_list = []
         if single_order[2] == customer_id
           order_list << single_order
