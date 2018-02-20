@@ -9,7 +9,7 @@ module Grocery
       #overriding initiazize method from Order class
       #self.initialize
       def initialize(id, email, address1, city, state, zipcode)
-        @id = id
+        super(id) = id
         @email = email
         @address1 = address1
         @city = city
@@ -20,33 +20,32 @@ module Grocery
 
     def self.all
       #overriding the self.all method of super classes
+      c = []
       customer_info_csv=CSV.read("support/customers.csv", 'r',headers: true).to_a
 
-      return customer_info_csv
+      customer_info_csv.each do |line|
+        c << Grocery::Customer.new(*line)
+      end
+      c
     end
 
     #overrides order class method .find
     def self.find(id)
-      customer_info_csv = CSV.read("support/customers.csv", 'r',headers: true).to_a
+      a = self.all
 
-      if id > customer_info_csv.length
+      if id > a.length
         return nil
       end
 
       if id >=1
-        specific_customer = customer_info_csv [id-1]
+        specific_customer = a[id-1]
       elsif id < 0
-        specific_customer = customer_info_csv[id]
+        specific_customer = a[id]
       else
         return nil
       end
       return specific_customer
     end
-
-
-
-
-
   end
 
 

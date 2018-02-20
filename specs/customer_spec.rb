@@ -71,23 +71,13 @@ describe "Customer" do
     end
 
     it  'The ID, email address of the first customer  match what is in the CSV file' do
-      #Arrange
-      id_and_email = []
-      first_order_program_id_and_email = []
-      #act
-      first_order = CSV.open('support/customers.csv', 'r') { |csv| csv.first }
+      #arrange
+      customer = Grocery::Customer.all.first
 
-      id_and_email << first_order.instance_variable_get(:@id)
-      id_and_email <<first_order.instance_variable_get(:@email)
-      #assert
-      first_order_program = (Grocery::Customer.all).first
+      customer_info_csv = CSV.read("support/customers.csv", 'r',headers: true).to_a.first
 
-      first_order_program_id_and_email << first_order_program.instance_variable_get(:@id)
-
-      first_order_program_id_and_email <<
-      first_order.instance_variable_get(:@email)
-      #implement this
-      id_and_email.must_equal first_order_program_id_and_email
+      customer_info_csv.must_include customer.id
+      customer_info_csv.must_include customer.email
     end
 
     it  'The ID, email address of the last customer  match what is in the CSV file' do
@@ -119,8 +109,6 @@ describe "Customer" do
     end
   end
 
-
-
   describe "Customer.find" do
     it "Can find the first customer from the CSV" do
       first_customer = CSV.open('support/customers.csv', 'r') { |csv| csv.first }
@@ -135,7 +123,7 @@ describe "Customer" do
       last_customer[-1] == Grocery::Customer.find(-1)
     end
     #
-   it "Raises an error for a customer that doesn't exist" do
+    it "Raises an error for a customer that doesn't exist" do
      #act
      #id ='a'
      id = 1000000000000

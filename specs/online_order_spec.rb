@@ -14,7 +14,13 @@ require_relative '../lib/order'
 
 describe "OnlineOrder" do
   describe "#initialize" do
-    xit "Is a kind of Order" do
+
+    it "is a banana" do
+      custidfind = Grocery::OnlineOrder.find_by_customer(25)
+      ap custidfind
+    end
+
+    it "Is a kind of Order" do
       #arrange
       #generic_order = Grocery::Order.new(24, [apple: 5 orange: 7])
 
@@ -22,7 +28,7 @@ describe "OnlineOrder" do
       # Check that an OnlineOrder is in fact a kind of Order
       # Instatiate your OnlineOrder here
       #calling instance method new
-      online_order = Grocery::OnlineOrder.new(3, apple: 10, dates: 4)
+      online_order = Grocery::OnlineOrder.new(3, {apple: 10, dates: 4}, 25, 'pending')
       #asserts
        online_order.must_be_kind_of Grocery::Order
     end
