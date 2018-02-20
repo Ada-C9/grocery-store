@@ -76,7 +76,7 @@ class Onlineorder < Grocery::Order
         raise ArgumentError, 'Input does not exist in the list'
       end
         return searched_value
-      
+
   end
 
   def self.find_by_customer(customer_id)
