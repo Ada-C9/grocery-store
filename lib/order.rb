@@ -79,9 +79,3 @@ class Order
 
   end
 end
-
-
-# vr = Grocery::Order.all
-# #rr = Grocery::Order.find(2)
-# #first_grocery_input = Grocery::Order.find("1")
-# ap vr
