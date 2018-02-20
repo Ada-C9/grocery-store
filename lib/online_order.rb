@@ -1,5 +1,8 @@
 require 'csv'
-# require 'faker'
+require 'faker'
+require 'pry'
+require 'awesome_print'
+
 
 require_relative '../lib/order'
 require_relative '../lib/customer'
@@ -16,8 +19,8 @@ module Grocery
     @@all_online_orders = []
 
     def initialize(initial_id, initial_products, initial_customer_id,
-      initial_fulfillment = :pending)
-      super(initial_id, initial_products)
+      initial_fulfillment = :pending, is_from_csv = false)
+      super(initial_id, initial_products, is_from_csv)
       @customer = get_customer(initial_customer_id)
       @fulfillment_status = set_initial_fulfillment_status(initial_fulfillment)
     end
@@ -30,16 +33,21 @@ module Grocery
 
     def add_product(product_name, product_cost)
       check_if_can_add_products # fulfillment_status must be pending or paid
-      super(product_name, product_cost) #TODO: no need for return??
+      return super(product_name, product_cost) #TODO: no need for return??
     end
 
     #
     def self.all
-
+      return Grocery::OnlineOrder.get_all
     end
 
     #
     def self.find(requested_id)
+      # found_order = Grocery::OnlineOrder.get_all.find { |order| order.id == requested_id }
+      # if found_order.nil?
+      #   raise ArgumentError.new("No online order with id .")
+      # end
+      # return found_order
       super(requested_id) or raise ArgumentError.new("No online order with id .")
       # order_with_requested_id = super(requested_id)
       # # order_with_requested_id = all.find { |order| order.id == requested_id }
@@ -56,7 +64,7 @@ module Grocery
       # return all.select { |order| order.products if order.customer.id == requested_customer_id }
       # end
 
-      all.each do |order|
+      Grocery::OnlineOrder.get_all.each do |order|
         orders_of_customer << order.products if order.customer.id == requested_customer_id
       end
       return orders_of_customer
@@ -64,34 +72,22 @@ module Grocery
 
     private
 
-    def get_all
-      build_all if @@all_online_orders.empty?
+    def self.get_all
+      Grocery::OnlineOrder.build_all if @@all_online_orders.empty?
       return @@all_online_orders
     end
 
 
-    def build_all
+    def self.build_all
       CSV.read("../support/online_orders.csv").each do |order_line|
         @@all_online_orders << Grocery::OnlineOrder.new(
           order_line[0].to_i, #id
-          build_products_hash(order_line[0]), # from parent
+          build_products_hash(order_line[1]), # from parent
           order_line[2].to_i,  # customer_id
           order_line[3].to_sym, # order_status
-          false) # not new
+          true) # not new
       end
     end
-
-    # def build_all
-    #   CSV.read("../support/online_orders.csv").each do |order_line|
-    #     order_id = order_line[0].to_i
-    #     product_hash = build_products_hash(order_line[0])
-    #     customer_id = order_line[2].to_i
-    #     order_status = order_line[3].to_sym
-    #     @@all_online_orders << Grocery::OnlineOrder.new(order_id, product_hash,
-    #         customer_id, order_status)
-    #   end
-    # end
-
 
     # Order fulfillment status must be pending or paid. Otherwise throws
     # ArgumentError.
@@ -107,7 +103,7 @@ module Grocery
       if order_customer.nil? # creates a new fake customer if can't find id
         order_customer = Grocery::Customer.new(customer_id, Faker::Internet.email,
         {street: Faker::Address.street_address, city:Faker::Address.city,
-          state: Faker::Address.state_abbr, zip_code: Faker::Address.zip_code})
+          state: Faker::Address.state_abbr, zip: Faker::Address.zip_code})
       end
       return order_customer
     end
@@ -123,6 +119,10 @@ module Grocery
         shipped complete].any?(possible_status)
     end
 
+
+
   end
 
 end
+
+# ap Grocery::OnlineOrder.find(61)
