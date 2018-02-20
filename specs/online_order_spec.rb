@@ -3,19 +3,11 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/online_order'
 
-# TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/online_order'
-# You may also need to require other classes here
-
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
-
 describe "OnlineOrder" do
   # Arrange
   id = 1
-  products = { "Lobster" => 17.18,
+  products = {
+    "Lobster" => 17.18,
     "Annatto seed" => 58.38,
     "Camomile" => 83.21
   }
@@ -25,7 +17,6 @@ describe "OnlineOrder" do
 
   describe "#initialize" do
     it "Is a kind of Order" do
-      # Check that an OnlineOrder is in fact a kind of Order
       # Assertion
       initialize_order.must_be_kind_of Grocery::Order
     end
@@ -151,7 +142,7 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      customer_id = 15
+      customer_id_find = 15
       found_orders = Grocery::OnlineOrder.find_by_customer(15)
       found_orders.class.must_equal Array
     end
