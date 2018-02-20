@@ -106,7 +106,7 @@ describe "Order Wave 2" do
       Grocery::Order.all.count.must_equal 100
     end
 
-    xit "Returns accurate information about the first order" do
+    it "Returns accurate information about the first order" do
       Grocery::Order.all[0].id.must_equal "1"
       Grocery::Order.all[0].products.must_include("Slivered Almonds")
       Grocery::Order.all[0].products.must_include("Wholewheat flour")
@@ -114,11 +114,12 @@ describe "Order Wave 2" do
 
       Grocery::Order.all[0].products.count.must_equal 3
 
-      #This is experimental at this point.
-      Grocery::Order.all[0].products.values.reduce(:+).must_equal 99.71
+      sum_of_values = Grocery::Order.all[0].products.values.reduce(:+)
+      sum_of_values.must_be_within_delta 99.71, 0.001
+
     end
 
-    xit "Returns accurate information about the last order" do
+    it "Returns accurate information about the last order" do
       Grocery::Order.all.last.id.must_equal "100"
       Grocery::Order.all.last.products.must_include("Allspice")
       Grocery::Order.all.last.products.must_include("Bran")
@@ -126,8 +127,9 @@ describe "Order Wave 2" do
 
       Grocery::Order.all.last.products.count.must_equal 3
 
-      #This is experimental at this point.
-      Grocery::Order.all.last.products.values.reduce(:+).must_equal 160.05
+      sum_of_values = Grocery::Order.all.last.products.values.reduce(:+)
+      sum_of_values.must_be_within_delta 160.05, 0.001
+
     end
   end
 
