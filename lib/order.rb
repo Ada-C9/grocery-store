@@ -1,6 +1,4 @@
 require 'csv'
-require 'awesome_print'
-
 
 FILE_NAME = "../support/orders.csv"
 
@@ -42,18 +40,16 @@ module Grocery
     end
 
     def total
-      # TODO: implement total
       sub_total = 0.00
       @products.each do |product, cost|
         sub_total += cost
       end
-      # return sub_total
+
       @total = sub_total + (sub_total * @tax)
       return @total.round(2)
     end
 
     def add_product(product_name, product_price)
-      # TODO: implement add_product
       if @products.key?(product_name) #method to see if the product already exists in product hash
         return false
       else
@@ -63,10 +59,3 @@ module Grocery
     end
   end
 end
-
-# ap Grocery::Order.all.class
-ap Grocery::Order.find(99)
-# my_order = Grocery::Order.new(1,[{"Slivered Almonds" => 22.88},{"Wholewheat flour" => 1.93},{"Grape Seed Oil" => 74.9}])
-# # puts my_order
-# ap Grocery::Order.all
-# ap Grocery::Order.find(13).total.class
