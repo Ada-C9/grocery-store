@@ -110,7 +110,7 @@ end
 
 # online_order = Grocery::OnlineOrder.all
 #  ap online_order
-#
+
 # online_order = Grocery::OnlineOrder.all
 # find_id = Grocery::OnlineOrder.find(100)
 # ap "#{find_id}"

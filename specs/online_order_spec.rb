@@ -84,10 +84,12 @@ describe "OnlineOrder" do
     it "Does not permit action for processing, shipped or completed statuses" do
 
       products = {"Lobster" => 17.18, "Annatto seed" => 58.38}
+
       online_order_processing = Grocery::OnlineOrder.new(4, products, nil, :processing)
       online_order_shipped = Grocery::OnlineOrder.new(4, products, nil, :shipped)
       online_order_complete = Grocery::OnlineOrder.new(4, products, nil, :complete)
 
+      # Evaluate:
       proc {online_order_processing.add_product("Camomile", 83.21)}.must_raise ArgumentError
       proc {online_order_shipped.add_product("Camomile", 83.21)}.must_raise ArgumentError
       proc {online_order_complete.add_product("Camomile", 83.21)}.must_raise ArgumentError
@@ -99,14 +101,17 @@ describe "OnlineOrder" do
 
       products = {"Lobster" => 17.18, "Annatto seed" => 58.38}
 
-        # Pending status:
+
+      # Pending status:
       online_order_pending = Grocery::OnlineOrder.new(1, products, nil, :pending)
       online_order_pending.add_product("Camomile", 4.25)
+      # Evaluate:
       online_order_pending.products.include?("Camomile").must_equal true
 
       # Paid status:
       online_order_paid = Grocery::OnlineOrder.new(1, products, nil, :paid)
       online_order_paid.add_product("Camomile", 4.25)
+      # Evaluate:
       online_order_paid.products.include?("Camomile").must_equal true
 
     end
@@ -129,7 +134,7 @@ describe "OnlineOrder" do
       first_order_index = 0
 
       # Order #1 on file:
-      file_order = CSV.read('support/online_orders.csv', 'r')[first_order_index]
+      file__online_order = CSV.read('support/online_orders.csv', 'r')[first_order_index]
 
       # Create all_orders on Grocery module
       Grocery::OnlineOrder.all
@@ -153,7 +158,7 @@ describe "OnlineOrder" do
       first_order = [find[first_order_index][0], order, costumer_id, status]
 
       # evaluate:
-      file_order.must_equal first_order
+      file__online_order.must_equal first_order
     end
 
 
@@ -161,7 +166,7 @@ describe "OnlineOrder" do
       last_order_index = 99
 
       # Order #1 on file:
-      file_order = CSV.read('support/online_orders.csv', 'r')[last_order_index]
+      file__online_order = CSV.read('support/online_orders.csv', 'r')[last_order_index]
 
       # Create all_orders on Grocery module
       Grocery::OnlineOrder.all
@@ -184,8 +189,8 @@ describe "OnlineOrder" do
       # create array of the first_order:
       last_order = [find[last_order_index][0], order, costumer_id, status]
 
-      # evaluate:
-      file_order.must_equal last_order
+      # Evaluate:
+      file__online_order.must_equal last_order
     end
   end
 
@@ -194,13 +199,34 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      # Order #1 on file:
+      #(Order number:)
+      online_first_order_number = CSV.read('support/online_orders.csv', 'r')[0][0]
+      #(Order status:)
+      online_first_order_status = CSV.read('support/online_orders.csv', 'r')[0][3]
+
+
+      # Create all orders on Grocery module and search for the order #1:
+      online_order = Grocery::OnlineOrder.all
+      find_id = Grocery::OnlineOrder.find(1)
+
+      # Evaluate:
+      online_first_order_number.must_equal find_id[0] #(Order number:)
+      online_first_order_status.must_equal find_id[3] #(Order status:)
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      # Order that doesnt exists on file:
+      error = "Order doesn't exist!"
+      # Create all orders on Grocery module and search for the order #101 - doesnt exist!:
+      Grocery::OnlineOrder.all
+      find =  Grocery::OnlineOrder.find(101)
+
+      error.must_equal find
     end
   end
+
+
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
