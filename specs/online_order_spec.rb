@@ -83,35 +83,50 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+      result = Grocery::OnlineOrder.all[0]
+
+      result.id.must_equal 1
+      result.status.must_equal :complete
+      result.total.must_equal 180.68
+
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+      result = Grocery::OnlineOrder.all[-1]
+
+      result.id.must_equal 100
+      result.status.must_equal :pending
+      result.total.must_equal 182.04
+
     end
   end
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::OnlineOrder.find(1)
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      assert_raises do #Fails no exceptions are raised
+        Grocery::OnlineOrder.find(101)
+      end
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      result = Grocery::OnlineOrder.find_by_customer(35)
+
+      result.length.must_equal 4
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+      proc {Grocery::OnlineOrder.find_by_customer(1337)}.must_raise Grocery::CustomerError
     end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      result = Grocery::OnlineOrder.find_by_customer(22)
+      result.length.must_equal 0
     end
   end
 end

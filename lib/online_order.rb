@@ -71,7 +71,7 @@ module Grocery
       orders_by_customer = []
 
       all.each do |order|
-        if order.customer > Grocery::Customer.all.length
+        if cust_id > Grocery::Customer.all.length
           raise Grocery::CustomerError.new
         elsif
           order.customer == cust_id
@@ -83,5 +83,5 @@ module Grocery
 
   end # OnlineOrder
 end # Grocery
-
+binding.pry
 Grocery::OnlineOrder.all
