@@ -14,8 +14,7 @@ class OnlineOrder < Grocery::Order
     @status = status
   end
 
-  # status: pending, paid, processing, shipped, complete
-
+  # Return the total cost of an OnlineOrder instance
   def total
     if super == 0
       return 0
@@ -24,28 +23,23 @@ class OnlineOrder < Grocery::Order
     end
   end
 
-  # The add_product method should be updated to permit a new product to be added
-  # ONLY if the status is either pending or paid (no other statuses permitted)
-  # Otherwise, it should raise an ArgumentError (Google this!)
+  # Add product name and price to @products of an OnlineOrder instance
   def add_product(product_name, product_price)
       if @status == :pending || @status == :paid
         super(product_name, product_price)
       end
 
-      # TODO: Fix this!
       if @status == :processing || @status == :shipped || @status == :complete
         raise ArgumentError.new("ArgumentError")
       end
   end
 
-  # self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
-  # Question Ask yourself, what is different about this all method versus the Order.all method? What is the same?
+  # Return an array of OnlineOrder instances
   def self.all
     return OnlineOrder.parse_csv
   end
 
-  # 1,Lobster:17.18;Annatto seed:58.38;Camomile:83.21,25,complete
-  # ID, products, customer ID, status
+  # Helper method to parse CSV file into an array of OnlineOrder instances
   def self.parse_csv
     arr_of_arrs = CSV.read('support/online_orders.csv')
     online_orders = []
@@ -68,8 +62,7 @@ class OnlineOrder < Grocery::Order
     return online_orders
   end
 
-  # self.find(id) - returns an instance of OnlineOrder where the value of the id field in the CSV matches the passed parameter.
-  # Question Ask yourself, what is different about this find method versus the Order.find method?
+  # Return an OnlineOrder instance searched by online order id
   def self.find(id)
     online_orders = OnlineOrder.all
     online_orders.each do |online_order|
@@ -80,7 +73,7 @@ class OnlineOrder < Grocery::Order
     return nil
   end
 
-  # self.find_by_customer(customer_id) - returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter.
+  # Return an array of OnlineOrder instances searched by customer id
   def self.find_by_customer(customer_id)
     online_orders = OnlineOrder.all
     online_orders_found = []
@@ -93,7 +86,3 @@ class OnlineOrder < Grocery::Order
   end
 
 end
-
-# puts Grocery::Customer.find(25)
-# puts Grocery::Customer.find(25).id
-# OnlineOrder.all

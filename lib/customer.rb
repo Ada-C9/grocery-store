@@ -12,12 +12,12 @@ module Grocery
       @address = address
     end
 
-    # Returns a collection of Customer instances
+    # Returns an array of Customer instances
     def self.all
       return Customer.parse_csv
     end
 
-    # Helper method to parse data from csv file
+    # Helper method to parse CVS file into an array of Customer instances
     def self.parse_csv
       customers = []
       CSV.foreach('support/customers.csv') do |row|
@@ -29,7 +29,7 @@ module Grocery
       return customers
     end
 
-    # Returns an instance of Customer searched by id
+    # Returns a Customer instance searched by customer id
     def self.find(id)
       customers = Customer.all
       customers.each do |customer|

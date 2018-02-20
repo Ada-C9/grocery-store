@@ -3,11 +3,11 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 require 'awesome_print'
-require 'csv'
 
 Minitest::Reporters.use!
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
+
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -49,6 +49,7 @@ xdescribe "Order Wave 1" do
 
       order.add_product("salad", 4.25)
       expected_count = before_count + 1
+
       order.products.count.must_equal expected_count
     end
 
@@ -57,12 +58,12 @@ xdescribe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.add_product("sandwich", 4.25)
+
       order.products.include?("sandwich").must_equal true
     end
 
     it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
-
       order = Grocery::Order.new(1337, products)
       before_total = order.total
 
@@ -78,6 +79,7 @@ xdescribe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       result = order.add_product("salad", 4.25)
+
       result.must_equal true
     end
   end
@@ -90,6 +92,7 @@ xdescribe "Order Wave 1" do
 
       order.remove_product("banana")
       expected_count = before_count - 1
+
       order.products.count.must_equal expected_count
     end
 
@@ -98,6 +101,7 @@ xdescribe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       order.remove_product("banana")
+
       order.products.include?("banana").must_equal false
     end
 
@@ -115,13 +119,13 @@ xdescribe "Order Wave 1" do
       order.remove_product("sandwich").must_equal false
     end
   end
+
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
+
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
       orders = Grocery::Order.all
 
       orders.must_be_instance_of Array
@@ -132,7 +136,6 @@ xdescribe "Order Wave 2" do
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
       orders = Grocery::Order.all
       first_order = orders.first
 
@@ -144,7 +147,6 @@ xdescribe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
       orders = Grocery::Order.all
       last_order = orders.last
 
@@ -158,7 +160,6 @@ xdescribe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
       products_found = Grocery::Order.find(1)
 
       # 1,Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9
@@ -168,19 +169,19 @@ xdescribe "Order Wave 2" do
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
       products_found = Grocery::Order.find(100)
 
+      # 100,Allspice:64.74;Bran:14.72;UnbleachedFlour:80.59
       products_found["Allspice"].must_equal 64.74
       products_found["Bran"].must_equal 14.72
       products_found["UnbleachedFlour"].must_equal 80.59
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Returns nil for an order that doesn't exist" do
       products_found = Grocery::Order.find(101)
 
       products_found.must_be_nil
     end
   end
+
 end
