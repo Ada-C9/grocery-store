@@ -33,7 +33,7 @@ module Grocery
           array_product_price = product.split(":")
           products_hash[array_product_price[0]] = array_product_price[1]
         end
-        orders <<   Order.new(order[0],products_hash)
+        orders <<   Order.new(order[0].to_i,products_hash)
       end
       return orders
     end

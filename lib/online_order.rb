@@ -1,38 +1,91 @@
 require "csv"
 require "ap"
 require_relative "order.rb"
+require_relative "customer.rb"
 
 module Grocery
   class OnlineOrder < Order
+    attr_accessor :customer, :online_order_id, :products, :fulfillment_status
+    def initialize(online_order_id, products, id, fulfillment_status)
+      # A customer object
+      @customer = Customer.find(id)
+      @products = products
+      @online_order_id = online_order_id
+      @fulfillment_status = fulfillment_status
+      
+    end
+
+    def self.all
+      online_orders_array = CSV.read("support/online_orders.csv", "r")
+      online_orders = []
+
+      online_orders_array.each do |order|
+        order_id = order[0].to_i
+        products_hash = {}
+        id = order[2].to_i
+        status = order[3].to_sym
+
+        order[1].split(";").each do |product|
+          product.split(":")[0]
+          products_hash[product.split(":")[0]] = product.split(":")[1].to_f
+        end
+        online_orders << OnlineOrder.new(order_id, products_hash, id, status)
+      end
+      online_orders
+    end
+
+    def total
+      if products != {}
+        super + 10
+      else
+        super
+      end
+    end
+
+    def add_product(product, price)
+      if @fulfillment_status == (:pending || :paid )
+        super
+      else
+        case @fulfillment_status
+        when :processing
+          raise ArgumentError.new("Your order is processing, you will have to make another order or call costumer services.")
+        when :shipped
+          raise ArgumentError.new("Too late to update, your order is on the way!")
+        when :complete
+          raise ArgumentError.new("This order is completed, should be at the delivery address, if you have not recieved it yet, please call costumer service.")
+        end
+      end
+    end
+
+    def self.find(id_number)
+      orderlist =  self.all
+      the_order = nil
+      orderlist.each do |order|
+        if order.online_order_id == id_number
+          the_order = order
+        end
+      end
+      if the_order == nil
+        raise ArgumentError.new("That order does not exist.")
+      else
+        return the_order
+      end
+    end
+
+    def self.find_by_customer(id)
+      the_customer = Customer.find(id)
+      if the_customer == nil
+        raise ArgumentError.new("The customer does not exist.")
+      else
+        orderlist = self.all
+        the_customer_orders = []
+        orderlist.each do |order|
+          if order.id == id
+            the_customer_orders << order
+          end
+        end
+      end
+      return the_customer_orders
+    end
   end
 end
-
-ap Grocery::OnlineOrder
-# OnlineOrder
-# Create an OnlineOrder class which will inherit behavior from the Order class.
-#
-# Each new OnlineOrder should include all attributes from the Order class as well as the following additional attributes:
-#
-# A customer object
-# A fulfillment status (stored as a Symbol)
-# pending, paid, processing, shipped or complete
-# If no status is provided, it should set to pending as the default
-# The OnlineOrder should include the following updated functionality:
-#
-# The total method should be the same, except it will add a $10 shipping fee
-# The add_product method should be updated to permit a new product to be added ONLY if the status is either pending or paid (no other statuses permitted)
-# Otherwise, it should raise an ArgumentError (Google this!)
-# The OnlineOrder should also have the following class methods:
-#
-# self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
-# Question Ask yourself, what is different about this all method versus the Order.all method? What is the same?
-# self.find(id) - returns an instance of OnlineOrder where the value of the id field in the CSV matches the passed parameter. -Question Ask yourself, what is different about this find method versus the Order.find method?
-# self.find_by_customer(customer_id) - returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter.
-# CSV Data File
-# The data for the online order CSV file consists of:
-#
-# Field	Type	Description
-# ID	Integer	A unique identifier for that Online Order
-# Products	String	The list of products in the following format: name:price;nextname:nextprice
-# Customer ID	Integer	A unique identifier corresponding to a Customer
-# Status	String	A string representing the order's current status

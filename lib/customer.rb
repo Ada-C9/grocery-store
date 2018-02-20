@@ -19,7 +19,7 @@ module Grocery
         address = "#{info[2]}, #{info[3]}, #{info[4]}, #{info[5]}"
         all_customers << Customer.new(id, email, address)
       end
-      ap all_customers
+      all_customers
     end
 
 
