@@ -65,13 +65,18 @@ module Grocery
       return all_orders_split
     end
 
-    # def self.find
-    #
-    # end
+    def self.find(id)
+      all_orders_split.each do |order|
+        if id == order.id
+          return order.products
+        end
+      end 
+
+
+    end
   end
 end
 
 
 orders = Grocery::Order.all
-  binding.pry
 puts orders
