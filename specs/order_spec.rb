@@ -117,7 +117,7 @@ describe "Order Wave 2" do
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      order = Grocery::Order.find(1,'sample.csv')
+      order = Grocery::Order.find(1, 'sample.csv')
 
       order.must_be_instance_of Grocery::Order
       order.id.must_equal 1
@@ -125,15 +125,16 @@ describe "Order Wave 2" do
     end
 
     it "Can find the last order from the CSV" do
-       order = Grocery::Order.find(4,'sample.csv')
+       order = Grocery::Order.find(4, 'sample.csv')
 
        order.must_be_instance_of Grocery::Order
        order.id.must_equal 4
        order.products.must_equal ({"Hiramasa Kingfish"=>78.37, "Oatmeal"=>10.41, "Mahi mahi"=>35.95, "Bean Sprouts"=>16.5})
      end
 
-    it "Return nil for an order that doesn't exist" do
-      Grocery::Order.find(5,'sample.csv').must_be_nil
+    it "Raise an error for an order that doesn't exist" do
+      error = proc { Grocery::Order.find(5, 'sample.csv') }.must_raise ArgumentError
+      error.message.must_match (/Order 5 could not be found in the order database./)
     end
   end
 end

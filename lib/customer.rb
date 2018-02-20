@@ -38,7 +38,7 @@ module Grocery
           return customer
         end
       end
-      return nil
+      raise ArgumentError.new("Customer #{id} could not be found in the customer database.")
     end
   end
 end

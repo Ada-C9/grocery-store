@@ -29,11 +29,7 @@ module Grocery
       if @products.keys.include?(product_name)
         return false
       elsif [:processing, :shipped, :complete].include?(@status)
-        begin
-          raise ArgumentError.new("The order status is #{@status}. New products can no longer be added to this order.")
-        rescue ArgumentError => e
-          puts e.message
-        end
+        raise ArgumentError.new("The order status is #{@status}. New products can no longer be added to this order.")
         return false
       else
         @products[product_name] = product_price
@@ -61,10 +57,11 @@ module Grocery
           return object
         end
       end
-      return nil
+      raise ArgumentError.new("Order #{id} could not be found in the online order database.")
     end
 
     def self.find_by_customer(num, csv_file=ONLINE_FILE)
+      Customer.find(num)
       online_orders =[]
       OnlineOrder.all(csv_file).each do |object|
         if object.customer.id == num

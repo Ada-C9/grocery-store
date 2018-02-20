@@ -103,8 +103,9 @@ describe "Customer" do
       last_customer.email.must_equal "cameron_kozey@littlejenkins.net"
     end
 
-    it "Returns nil for a customer that doesn't exist" do
-      Grocery::Customer.find(5,'some.csv').must_be_nil
+    it "Raises an error for a customer that doesn't exist" do
+      error = proc { Grocery::Customer.find(5,'some.csv') }.must_raise ArgumentError
+      error.message.must_match (/Customer 5 could not be found in the customer database./)
     end
   end
 end

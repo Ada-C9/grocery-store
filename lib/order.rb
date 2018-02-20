@@ -70,7 +70,7 @@ module Grocery
           return object
         end
       end
-      return nil
+      raise ArgumentError.new("Order #{id} could not be found in the order database.")
     end
   end
 end
