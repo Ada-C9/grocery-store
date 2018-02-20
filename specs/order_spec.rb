@@ -155,19 +155,19 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      last_order_index = 99
+      # last_order_index = 99
 
-      # Order #1 on file:
-      file_order = CSV.read('support/orders.csv', 'r')[last_order_index]
+      # Last order on file:
+      file_order = CSV.read('support/orders.csv', 'r').last
 
       # Create all_orders on Grocery module
-      Grocery::Order.all
+      all_orders = Grocery::Order.all
       find =  Grocery::Order.all
 
       # Create string of the order #1:
       order = ""
-      products = find[last_order_index][1].keys
-      price = find[last_order_index][1].values
+      products = find.last[1].keys
+      price = find.last[1].values
 
       (products.size - 1).times do |i|
         order += "#{products[i]}:#{price[i]};"
@@ -175,11 +175,11 @@ describe "Order Wave 2" do
 
       order += "#{products.last}:#{price.last}"
 
-      # create array of the first_order:
-      first_order = [find[last_order_index][0], order]
+      # create array of the last_order:
+      last_order = [find.last[0], order]
 
       # evaluate:
-      file_order.must_equal first_order
+      file_order.must_equal last_order
 
     end
   end

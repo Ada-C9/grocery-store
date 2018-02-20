@@ -35,7 +35,7 @@ module Grocery
         #Select the order costumer_id number from the file and assign it:
         costumer_id = row[0].to_i
         email = row[1]
-        customer_address = "#{row[2]}, #{row[3]}, #{row[4]}"
+        customer_address = "#{row[2]}, #{row[3]}, #{row[4]}, #{row[5]}"
 
         # Create new customer:
         new_customer = Customer.new(costumer_id, email, customer_address)
@@ -54,6 +54,9 @@ module Grocery
            found_customer = customer
          end
        end
+       unless found_customer != nil
+         raise ArgumentError.new("Customer doesn't exist.")
+       end
        return found_customer
      end
 
@@ -71,6 +74,5 @@ end
 # ap  all_customers[0].costumer_id
 
 # self.find:
-
-# find_customer = Grocery::Customer.find(1)
+# find_customer = Grocery::Customer.find(2222)
 # ap find_customer
