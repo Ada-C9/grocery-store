@@ -74,14 +74,17 @@ module Grocery
       target_customer_orders = []
       Grocery::OnlineOrder.all.each do |order_instance|
         if order_instance.customer_id == query_customer_id
-          order_found << order
+          order_found = order_instance
+          target_customer_orders << order_found
         end
       end
+      return target_customer_orders
     end
+
   end
 end
 
-#MISC TESTING STUFF
+#MISC TROUBLESHOOTING STUFF
 # ap Grocery::OnlineOrder.all
 # puts Grocery::OnlineOrder.all[0].inspect
 # puts Grocery::OnlineOrder.all[99].inspect

@@ -144,18 +144,24 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
 
       Grocery::OnlineOrder.find_by_customer("10").must_be_kind_of Array
 
       Grocery::OnlineOrder.find_by_customer("10").count.must_equal 4
 
-      Grocery::OnlineOrder.find_by_customer("10").id.must_include 2
-      Grocery::OnlineOrder.find_by_customer("10").id.must_include 16
-      Grocery::OnlineOrder.find_by_customer("10").id.must_include 61
-      Grocery::OnlineOrder.find_by_customer("10").id.must_include 88
+      found_order_array = Grocery::OnlineOrder.find_by_customer("10")
+      ids_of_found_orders = []
+      found_order_array.each do |order_instance|
+        found_id = order_instance.id
+        ids_of_found_orders << found_id
+      end
 
+      ids_of_found_orders.must_include "2"
+      ids_of_found_orders.must_include "16"
+      ids_of_found_orders.must_include "61"
+      ids_of_found_orders.must_include "88"
     end
 
     it "Returns an empty array if the customer does not exist" do
