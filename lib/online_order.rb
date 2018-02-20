@@ -10,7 +10,7 @@ module Grocery
 
     def initialize(id, products, customer_id, status)
       super(id, products)
-      @customer_id = customer_id
+      @customer_id = customer_id.to_i
       @status = status
     end
 
@@ -46,7 +46,7 @@ module Grocery
         order_hash = {}
         orders.each do |order|
           pair = order.split(%r{:\s*})
-          order_hash[pair[0]] = pair[1]
+          order_hash[pair[0]] = pair[1].to_f
         end
         products = order_hash
         customer_id = online_order[2].to_i
@@ -58,7 +58,7 @@ module Grocery
 
     def self.find(id)
       correct_order = nil
-      self.each do |each_order|
+      self.all.each do |each_order|
         if each_order.id == id
           correct_order = each_order
         end
@@ -67,30 +67,29 @@ module Grocery
       if correct_order != nil
         return correct_order
       else
-        return nil
+        ArgumentError
       end
 
     end # self.find method ends
 
     def self.find_by_customer(customer_id)
-      target_customer = []
-      self.each do |each_order|
+      found_online_orders = []
+      flag = false
+      self.all.each do |each_order|
         if each_order.customer_id == customer_id
-          target_customer << each_order.id
-          target_customer << each_order.products
-          target_customer << each_order.customer_id
-          target_customer << each_order.status
+          found_online_orders << each_order
+          flag = true
         end
       end
 
-      if target_customer != []
-        return target_customer
-      elsif
-        target_customer[1] = nil
-        return
-        target_customer = []
-      else
-        ArgumentError
+      if found_online_orders != []
+        return found_online_orders
+      else # Check if the customer existed but with no orders or not existed
+        if flag == true
+          return found_online_orders
+        else
+          ArgumentError
+        end
       end
 
     end # self.find_by_customer emthod ends
@@ -98,7 +97,5 @@ module Grocery
   end # class OnlineOrder ends
 
 end # module Grocery ends
-
-# ap OnlineOrder.all
 
 # Customer.find(OnlineOrder.customer_id)
