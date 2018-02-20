@@ -116,12 +116,12 @@ describe "Order Wave 2" do
     end
 
 
-  it "Can find the last order from the CSV" do
+    it "Can find the last order from the CSV" do
 
-    products_hash = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
-     Grocery::Order.all[-1].id.must_equal 100
-     Grocery::Order.all[-1].products.must_equal products_hash
-end
+      products_hash = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+      Grocery::Order.all[-1].id.must_equal 100
+      Grocery::Order.all[-1].products.must_equal products_hash
+    end
 
     it "Raises an error for an order that doesn't exist" do
       Grocery::Order.all[101].must_equal nil

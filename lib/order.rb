@@ -60,5 +60,3 @@ module Grocery
 
   end # end Order class
 end # end Grocery module
-
-binding.pry
