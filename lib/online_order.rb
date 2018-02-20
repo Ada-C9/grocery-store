@@ -34,14 +34,14 @@ module Grocery
 # ADD PRODUCT TO ORDER:
 
 
-    def add_product(product_name, product_price)
-      # The add_product method should be updated to permit a new product to be added ONLY if the status is either pending or paid (no other statuses permitted)
-      # Otherwise, it should raise an ArgumentError (Google this!)
-      unless @status == :paid || @status == :pending
-        raise ArgumentError.new("Only paid or pending status is allowed.")
-      end
-       super(product_name, product_price)
-     end
+def add_product(product_name, product_price)
+  # The add_product method should be updated to permit a new product to be added ONLY if the status is either pending or paid (no other statuses permitted)
+  # Otherwise, it should raise an ArgumentError (Google this!)
+  unless @status == :paid || @status == :pending
+    raise ArgumentError.new("Only paid or pending status is allowed.")
+  end
+  super(product_name, product_price)
+end
 
 #############################################################################################
 # ALL ORDERS:

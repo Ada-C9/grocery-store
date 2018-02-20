@@ -118,18 +118,74 @@ describe "OnlineOrder" do
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       online_orders = CSV.read('support/online_orders.csv', 'r')
-      
+
       Grocery::OnlineOrder.all.length.must_equal online_orders.length
 
       Grocery::OnlineOrder.all.must_be_kind_of Array
     end
 
-    it "Returns accurate information about the first online order" do
 
+    it "Returns accurate information about the first online order" do
+      first_order_index = 0
+
+      # Order #1 on file:
+      file_order = CSV.read('support/online_orders.csv', 'r')[first_order_index]
+
+      # Create all_orders on Grocery module
+      Grocery::OnlineOrder.all
+      find =  Grocery::OnlineOrder.all
+
+      # Create string of the order #1:
+      order = ""
+      products = find[first_order_index][1].keys
+      price = find[first_order_index][1].values
+
+      (products.size - 1).times do |i|
+        order += "#{products[i]}:#{price[i]};"
+      end
+
+      order += "#{products.last}:#{price.last}"
+
+      costumer_id = find[first_order_index][2]
+
+      status = find[first_order_index][3]
+      # create array of the first_order:
+      first_order = [find[first_order_index][0], order, costumer_id, status]
+
+      # evaluate:
+      file_order.must_equal first_order
     end
 
+
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+      last_order_index = 99
+
+      # Order #1 on file:
+      file_order = CSV.read('support/online_orders.csv', 'r')[last_order_index]
+
+      # Create all_orders on Grocery module
+      Grocery::OnlineOrder.all
+      find =  Grocery::OnlineOrder.all
+
+      # Create string of the order #1:
+      order = ""
+      products = find[last_order_index][1].keys
+      price = find[last_order_index][1].values
+
+      (products.size - 1).times do |i|
+        order += "#{products[i]}:#{price[i]};"
+      end
+
+      order += "#{products.last}:#{price.last}"
+
+      costumer_id = find[last_order_index][2]
+
+      status = find[last_order_index][3]
+      # create array of the first_order:
+      last_order = [find[last_order_index][0], order, costumer_id, status]
+
+      # evaluate:
+      file_order.must_equal last_order
     end
   end
 
