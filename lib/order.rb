@@ -65,7 +65,7 @@ module Grocery
         end
       end
       # will use proc syntax for testing
-      raise ArgumentError.new("Error: Customer ID does not exist.")
+      raise ArgumentError.new("Error: Order does not exist.")
     end
 
   end
