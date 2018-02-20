@@ -54,7 +54,7 @@ module Grocery
       @all_orders = []
 
       # Read file:
-      read_file = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/online_orders.csv', 'r')
+      read_file = CSV.read('../support/online_orders.csv', 'r')
       # ???? Somehow I keep on getting an error her eif i use only '../support/online_orders.csv'
 
       read_file.each do |row| # CSV.read('../support/orders.csv', 'r').each do |row|
