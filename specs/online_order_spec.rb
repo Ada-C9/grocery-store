@@ -26,16 +26,14 @@ require 'csv'
 # only test things that are different.
 
 describe "OnlineOrder" do
-  describe "#initialize" do
+  xdescribe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
-
       # Instatiate your OnlineOrder here
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
 
       online_order.must_be_kind_of Grocery::OnlineOrder
-
     end
 
     it "Can access Customer object" do
@@ -58,7 +56,7 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "#total" do
+  xdescribe "#total" do
     it "Adds a shipping fee" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
@@ -80,27 +78,39 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+      online_order = Grocery::OnlineOrder.new(1, products, 25, :completed)
+
+      proc { online_order.add_product }.must_raise ArgumentError
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+      online_order = Grocery::OnlineOrder.new(1, products, 25, :pending)
+
+    proc { online_order.add_product }.must_raise ArgumentError
     end
   end
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
+      order = Grocery::OnlineOrder.all
+
+      order.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+      order = Grocery::OnlineOrder.all
+
+      order[0].must_be_kind_of Grocery::Order
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+      order = Grocery::OnlineOrder.all
+
+      order[99].must_be_kind_of Grocery::Order
     end
   end
 

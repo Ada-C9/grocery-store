@@ -2,6 +2,9 @@ require 'pry'
 
 require_relative 'order'
 require 'awesome_print'
+require 'csv'
+
+FILE_NAME = 'support/online_orders.csv'
 
 # The OnlineOrder class will inherit behavior from the Order class
 # and include additional data to track the customer and order status.
@@ -40,19 +43,46 @@ module Grocery
       end
     end
 
+    def self.all
+      order_product = []
+      result = {}
+      all_online_order = []
+      CSV.open(FILE_NAME, 'r').each do |product|
+        order_product << "#{product[1]}"
+        id = product[0].to_i
+        customer_id = product[2].to_i
+        status = product[3].to_sym
+        order_product.each do |product_string|
+          result = Hash[
+            product_string.split(';').map do |pair|
+              product, price = pair.split(':', 2)
+              [product, price.to_i]
+            end
+          ]
+        end
+        all_online_order << Grocery::OnlineOrder.new(id,result, customer_id, status)
+      end
+      return all_online_order
+    end
+
   end # class OnlineOrder
 
 end # module Grocery
 
-# ui for initialize method
-products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
-# products = {}
-test_online_order = Grocery::OnlineOrder.new(1, products, 25, :paid)
-ap test_online_order
-ap test_online_order.customer_id
-ap test_online_order.products
-ap test_online_order.add_product("takoyaki", 5.00)
-ap test_online_order
+# # ui for initialize, total, and add_product
+# products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+# # products = {}
+# test_online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
+# ap test_online_order
+# ap test_online_order.customer_id
+# ap test_online_order.products
+# ap test_online_order.add_product("takoyaki", 5.00)
+# ap test_online_order
+
+online_order = Grocery::OnlineOrder.all
+ap online_order
+
+
 
 # two customer id's with no product 16 and 22
 # binding.pry

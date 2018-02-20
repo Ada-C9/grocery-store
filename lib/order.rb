@@ -38,7 +38,6 @@ module Grocery
       return false if @products.has_key?(product_name)
       # else
       @products[product_name] = product_price
-      #
       # puts "products is #{@products}"
       return true
       # end
@@ -66,7 +65,7 @@ module Grocery
 
 
     def self.find(find_id)
-      find_product = all
+      find_product = self.all
       return_value = nil
       find_product.each do |order|
         if find_id == order.id
@@ -79,6 +78,7 @@ module Grocery
 end # class Order
 
 end # module Grocery
+
 
 # # ui to test wave 1 changes
 # products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
@@ -105,9 +105,12 @@ end # module Grocery
 # puts result
 
 
-list_all_order = Grocery::Order.find(101)
-ap list_all_order
-# binding.pry
+
+
+# list_all_order = Grocery::Order.find(2)
+# ap list_all_order.products.class
+# # binding.pry
+
 
 
 

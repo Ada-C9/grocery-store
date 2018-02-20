@@ -9,10 +9,8 @@ require 'csv'
 # All provided tests pass
 # Using the appropriate attr_ for instance variables
 
-describe "Order Wave 1" do
-
+xdescribe "Order Wave 1" do
   describe "#initialize" do
-
     it "Takes an ID and collection of products" do
       # Arrange
       id = 1337
@@ -30,7 +28,6 @@ describe "Order Wave 1" do
   end # describe "#initialize"
 
   describe "#total" do
-
     it "Returns the total from the collection of products" do
       # Arrange
       products = { "banana" => 1.99, "cracker" => 3.00 }
@@ -43,7 +40,6 @@ describe "Order Wave 1" do
       # Assert
       order.total.must_equal expected_total
     end
-
     it "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
 
@@ -52,7 +48,6 @@ describe "Order Wave 1" do
   end # describe "#total"
 
   describe "#add_product" do
-
     it "Increases the number of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -62,7 +57,6 @@ describe "Order Wave 1" do
       expected_count = before_count + 1
       order.products.count.must_equal expected_count
     end
-
     it "Is added to the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -70,7 +64,6 @@ describe "Order Wave 1" do
       order.add_product("sandwich", 4.25)
       order.products.include?("sandwich").must_equal true
     end
-
     it "Returns false if the product is already present" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
 
@@ -83,7 +76,6 @@ describe "Order Wave 1" do
       result.must_equal false
       before_total.must_equal after_total
     end
-
     it "Returns true if the product is new" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
@@ -102,7 +94,7 @@ end # describe "Order Wave 1"
 # Used Order.all to get order list in Order.find
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-describe "Order Wave 2" do
+xdescribe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       order = Grocery::Order.all
@@ -121,7 +113,7 @@ describe "Order Wave 2" do
 
       order[99].must_be_kind_of Grocery::Order
     end
-  end
+  end # describe "Order.all"
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
@@ -141,5 +133,6 @@ describe "Order Wave 2" do
 
       find_id.must_be_kind_of NilClass
     end
-  end
-end
+  end # describe "Order.find"
+
+end # describe "Order Wave 2"
