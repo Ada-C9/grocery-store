@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require 'csv'
+require 'awesome_print'
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -78,33 +80,43 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      result = Grocery::Order.all
+      result.must_equal (CSV.read("/support/orders.csv"))
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      result = Grocery::Order.all
+      result_first = result[0]
+      test_result = CSV.read("/support/orders.csv")
+      test_first = test_result[0]
+      result_first.must_equal test_first
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
-    end
+      result = Grocery::Order.all
+      result_first = result[-1]
+      test_result = CSV.read("/support/orders.csv")
+      test_first = test_result[-1]
+      result_first.must_equal test_first
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Order.find(1)
+      result.must_equal ([1,
+{"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9])
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Order.find(100)
+      result.must_equal ([100, {"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59}])
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
-    end
+      result = Grocery::Order.find(1000)
+      result.must_equal ("Error, id number entry exeeds program parameters.")
   end
 end
