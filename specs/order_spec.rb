@@ -9,7 +9,7 @@ require 'csv'
 # All provided tests pass
 # Using the appropriate attr_ for instance variables
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       # Arrange

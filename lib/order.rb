@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 
 require 'csv'
 require 'awesome_print'
@@ -104,9 +104,11 @@ end # module Grocery
 # result = result.reduce(:merge)
 # puts result
 
+# # ui to test the self.all method
+# list_all_order = Grocery::Order.all
+# ap list_all_order
 
-
-
+# # ui to test the self.find(find_id) method
 # list_all_order = Grocery::Order.find(2)
 # ap list_all_order.products.class
 # # binding.pry

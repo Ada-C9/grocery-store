@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 
 require_relative 'order'
 require 'awesome_print'
@@ -21,9 +21,6 @@ module Grocery
       super(id, products)
       @customer_id = customer_id
       @status = status
-      # if @status == NilClass
-      #   return @status = :pending
-      # end
     end
 
     def total
@@ -39,7 +36,7 @@ module Grocery
       if @status == :pending || @status == :paid
         super
       else
-        raise ArgumentError.new("A new product to be added ONLY if the status is either pending or paid")
+        raise ArgumentError.new("A new product can be added ONLY if the status is either pending or paid")
       end
     end
 
@@ -69,16 +66,16 @@ module Grocery
       super
     end
 
-    # def self.find_by_customer(customer_id)
-    #   find_product = self.all
-    #   return_value = nil
-    #   find_product.each do |order|
-    #     if find_id == order.id
-    #       return_value = order
-    #     end
-    #   end
-    #   return return_value
-    # end
+    def self.find_by_customer(customer_id)
+      find_product = self.all
+      return_value = nil
+      find_product.each do |order|
+        if customer_id == order.customer_id
+          return_value = order
+        end
+      end
+      return return_value
+    end
 
   end # class OnlineOrder
 
@@ -87,20 +84,21 @@ end # module Grocery
 # # ui for initialize, total, and add_product
 # products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
 # # products = {}
-# test_online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
+# test_online_order = Grocery::OnlineOrder.new(1, products, 25, :paid)
 # ap test_online_order
 # ap test_online_order.customer_id
 # ap test_online_order.products
 # ap test_online_order.add_product("takoyaki", 5.00)
 # ap test_online_order
+# ap test_online_order.total
 
 # # ui for self.all method
 # online_order = Grocery::OnlineOrder.all
 # ap online_order
 
-# ui for self.find() method
-online_order = Grocery::OnlineOrder.find(5)
-ap online_order
+# # ui for self.find() and self.find_by_customer(customer_id) method
+# online_order = Grocery::OnlineOrder.find_by_customer(12)
+# ap online_order
 
 # two customer id's with no product 16 and 22
 # binding.pry
