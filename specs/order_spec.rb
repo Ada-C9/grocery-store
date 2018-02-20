@@ -1,9 +1,8 @@
 require 'minitest/autorun'
-require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+# require_relative '../support/orders'
 
-Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -80,33 +79,45 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
+
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      list = Grocery::Order.all
+      list.must_be_kind_of Array
+      list[0].must_be_kind_of Grocery::Order
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      list_item = Grocery::Order.all[0]
+      csv_row = CSV.read('support/orders.csv')[0]
+      csv_row[0].to_i.must_equal list_item.id
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      list_item = Grocery::Order.all[-1]
+      csv_row = CSV.read('support/orders.csv')[-1]
+      csv_row[0].to_i.must_equal list_item.id
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Order.find(23)
+      result.must_be_kind_of Grocery::Order
+      result.id.must_equal 23
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Order.find(100)
+      result.must_be_kind_of Grocery::Order
+      result.id.must_equal 100
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      result = Grocery::Order.find(180)
+      result.must_be_kind_of String
+      result.must_equal "Sorry, that order is not in our records"
     end
   end
 end
