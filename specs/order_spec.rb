@@ -175,17 +175,13 @@ describe "Order Wave 2" do
     end
 
     it "Return nil for an order that doesn't exist" do
-      an_order = Grocery::Order.find(299)
+      rand_order_num = Grocery::Order.find(299)
+      rand_order_blank = Grocery::Order.find ()
+      rand_order_neg = Grocery::Order.find(-32)
 
-      an_order.must_be_nil
+      rand_order_num.must_be_nil
+      rand_order_blank.must_be_nil
+      rand_order_neg.must_be_nil
     end
   end
 end
-
-# def find_es
-
-
-# it can return false
-# it can find e's
-# it can return length of string
-# it can take in an argument that is a string

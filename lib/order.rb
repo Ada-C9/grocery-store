@@ -9,7 +9,8 @@ module Grocery
 
     @@all_orders = []
 
-    attr_reader :id, :products
+    attr_reader :id
+    attr_accessor :products
 
     def initialize(id, products)
       @id = id
@@ -20,7 +21,6 @@ module Grocery
       if @products.length == 0
         total = 0
       end
-      # I still dont full understand what .inject(0, :+) is doing but pretty sure it is iterating through @products array, injecting a + operater in between each elements therefore adding them together?
       subtotal = @products.values.inject(0, :+)
       total = subtotal + (subtotal * 0.075).round(2)
       return total
@@ -34,7 +34,6 @@ module Grocery
         return true
       end
     end
-
 
     def self.all
       @@all_orders = []
@@ -56,7 +55,6 @@ module Grocery
     # self.find(id) - returns an instance of Order where the value of the id field in the CSV matches the passed parameter.
     # Return nil if order can't be found... write tests for this. Write test to find first order, last order, etc...
     def self.find(id)
-
       @@all_orders = Grocery::Order.all
       #.find_all returns an array, containing the one instance of Order where the id matches the passed parameter
       order_instance = @@all_orders.find_all { |order| order.id == id }
@@ -76,11 +74,6 @@ end
 # ap orders
 # print all_orders
 # all_orders = []
-
-#
-# ap all_orders.count
-
-# In future wave of grocery store I could use a subclass to do something like... add a shipping fee for example
 
 # WAVE 3
 
