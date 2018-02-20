@@ -34,7 +34,7 @@ describe "OnlineOrder" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
 
-      online_order.must_be_kind_of Grocery::Order
+      online_order.must_be_kind_of Grocery::OnlineOrder
 
     end
 
@@ -53,8 +53,8 @@ describe "OnlineOrder" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
 
-      online_order.status.must_be_kind_of Grocery::Order
-      online_order.status.must_be_kind_of to_sym
+      online_order.status.must_be_kind_of Grocery::OnlineOrder
+      online_order.status.must_be_kind_of :complete
     end
   end
 
@@ -69,8 +69,14 @@ describe "OnlineOrder" do
       online_order.total.must_equal expected_total
     end
 
-    xit "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
+    it "Doesn't add a shipping fee if there are no products" do
+      products = {}
+      online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
+
+      sum = products.values.inject(0, :+)
+      expected_total = sum + (sum * 0.075).round(2)
+
+      online_order.total.must_equal nil
     end
   end
 
