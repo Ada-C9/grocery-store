@@ -55,7 +55,6 @@ module Grocery
 
       # Read file:
       read_file = CSV.read('../support/online_orders.csv', 'r')
-      # ???? Somehow I keep on getting an error her eif i use only '../support/online_orders.csv'
 
       read_file.each do |row| # CSV.read('../support/orders.csv', 'r').each do |row|
         #Select the order id number from the file and assign it:
