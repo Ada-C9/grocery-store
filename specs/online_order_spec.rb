@@ -191,10 +191,10 @@ describe "OnlineOrder" do
     it "Returns an array of online orders for a specific customer ID" do
       # arrange
       # act
-      Grocery::OnlineOrder.find_by_customer("1")
+      order_by_customer = Grocery::OnlineOrder.find_by_customer("1")
       # assert
-      Grocery::OnlineOrder.find_by_customer("1").must_be_kind_of Array
-      Grocery::OnlineOrder.find_by_customer("1").must_be_instance_of Grocery::OnlineOrder
+      order_by_customer.must_be_kind_of Array
+      order_by_customer.must_be_instance_of Grocery::OnlineOrder
     end
 
     it "Raises an error if the customer does not exist" do
