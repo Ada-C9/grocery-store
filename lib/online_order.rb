@@ -11,9 +11,7 @@ module Grocery
     @@online_orders = []
 
     def initialize(id, products, customer_id, status = :pending)
-      #need super
-      @id = id.to_i
-      @products = products
+      super(id, products)
       @customer_id = customer_id
       @status = status
     end
