@@ -9,7 +9,7 @@ Minitest::Reporters.use!
 
 
 describe "OnlineOrder" do
-  xdescribe "#initialize" do
+  describe "#initialize" do
     before do
       @online_order = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18,
         "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
@@ -51,21 +51,24 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
 
     it "Does not permit action for processing, shipped or completed statuses" do
 
       online_order_processing = Grocery::OnlineOrder.new("34",{"Brown Flour" => 16.12, "Choy Sum" => 87.67}, "7", "processing")
       online_order_processing.add_product("albatross", 12.50)
       online_order_processing.products.count.must_equal 2
+      online_order_processing.products.wont_include "albatross"
 
       online_order_shipped = Grocery::OnlineOrder.new("27",{"Apples" => 61.87, "Garlic" => 64.36}, "27", "shipped")
       online_order_shipped.add_product("Tide Pods", 6.50)
       online_order_shipped.products.count.must_equal 2
+      online_order_shipped.products.wont_include "Tide Pods"
 
       online_order_complete = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
       online_order_complete.add_product("Toe of Frog", 22.50)
       online_order_complete.products.count.must_equal 3
+      online_order_complete.products.wont_include "Toe of Frog"
     end
 
 
@@ -74,14 +77,17 @@ describe "OnlineOrder" do
       online_order_pending = Grocery::OnlineOrder.new("15",{"Cranberry" => 85.36}, "8", "pending")
       online_order_pending.add_product("vegan ferret", 9.50)
       online_order_pending.products.count.must_equal 2
+      online_order_pending.products.must_include "vegan ferret"
+
 
       online_order_paid = Grocery::OnlineOrder.new("39",{"Beans" => 78.89, "Mangosteens" => 35.01}, "31", "paid")
-      online_order_paid.add_product("alfalfa smoothie", 5.50)
+      online_order_paid.add_product("lugnuts", 5.50)
       online_order_paid.products.count.must_equal 3
+      online_order_paid.products.must_include "lugnuts"
     end
   end
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       Grocery::OnlineOrder.all.must_be_kind_of Array
       Grocery::OnlineOrder.all.each do |element|

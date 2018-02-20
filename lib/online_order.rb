@@ -22,7 +22,12 @@ module Grocery
       return sum_with_tax
     end
 
-    def add_product
+    def add_product (product, price)
+      if @status == "paid"
+        super(product, price)
+      elsif @status == "pending"
+        super(product, price)
+      end
     end
 
     def self.process_order_csv(raw_order_array)
@@ -79,3 +84,9 @@ end
 # online_order_2 = Grocery::OnlineOrder.new("1", {}, "25", "complete")
 #
 # puts online_order_2.total.inspect
+
+
+# online_order_paid = Grocery::OnlineOrder.new("39",{"Beans" => 78.89, "Mangosteens" => 35.01}, "31", "paid")
+# online_order_paid.add_product("lugnuts", 5.50)
+# puts online_order_paid.inspect
+# ap online_order_paid
