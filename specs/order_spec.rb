@@ -1,8 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/order'
-require "csv"
+
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -77,67 +76,82 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
-end
 
+  describe "#remove_product" do
+    it "Removes a product if the product exists" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+      result = order.remove_product("cracker")
+      order.products.length.must_equal 1
+      result.must_equal true
+    end
+
+    it "Removes a product if the product exists" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+      result = order.remove_product("apple")
+      order.products.length.must_equal 2
+      result.must_equal false
+
+    end
+  end
+
+end
 
 describe "Order Wave 2" do
   describe "Order.all" do
+
     it "Returns an array of all orders" do
-
-      array = Grocery::Order.all
-
-      array.must_be_instance_of Array
-
+      list = Grocery::Order.all
+      list.must_be_kind_of Array
+      list[0].must_be_kind_of Grocery::Order
     end
 
     it "Returns accurate information about the first order" do
+      list_item = Grocery::Order.all[0]
+      csv_row = CSV.read('support/orders.csv')[0]
+      csv_row[0].to_i.must_equal list_item.id
 
-    first_order = Grocery::Order.all
+      products_string = ""
+      list_item.products.each do |k, v|
+        products_string += "#{k}:#{v};"
+      end
+      products_string = products_string.chomp(";")
 
-    first_order.first.id.must_equal 1
-    first_order.first.products.must_equal ({ "Slivered Almonds" => "22.88",
-      "Wholewheat flour" => "1.93",
-        "Grape Seed Oil" => "74.9"})
-
+      csv_row[1].must_equal products_string
     end
 
     it "Returns accurate information about the last order" do
+      list_item = Grocery::Order.all[-1]
+      csv_row = CSV.read('support/orders.csv')[-1]
+      csv_row[0].to_i.must_equal list_item.id
 
-      last_order = Grocery::Order.all
+      products_string = ""
+      list_item.products.each do |k, v|
+        products_string += "#{k}:#{v};"
+      end
+      products_string = products_string.chomp(";")
 
-      last_order.last.id.must_equal 100
-      last_order.last.products.must_equal ({
-               "Allspice" => "64.74",
-                   "Bran" => "14.72",
-        "UnbleachedFlour" => "80.59"
-    })
-
+      csv_row[1].must_equal products_string
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-
-        first_order = Grocery::Order.find(1)
-        first_order.id.must_equal  1
-        first_order.products.must_equal ({ "Slivered Almonds" => "22.88",
-          "Wholewheat flour" => "1.93",
-            "Grape Seed Oil" => "74.9"})
-
+      result = Grocery::Order.find(1)
+      result.must_be_kind_of Grocery::Order
+      result.id.must_equal 1
     end
 
     it "Can find the last order from the CSV" do
-      last_order = Grocery::Order.find(100)
-      last_order.id.must_equal  100
-      last_order.products.must_equal ({
-               "Allspice" => "64.74",
-                   "Bran" => "14.72",
-        "UnbleachedFlour" => "80.59"
-    })
+      result = Grocery::Order.find(100)
+      result.must_be_kind_of Grocery::Order
+      result.id.must_equal 100
     end
 
-    it "Returns nil for an order that doesn't exist" do
-      Grocery::Order.find(150).must_be_nil
+    it "Returns Nil for an order that doesn't exist" do
+      result = Grocery::Order.find(180)
+      result.must_be_nil
     end
   end
 end
