@@ -3,6 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
@@ -79,32 +80,40 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      result = Grocery::Order.all
+      result.must_be_instance_of(Array)
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      first_order = Grocery::Order.find(1)
+      first_order.products.must_include("Slivered Almonds")
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      result = Grocery::Order.all.length
+      last_order = Grocery::Order.find(result)
+      last_order.products.must_include("Bran")
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      first_order = Grocery::Order.find(1)
+      first_order.must_be_instance_of(Grocery::Order)
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      result = Grocery::Order::all.length
+      last_order = Grocery::Order.find(result)
+      last_order.must_be_instance_of(Grocery::Order)
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      invalid_id = Grocery::Order::all.length + 1
+      proc { Grocery::Order.find(invalid_id) }.must_raise ArgumentError
     end
   end
 end
