@@ -66,11 +66,11 @@ module Grocery
     end
 
     def self.find(id)
-      all_orders_split.each do |order|
+      Grocery::Order.all.each do |order|
         if id == order.id
           return order.products
         end
-      end 
+      end
 
 
     end
@@ -79,4 +79,4 @@ end
 
 
 orders = Grocery::Order.all
-puts orders
+puts orders.find(1)
