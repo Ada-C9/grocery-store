@@ -17,7 +17,7 @@ describe "Order Wave 1" do
     @normal_order = Grocery::Order.new(@normal_id, @normal_products)
   end
 
-  # Forces a hard reset of @@all_orders to sterilize tests
+  # Sterilizes tests by forcing a hard reset of @@all_orders
   after do
     Grocery::Order.build_all
   end
@@ -41,21 +41,13 @@ describe "Order Wave 1" do
       @normal_order.products.size.must_equal @normal_products.size # assertion
     end
 
-    it "adds self to all orders" do
-      number_of_orders_before = Grocery::Order.all.size
-      added_order = Grocery::Order.new(@normal_id + 1, {"banana" => 1.99})
-      number_of_orders_after = Grocery::Order.all.size
-
-      Grocery::Order.find(@normal_id + 1).must_equal added_order # assertion
-      number_of_orders_after.must_equal number_of_orders_before + 1 # assertion
-    end
-
     it "Requires positive and unique order ID numbers" do
       same_id = 829
       Grocery::Order.new(same_id, {"muffins" => 9.99})
 
       assert_raises{ Grocery::Order.new(same_id, {"banana" => 1.99}) } # assertion
-      assert_raises{ Grocery::Order.new(-2, {"melon" => 4.99}) } # assertion
+      assert_raises{ Grocery::Order.new(-2, {"melon" => 4.99}) } #
+      assert_raises{ Grocery::Order.new(0, {"melon" => 4.99}) } # assertion
     end
 
     it "Does not include negative costs" do
@@ -65,6 +57,18 @@ describe "Order Wave 1" do
 
       order_with_negative.must_be_kind_of Grocery::Order # assertion
       order_with_negative.products.must_equal expected_products # assertion
+    end
+
+    it "Allows costs of 0.0" do
+      order_products = {"rice" => 0.0, "cheese" => 3.5}
+      order_with_free_item = Grocery::Order.new(2468, order_products)
+
+      order_with_free_item.must_be_kind_of Grocery::Order # assertion
+      order_with_free_item.products.must_equal order_products # assertion
+    end
+
+    it "Does not allow other data structure for products" do
+      assert_raises{ Grocery::Order.new(85, "breaking your code") } # assertion
     end
 
   end
@@ -82,17 +86,15 @@ describe "Order Wave 1" do
 
     # Tests if total returns 0.0 if there are no products
     it "Returns a total of zero if there are no products" do
-      empty_order = Grocery::Order.new(2222222, {})
+      empty_order = Grocery::Order.new(123, {})
 
       empty_order.total.must_equal 0.0  # assertion
     end
   end
 
   describe "#add_product" do
-
     # Tests if add_product increases products size.
     it "Increases the number of products" do
-      # Grocery::Order.build_all
       @normal_order.add_product("salad", 4.25)
       expected_count = @normal_products.size + 1
 
@@ -106,6 +108,10 @@ describe "Order Wave 1" do
       @normal_order.products.include?("sandwich").must_equal true # assertion
     end
 
+    it "Returns true if the product is new" do
+      @normal_order.add_product("salad", 4.25).must_equal true # assertion
+    end
+
     it "Returns false if the product is already present" do
       before_total = @normal_order.total
       result_of_add = @normal_order.add_product("banana", 4.25) # already has
@@ -114,25 +120,50 @@ describe "Order Wave 1" do
       result_of_add.must_equal false # assertion
       before_total.must_equal after_total # assertion
     end
-
-    it "Returns true if the product is new" do
-      result_of_add = @normal_order.add_product("salad", 4.25)
-
-      result_of_add.must_equal true # assertion
-    end
   end
+
+  describe "#remove_product" do
+      # Tests if add_product increases products size.
+      it "Decreases the number of products" do
+        @normal_order.remove_product("banana")
+        expected_count = @normal_products.size - 1
+
+        @normal_order.products.count.must_equal expected_count # assertion
+      end
+
+      # Tests if program adds new product to products.
+      it "Is added to the collection of products" do
+        @normal_order.remove_product("banana")
+
+        @normal_order.products.include?("banana").must_equal false # assertion
+      end
+
+      it "Returns true if the product is removed" do
+        @normal_order.remove_product("banana").must_equal true # assertion
+      end
+
+      it "Returns false if the product isn't a product" do
+        before_total = @normal_order.total
+        result_of_remove = @normal_order.remove_product("corn") # doesn't have
+        after_total = @normal_order.total
+
+        result_of_remove.must_equal false # assertion
+        before_total.must_equal after_total # assertion
+      end
+  end
+
 end
 
 
 describe "Order Wave 2" do
 
   expected_first_id = 1
-  expected_first_products = {"Slivered Almonds"=>22.88,
-    "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
+  expected_first_products =
+    {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}
 
   expected_last_id = 100
-  expected_last_products = {"Allspice"=>64.74, "Bran"=>14.72,
-    "UnbleachedFlour"=>80.59}
+  expected_last_products =
+    {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
 
 
   describe "Order.all" do
@@ -155,7 +186,6 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the last order" do
-      # Grocery::Order.build_all
       last_order = Grocery::Order.all.last
 
       last_order.id.must_be_kind_of Integer # assertion
@@ -164,6 +194,37 @@ describe "Order Wave 2" do
       last_order.products.must_be_kind_of Hash # assertion
       last_order.products.must_equal expected_last_products # assertion
     end
+
+    it "adds self to all orders" do
+      number_of_orders_before = Grocery::Order.all.size
+      added_order = Grocery::Order.new(4321, {"banana" => 1.99})
+      
+      Grocery::Order.find(4321).must_equal added_order # assertion
+      Grocery::Order.all.size.must_equal number_of_orders_before + 1 # assertion
+
+      added_order.add_product("carrots", 1.23).must_equal true # check
+      Grocery::Order.find(4321).must_equal added_order # assertion
+
+      added_order.remove_product("banana").must_equal true # check
+      final_products = {"carrots" => 1.23}
+      Grocery::Order.find(4321).products.must_equal final_products # assertion
+
+      Grocery::Order.build_all
+    end
+
+    it "Can do a hard reset of all by using build_all" do
+      added_order = Grocery::Order.new(4321, {"potatoes" => 1.99})
+
+      Grocery::Order.find(4321).must_equal added_order # assertion (just to check)
+      Grocery::Order.build_all
+
+      current_last = Grocery::Order.all.last
+
+      assert_nil Grocery::Order.find(4321) # assertion
+      current_last.id.must_equal expected_last_id # assertion
+      current_last.products.must_equal expected_last_products # assertion
+    end
+
   end
 
   describe "Order.find" do
@@ -183,7 +244,7 @@ describe "Order Wave 2" do
     end
 
     it "Can find the last order from the CSV" do
-      last_order = Grocery::Order.find(expected_last_id)
+      last_order = Grocery::Order.find(100)
 
       last_order.must_be_kind_of Grocery::Order # assertion
 
