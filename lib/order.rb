@@ -10,6 +10,7 @@ module Grocery
     def initialize(id, products)
       @id = id
       @products = products
+      @order_collection = []
     end
 
     def total
@@ -34,18 +35,16 @@ module Grocery
     end
 
     def self.all
-      order_list = []
-      # class method, read from csv, retrun list of orders
-      # CSV.read('../support/orders.csv').each do |line|
-      #   order_list << line
-      #   return order_list
-      # end
-      #
-      CSV.read('../support/orders.csv').each do |row|
-        order_list << {id: row[0], products: row[1].split(';')}
+
+      @order_collection = []
+
+      @order_list = []
+
+      CSV.read(File.join(File.dirname(__FILE__),'../support/orders.csv')).each do |row|
+        @order_list << {id: row[0], products: row[1].split(';')}
       end
 
-      order_list.each do |order|
+      @order_list.each do |order|
         products_hash = {}
         order[:products].each do |item|
           product_price = item.split(':')
@@ -54,13 +53,35 @@ module Grocery
           products_hash[product] = price
         end
         order[:products] = products_hash
+
+        @order_collection << Grocery::Order.new(order[:id], order[:products])
+
       end
-      return order_list
+
+      return @order_collection
     end
 
 
-    def self.find
+    def self.find(find_id)
       # will take one parameter (an ID), returns one order from the CSV, return nil if ID not found
+
+      matched_order = nil
+
+      order_list = Grocery::Order.all
+
+      order_list.each do |order|
+        if order.id == find_id
+          matched_order = order
+          break
+        end
+      end
+
+      if (matched_order.nil?)
+        raise RuntimeError "Invalid order ID"
+      end
+
+        return matched_order
+
     end
 
   end

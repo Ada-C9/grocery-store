@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/skip_dsl'
 require 'minitest/reporters'
 require_relative '../lib/order'
+require_relative '../lib/customer'
 
 Minitest::Reporters.use!
 
@@ -87,38 +88,60 @@ describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
     # Arrange
-    ap Grocery::Order.all
-
-    all_orders = Grocery::Order.all
-
+    # ap Grocery::Order.all
     # Act
     result = Grocery::Order.all
-
     # Assert
     result.must_be_kind_of Array
-    all_orders.length.must_equal 100
+    result.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      # Arrange
+      # ap Grocery::Order.all
+      # Act
+      first_order = Grocery::Order.all[0]
+      # Assert
+      first_order.id.must_equal "1"
+      first_order.products.length.must_equal 3
+      first_order.products.must_be_kind_of Hash
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+      # Arrange
+      # ap Grocery::Order.all
+      # Act
+      last_order = Grocery::Order.all[99]
+      # Assert
+      last_order.id.must_equal "100"
+      last_order.products.length.must_equal 3
+      last_order.products["UnbleachedFlour"].must_equal "80.59"
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+
+      order_search_first = Grocery::Order.find("1")
+      # Assert
+      order_search_first.id.must_equal "1"
+      order_search_first.products["Slivered Almonds"].must_equal "22.88"
+      order_search_first.products.length.must_equal 3
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+
+      order_search_last = Grocery::Order.find("100")
+      # Assert
+      order_search_last.id.must_equal "100"
+      order_search_last.products.length.must_equal 3
+      order_search_last.products["UnbleachedFlour"].must_equal "80.59"
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+
+      proc { Grocery::Order.find("101") }.must_raise NoMethodError
     end
   end
 end
