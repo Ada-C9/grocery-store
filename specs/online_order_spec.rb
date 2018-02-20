@@ -102,13 +102,9 @@ describe "OnlineOrder" do
       online_order_2 = Grocery::OnlineOrder.new(1234, products, 10, :processing)
       online_order_3 = Grocery::OnlineOrder.new(1234, products, 10, :shipped)
 
-      no_action_1 = online_order_1.add_product("sandwich", 2.34)
-      no_action_2 = online_order_2.add_product("sandwich", 2.34)
-      no_action_3 = online_order_3.add_product("sandwich", 2.34)
-
-      no_action_1.must_be_nil
-      no_action_2.must_be_nil
-      no_action_3.must_be_nil
+      proc { online_order_1.add_product("sandwich", 2.34) }.must_raise ArgumentError
+      proc { online_order_2.add_product("sandwich", 2.34) }.must_raise ArgumentError
+      proc { online_order_3.add_product("sandwich", 2.34) }.must_raise ArgumentError
     end
 
     it "Permits action for pending and paid satuses" do

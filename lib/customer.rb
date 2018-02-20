@@ -8,7 +8,7 @@ module Grocery
     attr_reader :id, :email, :address_1, :city, :state, :zip_code
 
     @@all_customers = []
-
+# initializes all information from CSV as instance variables
     def initialize id, email, address_1, city, state, zip_code
       @id = id.to_i
       @email = email
@@ -17,7 +17,7 @@ module Grocery
       @state = state
       @zip_code = zip_code
     end
-
+# method to return an array that contains all instances of customers in CSV
     def self.all
       @@all_customers = []
       CSV.read("support/customers.csv").each do |customer|
@@ -26,7 +26,7 @@ module Grocery
       end
       @@all_customers
     end
-
+# method to find a specific customers info by their id
     def self.find(id)
       self.all
       @@all_customers.each do |customer|

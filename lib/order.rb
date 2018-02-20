@@ -1,25 +1,19 @@
 require 'csv'
 require 'awesome_print'
 
-# orders = []
-#
-# CSV.read("../support/orders.csv").each do |order|
-#   orders << order
-# end
-
-# ap orders
-
 module Grocery
   class Order
     attr_reader :id, :products
 
     @@all_orders = []
 
+# Initialize Method that also calls method
+# to split csv product list string
     def initialize(id, products)
       @id = id
       @products = useful_data(products)
     end
-
+# Method for splitting product strings into hashes
     def useful_data(data)
       if data.class == String
         grouped_products = data.split(";")
@@ -33,7 +27,7 @@ module Grocery
         data
       end
     end
-
+# Sum of product cost method
     def total
       # TODO: implement total
       subtotal = 0
@@ -42,7 +36,7 @@ module Grocery
       end
       (subtotal + (subtotal * 0.075)).round(2)
     end
-
+# method to add additional products to an existing order
     def add_product(product_name, product_price)
       # TODO: implement add_product
       if @products[product_name]
@@ -52,7 +46,7 @@ module Grocery
         true
       end
     end
-
+# option enhancement: removes product from an existing order
     def remove_product(product_name)
       if @products[product_name]
         @products.delete(product_name)
@@ -61,7 +55,7 @@ module Grocery
         false
       end
     end
-
+# returns array of all orders in the CSV
     def self.all
       @@all_orders = []
       CSV.read("support/orders.csv").each do |order|
@@ -70,7 +64,7 @@ module Grocery
       end
       @@all_orders
     end
-
+# returns instance of order that matches the given order id
     def self.find(id)
       self.all.each do |order|
         if id == order.id
@@ -79,13 +73,9 @@ module Grocery
       end
       raise ArgumentError
     end
+
   end
-
-
 end
-
-
-# ap Grocery::Order.all
 
 # experimenting with csv data and formatting
 # to understand the way the file works
@@ -103,9 +93,9 @@ end
 #   end
 #   separated_orders
 # end
-####
+# ###
 # organized_orders = making_usable_orders(orders)
-#####
+# ####
 # ap organized_orders
 
 # random_orders = [[1, "Slivered Almonds:22.88;Wholewheat flour:1.93;Grape Seed Oil:74.9"],
