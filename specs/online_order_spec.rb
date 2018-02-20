@@ -32,38 +32,44 @@ describe "OnlineOrder" do
 
       # Instatiate your OnlineOrder here
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
-
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
-      online_order.must_be_kind_of Grocery::Order
-      # Act
-      online_order.must_respond_to :id
-      online_order.id.must_equal id
-      online_order.id.must_be_kind_of Integer
 
-      # Assert
-      online_order.must_respond_to :products
-      online_order.products.length.must_equal 0
+      online_order.must_be_kind_of Grocery::Order
+
     end
 
     it "Can access Customer object" do
-      online_order.must_respond_to :customer_id
-      online_order.customer_id.must_equal customer_id
-      online_order.customer_id.must_be_kind_of Integer
+      # products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+      #
+      # online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
+      # online_order.must_be_kind_of Grocery::Order
+      #
+      # online_order.must_respond_to :customer_id
+      # online_order.customer_id.must_equal customer_id
+      # online_order.customer_id.must_be_kind_of Integer
     end
 
     it "Can access the online order status" do
-      online_order.must_respond_to :status
-      online_order.status.must_equal status
-      online_order.status_id.must_be_kind_of :to_sym
+      products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+      online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
+
+      online_order.status.must_be_kind_of Grocery::Order
+      online_order.status.must_be_kind_of to_sym
     end
   end
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
+      online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
+
+      sum = products.values.inject(0, :+)
+      expected_total = sum + (sum * 0.075).round(2) + 10
+
+      online_order.total.must_equal expected_total
     end
 
-    it "Doesn't add a shipping fee if there are no products" do
+    xit "Doesn't add a shipping fee if there are no products" do
       # TODO: Your test code here!
     end
   end
