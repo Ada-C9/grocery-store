@@ -82,7 +82,15 @@ describe "OnlineOrder" do
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38}
+      online_order_processing = Grocery::OnlineOrder.new(3, products, nil, :processing)
+      online_order_shipped = Grocery::OnlineOrder.new(5, products, nil, :shipped)
+      online_order_complete = Grocery::OnlineOrder.new(1, products, nil, :complete)
+
+      proc {online_order_processing.add_product("Camomile", 83.21)}.must_raise ArgumentError
+      proc {online_order_shipped.add_product("Camomile", 83.21)}.must_raise ArgumentError
+      proc {online_order_complete.add_product("Camomile", 83.21)}.must_raise ArgumentError
     end
 
     it "Permits action for pending and paid satuses" do
