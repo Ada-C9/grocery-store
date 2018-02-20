@@ -87,33 +87,60 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+#TODO: change 'xdescribe' to 'describe' to run these tests
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      all_groceries = Grocery::Order.all
+      sample_groceries = [all_groceries[0],all_groceries[49],all_groceries[99]]
+      sample_groceries[0].id.must_equal("1")
+      sample_groceries[1].id.must_equal("50")
+      sample_groceries[2].id.must_equal("100")
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      groceries = Grocery::Order.all
+      first_order = groceries[0]
+      first_order.id.must_equal("1")
+      first_order.products.must_equal({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      groceries = Grocery::Order.all
+      last_order = groceries[(groceries.length-1)]
+      last_order.products.must_equal({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
     end
   end
-
+  #
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      all_groceries = Grocery::Order.all
+      first_grocery_input = Grocery::Order.find("1")
+      first_grocery_input.id.must_equal("1")
+      first_grocery_input.products.must_equal({"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      all_groceries = Grocery::Order.all
+      last_grocery_input = Grocery::Order.find("100")
+      last_grocery_input.id.must_equal("100")
+      last_grocery_input.products.must_equal({"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      all_groceries = Grocery::Order.all
+      unincluded_input_extended_right = Grocery::Order.find("101")
+      unincluded_input_extended_right.must_be_nil
+
+      unincluded_input_extended_left = Grocery::Order.find("0")
+      unincluded_input_extended_left.must_be_nil
+
+      unincluded_input_number = Grocery::Order.find(4)
+      unincluded_input_number.must_be_nil
+
+      unincluded_input_random_string = Grocery::Order.find('sdfsdlkj')
+      unincluded_input_random_string.must_be_nil
+
     end
   end
 end
