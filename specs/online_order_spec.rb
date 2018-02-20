@@ -183,23 +183,32 @@ describe "OnlineOrder" do
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # online_order = Grocery::OnlineOrder.find("500")
-
       proc {Grocery::OnlineOrder.find("500")}.must_raise ArgumentError
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      # arrange
+      # act
+      Grocery::OnlineOrder.find_by_customer("1")
+      # assert
+      Grocery::OnlineOrder.find_by_customer("1").must_be_kind_of Array
+      Grocery::OnlineOrder.find_by_customer("1").must_be_instance_of Grocery::OnlineOrder
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+      # arrange
+      # act
+      # assert
+      proc {Grocery::OnlineOrder.find_by_customer("500")}.must_raise ArgumentError
     end
 
-    it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+    xit "Returns an empty array if the customer has no orders" do
+      # arrange
+      # act
+      # assert
+      # .must_be_empty
     end
   end
 end
