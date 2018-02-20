@@ -127,60 +127,28 @@ describe "Order Wave 2" do
     end
 
     it "Returns accurate information about the first order" do
-      first_order_index = 0
 
-      # Order #1 on file:
-      file_order = CSV.read('support/orders.csv', 'r')[first_order_index]
-
-      # Create all_orders on Grocery module
-      Grocery::Order.all
-      find =  Grocery::Order.all
-
-      # Create string of the order #1:
-      order = ""
-      products = find[first_order_index][1].keys
-      price = find[first_order_index][1].values
-
-      (products.size - 1).times do |i|
-        order += "#{products[i]}:#{price[i]};"
-      end
-
-      order += "#{products.last}:#{price.last}"
+        # Create order #1:
+      file_first_order = Grocery::Order.new(1, {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
 
       # create array of the first_order:
-      first_order = [find[first_order_index][0], order]
+      first_order = Grocery::Order.all[0]
 
       # evaluate:
-      file_order.must_equal first_order
+      file_first_order.id.must_equal first_order.id
+      file_first_order.products.must_equal first_order.products
     end
 
     it "Returns accurate information about the last order" do
-      # last_order_index = 99
+      # Create order #1:
+    file_last_order = Grocery::Order.new(100, {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
 
-      # Last order on file:
-      file_order = CSV.read('support/orders.csv', 'r').last
+    # create array of the first_order:
+    last_order = Grocery::Order.all[99]
 
-      # Create all_orders on Grocery module
-      all_orders = Grocery::Order.all
-      find =  Grocery::Order.all
-
-      # Create string of the order #1:
-      order = ""
-      products = find.last[1].keys
-      price = find.last[1].values
-
-      (products.size - 1).times do |i|
-        order += "#{products[i]}:#{price[i]};"
-      end
-
-      order += "#{products.last}:#{price.last}"
-
-      # create array of the last_order:
-      last_order = [find.last[0], order]
-
-      # evaluate:
-      file_order.must_equal last_order
-
+    # evaluate:
+    file_last_order.id.must_equal last_order.id
+    file_last_order.products.must_equal last_order.products
     end
   end
 
@@ -190,24 +158,24 @@ describe "Order Wave 2" do
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       # Order #1 on file:
-      orders = CSV.read('support/orders.csv', 'r')[0][0]
+      # orders = CSV.read('support/orders.csv', 'r')[0][0]
 
       # Create all orders on Grocery module and search for the order #1:
-      Grocery::Order.all
+      orders = Grocery::Order.all
       find =  Grocery::Order.find(1)
 
-      orders.must_equal find[0]
+      orders[0].must_equal find
     end
 
     it "Can find the last order from the CSV" do
       # Order #1 on file:
-      orders = CSV.read('support/orders.csv', 'r')[99][0]
+      order = CSV.read('support/orders.csv', 'r')[99][0].to_i
 
       # Create all orders on Grocery module and search for the order #100:
-      Grocery::Order.all
+      Grocery::Order.all[0]
       find =  Grocery::Order.find(100)
 
-      orders.must_equal find[0]
+      order.must_equal find.id
     end
 
     it "Raises an error for an order that doesn't exist" do

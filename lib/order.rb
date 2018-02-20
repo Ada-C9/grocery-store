@@ -31,13 +31,14 @@ module Grocery
       file_to_read.each do |row|
 
         #Select the order id number from the file and assign it:
-        order_id = row[0]
+        order_id = row[0].to_i
 
         # Separete the elements after the first comma (index[1]) into {product_name, product_price} and assign it to a products variable:
         products = separate("#{row[1]}".split(';'))
 
-        # Push this order (order id, products(itens, price)) to the array of orders
-        @all_orders << [order_id, products]
+        # Push this new order (order id, products(itens, price)) to the array of orders
+        new_order = Order.new(order_id, products)
+        @all_orders << new_order
       end
       return @all_orders
     end

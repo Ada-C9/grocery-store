@@ -123,66 +123,32 @@ describe "OnlineOrder" do
 
 
     it "Returns accurate information about the first online order" do
-      first_order_index = 0
+      file_last_order = Grocery::OnlineOrder.new(1, {"Lobster"=>17.18, "Annatto seed"=>58.38, "Camomile"=>83.21}, 25, "complete")
 
-      # Order #1 on file:
-      file__online_order = CSV.read('support/online_orders.csv', 'r')[first_order_index]
-
-      # Create all_orders on Grocery module
-      Grocery::OnlineOrder.all
-      find =  Grocery::OnlineOrder.all
-
-      # Create string of the order #1:
-      order = ""
-      products = find[first_order_index][1].keys
-      price = find[first_order_index][1].values
-
-      (products.size - 1).times do |i|
-        order += "#{products[i]}:#{price[i]};"
-      end
-
-      order += "#{products.last}:#{price.last}"
-
-      customer_id = find[first_order_index][2]
-
-      status = find[first_order_index][3]
       # create array of the first_order:
-      first_order = [find[first_order_index][0], order, customer_id, status]
+      last_order = Grocery::OnlineOrder.all[0]
 
       # evaluate:
-      file__online_order.must_equal first_order
+      file_last_order.id.must_equal last_order.id
+      file_last_order.products.must_equal last_order.products
+      file_last_order.customer_id.must_equal last_order.customer_id
+      file_last_order.status.must_equal last_order.status
+
     end
 
 
     it "Returns accurate information about the last online order" do
-      last_order_index = 99
+      # Create order #1:
+    file_last_order = Grocery::OnlineOrder.new(100, {"Amaranth"=>83.81, "Smoked Trout"=>70.6, "Cheddar"=>5.63}, 20, "pending")
 
-      # Order #1 on file:
-      file__online_order = CSV.read('support/online_orders.csv', 'r')[last_order_index]
+    # create array of the first_order:
+    last_order = Grocery::OnlineOrder.all[99]
 
-      # Create all_orders on Grocery module
-      Grocery::OnlineOrder.all
-      find =  Grocery::OnlineOrder.all
-
-      # Create string of the order #1:
-      order = ""
-      products = find[last_order_index][1].keys
-      price = find[last_order_index][1].values
-
-      (products.size - 1).times do |i|
-        order += "#{products[i]}:#{price[i]};"
-      end
-
-      order += "#{products.last}:#{price.last}"
-
-      customer_id = find[last_order_index][2]
-
-      status = find[last_order_index][3]
-      # create array of the first_order:
-      last_order = [find[last_order_index][0], order, customer_id, status]
-
-      # Evaluate:
-      file__online_order.must_equal last_order
+    # evaluate:
+    file_last_order.id.must_equal last_order.id.to_i
+    file_last_order.products.must_equal last_order.products
+    file_last_order.customer_id.must_equal last_order.customer_id
+    file_last_order.status.must_equal last_order.status
     end
   end
 
@@ -193,7 +159,7 @@ describe "OnlineOrder" do
     it "Will find an online order from the CSV" do
       # Order #1 on file:
       #(Order number:)
-      online_first_order_number = CSV.read('support/online_orders.csv', 'r')[0][0]
+      online_first_order_number = CSV.read('support/online_orders.csv', 'r')[0][0].to_i
       #(Order status:)
       online_first_order_status = CSV.read('support/online_orders.csv', 'r')[0][3]
 
@@ -203,8 +169,8 @@ describe "OnlineOrder" do
       find_id = Grocery::OnlineOrder.find(1)
 
       # Evaluate:
-      online_first_order_number.must_equal find_id[0] #(Order number:)
-      online_first_order_status.must_equal find_id[3] #(Order status:)
+      online_first_order_number.must_equal find_id.id #(Order number:)
+      online_first_order_status.must_equal find_id.status #(Order status:)
     end
 
     it "Raises an error for an online order that doesn't exist" do

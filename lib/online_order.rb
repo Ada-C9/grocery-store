@@ -13,7 +13,7 @@ module Grocery
     # Initialize class OnlineOrder:
     def initialize(id, products, customer_id, status = :pending)
       super(id, products)
-      @customer_id = customer_id
+      @customer_id = customer_id.to_i
       @status = status #pending, paid, processing, shipped or complete
     end
 
@@ -59,8 +59,8 @@ module Grocery
 
       read_file.each do |row| # CSV.read('../support/orders.csv', 'r').each do |row|
         #Select the order id number from the file and assign it:
-        order_id = row[0]
-        customer_id = row[2]
+        order_id = row[0].to_i
+        customer_id = row[2].to_i
         status = row[3]
 
         # Separete the elements after the first comma (index[1]) into {product_name, product_price} and assign it to a products variable:
@@ -68,7 +68,8 @@ module Grocery
         # example => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
 
         # Push this order (order id, products(itens, price)) to the array of orders
-        @all_orders << [order_id, products, customer_id, status]
+        new_order = OnlineOrder.new(order_id, products, customer_id, status)
+        @all_orders << new_order
       end
       return @all_orders
     end
@@ -97,7 +98,7 @@ module Grocery
       all_specific_costumer_orders = []
 
       @all_orders.count.times do |order|
-        if @all_orders[order][2] == "#{costumer_id}"
+        if @all_orders[order].id == "#{costumer_id}"
           # ap  @all_orders[order][2]
           # if order[2] == costumer_id
           specific_costumer_order = @all_orders[order]
