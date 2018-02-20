@@ -1,45 +1,59 @@
+require 'csv'
+require 'awesome_print'
+
+FILE_NAME = 'support/orders.csv'
+
+
 module Grocery
   class Order
-    #an ID, read-only, products are currently read only too
     attr_reader :id, :products
 
-    #Define initialize
     def initialize(id, products)
       @id = id
       @products = products
-      @product_length = @products.length
-      return @products
     end
 
-    #Define the total method, which will calculate the total cost of the order
-    #by summing up the products, and adding 7.5% tax
-    #needs rounding by 2 decimal places.
     def total
-      # TODO: implement total
-      @total = 0
-      @products.each do |products, price|
-        @total += price + price *(0.075)
-      end
-      #Round by two, make sure total can be accessed outside
-      return @total.round(2)
+      ((@products.values.sum)*1.075).round(2)
     end
 
-    #Define the add product method, take in two arguments, product_name and product_price, and add the data to the product collection
-    #It should return true if the item was successfully added and false if it was not
     def add_product(product_name, product_price)
-      # TODO: implement add_product
-      #will not add product if it already is there
-      @products.each do |products, price|
-        if products == product_name
-          return false
+      if @products.keys.include?(product_name)
+        return false
+      else
+        @products[product_name] = product_price
+        return true
+      end
+    end
+
+    def self.all
+      all_orders = []
+      CSV.open(FILE_NAME, 'r').each do |num|
+        new_item_hash = {}
+        id = num[0].to_i
+        num[1].split(";").each do |item|
+          new_item = item.split(":")
+          key = new_item[0]
+          value = new_item[1].to_f
+          new_item_hash[key] = value
+        end
+        new_order = Order.new(id, new_item_hash)
+        all_orders << new_order
+      end
+      return all_orders
+    end
+
+    def self.find(good_id)
+      return_value = "Sorry, that order is not in our records"
+      self.all.each do |order|
+        if order.id == good_id
+          return_value = order
         end
       end
-      #Add the product name if it is a new product
-      @products[product_name] = product_price
-      return true
-      @all_products = []
-      @all_products << products #seems repetitive#
-
+      return return_value
     end
+
   end
 end
+
+ap Grocery::Order.find(19999)
