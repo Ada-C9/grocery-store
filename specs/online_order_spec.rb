@@ -14,22 +14,29 @@ Minitest::Reporters.use!
 # only test things that are different.
 
 describe "OnlineOrder" do
-  xdescribe "#initialize" do
+  describe "#initialize" do
     before do
-      online_order = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18,
+      @online_order = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18,
         "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
+    end
+
     it "Is a kind of Order" do
-      online_order.must_be_kind_of Grocery::Order
+      @online_order.must_be_kind_of Grocery::Order
+    end
+
+    it "Can access the order id" do
+      @online_order.id.must_equal "1"
     end
 
     it "Can access Customer object" do
-        online_order.customer_id.must_equal "25"
+      @online_order.customer_id.must_equal "25"
     end
 
     it "Can access the online order status" do
-        online_order.status.must_equal "complete"
+      @online_order.status.must_equal "complete"
     end
   end
+
 
   xdescribe "#total" do
     it "Adds a shipping fee" do

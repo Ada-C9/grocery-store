@@ -8,8 +8,7 @@ module Grocery
     attr_accessor :products
 
     def initialize(id, products, customer_id, status)
-      @id = id
-      @products = products
+      super(id, products)
       @customer_id = customer_id
       @status = status
     end
