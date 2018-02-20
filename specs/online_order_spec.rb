@@ -89,11 +89,36 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.all[0].id.must_equal "1"
+
+      Grocery::OnlineOrder.all[0].products.must_include("Lobster")
+      Grocery::OnlineOrder.all[0].products.must_include("Annatto seed")
+      Grocery::OnlineOrder.all[0].products.must_include("Camomile")
+
+      Grocery::OnlineOrder.all[0].products.count.must_equal 3
+
+      sum_of_values = Grocery::OnlineOrder.all[0].products.values.reduce(:+)
+      sum_of_values.must_be_within_delta 158.77, 0.001
+
+      Grocery::OnlineOrder.all[0].customer_id.must_equal "25"
+      Grocery::OnlineOrder.all[0].status.must_equal "complete"
+
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.last.id.must_equal "100"
+
+      Grocery::OnlineOrder.all.last.products.must_include("Amaranth")
+      Grocery::OnlineOrder.all.last.products.must_include("Smoked Trout")
+      Grocery::OnlineOrder.all.last.products.must_include("Cheddar")
+
+      Grocery::OnlineOrder.last.products.count.must_equal Q
+
+      sum_of_values = Grocery::OnlineOrder.last.products.values.reduce(:+)
+      sum_of_values.must_be_within_delta 160.04, 0.001
+
+      Grocery::OnlineOrder.all[0].customer_id.must_equal "20"
+      Grocery::OnlineOrder.all[0].status.must_equal "pending"
     end
   end
 
