@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
-
+Minitest::Reporters.use!
 
 
 xdescribe "Order Wave 1" do
@@ -81,46 +81,42 @@ xdescribe "Order Wave 1" do
 end
 
 
-# # TODO: change 'xdescribe' to 'describe' to run these tests
-
 describe "Order Wave 2" do
   describe "Order.all" do
-    it "Returns an array of all orders" do
+    it "Returns an array of all orders" do # DONE
       Grocery::Order.all.must_be_kind_of Array
     end # it/do
 
 
-    it "Returns accurate information about the first order" do
+    it "Returns accurate information about the first order" do # DONE
       Grocery::Order.all[0].id.must_equal 1
       product_in_1st = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
       Grocery::Order.all[0].products.must_equal product_in_1st
-    end
+    end # it/do
 
-    it "Returns accurate information about the last order" do
+    it "Returns accurate information about the last order" do #DONE
       Grocery::Order.all[-1].id.must_equal 100
       product_last = {"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59}
       Grocery::Order.all[-1].products.must_equal product_last
-    end
-  end # describe Order.all
+    end # it/do
+  end # describe "Order.all" do
 
 
   describe "Order.find" do
-    it "Can find the first order from the CSV" do
+    it "Can find the first order from the CSV" do # DONE
       first_id = Grocery::Order.find(1)
       first_id.id.must_equal 1
     end
 
-    it "Can find the last order from the CSV" do
+    it "Can find the last order from the CSV" do # DONE
       last_id = Grocery::Order.find(100)
       last_id.id.must_equal 100
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    it "Raises an error for an order that doesn't exist" do # DONE 
       phantom_id = Grocery::Order.find(101)
-      phantom_id.must_equal nil
-    end # describe it "Raises an error..."
-  end # describe "Order.find"
+      assert_nil phantom_id
+    end # it "Raises an error..." do
+  end # describe "Order.find" do
 
-end # describe Order Wave 2
-
-# We're going to move on
+end # describe "Order Wave 2" do
