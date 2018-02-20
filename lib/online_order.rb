@@ -14,6 +14,12 @@ module Grocery
     end
 
     def total
+      super
+      sum_with_tax = super
+        if !@products.values.empty?
+          sum_with_tax = sum_with_tax + 10
+        end
+      return sum_with_tax
     end
 
     def add_product
@@ -63,3 +69,13 @@ end
 # puts Grocery::OnlineOrder.all[0].inspect
 # puts Grocery::OnlineOrder.all[99].inspect
 # puts Grocery::OnlineOrder.all.length
+
+
+# online_order_1 = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18,
+#   "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
+#
+# puts online_order_1.total.inspect
+
+# online_order_2 = Grocery::OnlineOrder.new("1", {}, "25", "complete")
+#
+# puts online_order_2.total.inspect

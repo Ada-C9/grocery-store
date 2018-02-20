@@ -33,20 +33,15 @@ describe "OnlineOrder" do
   end
 
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Adds a shipping fee" do
       online_order = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18,
         "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
       #Option 1:
-      sum = products.values.reduce(:+)
+      sum = online_order.products.values.reduce(:+)
       tax = (sum * 0.075).round(2)
       expected_total = sum + tax + 10
       online_order.total.must_be_within_delta expected_total, 0.02
-      #  HOW MUST BE WITHIN DELTA WAS DONE SUCCESSFULLY ELSEWHERE
-      #      sum_of_values = Grocery::Order.all.last.products.values.reduce(:+)
-      #      sum_of_values.must_be_within_delta 160.05, 0.001
-
-      #Option 2:  (por que no los dos)
       online_order.total.must_be_within_delta 180.68, 0.02
     end
 
@@ -86,7 +81,7 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "OnlineOrder.all" do
+  xdescribe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       Grocery::OnlineOrder.all.must_be_kind_of Array
       Grocery::OnlineOrder.all.each do |element|

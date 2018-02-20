@@ -63,8 +63,7 @@ module Grocery
     end
     def total
       sum = @products.values.inject(0, :+)
-      sum_with_tax = expected_total = sum + (sum * 0.075).round(2)
-      return sum_with_tax
+      sum_with_tax = sum + (sum * 0.075).round(2)
     end
   end
 end

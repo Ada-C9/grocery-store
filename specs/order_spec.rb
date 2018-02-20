@@ -5,7 +5,7 @@ require_relative '../lib/order'
 
 Minitest::Reporters.use!
 
-xdescribe "Order Wave 1" do
+describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -133,7 +133,7 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
       Grocery::Order.find("1").products.must_include("Slivered Almonds")
     end
