@@ -1,7 +1,8 @@
 require 'csv'
+require 'awesome_print'
 @@all_orders
 module Grocery
-  class Order
+class Order
     attr_reader :id, :products
 
     def initialize(id, products)
@@ -14,7 +15,7 @@ module Grocery
       @products.values.each do |grocery_product|
         total += grocery_product
       end
-      return total + (total*0.075).round(2)
+      return (total + (total*0.075).round(2))
     end
 
     def add_product(product_name, product_price)
@@ -34,6 +35,7 @@ module Grocery
         #update to path to be able to be called from main terminal path.
         counter = 0
         store_id = line[0]
+
         # Deliminate string by uneeded character ';' & ':'
         food_by_order_line = line[1].split(';')
         food_by_order_line.each_with_index {|item,index|
@@ -48,7 +50,7 @@ module Grocery
         end
 
         # Instantiates and pushes new grocery objects into an array.
-        @@all_orders << Grocery::Order.new(store_id[counter],food_by_order_line_hash)
+        @@all_orders << Grocery::Order.new(store_id,food_by_order_line_hash)
         counter+=1
       end
       return @@all_orders
@@ -78,5 +80,8 @@ module Grocery
   end
 end
 
-v = Grocery::Order.all
-puts Grocery::Order.find('4').id
+
+# vr = Grocery::Order.all
+# #rr = Grocery::Order.find(2)
+# #first_grocery_input = Grocery::Order.find("1")
+# ap vr
