@@ -92,10 +92,10 @@ describe "Order Wave 2" do
       results[0].must_be_kind_of Grocery::Order
     end
 
-    it "Returns accurate information about the first order" do
+    xit "Returns accurate information about the first order" do
       # Arrange - feed information for method to work with
 
-      products_list = [{"Slivered Almonds" => "22.88"}, {"Wholewheat flour" => "1.93"},{"Grape Seed Oil" => "74.9"}]
+      products_list = ["Slivered Almonds", "22.88"], ["Wholewheat flour", "1.93"],["Grape Seed Oil" , "74.9"]
 
       results = Grocery::Order.all
 
@@ -106,12 +106,13 @@ describe "Order Wave 2" do
 
     xit "Returns accurate information about the last order" do
 
-      products = ["Allspice" => "64.74", "Bran" => "14.72"],["Unbleached Flour" => "80.59"]
+      products_list = ["Allspice", "64.74"], ["Bran", "14.72"],["Unbleached Flour", "80.59"]
 
       results = Grocery::Order.all
 
-      results.last.id.must_equal "100"
-      results.last.Order.products.must_equal products
+      results.last.id.must_equal 100
+      results.last.products.must_equal products_list[-1]
+      # something interesting happening here not sure why this test is passing
 
     end
   end
@@ -119,15 +120,20 @@ describe "Order Wave 2" do
   describe "Order.find" do
     xit "Can find the first order from the CSV" do
 
-    results = Grocery::Order.find
+      results = Grocery::Order.find(1)
+      results.id.must_equal 1
+      results.must_be_kind_of Grocery::Order
     end
 
-    xit "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+    it "Can find the last order from the CSV" do
+      results = Grocery::Order.find(100)
+      results.id.must_equal 100
+      results.must_be_kind_of Grocery::Order
     end
 
     xit "Raises an error/nil for an order that doesn't exist" do
-      # TODO: Your test code here!
+      results = Grocery::Order.find(3)
+      results.must_be_nil
     end
   end
 end
