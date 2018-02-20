@@ -6,13 +6,12 @@ require_relative "customer.rb"
 module Grocery
   class OnlineOrder < Order
     attr_accessor :customer, :online_order_id, :products, :fulfillment_status
-    def initialize(online_order_id, products, id, fulfillment_status)
-      # A customer object
+
       @customer = Customer.find(id)
       @products = products
       @online_order_id = online_order_id
       @fulfillment_status = fulfillment_status
-      
+
     end
 
     def self.all

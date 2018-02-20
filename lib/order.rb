@@ -23,7 +23,7 @@ module Grocery
         return false
       end
     end
-    #"Returns an array of all orders"
+
     def self.all
       data_array = CSV.read("support/orders.csv", "r")
       orders = []
@@ -45,7 +45,6 @@ module Grocery
         if order.id == id_number
            the_order = order
         end
-
       end
       return the_order
     end
