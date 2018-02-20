@@ -1,6 +1,7 @@
 # require "order.rb"
 require_relative "order.rb"
 require "awesome_print"
+require_relative 'customer'
 
 module Grocery
 
@@ -14,6 +15,7 @@ module Grocery
     def initialize(id, products, customer_id, status)
       super(id, products)
       @customer_id = customer_id
+      @customer = customer.find(customer_id)
       @status = status
     end
 
@@ -35,6 +37,7 @@ module Grocery
 
     def self.all
       @@all_online_orders = []
+      #
       # @customer_id = ""
       # CSV.read('../support/online_orders.csv', 'r').each do |row|
       CSV.read('support/online_orders.csv', 'r').each do |row|
@@ -64,10 +67,12 @@ module Grocery
 
     def self.find_by_customer(customer_id)
       # returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter.
+      # open array to store all customer ids (customers wont exists on oneline orders csv if they did not order anything)
+      # call customer.all and do .each do and grab id from each customer object and store them in customer ids arrays.
       @@all_online_orders = Grocery::OnlineOrder.all
       order_instances = @@all_online_orders.find_all { |order| order.customer_id == customer_id }
       if order_instances.length <= 0
-        return nil
+        return order_instances
       else
         return order_instances
       end

@@ -3,7 +3,7 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 
 # TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/customer'
+require_relative '../lib/customer'
 
 xdescribe "Customer" do
   describe "#initialize" do
@@ -12,7 +12,7 @@ xdescribe "Customer" do
     end
   end
 
-  describe "Customer.all" do
+  xdescribe "Customer.all" do
     it "Returns an array of all customers" do
       # TODO: Your test code here!
       # Useful checks might include:
@@ -25,7 +25,7 @@ xdescribe "Customer" do
     end
   end
 
-  describe "Customer.find" do
+  xdescribe "Customer.find" do
     it "Can find the first customer from the CSV" do
       # TODO: Your test code here!
     end
@@ -34,7 +34,7 @@ xdescribe "Customer" do
       # TODO: Your test code here!
     end
 
-    it "Raises an error for a customer that doesn't exist" do
+    it "Returns nil for a customer that doesn't exist" do
       # TODO: Your test code here!
     end
   end
