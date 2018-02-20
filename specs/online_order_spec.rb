@@ -143,9 +143,8 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.find_by_customer(200).must_be_nil
     end
 
-    xit "Returns an empty array if the customer has no orders" do
-      # 6,Peaches:46.34,14,pending
-      Grocery::OnlineOrder.find_by_customer("?").count.must_be 0
+    it "Returns an empty array if the customer has no orders" do # not sure how to get an existing customer with no orders with our current set up of importing OnlineOrders from a CSV
+      Grocery::OnlineOrder.find_by_customer(22).count.must_be 0 
     end
   end
 end
