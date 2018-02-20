@@ -132,13 +132,15 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       Grocery::OnlineOrder.find("1").products.must_include("Lobster")
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      proc {Grocery::Order.find("102")}.must_raise_ArgumentError
+      assert_raises ArgumentError do
+        Grocery::OnlineOrder.find("102")
+      end
     end
   end
 

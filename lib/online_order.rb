@@ -61,10 +61,22 @@ module Grocery
       return all_order_instances
     end
 
-    def self.find(id)
+    def self.find(query_id)
+      found_order = Grocery::OnlineOrder.all.find {|order_instance| order_instance.id == query_id}
+      if found_order.nil?
+        raise ArgumentError.new("That Order ID is not recognized")
+      end
+      return found_order
     end
 
-    def self.find_by_customer(customer_id)
+
+    def self.find_by_customer(query_customer_id)
+      target_customer_orders = []
+      Grocery::OnlineOrder.all.each do |order_instance|
+        if order_instance.customer_id == query_customer_id
+          order_found << order
+        end
+      end
     end
   end
 end
@@ -74,6 +86,21 @@ end
 # puts Grocery::OnlineOrder.all[0].inspect
 # puts Grocery::OnlineOrder.all[99].inspect
 # puts Grocery::OnlineOrder.all.length
+#
+#
+# ap Grocery::OnlineOrder.find("1")
+# puts Grocery::OnlineOrder.find("1").inspect
+
+# Grocery::OnlineOrder.find("103")
+# ap Grocery::OnlineOrder.find("103")
+# puts Grocery::OnlineOrder.find("103").inspect
+
+# ap Grocery::OnlineOrder.find("1")
+# puts Grocery::OnlineOrder.find("1").inspect
+
+# Grocery::OnlineOrder.find("1")
+# puts Grocery::OnlineOrder.find("1").inspect
+
 
 
 # online_order_1 = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18,
