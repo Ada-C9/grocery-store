@@ -84,9 +84,9 @@ describe "OnlineOrder" do
     it "Does not permit action for processing, shipped or completed statuses" do
 
       products = {"Lobster" => 17.18, "Annatto seed" => 58.38}
-      online_order_processing = Grocery::OnlineOrder.new(3, products, nil, :processing)
-      online_order_shipped = Grocery::OnlineOrder.new(5, products, nil, :shipped)
-      online_order_complete = Grocery::OnlineOrder.new(1, products, nil, :complete)
+      online_order_processing = Grocery::OnlineOrder.new(4, products, nil, :processing)
+      online_order_shipped = Grocery::OnlineOrder.new(4, products, nil, :shipped)
+      online_order_complete = Grocery::OnlineOrder.new(4, products, nil, :complete)
 
       proc {online_order_processing.add_product("Camomile", 83.21)}.must_raise ArgumentError
       proc {online_order_shipped.add_product("Camomile", 83.21)}.must_raise ArgumentError
@@ -94,7 +94,21 @@ describe "OnlineOrder" do
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+
+      # "Is added to the collection of products" & "Returns true if the product is new":
+
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38}
+
+        # Pending status:
+      online_order_pending = Grocery::OnlineOrder.new(1, products, nil, :pending)
+      online_order_pending.add_product("Camomile", 4.25)
+      online_order_pending.products.include?("Camomile").must_equal true
+
+      # Paid status:
+      online_order_paid = Grocery::OnlineOrder.new(1, products, nil, :paid)
+      online_order_paid.add_product("Camomile", 4.25)
+      online_order_paid.products.include?("Camomile").must_equal true
+
     end
   end
 
