@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
-require_relative '../lib/online_order'
 
 require 'csv'
 
@@ -17,7 +16,7 @@ require 'csv'
 
 
 # TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/online_order'
+require_relative '../lib/online_order'
 # You may also need to require other classes here
 
 # Because an OnlineOrder is a kind of Order, and we've
@@ -26,7 +25,7 @@ require 'csv'
 # only test things that are different.
 
 describe "OnlineOrder" do
-  xdescribe "#initialize" do
+  describe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
       # Instatiate your OnlineOrder here
@@ -36,27 +35,19 @@ describe "OnlineOrder" do
       online_order.must_be_kind_of Grocery::OnlineOrder
     end
 
-    it "Can access Customer object" do
-      # products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
-      #
-      # online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
-      # online_order.must_be_kind_of Grocery::Order
-      #
-      # online_order.must_respond_to :customer_id
-      # online_order.customer_id.must_equal customer_id
-      # online_order.customer_id.must_be_kind_of Integer
+    xit "Can access Customer object" do
+      # TODO: Your test code here!
     end
 
     it "Can access the online order status" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
 
-      online_order.status.must_be_kind_of Grocery::OnlineOrder
-      online_order.status.must_be_kind_of :complete
+      online_order.status.must_equal :complete
     end
   end
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Adds a shipping fee" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :complete)
@@ -74,11 +65,11 @@ describe "OnlineOrder" do
       sum = products.values.inject(0, :+)
       expected_total = sum + (sum * 0.075).round(2)
 
-      online_order.total.must_equal nil
+      online_order.total.must_be_kind_of NilClass
     end
   end
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :completed)
@@ -90,11 +81,11 @@ describe "OnlineOrder" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :pending)
 
-    proc { online_order.add_product }.must_raise ArgumentError
+      proc { online_order.add_product }.must_raise ArgumentError
     end
   end
 
-  xdescribe "OnlineOrder.all" do
+  describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       order = Grocery::OnlineOrder.all
 
@@ -128,16 +119,20 @@ describe "OnlineOrder" do
     end
   end
 
-  xdescribe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      customer_id = Grocery::OnlineOrder.find_by_customer(21)
+
+      customer_id.must_be_kind_of Grocery::OnlineOrder
     end
 
     it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+      customer_id = Grocery::OnlineOrder.find_by_customer(22)
+
+      customer_id.must_be_kind_of NilClass
     end
 
-    it "Returns an empty array if the customer has no orders" do
+    xit "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
     end
   end
