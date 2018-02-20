@@ -15,6 +15,7 @@ module Grocery
     end
 
     def self.find(id)
+      # ap @@orders.count
       # finds an order in the collection of Order instances
       @@orders.each do |order|
         if order.id == id
@@ -72,5 +73,8 @@ module Grocery
 
   end
 end
+
+# new_orders = Grocery::Order.all
+# ap new_orders
 
 # array_of_@orders << # Order instance (i.e., NOT collection of hashes)

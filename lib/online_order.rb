@@ -4,7 +4,7 @@ require_relative '../lib/order'
 
 module Grocery
   class OnlineOrder < Grocery::Order
-    attr_reader :id, :products, :customer_id, :status, :total, :add_product
+    attr_reader :id, :products, :customer_id, :status, :total, :add_product, :find_by_customer
 
     FILE_NAME = "support/online_orders.csv"
 
@@ -25,6 +25,16 @@ module Grocery
         end
       end
       return "ERROR: Order not found"
+    end
+
+    def self.find_by_customer(customer_id)
+      customer_orders = []
+      @@online_orders.each do |order|
+        if order.customer_id == customer_id
+          customer_orders << order
+        end
+      end
+      return customer_orders
     end
 
     def self.all
