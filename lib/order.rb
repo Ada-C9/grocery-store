@@ -4,6 +4,7 @@ require 'awesome_print'
 
 FILE_NAME = "../support/orders.csv"
 
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -37,6 +38,7 @@ module Grocery
       self.all.each do |order|
         return order if order.id == id
       end
+      raise ArgumentError.new("This order ID was not found")
     end
 
     def total
@@ -46,7 +48,6 @@ module Grocery
         sub_total += cost
       end
       # return sub_total
-
       @total = sub_total + (sub_total * @tax)
       return @total.round(2)
     end
@@ -63,8 +64,9 @@ module Grocery
   end
 end
 
-# ap Grocery::Order.all
-ap Grocery::Order.find(6)
+# ap Grocery::Order.all.class
+ap Grocery::Order.find(99)
 # my_order = Grocery::Order.new(1,[{"Slivered Almonds" => 22.88},{"Wholewheat flour" => 1.93},{"Grape Seed Oil" => 74.9}])
-# puts my_order
-# puts Grocery::Order.all
+# # puts my_order
+# ap Grocery::Order.all
+# ap Grocery::Order.find(13).total.class
