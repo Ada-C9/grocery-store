@@ -93,7 +93,7 @@ module Grocery
     #############################################################################################
     # FIND ORDER BY COSTUMER:
 
-    def self.find_by_costumer(costumer_id)
+    def self.find_by_custumer(costumer_id)
       # self.find_by_customer(customer_id) - returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter.
       all_specific_costumer_orders = []
 
@@ -109,14 +109,14 @@ module Grocery
         end
       end
 
+      return all_specific_costumer_orders
 
-      if all_specific_costumer_orders.size == 0
-        return "Costumer doesn't exist or has no orders!"
-      else
-        return all_specific_costumer_orders
-      end
-
-
+      #### If figure out how to separate empty orders from non-existing customers
+      # if all_specific_costumer_orders.size == 0
+      #   return "Costumer doesn't exist or has no orders!"
+      # else
+      #   return all_specific_costumer_orders
+      # end
 
     end
   end
@@ -143,4 +143,4 @@ end
   # print "#{find_id}"
 
   # Grocery::OnlineOrder.all
-  # ap "BY COSTUMER: #{Grocery::OnlineOrder.find_by_costumer(99)}"
+  # ap "BY COSTUMER: #{Grocery::OnlineOrder.find_by_custumer(16)}"
