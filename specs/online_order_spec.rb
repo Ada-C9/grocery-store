@@ -23,7 +23,6 @@ describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
       @normal_order.must_be_kind_of Grocery::Order
-
     end
 
     it "Can access Customer object" do
