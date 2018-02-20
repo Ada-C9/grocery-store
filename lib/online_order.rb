@@ -49,8 +49,7 @@ end
 def self.all
   # self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
   # Question Ask yourself, what is different about this all method versus the Order.all method? What is the same?
-
-
+      # (Answer: 2 more indexes at the end 'costumer_id' & 'status' + different file)
 
   @all_orders = []
 
@@ -77,30 +76,19 @@ end
 
 # Separete the elements into (product_name, product_price):
 def self.separate(elements_of_order)
-  products = {}
-  elements_of_order.each do |item|
-    # Assign the product of this element in this order:
-    product =  "#{item.split(':')[0]}" #.split.map(&:capitalize).join(' ')
-    # puts "product : #{product}"
-
-    # Assign the price of this element in this order:
-    price =  "#{item.split(':')[1]}"
-    # puts "price : #{price}"
-
-    #Push the Product and the Price into the array products for this order:
-    products["#{product}"] = price.to_f
-    # puts "products: #{products}"
-  end
-  # ap "this is products #{products}"
-  return products
+  # (The same as in Grocery::Order.separate)
+  super
 end
 
 
 
 #############################################################################################
 # FIND ORDER:
-    def self.find
+    def self.find(find_id)
       # self.find(id) - returns an instance of OnlineOrder where the value of the id field in the CSV matches the passed parameter. -Question Ask yourself, what is different about this find method versus the Order.find method?
+      #(Answer: Nothing! )
+      super
+
     end
 
 #############################################################################################
@@ -119,6 +107,11 @@ end
 # ap online_order.total
 # ap online_order.status
 # ap online_order.add_product("Lobster", 17.18)
-# online_order = Grocery::OnlineOrder.new
+
 # online_order = Grocery::OnlineOrder.all
 #  ap online_order
+#
+# online_order = Grocery::OnlineOrder.all
+# find_id = Grocery::OnlineOrder.find(100)
+# ap "#{find_id}"
+# print "#{find_id}"
