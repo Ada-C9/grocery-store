@@ -12,6 +12,7 @@ module Grocery
     def initialize(id, products, customer_id, status)
       super(id, products)
       @customer_id = customer_id
+      @customer = Customer.find(customer_id)
       @status = status
     end
 

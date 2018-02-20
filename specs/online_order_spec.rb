@@ -17,9 +17,10 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.new(1337, {}, 10, :pending).must_be_kind_of Grocery::Order
     end
 
-    # it "Can access Customer object" do
-    #   # TODO: Your test code here!
-    # end
+    it "Can access Customer object" do
+      online_order = Grocery::OnlineOrder.new(1337, {}, 10, :pending)
+      online_order.customer_id.must_equal Grocery::Customer.find(10).id
+    end
 
     it "Can access the online order status" do
       Grocery::OnlineOrder.new(1337, {}, 10, :pending).status.must_equal :pending
