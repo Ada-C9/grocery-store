@@ -4,8 +4,13 @@ require 'minitest/skip_dsl'
 require_relative '../lib/customer'
 
 
+#_______________ WAVE 3 _______________
+
 
 describe "Customer" do
+
+  #############################################################################################
+  # INITIALIZES Customer:
   describe "#initialize" do
     it "Takes an ID, email and address info" do
 
@@ -27,6 +32,9 @@ describe "Customer" do
   end
 end
 
+#############################################################################################
+# READS FILE OF ALL CUSTOMERS AND ADDS THEM:
+
 describe "Customer.all" do
   it "Returns an array of all customers" do
     # Customer.all returns an array:
@@ -44,6 +52,9 @@ describe "Customer.all" do
     all_customers.size.must_equal file_customers.size
   end
 end
+
+#############################################################################################
+# FINDS CUSTOMERS:
 
 describe "Customer.find" do
   it "Can find the first customer from the CSV" do

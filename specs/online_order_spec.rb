@@ -3,14 +3,6 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/online_order'
 
-# You may also need to require other classes here
-
-# Because an OnlineOrder is a kind of Order, and we've
-# already tested a bunch of functionality on Order,
-# we effectively get all that testing for free! Here we'll
-# only test things that are different.
-
-
 
 #_______________ WAVE 3 _______________
 
@@ -151,11 +143,11 @@ describe "OnlineOrder" do
 
       order += "#{products.last}:#{price.last}"
 
-      custumer_id = find[first_order_index][2]
+      customer_id = find[first_order_index][2]
 
       status = find[first_order_index][3]
       # create array of the first_order:
-      first_order = [find[first_order_index][0], order, custumer_id, status]
+      first_order = [find[first_order_index][0], order, customer_id, status]
 
       # evaluate:
       file__online_order.must_equal first_order
@@ -183,11 +175,11 @@ describe "OnlineOrder" do
 
       order += "#{products.last}:#{price.last}"
 
-      custumer_id = find[last_order_index][2]
+      customer_id = find[last_order_index][2]
 
       status = find[last_order_index][3]
       # create array of the first_order:
-      last_order = [find[last_order_index][0], order, custumer_id, status]
+      last_order = [find[last_order_index][0], order, customer_id, status]
 
       # Evaluate:
       file__online_order.must_equal last_order
@@ -230,12 +222,12 @@ describe "OnlineOrder" do
   #############################################################################################
   # FINDS ORDER BY COSTUMER_ID:
 
-    describe "OnlineOrder.find_by_customer" do
+  describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
 
       online_orders = CSV.read('support/online_orders.csv', 'r')
       Grocery::OnlineOrder.all
-      Grocery::OnlineOrder.find_by_custumer(1).must_be_kind_of Array
+      Grocery::OnlineOrder.find_by_customer(1).must_be_kind_of Array
 
     end
 
@@ -243,15 +235,15 @@ describe "OnlineOrder" do
 
       online_orders = CSV.read('support/online_orders.csv', 'r')
       Grocery::OnlineOrder.all
-      # Grocery::OnlineOrder.find_by_custumer(50).must_equal "Costumer doesn't exist or has no orders!"
-      Grocery::OnlineOrder.find_by_custumer(50).size.must_equal 0
+      # Grocery::OnlineOrder.find_by_customer(50).must_equal "Costumer doesn't exist or has no orders!"
+      Grocery::OnlineOrder.find_by_customer(50).size.must_equal 0
 
     end
 
     it "Returns an empty array if the customer has no orders" do
       #Costumer #16 does not have orders on the CSV file.
 
-      online_orders_found = Grocery::OnlineOrder.find_by_custumer(16)
+      online_orders_found = Grocery::OnlineOrder.find_by_customer(16)
 
       online_orders_found.must_be_instance_of Array
       online_orders_found.size.must_equal 0

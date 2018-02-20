@@ -16,8 +16,8 @@ module Grocery
     end
 
 
-#############################################################################################
-# ALL ORDERS:
+    #############################################################################################
+    # ALL ORDERS:
 
     # Populates itself with the whole order.csv file:
     def self.all
@@ -25,17 +25,16 @@ module Grocery
       @all_orders = []
 
       # Read file:
-      # ???? why on rake I need to have the whole path here??
-      read_file = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')
-      read_file.each do |row|
-        # CSV.read('../support/orders.csv', 'r').each do |row|
+      # ???? Somehow I keep on getting an error here if i use only '../support/orders.csv'
+      file_to_read = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')
+
+      file_to_read.each do |row|
 
         #Select the order id number from the file and assign it:
         order_id = row[0]
 
         # Separete the elements after the first comma (index[1]) into {product_name, product_price} and assign it to a products variable:
         products = separate("#{row[1]}".split(';'))
-        # example => puts products = [{"Allspice"=>"64.74"}, {"Bran"=>"14.72"}, {"UnbleachedFlour"=>"80.59"}]
 
         # Push this order (order id, products(itens, price)) to the array of orders
         @all_orders << [order_id, products]
@@ -64,8 +63,8 @@ module Grocery
     end
 
 
-#############################################################################################
-# FIND ORDER:
+    #############################################################################################
+    # FIND ORDER:
 
     # Find order where the value of the id fiedl matches the passed parameter
     def self.find(find_id)
@@ -78,8 +77,8 @@ module Grocery
       return "Order doesn't exist!"
     end
 
-#############################################################################################
-#  TOTAL OF ORDER:
+    #############################################################################################
+    #  TOTAL OF ORDER:
 
     # Total of order with tax:
     def total
@@ -92,8 +91,8 @@ module Grocery
       return total.round(2)
     end
 
-#############################################################################################
-#  ADD/REMOVE PRODUCT TO ORDER:
+    #############################################################################################
+    #  ADD/REMOVE PRODUCT TO ORDER:
 
     # Add a new product to order:
     def add_product(product_name, product_price)
@@ -122,12 +121,11 @@ end
 
 # TEMRINAL PERSONAL TESTSING:
 
+# self.all:
 # order = Grocery::Order.all
+# ap order
+
+# self.find:
 # find_id = Grocery::Order.find(100)
 # ap "#{find_id}"
 # puts "#{find_id}"
-
-# order = Grocery::Order.separate
-# order = Grocery::Order.all
-# ap order
-# ap order.class

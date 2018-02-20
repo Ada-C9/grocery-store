@@ -19,18 +19,16 @@ module Grocery
     #############################################################################################
     # ALL CUSTOMERS:
 
+    # self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
     def self.all
-      # self.all - returns a collection of OnlineOrder instances, representing all of the OnlineOrders described in the CSV. See below for the CSV file specifications
-      # Question Ask yourself, what is different about this all method versus the Order.all method? What is the same?
-      # (Answer: 2 more indexes at the end 'costumer_id' & 'status' + different file)
 
       @all_customers = []
 
       # Read file:
       # ???? why on rake I need to have the whole path here??
-      read_file = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/customers.csv', 'r')
-      read_file.each do |row|
-        # CSV.read('../support/orders.csv', 'r').each do |row|
+      file_to_read = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/customers.csv', 'r')
+
+      file_to_read.each do |row|
 
         #Select the order costumer_id number from the file and assign it:
         costumer_id = row[0].to_i
@@ -44,8 +42,11 @@ module Grocery
         @all_customers << new_customer
       end
       return @all_customers
+
     end
 
+    #############################################################################################
+    # FIND CUSTOMERS:
 
     def self.find(find_costumer_id)
        found_customer = nil
@@ -59,7 +60,6 @@ module Grocery
        end
        return found_customer
      end
-
 
   end
 end
