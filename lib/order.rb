@@ -1,7 +1,7 @@
 require 'pry'
 require 'csv'
 require 'awesome_print'
-# to get the CSV file:
+# to use the CSV file:
 FILE_NAME = "support/orders.csv"
 
 module Grocery
@@ -14,44 +14,46 @@ module Grocery
 
     end
 
+    # How to calculate the order total
     def total
       subtotal = 0
       @products.each do |product_name, product_price|
-        # puts "A #{   product_name} costs $#{product_price}"
         subtotal += product_price
       end
       tax = (subtotal * 0.075).round(2)
       total = tax + subtotal
       total = total.round(2)
-      # puts "the subtotal is $#{subtotal}"
-      # puts "the tax is $#{tax}"
-      # puts "the total is $#{total}"
       return total
     end
 
+    # How to add a product to an order
     def add_product(product_name, product_price)
       if @products.key?product_name
-        return false # false because we don't have to add it cuz it's already there
+        # Return 'false' because we don't have to add the product since it's already in the products list
+        return false
       else
+        # 'product_name' is the key
+        # 'product_price' is the value
         @products[product_name] = product_price
-        # product_name is the key
-        # product_price is the value
-        return true # true -- we *do* add it because it's not already in there
+        # Return 'true' because we *do* add the product since it's not in the products list
+        return true
       end
     end
 
+    # The Order.all method
     def self.all
-      orders = [] # this is here because I realized I needed it when I wrote "orders << order" at the end
+      # Set up an empty array that will be populated with many orders
+      all_orders = []
       CSV.read(FILE_NAME).each do |row|
-        # row looks like ["123", "Eggs:3.00;Milk:4.50"]
-        # let's tackle id first
+        # Let's tackle id first
         id_string = row[0]
         id = id_string.to_i
-        # let's tackle the products
+        # Let's tackle the products
         products_string = row[1]
         products_array = products_string.split(";")
-        # let's loop inside products_array
+        # Set up an empty hash that will be populated at the end of the loop
         products_hash = {}
+        # Let's loop inside products_array
         products_array.each do |product|
           product_pair = product.split(":")
           product_name = product_pair[0]
@@ -59,22 +61,20 @@ module Grocery
           # now we put it into a hash
           products_hash[product_name] = product_price
         end
-        order = Order.new(id, products_hash)
-        orders << order
+        new_order = Order.new(id, products_hash)
+        all_orders << new_order
       end
-      return orders
+      return all_orders
     end
 
-      # def self.find(id)
-      #   # how do i do this?!
-      #
-      #
-      #
-      # end
-
-
-
-
+    # How to find orders by the ID number
+    def self.find(needed_id)
+      all_orders = Grocery::Order.all
+      all_orders.each do |order|
+        return order if order.id == needed_id
+      end
+      return nil
+    end
   end
 end
 
