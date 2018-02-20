@@ -1,5 +1,6 @@
-require "./order.rb"
+require_relative "./order.rb"
 include Grocery
+
 
 ONLINE_FILE_NAME = "../support/online_orders.csv"
 
@@ -15,19 +16,20 @@ class OnlineOrder < Grocery::Order
   end
 
   def total
+    # shipping_fee = 10.00
+    # super + shipping_fee
     shipping_fee = 10.00
-    super + shipping_fee
+    total = super
+    if total != 0
+      total += shipping_fee
+    end
+    return total.round(2)
   end
 
-  # http://blog.honeybadger.io/a-beginner-s-guide-to-exceptions-in-ruby/
+
   def add_product(product_name, product_price)
     unless self.status == :pending || self.status == :paid
-      begin
-        raise ArgumentError.new("You can only add products to orders with a status of 'Pending' or 'Paid'")
-      rescue ArgumentError => e
-        puts e.message
-        return
-      end
+      raise ArgumentError.new("You can only add products to orders with a status of 'Pending' or 'Paid'")
     end
     super
   end
@@ -57,6 +59,7 @@ class OnlineOrder < Grocery::Order
     self.all.each do |online_order|
       return online_order if online_order.id == id
     end
+    raise ArgumentError.new("This order ID was not found")
   end
 
   def self.find_by_customer(customer_id)
@@ -70,14 +73,3 @@ class OnlineOrder < Grocery::Order
   end
 
 end
-
-# puts OnlineOrder.ancestors.inspect
-# ap OnlineOrder.find(13)
-
-# puts my_order.status.class
-# ap OnlineOrder.all
-# ap my_order.inspect
-# ap my_online = OnlineOrder.find(36)
-# ap my_online.add_product("apple",5.50)
-# ap my_online
-# ap OnlineOrder.find_by_customer(25)
