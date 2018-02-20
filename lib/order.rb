@@ -25,7 +25,6 @@ module Grocery
       @all_orders = []
 
       # Read file:
-      # ???? Somehow I keep on getting an error here if i use only '../support/orders.csv'
       file_to_read = CSV.read('../support/orders.csv', 'r')
 
       file_to_read.each do |row|
