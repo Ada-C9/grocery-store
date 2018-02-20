@@ -52,29 +52,33 @@ describe "OnlineOrder" do
 
   xdescribe "#add_product" do
     before do
-      online_order_1 = Grocery::OnlineOrder.new("34",{"Brown Flour" => 16.12, "Choy Sum" => 87.67}, "7", "processing")
-      online_order_2 = Grocery::OnlineOrder.new("27",{"Apples" => 61.87, "Garlic" => 64.36} "27", "shipped")
-      online_order_3 = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
-      online_order_4 = Grocery::OnlineOrder.new("15",{"Cranberry" => 85.36} "8", "pending")
-      online_order_5 = Grocery::OnlineOrder.new("39",{"Beans" => 78.89, "Mangosteens" => 35.01}, "31", "paid")
+      online_order_processing = Grocery::OnlineOrder.new("34",{"Brown Flour" => 16.12, "Choy Sum" => 87.67}, "7", "processing")
+      online_order_shipped = Grocery::OnlineOrder.new("27",{"Apples" => 61.87, "Garlic" => 64.36} "27", "shipped")
+      online_order_complete = Grocery::OnlineOrder.new("1", {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}, "25", "complete")
+      online_order_pending = Grocery::OnlineOrder.new("15",{"Cranberry" => 85.36} "8", "pending")
+      online_order_paid = Grocery::OnlineOrder.new("39",{"Beans" => 78.89, "Mangosteens" => 35.01}, "31", "paid")
 
 
 
     it "Does not permit action for processing, shipped or completed statuses" do
-        online_order_1.add_product("albatross", 12.50)
-        online_order_2.add_product("Tide Pods", 6.50)
-        online_order_3.add_product("Toe of Frog", 22.50)
-        online_order_1.products.count.must_equal 3
-        online_order_2.products.count.must_equal 2
-        online_order_3.products.count.must_equal 3
+
+        online_order_processing.add_product("albatross", 12.50)
+        online_order_processing.products.count.must_equal 3
+
+        online_order_shipped.add_product("Tide Pods", 6.50)
+        online_order_shipped.products.count.must_equal 2
+
+        online_order_complete.add_product("Toe of Frog", 22.50)
+        online_order_complete.products.count.must_equal 3
     end
 
 
     it "Permits action for pending and paid statuses" do
-      online_order_4.add_product("vegan ferret", 9.50)
-      online_order_5.add_product("alfalfa smoothie", 5.50)
-      online_order_4.products.count.must_equal 2
-      online_order_5.products.count.must_equal 3
+      online_order_pending.add_product("vegan ferret", 9.50)
+      online_order_pending.products.count.must_equal 2
+
+      online_order_paid.add_product("alfalfa smoothie", 5.50)
+      online_order_paid.products.count.must_equal 3
     end
   end
 =b
@@ -124,25 +128,36 @@ describe "OnlineOrder" do
 
   xdescribe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find("1").products.must_include("Lobster")
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      proc {Grocery::Order.find("102")}.must_raise_ArgumentError
     end
   end
 
   xdescribe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+
+      Grocery::OnlineOrder.find_by_customer("10").must_be_kind_of Array
+
+      Grocery::OnlineOrder.find_by_customer("10").count.must_equal 4
+
+      Grocery::OnlineOrder.find_by_customer("10").id.must_include 2
+      Grocery::OnlineOrder.find_by_customer("10").id.must_include 16
+      Grocery::OnlineOrder.find_by_customer("10").id.must_include 61
+      Grocery::OnlineOrder.find_by_customer("10").id.must_include 88
+
     end
 
     it "Returns an empty array if the customer does not exist" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find_by_customer("110").must_be_kind_of Array
+      Grocery::OnlineOrder.find_by_customer("110").must_be_empty
     end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find_by_customer("22").must_be_kind_of Array
+      Grocery::OnlineOrder.find_by_customer("22").must_be_empty
     end
   end
 end

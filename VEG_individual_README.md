@@ -158,13 +158,30 @@
 
     1.  Update the Order class to be able to handle all of the fields from the CSV file used as input.
 
-        a. In preparation:
+        a. To try it out:
 
             i.  Manually choose the data from the first line of the CSV File
 
-              YUP
+
 
             ii. Make sure you can create a new instance of your Order using that data.
+
+VEG'S OWN NOTES ON WHAT HAS TO HAPPEN HERE:  
+
+(1)  Open the CSV file and read it into an appropriate data structure
+(2)  From that data structure, turn each order
+      (aka line) in the CSV into an instance of Order, and store them in an array
+      called all_orders
+        -- Turning lines into order instances--
+            a.  lines will have 2 fields, one an ID field and one the field that contains the orders
+            b.   Each line has to be turned into an array that contains:
+                  1. the ID at index 0
+                  2. A hash of products and prices at index 1
+            c.   This needs to be stored in an array of arrays that the new method,
+                  Self.all, can read to generate new orders, which are then stored in an
+                  array of instances of Orders.  
+
+
 
 
 
