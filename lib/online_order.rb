@@ -65,6 +65,21 @@ module Grocery
       return all_online_order
     end
 
+    def self.find(find_id)
+      super
+    end
+
+    # def self.find_by_customer(customer_id)
+    #   find_product = self.all
+    #   return_value = nil
+    #   find_product.each do |order|
+    #     if find_id == order.id
+    #       return_value = order
+    #     end
+    #   end
+    #   return return_value
+    # end
+
   end # class OnlineOrder
 
 end # module Grocery
@@ -79,10 +94,13 @@ end # module Grocery
 # ap test_online_order.add_product("takoyaki", 5.00)
 # ap test_online_order
 
-online_order = Grocery::OnlineOrder.all
+# # ui for self.all method
+# online_order = Grocery::OnlineOrder.all
+# ap online_order
+
+# ui for self.find() method
+online_order = Grocery::OnlineOrder.find(5)
 ap online_order
-
-
 
 # two customer id's with no product 16 and 22
 # binding.pry

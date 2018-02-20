@@ -78,7 +78,7 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "#add_product" do
+  xdescribe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
       products = { "banana" => 1.99, "cracker" => 3.00, "sushi" => 5.50 }
       online_order = Grocery::OnlineOrder.new(1, products, 25, :completed)
@@ -94,7 +94,7 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "OnlineOrder.all" do
+  xdescribe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
       order = Grocery::OnlineOrder.all
 
@@ -104,23 +104,27 @@ describe "OnlineOrder" do
     it "Returns accurate information about the first online order" do
       order = Grocery::OnlineOrder.all
 
-      order[0].must_be_kind_of Grocery::Order
+      order[0].must_be_kind_of Grocery::OnlineOrder
     end
 
     it "Returns accurate information about the last online order" do
       order = Grocery::OnlineOrder.all
 
-      order[99].must_be_kind_of Grocery::Order
+      order[99].must_be_kind_of Grocery::OnlineOrder
     end
   end
 
-  xdescribe "OnlineOrder.find" do
+  describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      find_id = Grocery::OnlineOrder.find(1)
+
+      find_id.must_be_kind_of Grocery::OnlineOrder
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      find_id = Grocery::OnlineOrder.find(101)
+
+      find_id.must_be_kind_of NilClass
     end
   end
 
