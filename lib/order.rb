@@ -40,5 +40,30 @@ module Grocery
       end
       @result = result
     end
+
+    # Returns an array of all orders
+    def self.all
+      # TODO: implement all.
+      arr_orders = []
+      arr_products = Array.new
+      arr_products_b = Array.new
+      csv.read("../support/orders.csv").each do |line|
+        @id = line[0]
+       arr_products << (line[1].split(";"))
+        arr_orders.each do |row|
+          row.each do |element|
+            arr_products << element.split(':')
+            @products = arr_products()
+          end
+        end
+      end
+    end
+
+    # Can find the order from the dataset
+    def find
+      # TODO: implement all.
+    end
+
+
   end
 end
