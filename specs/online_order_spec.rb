@@ -74,9 +74,8 @@ describe "OnlineOrder" do
       test_order = Grocery::OnlineOrder.new(@normal_order_id, @normal_products,
         @customer_id, :shipped)
 
-        assert_raises{test_order.add_product("apple", 1.0)}
-        test_order.total.must_equal @normal_total
-
+      assert_raises{test_order.add_product("apple", 1.0)}
+      test_order.total.must_equal @normal_total
     end
 
     it "Permits action for pending and paid statuses" do
@@ -89,7 +88,6 @@ describe "OnlineOrder" do
 
       test_order.add_product("apple", 1.0)
       test_order.total.must_equal expected_total
-
     end
   end
 
@@ -120,7 +118,6 @@ describe "Online Order: All, Find, and Find by Customer" do
     end
 
     it "Returns accurate information about the first online order" do
-
       first_order = Grocery::OnlineOrder.all.first
 
       first_order.id.must_be_kind_of Integer
@@ -138,7 +135,6 @@ describe "Online Order: All, Find, and Find by Customer" do
     end
 
     it "Returns accurate information about the last online order" do
-
       last_order = Grocery::OnlineOrder.all.last
 
       last_order.id.must_be_kind_of Integer
@@ -149,7 +145,6 @@ describe "Online Order: All, Find, and Find by Customer" do
 
       last_order.customer.id.must_be_kind_of Integer
       last_order.customer.id.must_equal expected_last_customer_id
-
 
       last_order.fulfillment_status.must_be_kind_of Symbol
       last_order.fulfillment_status.must_equal expected_last_status
@@ -178,7 +173,6 @@ describe "Online Order: All, Find, and Find by Customer" do
 
       last_order.fulfillment_status.must_be_kind_of Symbol
       last_order.fulfillment_status.must_equal order_status_to_find
-
     end
 
     it "Raises an error for an online order that doesn't exist" do
@@ -189,25 +183,23 @@ describe "Online Order: All, Find, and Find by Customer" do
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      expected_product_array =[{"Peaches"=>46.34}, {"Iceberg lettuce"=>88.51,
-        "Rice paper"=>66.35, "Amaranth"=>1.5, "Walnut"=>65.26},
-        {"Soymilk"=>47.55, "Longan"=>14.86, "Fish Sauce"=>85.19,
-        "Cashews"=>28.49}]
+      expected_product_array = [
+        {"Peaches"=>46.34}, {"Iceberg lettuce"=>88.51, "Rice paper"=>66.35,
+        "Amaranth"=>1.5, "Walnut"=>65.26}, {"Soymilk"=>47.55, "Longan"=>14.86,
+        "Fish Sauce"=>85.19, "Cashews"=>28.49}
+      ]
 
       actual_product_array = Grocery::OnlineOrder.find_by_customer(14)
 
       actual_product_array.must_be_kind_of Array
       actual_product_array.must_equal expected_product_array
-
     end
 
     it "Raises an error if the customer does not exist" do
-        # assert_raises{Grocery::OnlineOrder.find_by_customer(9999999)}
-        actual_product_array = Grocery::OnlineOrder.find_by_customer("ejo")
-        expected_product_array = []
-        actual_product_array.must_be_kind_of Array
-        actual_product_array.must_equal expected_product_array
-      
+      actual_product_array = Grocery::OnlineOrder.find_by_customer("ejo")
+      expected_product_array = []
+      actual_product_array.must_be_kind_of Array
+      actual_product_array.must_equal expected_product_array
     end
 
     it "Returns an empty array if the customer has no orders" do
