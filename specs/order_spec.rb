@@ -16,7 +16,7 @@ describe "Order Wave 1" do
       order.must_respond_to :products
       order.products.length.must_equal 0
     end
-  end
+  end # initialize
 
   describe "#total" do
     it "Returns the total from the collection of products" do
@@ -34,7 +34,7 @@ describe "Order Wave 1" do
 
       order.total.must_equal 0
     end
-  end
+  end # total
 
   describe "#add_product" do
     it "Increases the number of products" do
@@ -75,36 +75,69 @@ describe "Order Wave 1" do
       result = order.add_product("salad", 4.25)
       result.must_equal true
     end
-  end
-end
+  end # add_product
+
+  describe "#remove_product" do
+    it "Decreases the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("salad")
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+
+    it "Is removed from the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("sandwich")
+      order.products.include?("sandwich").must_equal false
+    end
+  end # remove_product
+end # Order wave1
+
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      Grocery::Order.all.class.must_equal Array
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      first_item_id = 1
+      first_product_hash = {"Slivered Almonds"=>22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      Grocery::Order.all.first.id.must_equal first_item_id
+      Grocery::Order.all.first.products.must_equal first_product_hash
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      last_item_id = 100
+      last_product_hash = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+      Grocery::Order.all.last.id.must_equal last_item_id
+      Grocery::Order.all.last.products.must_equal last_product_hash
     end
   end
 
   describe "Order.find" do
-    it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+    it "Can find the first order from the CSV" do # reverse into comma separated values?
+      first_item_id = 1
+      first_product_hash = {"Slivered Almonds"=>22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      Grocery::Order.find(1).id.must_equal first_item_id
+      Grocery::Order.find(1).products.must_equal first_product_hash
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      last_item_id = 100
+      last_product_hash = {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}
+      Grocery::Order.find(100).id.must_equal last_item_id
+      Grocery::Order.find(100).products.must_equal last_product_hash
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Return nil for an order that doesn't exist" do
+      Grocery::Order.find(101).must_be_nil
     end
   end
 end
