@@ -1,11 +1,8 @@
-require "colorize"
-require "colorized_string"
-require "awesome_print"
 require "csv"
 
 module Grocery
   class Order
-    attr_reader :id, :products, :add_product, :total, :result#, :product_name, :product_price
+    attr_reader :id, :products#,  :add_product, :total, :result#, :product_name, :product_price
 
 #Takes an ID and collection of products
     def initialize(id, products)
@@ -24,7 +21,7 @@ module Grocery
       if products.length == 0
          return 0
       end
-      ((@products.values.sum)*1.075).round(2)
+     ((@products.values.sum)*1.075).round(2)
     end
 
 # Increases the number of products
@@ -44,26 +41,35 @@ module Grocery
     # Returns an array of all orders
     def self.all
       # TODO: implement all.
-      arr_orders = []
-      arr_products = Array.new
-      arr_products_b = Array.new
-      csv.read("../support/orders.csv").each do |line|
-        @id = line[0]
-       arr_products << (line[1].split(";"))
-        arr_orders.each do |row|
-          row.each do |element|
-            arr_products << element.split(':')
-            @products = arr_products()
+      # formats CSV file to work with class
+          arr_orders = Array.new
+          CSV.read('support/orders.csv', 'r').each do |line|
+            arr_orders << line
           end
-        end
-      end
+
+          arr_orders.each do |line|
+            id = line[0].to_i
+            line[0] = id
+            @id = id
+            product = line[1].split(";")
+            line[1] = product
+            array_split = Array.new
+            line[1].each do |element|
+              array_split << element.split(":")
+            end
+            array_split.each do |item|
+              item[1] = item[1].to_f
+            end
+            line[1] = array_split.to_h
+          end
+        return arr_orders
     end
 
     # Can find the order from the dataset
-    def find
+    def self.find(id_lookup)
       # TODO: implement all.
+      Grocery::Order.all[(id_lookup-1)]
     end
-
 
   end
 end
