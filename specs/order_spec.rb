@@ -33,7 +33,6 @@ describe "Order Wave 1" do
 
     it "Returns a total of zero if there are no products" do
       order = Grocery::Order.new(1337, {})
-
       order.total.must_equal 0
     end
   end
@@ -86,6 +85,7 @@ describe "Order Wave 2" do
     it "Returns an array of all orders" do
       # TODO: Your test code here!
       arr_orders = Grocery::Order.all
+
       arr_orders.must_be_kind_of Array
       arr_orders.length.must_equal 100
     end
@@ -93,6 +93,7 @@ describe "Order Wave 2" do
     it "Returns accurate information about the first order" do
       # TODO: Your test code here!
       arr_orders = Grocery::Order.all
+
       arr_orders[0][0].must_equal 1
       arr_orders[0].must_equal [1, {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9}]
     end
@@ -100,6 +101,7 @@ describe "Order Wave 2" do
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
       arr_orders = Grocery::Order.all
+      
       arr_orders[99][0].must_equal 100
       arr_orders[99].must_equal [100, {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59}]
     end
@@ -120,6 +122,6 @@ describe "Order Wave 2" do
       # TODO: Your test code here!
       Grocery::Order.find(111).must_be_nil
     end
-    
+
   end
 end
