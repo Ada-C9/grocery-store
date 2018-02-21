@@ -1,11 +1,9 @@
-
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative '../lib/customer'
-
 
 describe "Customer" do
 
@@ -51,7 +49,6 @@ describe "Customer" do
       assert_raises{Grocery::Customer.new(standard_id, "@", standard_address)}
       assert_raises{Grocery::Customer.new(standard_id, "", standard_address)}
     end
-
   end
 
   describe "Customer.all" do
@@ -113,7 +110,6 @@ describe "Customer" do
       first_customer_for_find.must_respond_to :address
       first_customer_for_find.address.must_be_kind_of Hash
       first_customer_for_find.address.must_equal expected_first_address
-
     end
 
     it "Can find the last customer from the CSV" do
