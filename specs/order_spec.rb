@@ -101,22 +101,23 @@ describe "Order Wave 2" do
       test_result = CSV.read("/support/orders.csv")
       test_first = test_result[-1]
       result_first.must_equal test_first
+    end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
       result = Grocery::Order.find(1)
-      result.must_equal ([1,
-{"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9])
+      result.must_equal ([1, {"Slivered Almonds":22.88, "Wholewheat flour":1.93, "Grape Seed Oil":74.9}])
     end
 
     it "Can find the last order from the CSV" do
       result = Grocery::Order.find(100)
-      result.must_equal ([100, {"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59}])
+      result.must_equal ([100, {"Allspice":64.74, "Bran":14.72, "UnbleachedFlour":80.59}])
     end
 
     it "Raises an error for an order that doesn't exist" do
       result = Grocery::Order.find(1000)
       result.must_equal ("Error, id number entry exeeds program parameters.")
+    end
   end
 end
