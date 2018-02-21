@@ -48,14 +48,14 @@ describe "Order Wave 1" do
     # way to handle populating @@all_orders without including online_orders. All
     # attempts at resolving this were either unjustifiably expensive or became
     # bogged down with additional parameters and special cases.
-    it "Requires unique order ID numbers" do
+    # it "Requires unique order ID numbers" do
       # same_id = 829
       # Grocery::Order.new(same_id, {"muffins" => 9.99})
       # assert_raises{ Grocery::Order.new(same_id, {"banana" => 1.99}) }
-    end
+    # end
 
     it "Requires positive ID numbers" do
-      assert_raises{ Grocery::Order.new(-2, {"melon" => 4.99}) } #
+      assert_raises{ Grocery::Order.new(-2, {"melon" => 4.99}) } # assertion
       assert_raises{ Grocery::Order.new(0, {"melon" => 4.99}) } # assertion
     end
 
@@ -99,7 +99,7 @@ describe "Order Wave 1" do
       expected_total = sum + (sum * 0.075).round(2)
 
       # Must be total + tax and rounded to two decimal places
-      @normal_order.total.must_equal expected_total
+      @normal_order.total.must_equal expected_total # assertion
     end
 
     # Tests if total returns 0.0 if there are no products
@@ -141,33 +141,33 @@ describe "Order Wave 1" do
   end
 
   describe "#remove_product" do
-      # Tests if add_product increases products size.
-      it "Decreases the number of products" do
-        @normal_order.remove_product("banana")
-        expected_count = @normal_products.size - 1
+    # Tests if add_product increases products size.
+    it "Decreases the number of products" do
+      @normal_order.remove_product("banana")
+      expected_count = @normal_products.size - 1
 
-        @normal_order.products.count.must_equal expected_count # assertion
-      end
+      @normal_order.products.count.must_equal expected_count # assertion
+    end
 
-      # Tests if program adds new product to products.
-      it "Is added to the collection of products" do
-        @normal_order.remove_product("banana")
+    # Tests if program adds new product to products.
+    it "Is added to the collection of products" do
+      @normal_order.remove_product("banana")
 
-        @normal_order.products.include?("banana").must_equal false # assertion
-      end
+      @normal_order.products.include?("banana").must_equal false # assertion
+    end
 
-      it "Returns true if the product is removed" do
-        @normal_order.remove_product("banana").must_equal true # assertion
-      end
+    it "Returns true if the product is removed" do
+      @normal_order.remove_product("banana").must_equal true # assertion
+    end
 
-      it "Returns false if the product isn't a product" do
-        before_total = @normal_order.total
-        result_of_remove = @normal_order.remove_product("corn") # doesn't have
-        after_total = @normal_order.total
+    it "Returns false if the product isn't a product" do
+      before_total = @normal_order.total
+      result_of_remove = @normal_order.remove_product("corn") # doesn't have
+      after_total = @normal_order.total
 
-        result_of_remove.must_equal false # assertion
-        before_total.must_equal after_total # assertion
-      end
+      result_of_remove.must_equal false # assertion
+      before_total.must_equal after_total # assertion
+    end
   end
 
 end
@@ -215,7 +215,7 @@ describe "Order Wave 2" do
 
     # Idea tabled due to issues related to the problem described in unit test
     # 'Requires unique order ID numbers'
-    it "Adds self to all orders" do
+    # it "Adds self to all orders" do
       # num_of_orders_before = Grocery::Order.all.size
       # added_order = Grocery::Order.new(4321, {"banana" => 1.99})
       #
@@ -230,13 +230,13 @@ describe "Order Wave 2" do
       # Grocery::Order.find(4321).products.must_equal final_products # assertion
       #
       # Grocery::Order.build_all
-    end
+    # end
 
     # Technically could leave this but the whole purpose of the hard reset was
     # related to adding user-provided orders to all_orders. As described in unit
     # tests 'Requires unique order ID numbers' and 'Adds self to all orders',
     # this idea has been tabled, so there is no current need for a hard reset.
-    it "Can do a hard reset of all by using build_all" do
+    # it "Can do a hard reset of all by using build_all" do
       # added_order = Grocery::Order.new(4321, {"potatoes" => 1.99})
       #
       # Grocery::Order.find(4321).must_equal added_order # just to check
@@ -247,7 +247,7 @@ describe "Order Wave 2" do
       # assert_nil Grocery::Order.find(4321) # assertion
       # current_last.id.must_equal expected_last_id # assertion
       # current_last.products.must_equal expected_last_products # assertion
-    end
+    # end
 
   end
 
