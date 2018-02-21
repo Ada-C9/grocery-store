@@ -4,7 +4,7 @@ require 'csv'
 module Grocery
   class Order
     attr_reader :id
-    attr_accessor :order, :products
+    attr_accessor :order, :products, :gross_total
 
     @@organized_orders = []
 
@@ -19,8 +19,8 @@ module Grocery
         subtotal += price
       end
       tax = subtotal * 0.075
-      total = (subtotal + tax).round(2)
-      return total
+      @gross_total = (subtotal + tax).round(2)
+      return @gross_total
     end
     # Takes user input product, price and order id
     # Allows user to add new order, or add product and its price to existing order
@@ -73,10 +73,13 @@ module Grocery
         end
         @@organized_orders << Order.new(order[0].to_i, products)
       end
-      # I comment this out after running rake
-      # return array_of_orders_data
+      return @@organized_orders
     end
   end
 end
 
-puts Grocery::Order.all
+Grocery::Order.all
+
+first = Grocery::Order.new(1, {"tempeh" => 4.99, "pokebowl" => 9.00})
+puts first
+puts first.total
