@@ -59,7 +59,7 @@ module Grocery
       online_orders = OnlineOrder.all
       online_orders.each do |entry|
         if entry.id == id
-          return entry.products
+          return entry
         end
       end
       return nil
@@ -73,7 +73,11 @@ module Grocery
           online_orders_found  << entry
         end
       end
-      return online_orders_found
+      if Grocery::Order.find(customer_id) == nil #checks if customer exists at all
+        return nil
+      else
+        return online_orders_found
+      end
     end
 
   end

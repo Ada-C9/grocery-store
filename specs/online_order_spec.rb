@@ -21,10 +21,6 @@ describe "OnlineOrder" do
       online_order.must_be_kind_of Grocery::Order
     end
 
-    #it "Can access Customer object" do
-    # TODO: Your test code here!
-    #end
-
     it "Can access the online order status" do
 
       products = { "banana" => 1.99, "cracker" => 3.00 }
@@ -72,7 +68,6 @@ describe "OnlineOrder" do
       online_order_pending = Grocery::OnlineOrder.new(6, {"Peaches" => 46.34}, 14, :pending)
       online_order_pending.must_respond_to(:add_product)
       online_order_pending.add_product("apple", 12.3).must_equal true
-
       online_order_paid = Grocery::OnlineOrder.new(13, {"Lettuce" => 37.94, "Paper" => 23.93, "Flaxseed" => 23.67}, 19, :paid)
       online_order_paid.must_respond_to(:add_product)
       online_order_paid.add_product("apple", 12.3).must_equal true
@@ -136,7 +131,7 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.find_by_customer(999).must_be_nil
     end
 
-    xit "Returns an empty array if the customer has no orders" do
+    it "Returns an empty array if the customer has no orders" do
       # TODO: Your test code here!
     end
   end
