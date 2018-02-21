@@ -7,7 +7,9 @@ require_relative 'customer'
 
 module Grocery
 
-# Custom ArgumentError because it's fun, could also be done at the point of raising the ArgumentError using syntax ArgumentError.new("Custom Error Message")
+# Custom ArgumentError because it's fun, could also
+# be done at the point of raising the ArgumentError
+# using syntax ArgumentError.new("Custom Error Message")
   class CartError < ArgumentError
     def initialize(msg="Error: Items cannot be added to this order based on its current status")
       super
@@ -17,6 +19,7 @@ module Grocery
   class OnlineOrder < Order
     attr_reader :customer, :status
     @@customers = []
+    @@list_all = []
 
     def initialize(id, products, customer_id, status = :pending)
       #Use the itialize attributes from the parent class Order
@@ -42,8 +45,16 @@ module Grocery
       end
     end
 
+    def self.populate
+      super
+    end
+
     def self.customers
       return @@customers
+    end
+
+    def self.list_all
+      return @@list_all
     end
 
     def self.all
@@ -83,4 +94,5 @@ module Grocery
 
   end # OnlineOrder
 end # Grocery
-Grocery::OnlineOrder.all
+
+binding.pry

@@ -94,6 +94,7 @@ describe "Order Wave 2" do
 
       # Assert
       result.must_be_kind_of Array
+      result[0].must_be_kind_of Grocery::Order
 
     end
 

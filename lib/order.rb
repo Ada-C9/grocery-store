@@ -18,6 +18,7 @@ module Grocery
 
   class Order
     attr_reader :id, :products
+    @@list_all = []
 
     def initialize(id, products)
       @id = id
@@ -45,6 +46,18 @@ module Grocery
       end
     end # Order#add_product
 
+    def self.list_all
+      return @@list_all
+    end
+
+    def self.populate
+      if @@list_all.length == 0
+        @@list_all = all
+      else
+        return @@list_all
+      end
+    end
+
     def self.all
       list_all = []
       CSV.open('support/orders.csv', 'r', headers: true, header_converters: :symbol).each do |row|
@@ -62,8 +75,9 @@ module Grocery
     end # Order.all
 
     def self.find(id)
-      self.all.each do |order|
-        if id > all.length
+      populate
+      @@list_all.each do |order|
+        if id > @@list_all.length
           raise Grocery::FindError.new
         elsif
           order.id == id
@@ -71,5 +85,8 @@ module Grocery
         end
       end # self.all.each do
     end # Order.find
+
   end # Order
+
 end # Grocery
+binding.pry
