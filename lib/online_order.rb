@@ -4,7 +4,7 @@ require File.expand_path('../order.rb', __FILE__)
 
 # Do I need to create a grocery class?
 class OnlineOrder < Grocery::Order
-  attr_accessor :customer_id, :fulfillment_status, :total, :order_id, :status, :products
+  attr_accessor :customer_id, :fulfillment_status, :online_total, :order_id, :status, :products
 
   @@organized_online_orders = []
 
@@ -19,9 +19,9 @@ class OnlineOrder < Grocery::Order
     @products = products
   end
 
-  def total
-    @total = super total + 10
-    return @total
+  def calculate_online_total
+    @online_total = super total + 10
+    return @online_total
   end
 
   def add_product (product_name, product_price, add_id)
@@ -37,15 +37,12 @@ class OnlineOrder < Grocery::Order
     array_of_orders_data = CSV.read("support/online_orders.csv")
     array_of_orders_data.each do |order|
       products = Hash.new
-      id = order[0].to_i
-      customer_id = order[2]
-      status = order[3]
       product_prices = order[1].split(";")
       product_prices.each do |product_price|
         product_price = product_price.split(":")
         products.store(product_price[0], product_price[1].to_f)
       end
-      @@organized_online_orders << OnlineOrder.new(id, customer_id, status, products)
+      @@organized_online_orders << OnlineOrder.new(order[0].to_i, order[2], order[3].to_sym, products)
     end
     return @@organized_online_orders
   end
@@ -63,7 +60,7 @@ class OnlineOrder < Grocery::Order
   def self.find_by_customer (customer_id_entry)
     found_order = false
     @@organized_online_orders.each do |order|
-      if order.customer_id == customer_id_entry
+      if @customer_id == customer_id_entry
         found_order = order.products
       end
     end
