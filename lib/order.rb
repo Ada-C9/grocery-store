@@ -25,7 +25,7 @@ module Grocery
     # Takes user input product, price and order id
     # Allows user to add new order, or add product and its price to existing order
     # Appends new order onto existing orders csv file
-    def add_product(product_name, product_price, add_id)
+    def add_product (product_name, product_price, add_id)
       if add_id != "new"
         add_id = add_id.to_i
         add_products = self.find_by_id(add_id)
@@ -46,15 +46,16 @@ module Grocery
           CSV.open("../support/orders.csv", 'a') do |orders_csv|
             orders_csv << ["#{new_id}", "#{product_name}:#{product_price}"]
           end
+          # return is better because allows for continuous updating of csv from multiple programs.
           @@organized_orders << Order.new(new_id, new_products)
         end
       end
     end
 
-    def self.find(find_id)
+    def self.find (find_id)
       found_order = false
       @@organized_orders.each do |order|
-        if order.id == find_id
+        if @id == find_id
           found_order = order.products
         end
       end
@@ -62,10 +63,10 @@ module Grocery
     end
 
     def self.all
-      array_of_orders_data = CSV.read("../support/orders.csv")
+      array_of_orders_data = CSV.read("support/orders.csv")
       array_of_orders_data.each do |order|
         products = Hash.new
-        id = order[0].to_i
+        @id = order[0].to_i
         product_prices = order[1].split(";")
         product_prices.each do |product_price|
           product_price = product_price.split(":")
@@ -77,9 +78,3 @@ module Grocery
     end
   end
 end
-
-Grocery::Order.all
-
-first = Grocery::Order.new(1, {"tempeh" => 4.99, "pokebowl" => 9.00})
-puts first
-puts first.total
