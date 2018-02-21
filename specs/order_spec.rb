@@ -1,9 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
-Minitest::Reporters.use!
-Minitest::Test.make_my_diffs_pretty!
 require 'minitest/skip_dsl'
-
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative '../lib/order'
 
 

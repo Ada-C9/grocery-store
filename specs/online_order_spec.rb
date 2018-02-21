@@ -1,8 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
-Minitest::Reporters.use!
-Minitest::Test.make_my_diffs_pretty!
 require 'minitest/skip_dsl'
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative '../lib/customer'
 require_relative '../lib/order'
@@ -14,7 +13,7 @@ describe "OnlineOrder" do
   before do
     @normal_products = { "sandwich" => 9.99, "gum" => 1.0 }
     @normal_order_id = 121
-    @customer_id = 9999
+    @customer_id = 21
     @normal_order = Grocery::OnlineOrder.new(@normal_order_id, @normal_products,
       @customer_id, :pending)
     @normal_total = ((9.99 + 1.0) + ((9.99 + 1.0) * 0.075)).round(2) + 10.0
@@ -46,12 +45,12 @@ describe "OnlineOrder" do
 
     it "Sets invalid status to pending" do
       status = "ferrets"
-      test_order = Grocery::OnlineOrder.new(9999, {"gum" => 1.0 }, 992, status)
+      test_order = Grocery::OnlineOrder.new(9999, {"gum" => 1.0 }, 21, status)
       test_order.fulfillment_status.must_equal :pending
     end
 
     it "Does not need to be provided status" do
-      test_order = Grocery::OnlineOrder.new(9999, {"gum" => 1.0 }, 992)
+      test_order = Grocery::OnlineOrder.new(9999, {"gum" => 1.0 }, 21)
       test_order.fulfillment_status.must_equal :pending
     end
 
@@ -64,7 +63,7 @@ describe "OnlineOrder" do
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-      test_order = Grocery::OnlineOrder.new(@normal_order_id, {}, 999, :pending)
+      test_order = Grocery::OnlineOrder.new(@normal_order_id, {}, 21, :pending)
       test_order.total.must_be_kind_of Float
       test_order.total.must_equal 0.0
     end
@@ -80,7 +79,7 @@ describe "OnlineOrder" do
 
     end
 
-    it "Permits action for pending and paid satuses" do
+    it "Permits action for pending and paid statuses" do
       test_order = Grocery::OnlineOrder.new(
         @normal_order_id, {"diet coke" => 1.99, "muffins" => 3.00}, @customer_id,
         :pending)
@@ -203,19 +202,19 @@ describe "Online Order: All, Find, and Find by Customer" do
     end
 
     it "Raises an error if the customer does not exist" do
-        assert_raises{Grocery::OnlineOrder.find_by_customer(9999999)}
+        # assert_raises{Grocery::OnlineOrder.find_by_customer(9999999)}
+        actual_product_array = Grocery::OnlineOrder.find_by_customer("ejo")
+        expected_product_array = []
+        actual_product_array.must_be_kind_of Array
+        actual_product_array.must_equal expected_product_array
+      
     end
 
     it "Returns an empty array if the customer has no orders" do
-      #  Grocery::Customer.new(444, "adalovelace.gmail.com",
-      #     {street: "42 Baker Street", city: "Seattle", state: "WA", zip: "98101"})
-      #
-      # Grocery::OnlineOrder.new(333, {}, 444, :pending)
-      #
-      # actual_product_array = Grocery::OnlineOrder.find_by_customer(444)
-      # expected_product_array = []
-      # actual_product_array.must_be_kind_of Array
-      # actual_product_array.must_equal expected_product_array
+      actual_product_array = Grocery::OnlineOrder.find_by_customer(22222)
+      expected_product_array = []
+      actual_product_array.must_be_kind_of Array
+      actual_product_array.must_equal expected_product_array
     end
   end
 
