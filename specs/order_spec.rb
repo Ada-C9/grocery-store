@@ -8,13 +8,13 @@ Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
-    it "Takes an ID and collection of products" do
-      id = 1337
-      order = Grocery::Order.new(id, {})
+    it "Takes an order_id and collection of products" do
+      order_id = 1337
+      order = Grocery::Order.new(order_id, {})
 
-      order.must_respond_to :id
-      order.id.must_equal id
-      order.id.must_be_kind_of Integer
+      order.must_respond_to :order_id
+      order.order_id.must_equal order_id
+      order.order_id.must_be_kind_of Integer
 
       order.must_respond_to :products
       order.products.length.must_equal 0
@@ -102,7 +102,7 @@ describe "Order Wave 2" do
       # Act
       first_order = Grocery::Order.all[0]
       # Assert
-      first_order.id.must_equal "1"
+      first_order.order_id.must_equal "1"
       first_order.products.length.must_equal 3
       first_order.products.must_be_kind_of Hash
     end
@@ -114,7 +114,7 @@ describe "Order Wave 2" do
       # Act
       last_order = Grocery::Order.all[99]
       # Assert
-      last_order.id.must_equal "100"
+      last_order.order_id.must_equal "100"
       last_order.products.length.must_equal 3
       last_order.products["UnbleachedFlour"].must_equal "80.59"
     end
@@ -125,7 +125,7 @@ describe "Order Wave 2" do
 
       order_search_first = Grocery::Order.find("1")
       # Assert
-      order_search_first.id.must_equal "1"
+      order_search_first.order_id.must_equal "1"
       order_search_first.products["Slivered Almonds"].must_equal "22.88"
       order_search_first.products.length.must_equal 3
     end
@@ -134,7 +134,7 @@ describe "Order Wave 2" do
 
       order_search_last = Grocery::Order.find("100")
       # Assert
-      order_search_last.id.must_equal "100"
+      order_search_last.order_id.must_equal "100"
       order_search_last.products.length.must_equal 3
       order_search_last.products["UnbleachedFlour"].must_equal "80.59"
     end

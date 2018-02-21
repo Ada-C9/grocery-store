@@ -10,7 +10,7 @@ describe "Customer" do
        an_order = Grocery::Customer.new('36', 'maggie@mutts.org', '2000 Fire Hydrant Way, Seattle, WA 98115')
 
       ap an_order
-      an_order.id.must_equal '36'
+      an_order.customer_id.must_equal '36'
 
     end
   end
@@ -28,9 +28,9 @@ describe "Customer" do
       #   - The ID, email address of the first and last
       #       customer match what's in the CSV file
       all_customers[0].email.must_equal 'leonard.rogahn@hagenes.org'
-      all_customers[0].id.must_equal '1'
+      all_customers[0].customer_id.must_equal '1'
       all_customers[34].email.must_equal 'rogers_koelpin@oconnell.org'
-      all_customers[34].id.must_equal '35'
+      all_customers[34].customer_id.must_equal '35'
       # Feel free to split this into multiple tests if needed
     end
   end
@@ -38,14 +38,14 @@ describe "Customer" do
   describe "Customer.find" do
     it "Can find the first customer from the CSV" do
       first_customer = Grocery::Customer.find('1')
-      first_customer.id.must_equal '1'
+      first_customer.customer_id.must_equal '1'
       first_customer.email.must_equal 'leonard.rogahn@hagenes.org'
     end
 
     it "Can find the last customer from the CSV" do
       last_customer = Grocery::Customer.find('35')
       last_customer.email.must_equal 'rogers_koelpin@oconnell.org'
-      last_customer.id.must_equal '35'
+      last_customer.customer_id.must_equal '35'
     end
 
     it "Raises an error for a customer that doesn't exist" do

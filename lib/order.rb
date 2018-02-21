@@ -5,10 +5,10 @@ require 'awesome_print'
 
 module Grocery
   class Order
-    attr_reader :id, :products, :product_name, :product_price
+    attr_reader :order_id, :products, :product_name, :product_price
 
-    def initialize(id, products)
-      @id = id
+    def initialize(order_id, products)
+      @order_id = order_id
       @products = products
       @order_collection = []
     end
@@ -41,7 +41,7 @@ module Grocery
       @order_list = []
 
       CSV.read(File.join(File.dirname(__FILE__),'../support/orders.csv')).each do |row|
-        @order_list << {id: row[0], products: row[1].split(';')}
+        @order_list << {order_id: row[0], products: row[1].split(';')}
       end
 
       @order_list.each do |order|
@@ -54,7 +54,7 @@ module Grocery
         end
         order[:products] = products_hash
 
-        @order_collection << Grocery::Order.new(order[:id], order[:products])
+        @order_collection << Grocery::Order.new(order[:order_id], order[:products])
 
       end
 
@@ -62,15 +62,15 @@ module Grocery
     end
 
 
-    def self.find(find_id)
-      # will take one parameter (an ID), returns one order from the CSV, return nil if ID not found
+    def self.find(find_order_id)
+      # will take one parameter (an order_id), returns one order from the CSV, return nil if order_id not found
 
       matched_order = nil
 
       order_list = Grocery::Order.all
 
       order_list.each do |order|
-        if order.id == find_id
+        if order.order_id == find_order_id
           matched_order = order
           break
         end
