@@ -3,6 +3,7 @@ require 'csv'
 # This program creates a new Customer.
 module Grocery
   class Customer
+    
     attr_reader :id, :email, :address
 
     @@all_customers = [] # stores all customers

@@ -15,14 +15,14 @@ module Grocery
       set_products_if_valid(initial_products)
     end
 
-    # Return the total cost of the order.
+    # Returns the total cost of the order.
     def total
       cost_without_tax = get_cost_without_tax
       return cost_without_tax + get_sales_tax(cost_without_tax)
     end
 
     # Adds provided product_name and product_cost as a product if they makes
-    # valid product. Returns 'true' if this was successful and 'false' otherwise.
+    # valid product. Returns 'true' if this was successful and 'false' otherwise
     def add_product(product_name, product_cost)
       return successfully_add_product?(product_name, product_cost)
     end
@@ -105,9 +105,9 @@ module Grocery
     # Adds provided product_name and product_cost as a product if they makes
     # valid product. Returns 'true' if this was successful and 'false' otherwise.
     def successfully_add_product?(product_name, product_cost)
-       original_num_of_products = @products.length
-       add_new_product_if_valid(product_name, product_cost)
-       return original_num_of_products != @products.length
+      original_num_of_products = @products.length
+      add_new_product_if_valid(product_name, product_cost)
+      return original_num_of_products != @products.length
     end
 
     # Removes the product with the provided product_name if it is a product in
