@@ -3,6 +3,9 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+Minitest::Reporters.use!
+
+
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
@@ -53,6 +56,7 @@ describe "Order Wave 1" do
 
       order.add_product("sandwich", 4.25)
       order.products.include?("sandwich").must_equal true
+      order.products.count.must_equal 3
     end
 
     it "Returns false if the product is already present" do
@@ -66,6 +70,7 @@ describe "Order Wave 1" do
 
       result.must_equal false
       before_total.must_equal after_total
+      order.products.count.must_equal 2
     end
 
     it "Returns true if the product is new" do
@@ -78,33 +83,43 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      test_order = Grocery::Order.all
+      test_order.must_be_kind_of Array
+      test_order[0].must_be_instance_of Grocery::Order
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      test_order = Grocery::Order.all
+      test_order[0].id.must_equal 1
+      test_order[0].products.must_equal "Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      test_order = Grocery::Order.all
+      test_order[99].id.must_equal 100
+      test_order[99].products.must_equal "Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59
     end
-  end
+
+end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      expected_order = Grocery::Order.all[0]
+      first_order = Grocery::Order.find(1)
+      first_order.must_equal expected_order
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      expected_order = Grocery::Order.all[99]
+      last_order = Grocery::Order.find(100)
+      last_order.must_equal expected_order
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      proc { Grocery::Order.find(9000) }.must_raise ArgumentError
     end
   end
 end
