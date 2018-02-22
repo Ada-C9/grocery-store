@@ -3,11 +3,17 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+Minitest::Reporters.use!
+
+
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
+      # Below, calling upon module Grocer and class Order
+      # Each order (or purchase) has a unique id with a hash of products
       order = Grocery::Order.new(id, {})
+      # Order must have an id and products
 
       order.must_respond_to :id
       order.id.must_equal id
@@ -18,12 +24,18 @@ describe "Order Wave 1" do
     end
   end
 
+
   describe "#total" do
     it "Returns the total from the collection of products" do
       products = { "banana" => 1.99, "cracker" => 3.00 }
+      # Using a hash of the product name assigned as a string with a value as a float
+
       order = Grocery::Order.new(1337, products)
+      # A hash of ID and products (which contains a hash of product and price) is created as a new order
 
       sum = products.values.inject(0, :+)
+      # Need to def values method in class...thinking hash relating to product/price?
+
       expected_total = sum + (sum * 0.075).round(2)
 
       order.total.must_equal expected_total
@@ -69,41 +81,105 @@ describe "Order Wave 1" do
     end
 
     it "Returns true if the product is new" do
+      # Arrange
       products = { "banana" => 1.99, "cracker" => 3.00 }
       order = Grocery::Order.new(1337, products)
 
+      # Act
       result = order.add_product("salad", 4.25)
+
+      # Assert
       result.must_equal true
     end
   end
-end
 
+  #Basically the opposite of #add_product
+  describe "#remove_product" do
+    it "Decreases the number of products" do
+      # Arrange
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+
+      # Act
+      # based only on the first argument or name of product
+      order.remove_product("banana")
+      # remove instead of add
+      expected_count = before_count - 1
+
+      # Assert
+      order.products.count.must_equal expected_count
+    end
+
+    it "Is removed to the collection of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("sandwich")
+      order.products.include?("sandwich").wont_equal true
+    end
+
+    it "Returns true if the product is removed" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+
+      order = Grocery::Order.new(1337, products)
+      before_total = order.total
+
+      result = order.remove_product("banana")
+      after_total = order.total
+
+      # Returns true if the before total != after total when item is removed
+      result.must_equal true
+      before_total.wont_equal after_total
+    end
+
+    it "Returns false if the product is new" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
+      result = order.remove_product("salad")
+      result.must_equal false
+    end
+
+  end
+end
+#
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
+      # Arrange
+
+      # Act
+      array_of_all_orders = Grocery::Order.all
+
+      # Assert
+      array_of_all_orders.must_be_kind_of Array
+      # array_of_all_orders[0].must_be_kind_of Grocery::Order
+      # 1. array_of_all_orders is of class Array
+      # 2. the first element of the array_of_all_orders is of class Order
+    end
+
+    xit "Returns accurate information about the first order" do
       # TODO: Your test code here!
     end
 
-    it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
-    end
-
-    it "Returns accurate information about the last order" do
+    xit "Returns accurate information about the last order" do
       # TODO: Your test code here!
     end
   end
 
-  describe "Order.find" do
-    it "Can find the first order from the CSV" do
+  xdescribe "Order.find" do
+    xit "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Can find the last order from the CSV" do
+    xit "Can find the last order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    xit "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
     end
   end
