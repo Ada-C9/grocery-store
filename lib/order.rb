@@ -3,9 +3,7 @@ require 'csv'
 require 'pry'
 module Grocery
   class Order
-    attr_reader :id, :order, :products
-
-    @@organized_orders = []
+    attr_reader :id, :products
 
     def initialize(id, products)
       @id = id
@@ -43,7 +41,10 @@ module Grocery
     end
 
     def self.all
+      organized_orders = []
+
       array_of_orders_data = CSV.read("support/orders.csv")
+
       array_of_orders_data.each do |order|
         products = Hash.new
         @id = order[0].to_i
@@ -52,9 +53,10 @@ module Grocery
           product_price = product_price.split(":")
           products.store(product_price[0], product_price[1].to_f)
         end
-        @@organized_orders << Order.new(order[0].to_i, products)
+        
+        organized_orders << Order.new(order[0].to_i, products)
       end
-      return @@organized_orders
+      return organized_orders
     end
   end
 end

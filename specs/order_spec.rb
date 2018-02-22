@@ -99,31 +99,30 @@ describe "Order Wave 1" do
   end
 end
 
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       result = Grocery::Order.all
-      result.must_equal (CSV.read("support/orders.csv"))
+      result.first.is_a?(Grocery::Order).must_equal true
+      result.count.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
       result = Grocery::Order.all
-      result_first = result[0]
-      test_result = CSV.read("support/orders.csv")
-      test_first = test_result[0]
-      result_first.must_equal test_first
+      result.first.id.must_equal 1
+      result.first.products.include?("Wholewheat flour").must_equal true
+      result.first.products["Wholewheat flour"].must_equal 1.93
     end
 
     it "Returns accurate information about the last order" do
       result = Grocery::Order.all
-      result_first = result[-1]
-      test_result = CSV.read("support/orders.csv")
-      test_first = test_result[-1]
-      result_first.must_equal test_first
+      result.last.id.must_equal 100
+      result.last.products.include?("Bran").must_equal true
+      result.last.products["Bran"].must_equal 14.72
     end
   end
 
-  describe "Order.find" do
+  xdescribe "Order.find" do
     it "Can find the first order from the CSV" do
       result = Grocery::Order.find(1)
       result.must_equal ([1, {"Slivered Almonds":22.88, "Wholewheat flour":1.93, "Grape Seed Oil":74.9}])
