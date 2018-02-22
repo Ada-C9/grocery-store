@@ -47,5 +47,15 @@ module Grocery
       return all_orders
     end # end of self.all method
 
+    def self.find(order_id)
+      # loop over array (self.all and look for hash that has
+      # order ID that matches the order ID i'm looking for
+      self.all.each do |order|
+        if order.id == order_id
+          return order
+        end
+      end
+    end # end of self.find
+
   end # end of class order
 end # end of module grocery
