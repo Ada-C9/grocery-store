@@ -2,8 +2,12 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require 'csv'
 
 describe "Order Wave 1" do
+  before do
+    @all = Grocery::Order.populate
+  end
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -78,33 +82,98 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      # # Arrange
+      # products = { "banana" => 1.99, "cracker" => 3.00 }
+      # products2 = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # order = Grocery::Order.new(1337, products)
+      # order2 = Grocery::Order.new(23, products2)
+      # order_list = [order, order2]
+
+      # Act
+      result = Grocery::Order.all
+
+      # Assert
+      result.must_be_kind_of Array
+      result[0].must_be_kind_of Grocery::Order
+
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      #Arrange
+      # id = 1
+      # products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # id2 = 2
+      # products2 = {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}
+      # order = Grocery::Order.new(id, products)
+      # order2 = Grocery::Order.new(id2, products2)
+      # order_list = [order, order2]
+
+      # Act
+
+      result = Grocery::Order.all[0]
+
+
+      # Assert
+
+      result.id.must_equal 1
+      result.total.must_equal 107.19
+
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      #Arrange
+      # # id = 1
+      # # products = {"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9}
+      # # id2 = 2
+      # # products2 = {"Albacore Tuna" => 36.92, "Capers" => 97.99, "Sultanas" => 2.82, "Koshihikari rice" => 7.55}
+      #
+      # # Act
+      # order = Grocery::Order.new(id, products)
+      # order2 = Grocery::Order.new(id2, products2)
+      result = Grocery::Order.all[-1]
+      # Assert
+      result.id.must_equal Grocery::Order.all.length
+      result.total.must_equal 172.05
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
-    end
+      # #Arrange
+      # FILE_NAME = 'support/orders.csv'
+      # csv_file = CSV.read(FILE_NAME, 'r', headers: true, header_converters: :symbol)
+      #
+      # # Act
+      # order = Grocery::Order.new(csv_file.first[:id], csv_file.first[:products])
+      result = Grocery::Order.find(1)
 
+      # Assert
+      result.id.must_equal 1
+      result.must_be_kind_of Grocery::Order
+
+    end
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      # # Arrange
+      # FILE_NAME = 'support/orders.csv'
+      # csv_file = CSV.read(FILE_NAME, 'r', headers: true, header_converters: :symbol)
+      #
+      # # Act
+      # order = Grocery::Order.new(csv_file[-1][:id], csv_file[-1][:products])
+      result = Grocery::Order.find(100)
+
+      # Assert
+      result.id.must_equal 100
+      result.must_be_kind_of Grocery::Order
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      # Arrange
+      # Act
+      # Assert
+      proc {Grocery::Order.find(1337)}.must_raise Grocery::FindError
     end
   end
 end
