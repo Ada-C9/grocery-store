@@ -3,10 +3,11 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
-      id = 1337
+      id = 5
       order = Grocery::Order.new(id, {})
 
       order.must_respond_to :id
@@ -76,35 +77,58 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+
+  describe 'remove_product' do
+
+    it "returns true if the product is removed" do
+      products = { "banana" => 1.99, "cracker" => 3.00, "salad" => 4.25}
+      order = Grocery::Order.new(1337, products)
+
+      result = order.remove_product("salad")
+      result.must_equal true
+      products.length.must_equal 2
+    end
+  end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      array = Grocery::Order.all
+      array.must_be_instance_of Array
+
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      first_order = Grocery::Order.all[0]
+      first_order.id.must_equal 1
+
+      first_order.products.must_equal ({"Slivered Almonds" => 22.88, "Wholewheat flour" => 1.93, "Grape Seed Oil" => 74.9 })
+
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+
+      last_order = Grocery::Order.all[-1]
+      last_order.id.must_equal 100
+
+      last_order.products.must_equal ({"Allspice" => 64.74, "Bran" => 14.72, "UnbleachedFlour" => 80.59 })
+
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::Order.find(1).must_be_instance_of Grocery::Order
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::Order.find(100).must_be_instance_of Grocery::Order
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Returns nil for an order that doesn't exist" do
+      result = Grocery::Order.find(110)
+      result.must_be_nil
     end
   end
 end
