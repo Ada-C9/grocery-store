@@ -1,14 +1,13 @@
 require 'awesome_print'
 require 'csv'
-
+require 'pry'
 module Grocery
   class Order
-    attr_reader :id
-    attr_accessor :order, :products, :gross_total
+    attr_reader :id, :order, :products
 
     @@organized_orders = []
 
-    def initialize (id, products)
+    def initialize(id, products)
       @id = id
       @products = products
     end
@@ -18,41 +17,22 @@ module Grocery
       @products.each do |product, price|
         subtotal += price
       end
+
       tax = subtotal * 0.075
-      @gross_total = (subtotal + tax).round(2)
-      return @gross_total
-    end
-    # Takes user input product, price and order id
-    # Allows user to add new order, or add product and its price to existing order
-    # Appends new order onto existing orders csv file
-    def add_product (product_name, product_price, add_id)
-      if add_id != "new"
-        add_id = add_id.to_i
-        add_products = self.find_by_id(add_id)
-        if !add_product == false
-          add_products.each do |product, price|
-            if add_product == product
-              puts "The product has already been added."
-              return false
-            else
-              add_products.store(product_name, product_price)
-              puts "#{product_name} has been added to #{add_id}"
-              return true
-            end
-          end
-        else
-          new_id = orders.length + 1
-          new_products = {product_name => product_price}
-          CSV.open("../support/orders.csv", 'a') do |orders_csv|
-            orders_csv << ["#{new_id}", "#{product_name}:#{product_price}"]
-          end
-          # return is better because allows for continuous updating of csv from multiple programs.
-          @@organized_orders << Order.new(new_id, new_products)
-        end
-      end
+
+      return (subtotal + tax).round(2)
     end
 
-    def self.find (find_id)
+    def add_product(product_name, product_price)
+      if @products[product_name].nil?
+        @products[product_name] = product_price
+        return true
+      end
+
+      return false
+    end
+
+    def self.find(find_id)
       found_order = false
       @@organized_orders.each do |order|
         if @id == find_id

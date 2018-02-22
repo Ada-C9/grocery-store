@@ -4,6 +4,7 @@ require 'minitest/skip_dsl'
 require_relative '../lib/order'
 require 'csv'
 require 'awesome_print'
+require 'pry'
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -22,10 +23,14 @@ describe "Order Wave 1" do
 
   describe "#total" do
     it "Returns the total from the collection of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      order = Grocery::Order.new(1337, products)
+      products = {
+        "banana" => 1.99,
+        "cracker" => 3.00
+      }
 
+      order = Grocery::Order.new(1337, products)
       sum = products.values.inject(0, :+)
+
       expected_total = sum + (sum * 0.075).round(2)
 
       order.total.must_equal expected_total
@@ -40,7 +45,11 @@ describe "Order Wave 1" do
 
   describe "#add_product" do
     it "Increases the number of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {
+        "banana" => 1.99,
+        "cracker" => 3.00
+      }
+
       before_count = products.count
       order = Grocery::Order.new(1337, products)
 
@@ -50,15 +59,21 @@ describe "Order Wave 1" do
     end
 
     it "Is added to the collection of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
-      order = Grocery::Order.new(1337, products)
+      products = {
+        "banana" => 1.99,
+        "cracker" => 3.00
+      }
 
+      order = Grocery::Order.new(1337, products)
       order.add_product("sandwich", 4.25)
       order.products.include?("sandwich").must_equal true
     end
 
     it "Returns false if the product is already present" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {
+        "banana" => 1.99,
+        "cracker" => 3.00
+      }
 
       order = Grocery::Order.new(1337, products)
       before_total = order.total
@@ -71,7 +86,11 @@ describe "Order Wave 1" do
     end
 
     it "Returns true if the product is new" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {
+        "banana" => 1.99,
+        "cracker" => 3.00
+      }
+
       order = Grocery::Order.new(1337, products)
 
       result = order.add_product("salad", 4.25)
@@ -80,17 +99,17 @@ describe "Order Wave 1" do
   end
 end
 
-describe "Order Wave 2" do
+xdescribe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
       result = Grocery::Order.all
-      result.must_equal (CSV.read("/support/orders.csv"))
+      result.must_equal (CSV.read("support/orders.csv"))
     end
 
     it "Returns accurate information about the first order" do
       result = Grocery::Order.all
       result_first = result[0]
-      test_result = CSV.read("/support/orders.csv")
+      test_result = CSV.read("support/orders.csv")
       test_first = test_result[0]
       result_first.must_equal test_first
     end
@@ -98,7 +117,7 @@ describe "Order Wave 2" do
     it "Returns accurate information about the last order" do
       result = Grocery::Order.all
       result_first = result[-1]
-      test_result = CSV.read("/support/orders.csv")
+      test_result = CSV.read("support/orders.csv")
       test_first = test_result[-1]
       result_first.must_equal test_first
     end
