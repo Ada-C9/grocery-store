@@ -122,20 +122,24 @@ describe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
       result = Grocery::Order.find(1)
-      result.must_equal ([1, {"Slivered Almonds":22.88, "Wholewheat flour":1.93, "Grape Seed Oil":74.9}])
+      result.id.must_equal 1
+      result.products.include?("Wholewheat flour").must_equal true
+      result.products["Wholewheat flour"].must_equal 1.93
     end
 
     it "Can find the last order from the CSV" do
       result = Grocery::Order.find(100)
-      result.must_equal ([100, {"Allspice":64.74, "Bran":14.72, "UnbleachedFlour":80.59}])
+      result.id.must_equal 100
+      result.products.include?("Bran").must_equal true
+      result.products["Bran"].must_equal 14.72
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    it "Returns nil if order doesn't exist" do
       result = Grocery::Order.find(1000)
-      result.must_equal ("Error, id number entry exeeds program parameters.")
+      result.must_equal nil
     end
   end
 end

@@ -31,10 +31,11 @@ module Grocery
     end
 
     def self.find(find_id)
-      found_order = false
-      @@organized_orders.each do |order|
-        if @id == find_id
-          found_order = order.products
+      found_order = nil
+      self.all.each do |order|
+        if order.id == find_id
+          found_order = order
+          break
         end
       end
       return found_order
@@ -53,7 +54,7 @@ module Grocery
           product_price = product_price.split(":")
           products.store(product_price[0], product_price[1].to_f)
         end
-        
+
         organized_orders << Order.new(order[0].to_i, products)
       end
       return organized_orders
