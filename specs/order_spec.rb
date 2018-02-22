@@ -5,7 +5,10 @@ require_relative '../lib/order'
 require 'csv'
 
 describe "Order Wave 1" do
-describe "#initialize" do
+  before do
+    @all = Grocery::Order.populate
+  end
+  describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       order = Grocery::Order.new(id, {})
@@ -151,7 +154,7 @@ describe "Order Wave 2" do
       result.id.must_equal 1
       result.must_be_kind_of Grocery::Order
 
-  end
+    end
     it "Can find the last order from the CSV" do
       # # Arrange
       # FILE_NAME = 'support/orders.csv'
@@ -170,10 +173,7 @@ describe "Order Wave 2" do
       # Arrange
       # Act
       # Assert
-      assert_raises do #Fails no exceptions are raised
-        Grocery::Order.find(101)
-      end
-
+      proc {Grocery::Order.find(1337)}.must_raise Grocery::FindError
     end
   end
 end

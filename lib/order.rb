@@ -12,13 +12,13 @@ module Grocery
   class FindError < ArgumentError
     def initialize(msg="Error: Order has not been created yet")
       super
-    # rescue
+      # rescue
     end
   end
 
   class Order
     attr_reader :id, :products
-    @@list_all = []
+    @@all_orders = []
 
     def initialize(id, products)
       @id = id
@@ -47,14 +47,14 @@ module Grocery
     end # Order#add_product
 
     def self.list_all
-      return @@list_all
+      return @@all_orders
     end
 
     def self.populate
-      if @@list_all.length == 0
-        @@list_all = all
+      if @@all_orders.length == 0
+        @@all_orders = all
       else
-        return @@list_all
+        return @@all_orders
       end
     end
 
@@ -76,16 +76,15 @@ module Grocery
 
     def self.find(id)
       populate
-      @@list_all.each do |order|
-        if id > @@list_all.length
-          raise Grocery::FindError.new
-        elsif
-          order.id == id
+      if id > @@all_orders.length
+        raise Grocery::FindError.new
+      end
+      @@all_orders.each do |order|
+        if order.id == id
           return order
-        end
-      end # self.all.each do
-    end # Order.find
-
+        end # self.all.each do
+      end # Order.find
+    end
   end # Order
-
+  
 end # Grocery

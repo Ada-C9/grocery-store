@@ -7,9 +7,7 @@ require_relative 'customer'
 
 module Grocery
 
-# Custom ArgumentError because it's fun, could also
-# be done at the point of raising the ArgumentError
-# using syntax ArgumentError.new("Custom Error Message")
+# Custom ArgumentError because it's fun, could also be done at the point of raising the ArgumentError using syntax ArgumentError.new("Custom Error Message")
   class CartError < ArgumentError
     def initialize(msg="Error: Items cannot be added to this order based on its current status")
       super
@@ -18,8 +16,8 @@ module Grocery
 
   class OnlineOrder < Order
     attr_reader :customer, :status
+    @@all_online_orders = []
     @@customers = []
-    @@list_all = []
 
     def initialize(id, products, customer_id, status = :pending)
       #Use the itialize attributes from the parent class Order
@@ -45,20 +43,18 @@ module Grocery
       end
     end
 
-    def self.populate
-      super
-    end
-
     def self.customers
       return @@customers
     end
 
-    def self.list_all
-      return @@list_all
+    def self.all
+      if @@all_online_orders.length == 0
+        self.populate
+      end
+        return @@all_online_orders
     end
 
-    def self.all
-      list_all = []
+    def self.populate
       CSV.open('support/online_orders.csv', 'r', headers: true, header_converters: :symbol).each do |row|
         products = {}
         id = row[:id].to_i
@@ -68,15 +64,25 @@ module Grocery
           name, price = item.split(':')
           products[name] = price.to_f
         end
-        list_all << index = self.new(id, products, customer_id, status)
+        @@all_online_orders << index = self.new(id, products, customer_id, status)
         @@customers << Grocery::Customer.find(customer_id)
       end
-      return list_all
+      return @@all_online_orders
     end # OnlineOrder.all
 
     def self.find(id)
-      super
-    end
+      populate
+      if id > @@all_online_orders.length
+        raise Grocery::FindError.new
+      else
+        return all[all.index(id)]
+      end
+      # @@all_online_orders.each do |order|
+      #   if order.id == id
+      #     return order
+      #   end
+      # end # self.all.each do
+    end # Order.find
 
     def self.find_by_customer(cust_id)
       orders_by_customer = []
@@ -94,3 +100,4 @@ module Grocery
 
   end # OnlineOrder
 end # Grocery
+Grocery::OnlineOrder.all

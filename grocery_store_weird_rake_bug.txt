@@ -1,0 +1,92 @@
+grocery-store ✨✨✨ rake
+
+From: /Users/kat/ada/week02/grocery-store/lib/online_order.rb @ line 103 :
+
+     98:       return orders_by_customer
+     99:     end #self.find_by_customer
+    100: 
+    101:   end # OnlineOrder
+    102: end # Grocery
+ => 103: binding.pry
+    104: Grocery::OnlineOrder.all
+
+[1] pry(main)> 
+Run options: --seed 61803
+
+# Running:
+
+.................................
+
+Finished in 31.001987s, 1.0644 runs/s, 1.8386 assertions/s.
+
+33 runs, 57 assertions, 0 failures, 0 errors, 0 skips
+grocery-store ✨✨✨ rake
+
+From: /Users/kat/ada/week02/grocery-store/lib/online_order.rb @ line 103 :
+
+     98:       return orders_by_customer
+     99:     end #self.find_by_customer
+    100: 
+    101:   end # OnlineOrder
+    102: end # Grocery
+ => 103: binding.pry
+    104: Grocery::OnlineOrder.all
+
+[1] pry(main)> 
+Run options: --seed 40832
+
+# Running:
+
+...............................F.
+
+Finished in 30.024127s, 1.0991 runs/s, 1.8985 assertions/s.
+
+  1) Failure:
+OnlineOrder::OnlineOrder.find#test_0002_Raises an error for an online order that doesn't exist [/Users/kat/ada/week02/grocery-store/specs/online_order_spec.rb:113]:
+[Grocery::FindError] exception expected, not
+Class: <TypeError>
+Message: <"no implicit conversion from nil to integer">
+---Backtrace---
+/Users/kat/ada/week02/grocery-store/lib/online_order.rb:78:in `find'
+/Users/kat/ada/week02/grocery-store/specs/online_order_spec.rb:113:in `block (4 levels) in <top (required)>'
+---------------
+
+33 runs, 57 assertions, 1 failures, 0 errors, 0 skips
+rake aborted!
+Command failed with status (1)
+/Users/kat/.rvm/gems/ruby-2.5.0/gems/rake-12.3.0/exe/rake:27:in `<top (required)>'
+/Users/kat/.rvm/gems/ruby-2.5.0/bin/ruby_executable_hooks:15:in `eval'
+/Users/kat/.rvm/gems/ruby-2.5.0/bin/ruby_executable_hooks:15:in `<main>'
+Tasks: TOP => default => test
+(See full trace by running task with --trace)
+grocery-store ✨✨✨ rake
+Run options: --seed 45414
+
+# Running:
+
+.................................
+
+Finished in 32.443327s, 1.0172 runs/s, 1.7569 assertions/s.
+
+33 runs, 57 assertions, 0 failures, 0 errors, 0 skips
+grocery-store ✨✨✨ rake
+Run options: --seed 39257
+
+# Running:
+
+.................................
+
+Finished in 32.222353s, 1.0241 runs/s, 1.7690 assertions/s.
+
+33 runs, 57 assertions, 0 failures, 0 errors, 0 skips
+grocery-store ✨✨✨ rake
+Run options: --seed 43649
+
+# Running:
+
+.................................
+
+Finished in 30.365732s, 1.0868 runs/s, 1.8771 assertions/s.
+
+33 runs, 57 assertions, 0 failures, 0 errors, 0 skips
+grocery-store ✨✨✨ 

@@ -12,17 +12,20 @@ require_relative '../lib/online_order'
 # only test things that are different.
 
 describe "OnlineOrder" do
+  before do
+    @all = Grocery::OnlineOrder.populate
+  end
   describe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
 
       # Instatiate your OnlineOrder here
-      result = Grocery::OnlineOrder.list_all[0]
+      result = Grocery::OnlineOrder.all[0]
       result.must_be_kind_of Grocery::Order
     end
 
     it "Can access Customer object" do
-      id = Grocery::OnlineOrder.list_all[0].customer
+      id = Grocery::OnlineOrder.all[0].customer
 
       result = Grocery::Customer.find(id)
 
@@ -30,7 +33,7 @@ describe "OnlineOrder" do
     end
 
     it "Can access the online order status" do
-      result = Grocery::OnlineOrder.list_all[0].status
+      result = Grocery::OnlineOrder.all[0].status
 
       result.must_equal :complete
     end
@@ -38,7 +41,7 @@ describe "OnlineOrder" do
 
   describe "#total" do
     it "Adds a shipping fee" do
-      result = Grocery::OnlineOrder.list_all[0].total
+      result = Grocery::OnlineOrder.all[0].total
 
       result.must_equal 180.68
 
@@ -53,7 +56,7 @@ describe "OnlineOrder" do
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
       # Arrange
-      order = Grocery::OnlineOrder.list_all[2]
+      order = Grocery::OnlineOrder.all[2]
 
       # Act
       result = order.add_product("Seaweed Salad", 5.78)
@@ -64,7 +67,7 @@ describe "OnlineOrder" do
 
     it "Permits action for pending and paid satuses" do
       # Arrange
-      order = Grocery::OnlineOrder.list_all[1]
+      order = Grocery::OnlineOrder.all[1]
 
       # Act
       result = order.add_product("Seaweed Salad", 5.78)
@@ -74,16 +77,16 @@ describe "OnlineOrder" do
     end
   end
 
-  describe "OnlineOrder.list_all" do
+  describe "OnlineOrder.all_online_orders" do
     it "Returns an array of all online orders" do
-        result = Grocery::OnlineOrder.list_all
-        result.must_be_kind_of Array
-        result[1].must_be_kind_of Grocery::Order
-        result[1].must_be_kind_of Grocery::OnlineOrder
+      result = Grocery::OnlineOrder.all
+      result.must_be_kind_of Array
+      result[1].must_be_kind_of Grocery::Order
+      result[1].must_be_kind_of Grocery::OnlineOrder
     end
 
     it "Returns accurate information about the first online order" do
-      result = Grocery::OnlineOrder.list_all[0]
+      result = Grocery::OnlineOrder.populate[0]
 
       result.id.must_equal 1
       result.status.must_equal :complete
@@ -92,7 +95,7 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the last online order" do
-      result = Grocery::OnlineOrder.list_all[-1]
+      result = Grocery::OnlineOrder.populate[-1]
 
       result.id.must_equal 100
       result.status.must_equal :pending
@@ -103,13 +106,11 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      result = Grocery::OnlineOrder.find(1)
+
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      assert_raises do #Fails no exceptions are raised
-        Grocery::OnlineOrder.find(101)
-      end
+      proc {Grocery::OnlineOrder.find(1337)}.must_raise Grocery::FindError
     end
   end
 
@@ -117,7 +118,7 @@ describe "OnlineOrder" do
     it "Returns an array of online orders for a specific customer ID" do
       result = Grocery::OnlineOrder.find_by_customer(35)
 
-      result.length.must_equal 4
+      result[0].id.must_equal 4
     end
 
     it "Raises an error if the customer does not exist" do
