@@ -78,32 +78,44 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      all_orders = Grocery::Order.all
+      all_orders.must_be_kind_of Array
+      puts "#{all_orders}"
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      all_orders = Grocery::Order.all
+      first_order = all_orders[0]
+      first_order.id.must_equal "1"
+      first_order.products.must_be_kind_of Hash
+      test_hash = {"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"}
+      first_order.products.must_equal test_hash
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      all_orders = Grocery::Order.all
+      last_order = all_orders.last
+      last_order.id.must_equal "100"
+      last_order.products.must_be_kind_of Hash
+      test_hash = {"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"}
+      last_order.products.must_equal test_hash
     end
   end
 
-  describe "Order.find" do
-    it "Can find the first order from the CSV" do
+  xdescribe "Order.find" do
+    xit "Can find the first order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Can find the last order from the CSV" do
+    xit "Can find the last order from the CSV" do
       # TODO: Your test code here!
     end
 
-    it "Raises an error for an order that doesn't exist" do
+    xit "Raises an error for an order that doesn't exist" do
       # TODO: Your test code here!
     end
   end

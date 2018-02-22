@@ -1,6 +1,10 @@
+require "csv"
+
+FILE_NAME = "support/orders.csv"
+
 module Grocery
   class Order
-    attr_reader :id 
+    attr_reader :id
     attr_accessor :products
 
     def initialize(id, products)
@@ -25,5 +29,23 @@ module Grocery
         return true
       end
     end # end of add_product method
+
+    def self.all
+      all_orders = []
+      CSV.read("support/orders.csv").each do |row|
+        products = {}
+        products_information = row.last.split(';')
+        products_information.each do |prod_info|
+          split_prod_info = prod_info.split(':')
+          name = split_prod_info[0]
+          price = split_prod_info[1]
+          products[name] = price
+          order = Order.new(row.first, products)
+          all_orders << order
+        end
+      end
+      return all_orders
+    end # end of self.all method
+
   end # end of class order
 end # end of module grocery
