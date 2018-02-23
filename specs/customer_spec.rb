@@ -9,7 +9,6 @@ describe "Customer" do
 
        an_order = Grocery::Customer.new('36', 'maggie@mutts.org', '2000 Fire Hydrant Way, Seattle, WA 98115')
 
-      ap an_order
       an_order.customer_id.must_equal '36'
 
     end

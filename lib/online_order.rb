@@ -3,18 +3,22 @@ require 'awesome_print'
 require_relative 'order.rb'
 module Grocery
   class OnlineOrder < Order
-    attr_reader :customer_id,:status
+    attr_reader :customer,:status
     alias order_total total
     alias order_add_product add_product
-    def initialize(order_id, products, customer_id, status)
+    def initialize(order_id, products, customer, status)
       super(order_id, products)
-      @customer_id = customer_id
+      @customer = Grocery::Customer.find(customer)
       @status = status.to_sym
       @status ||= :pending
     end
 
     def total
-      return self.order_total + 10
+      if products.length > 0
+         return self.order_total + 10
+      else
+        return self.order_total
+      end
     end
 
     def add_product(product_name, product_price)
@@ -30,7 +34,7 @@ module Grocery
       online_orders_instances =[]
 
       CSV.read(File.join(File.dirname(__FILE__),'../support/online_orders.csv')).each do |row|
-        all_online_orders << {order_id: row[0], products: row[1].split(';'), customer_id: row[2], status: row[3]}
+        all_online_orders << {order_id: row[0], products: row[1].split(';'), customer: row[2], status: row[3]}
       end
 
       all_online_orders.each do |order|
@@ -45,7 +49,7 @@ module Grocery
       end
 
       all_online_orders.each do |online_order|
-        online_orders_instances << Grocery::OnlineOrder.new(online_order[:order_id], online_order[:products], online_order[:customer_id], online_order[:status])
+        online_orders_instances << Grocery::OnlineOrder.new(online_order[:order_id], online_order[:products], online_order[:customer], online_order[:status])
       end
 
       return online_orders_instances
@@ -64,40 +68,27 @@ module Grocery
       end
 
       if (matched_order_id.nil?)
-        raise RuntimeError "Invalid order ID"
+        raise ArgumentError "Invalid order ID"
       end
 
       return matched_order_id
 
     end
 
-    def self.find_by_customer(customer_id)
-      matched_customer_ids = []
+    def self.find_by_customer(customer)
+      matched_customers = []
 
       online_orders_list = Grocery::OnlineOrder.all
 
       online_orders_list.each do |online_order|
-        if online_order.customer_id == customer_id
-          matched_customer_ids << online_order
+        if online_order.customer == customer
+          matched_customers << online_order
         end
       end
 
-      if (matched_customer_ids.nil?)
-        raise RuntimeError "Invalid customer ID"
-      end
-
-      return matched_customer_ids
+      return matched_customers
 
     end
 
   end
 end
-
-# test = Grocery::OnlineOrder.new(1, [{}], 1, '')
-# ap Grocery::OnlineOrder.all
-ap test = Grocery::OnlineOrder.find("25")
-ap test
-ap test.order_total
-ap test.total
-ap test.add_product("coffee", 5)
-# ap Grocery::OnlineOrder.find_by_customer("25")
