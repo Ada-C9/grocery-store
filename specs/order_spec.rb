@@ -114,14 +114,15 @@ describe "Order Wave 2" do
       first_order.id.must_equal test_order.id
     end
 
-    xit "Can find the last order from the CSV" do
-      #      first_order = Grocery::Order.find("1")
-            # test_order = Grocery::Order.new("1", {"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
-            # first_order.must_equal test_order
+    it "Can find the last order from the CSV" do
+      last_order = Grocery::Order.find("100")
+      test_order = Grocery::Order.new("100", {"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
+      last_order.products.must_equal test_order.products
+      last_order.id.must_equal test_order.id
     end
 
-    xit "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    xit "Return nil for an order that doesn't exist" do
+      # nil_order = Grocery::Order.find("235")
     end
   end
 end
