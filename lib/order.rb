@@ -1,3 +1,7 @@
+require 'csv'
+require 'pry'
+require 'awesome_print'
+
 module Grocery
   class Order
     attr_reader :id, :products
@@ -30,9 +34,37 @@ module Grocery
       return products
     end
 
+    def self.all
+      all_data = []
 
+      all_orders = CSV.open("../support/orders.csv", 'r')
 
+      all_orders.each do |file|
+        @id = file[0].to_i
 
+        item = file[1].split(';')
+        item_price = item.map! do |row|
+          Hash[row.split(':').first,row.split(':').last]
+        end
+        item_price = item_price.reduce(:merge)
+        @products = item_price
+
+        all_data << Order.new(@id, @products)
+      end
+
+      return all_data
+    end
+
+    def self.find(id)
+      all_orders = Grocery::Order.all
+
+      all_orders.each do |item|
+        if item.id == id
+          return item.products
+        end
+      end
+      return nil
+    end
 
 
   end
