@@ -1,7 +1,7 @@
 require "csv"
 require_relative 'order.rb'
 
-
+# class to handle online orders
 class OnlineOrder < Grocery::Order
 
   attr_reader :id, :products, :customer_id, :fulfillment_status
