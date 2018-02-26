@@ -11,25 +11,30 @@ module Grocery
       @products = products
     end
 
+    def self.to_products(csv_input)
+      products = {}
+      k_v_array = csv_input.split(";")
+
+      k_v_array.each do |kv|
+        key, value = kv.split(":")
+        products[key] = value
+      end
+      return products
+    end
+
     def self.all
       order_objects = []
       CSV.read("support/orders.csv").each do |line|
-        products_array = line[1].split(';')
+        products = self.to_products(line[1])
 
-        products_array2 = []
-        products_array.each do |product|
-          products_array2 << product.split(':')
-        end
-
-        products_hash = products_array2.to_h
-        line = Order.new(line[0], products_hash)
-        order_objects << line
+        new_order = Order.new(line[0], products)
+        order_objects << new_order
       end
       return order_objects
     end
 
     def self.find(id)
-      Order.all.each do |object|
+      self.all.each do |object|
         if object.id == id
           return object
         end
