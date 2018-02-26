@@ -109,30 +109,18 @@ describe "Order Wave 2" do
 
     it "Returns accurate information about the first order" do
       list_item = Grocery::Order.all[0]
-      csv_row = CSV.read('support/orders.csv')[0]
-      csv_row[0].to_i.must_equal list_item.id
-
-      products_string = ""
-      list_item.products.each do |k, v|
-        products_string += "#{k}:#{v};"
-      end
-      products_string = products_string.chomp(";")
-
-      csv_row[1].must_equal products_string
+      expected_products = {'Slivered Almonds'=>22.88, 'Wholewheat flour'=>1.93, 'Grape Seed Oil'=>74.9}
+      expected_id = 1
+      list_item.products.must_equal expected_products
+      list_item.id.must_equal expected_id
     end
 
     it "Returns accurate information about the last order" do
       list_item = Grocery::Order.all[-1]
-      csv_row = CSV.read('support/orders.csv')[-1]
-      csv_row[0].to_i.must_equal list_item.id
-
-      products_string = ""
-      list_item.products.each do |k, v|
-        products_string += "#{k}:#{v};"
-      end
-      products_string = products_string.chomp(";")
-
-      csv_row[1].must_equal products_string
+      expected_products = {'Allspice'=>64.74, 'Bran'=>14.72,'UnbleachedFlour'=>80.59}
+      expected_id = 100
+      list_item.products.must_equal expected_products
+      list_item.id.must_equal expected_id
     end
   end
 

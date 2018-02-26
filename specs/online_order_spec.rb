@@ -87,36 +87,19 @@ describe "OnlineOrder" do
     end
 
     it "Returns accurate information about the first online order" do
-
       list_item = Grocery::OnlineOrder.all[0]
-      csv_row = CSV.read('support/online_orders.csv')[0]
-      csv_row[0].to_i.must_equal list_item.id
-      csv_row[2].to_i.must_equal list_item.customer_id
-      csv_row[3].to_sym.must_equal list_item.status
-      products_string = ""
-      list_item.products.each do |k, v|
-        products_string += "#{k}:#{v};"
-      end
-      products_string = products_string.chomp(";")
-
-      csv_row[1].must_equal products_string
-
+      expected_products = {'Lobster' => 17.18, 'Annatto seed'=>58.38, 'Camomile'=>83.21}
+      expected_id = 1
+      list_item.products.must_equal expected_products
+      list_item.id.must_equal expected_id
     end
 
     it "Returns accurate information about the last online order" do
-
       list_item = Grocery::OnlineOrder.all[-1]
-      csv_row = CSV.read('support/online_orders.csv')[-1]
-      csv_row[0].to_i.must_equal list_item.id
-      csv_row[2].to_i.must_equal list_item.customer_id
-      csv_row[3].to_sym.must_equal list_item.status
-      products_string = ""
-      list_item.products.each do |k, v|
-        products_string += "#{k}:#{v};"
-      end
-      products_string = products_string.chomp(";")
-
-      csv_row[1].must_equal products_string
+      expected_products = {'Amaranth'=>83.81,'Smoked Trout'=>70.6,'Cheddar'=>5.63}
+      expected_id = 100
+      list_item.products.must_equal expected_products
+      list_item.id.must_equal expected_id
     end
   end
 
