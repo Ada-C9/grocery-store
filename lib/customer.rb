@@ -25,7 +25,6 @@ module Grocery
       @all_customers = []
 
       # Read file:
-      # ???? why on rake I need to have the whole path here??
       file_to_read = CSV.read('support/customers.csv', 'r')
 
       file_to_read.each do |row|
