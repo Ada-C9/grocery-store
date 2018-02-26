@@ -122,6 +122,7 @@ describe "Order Wave 2" do
       Grocery::Order.all
       # assert
       Grocery::Order.all.must_be_kind_of Array
+      Grocery::Order.all[0].must_be_instance_of Grocery::Order
     end
 
     it "Returns accurate information about the first order" do
