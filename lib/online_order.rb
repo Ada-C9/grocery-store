@@ -10,7 +10,9 @@ module Grocery
 
     @@all_online_orders = []
 
-    attr_reader :id, :products, :customer_id, :status
+    # attr_reader :id, :products, :customer_id, :status
+    attr_reader :customer_id, :status
+
 
     def initialize(id, products, customer_id, status)
       super(id, products)
@@ -54,16 +56,16 @@ module Grocery
       return @@all_online_orders
     end
 
-    def self.find(id)
-      # returns an instance of OnlineOrder where the value of the id field in the CSV matches the passed parameter.
-      @@all_online_orders = Grocery::OnlineOrder.all
-      order_instance = @@all_online_orders.find_all { |order| order.id == id }
-      if order_instance.length <= 0
-        return nil
-      else
-        return order_instance
-      end
-    end
+    # def self.find(id)
+    #   # returns an instance of OnlineOrder where the value of the id field in the CSV matches the passed parameter.
+    #   @@all_online_orders = Grocery::OnlineOrder.all
+    #   order_instance = @@all_online_orders.find_all { |order| order.id == id }
+    #   if order_instance.length <= 0
+    #     return nil
+    #   else
+    #     return order_instance
+    #   end
+    # end
 
     def self.find_by_customer(customer_id)
       # returns a list of OnlineOrder instances where the value of the customer's ID matches the passed parameter.

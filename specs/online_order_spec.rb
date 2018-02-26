@@ -96,7 +96,7 @@ describe "OnlineOrder" do
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
       first_order = Grocery::OnlineOrder.find(1)
-      first_order[0].must_be_instance_of Grocery::OnlineOrder
+      first_order[0].must_be_instance_of Grocery::Order
     end
 
     it "Return nil for an online order that doesn't exist" do
