@@ -62,15 +62,15 @@ class OnlineOrder < Grocery::Order
   end
 
   # Finds one online order out of array of online orders. Returns nil if the OnlineOrder does not exist
-  def self.find(online_order_id)
-    online_orders = self.all
-    online_orders.each do |online_order|
-      if online_order.id == online_order_id
-        return online_order
-      end
-    end
-    return nil
-  end
+  # def self.find(online_order_id)
+  #   online_orders = self.all
+  #   online_orders.each do |online_order|
+  #     if online_order.id == online_order_id
+  #       return online_order
+  #     end
+  #   end
+  #   return nil
+  # end
 
   def self.find_by_customer(customer_id)
     num_of_customers = 35
