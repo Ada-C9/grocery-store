@@ -3,8 +3,7 @@ require "awesome_print"
 
 module Grocery
   class Order
-    attr_reader :id
-    attr_accessor :products
+    attr_reader :id, :products
 
     def initialize(id, products)
       @id = id
