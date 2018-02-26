@@ -17,8 +17,8 @@ describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
-      onlineorder = Grocery::OnlineOrder.new(12, {}, 4, :fulfilled)
-      onlineorder.must_be_kind_of Grocery::Order
+      online_order = Grocery::OnlineOrder.new(12, {}, 4, :fulfilled)
+      online_order.must_be_kind_of Grocery::Order
 
       # Instatiate your OnlineOrder here
       # online_order =
@@ -28,33 +28,33 @@ describe "OnlineOrder" do
     it "Can access Customer object" do
       customer = Grocery::Customer.new(747, "mary@ada.org", "626 Malden Ave")
 
-      onlineorder = Grocery::OnlineOrder.new(12, {}, customer, :fulfilled)
+      online_order = Grocery::OnlineOrder.new(12, {}, customer, :fulfilled)
 
-      onlineorder.customer.must_be_instance_of Grocery::Customer
+      online_order.customer.must_be_instance_of Grocery::Customer
     end
 
     it "Can access the online order status" do
-      onlineorder = Grocery::OnlineOrder.new(12, {}, 987, :fulfilled)
+      online_order = Grocery::OnlineOrder.new(12, {}, 987, :fulfilled)
 
-      onlineorder.status.must_be_kind_of Symbol
+      online_order.status.must_be_kind_of Symbol
     end
   end
 
   describe "#total" do
     it "Adds a shipping fee" do
-      onlineorder = Grocery::OnlineOrder.new(12, { "banana" => 1.99, "cracker" => 3.00 }, 987, :fulfilled)
+      online_order = Grocery::OnlineOrder.new(12, { "banana" => 1.99, "cracker" => 3.00 }, 987, :fulfilled)
 
       expected_total = ((1.99 + 3.00) * 1.075).round(2) + 10
 
-      onlineorder.total.must_equal expected_total
+      online_order.total.must_equal expected_total
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-        onlineorder = Grocery::OnlineOrder.new(12, {}, 987, :fulfilled)
+        online_order = Grocery::OnlineOrder.new(12, {}, 987, :fulfilled)
 
         expected_total = 0
 
-        onlineorder.total.must_equal expected_total
+        online_order.total.must_equal expected_total
     end
   end
 
@@ -112,12 +112,13 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      Grocery::OnlineOrder.find("1").must_be_instance_of Grocery::OnlineOrder
+      online_order = Grocery::OnlineOrder
+      online_order.find("1").must_be_instance_of Grocery::OnlineOrder
 
-      Grocery::OnlineOrder.find("1").products.must_equal ({"Lobster" => "17.18", "Annatto seed" => "58.38", "Camomile" => "83.21"})
+      online_order.find("1").products.must_equal ({"Lobster" => "17.18", "Annatto seed" => "58.38", "Camomile" => "83.21"})
 
-      Grocery::OnlineOrder.find("1").customer.must_equal "25"
-      Grocery::OnlineOrder.find("1").status.must_equal :complete
+      online_order.find("1").customer.must_equal "25"
+      online_order.find("1").status.must_equal :complete
     end
 
     it "Raises an error for an online order that doesn't exist" do
@@ -142,7 +143,7 @@ describe "OnlineOrder" do
     end
 
     it "Returns an empty array if the customer has no orders" do
-      
+
     end
   end
 end

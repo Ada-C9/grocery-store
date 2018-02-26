@@ -4,6 +4,13 @@ module Grocery
 
   class Order
 
+    attr_reader :id, :products
+
+    def initialize(id, products)
+      @id = id
+      @products = products
+    end
+
     def self.all
       order_objects = []
       CSV.read("support/orders.csv").each do |line|
@@ -30,12 +37,6 @@ module Grocery
       return nil
     end
 
-    attr_reader :id, :products
-
-    def initialize(id, products)
-      @id = id
-      @products = products
-    end
 
     def total
       subtotal = 0
@@ -43,7 +44,7 @@ module Grocery
         subtotal += price.to_f
       end
       return (subtotal * 1.075).round(2)
-     end
+    end
 
     def add_product(product_name, product_price)
       if @products.key?(product_name)
@@ -52,7 +53,7 @@ module Grocery
         @products[product_name] = product_price
         return true
       end
-     end
+    end
 
     def remove_product(product_name)
       if @products.key?(product_name)
@@ -61,7 +62,7 @@ module Grocery
       else
         return false
       end
-     end
+    end
 
   end
 
