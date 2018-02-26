@@ -5,15 +5,15 @@
 |---	|---	|
 |  **Baseline** |   |
 |   Answered comprehension questions	|   	|
-|   Used Git Regularly	|   	|
+|   xUsed Git Regularly	|   	|
 |  **Wave 1** |   |
-|   All provided tests pass | |
-|   Using the appropriate `attr_` for instance variables |    |
+|   xAll provided tests pass | |
+|   xUsing the appropriate `attr_` for instance variables |    |
 |  **Wave 2** |   |
-|   All stubbed tests are implemented fully and pass | |
-|   Appropriately parses the product data from CSV file in `Order.all` |  |
-|   Used `CSV` library only in `Order.all` (not in `Order.find`) |   |
-|   Used `Order.all` to get order list in `Order.find`	|   	|
+|   xAll stubbed tests are implemented fully and pass | |
+|   xAppropriately parses the product data from CSV file in `Order.all` |  |
+|   xUsed `CSV` library only in `Order.all` (not in `Order.find`) |   |
+|   xUsed `Order.all` to get order list in `Order.find`	|   	|
 |  **Wave 3** |   |
 |   All stubbed tests are implemented fully and pass |  |
 |   Used inheritance in the initialize for online order |   	|

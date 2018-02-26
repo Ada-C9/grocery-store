@@ -1,6 +1,9 @@
+gem 'minitest', '>= 5.0.0'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'minitest/autorun'
+require 'minitest/pride'
 require_relative '../lib/order'
 
 require 'csv'
@@ -8,7 +11,7 @@ require 'awesome_print'
 
 
 describe "Order Wave 1" do
-  xdescribe "#initialize" do
+  describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
       products = {'olives': 3.30, 'bread': 4.45}
@@ -24,7 +27,7 @@ describe "Order Wave 1" do
     end
   end
 
-  xdescribe "#total" do
+  describe "#total" do
     it "Returns the total from the collection of products" do
       #arrange
       products = { "banana" => 1.99, "cracker" => 3.00}
@@ -45,7 +48,7 @@ describe "Order Wave 1" do
     end
   end
 
-  xdescribe "#add_product" do
+  describe "#add_product" do
     it "Increases the number of products" do
       products = {"banana" => 1.99, "cracker" => 3.00 }
       before_count = products.count
@@ -58,7 +61,7 @@ describe "Order Wave 1" do
     end
 
      #tests remove product method
-    xdescribe "#remove_product" do
+    describe "#remove_product" do
       it "Decreases the number of products" do
         #arrange
         products = {"banana" => 1.99, "cracker" => 3.00}
@@ -105,7 +108,7 @@ describe "Order Wave 1" do
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
 
 
   describe "Order.all" do
@@ -141,7 +144,7 @@ xdescribe "Order Wave 2" do
     end
   end
 
-  xdescribe "Order.find" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
       # TODO: Your test code here!
       #act
