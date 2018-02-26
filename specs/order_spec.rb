@@ -2,8 +2,13 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require "csv"
 
-describe "Order Wave 1" do
+require 'awesome_print'
+
+Minitest::Reporters.use!
+
+xdescribe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -76,35 +81,106 @@ describe "Order Wave 1" do
       result.must_equal true
     end
   end
+
+  describe "#remove_product" do
+    it "decreases the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("banana")
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+
+    it "returns true if the product is removed" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("banana")
+      # order.products.include?("banana").must_equal false
+      order.products.wont_include("banana")
+    end
+
+    it "returns false if the product is not removed" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("cracker")
+      order.products.include?("banana").must_equal true
+    end
+  end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      # arrange
+      # NO arrange needed here
+      # act
+      Grocery::Order.all
+      # assert
+      Grocery::Order.all.must_be_kind_of Array
+      Grocery::Order.all[1].must_be_instance_of Grocery::Order
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      # arrange
+      # NO arrange needed here
+      # act
+      Grocery::Order.all[0].id
+      # assert
+      Grocery::Order.all[0].id.must_equal "1"
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      # arrange
+      # NO arrange needed here
+      # act
+      Grocery::Order.all[-1].id
+      # assert
+      Grocery::Order.all[-1].id.must_equal CSV.read('support/orders.csv', 'r')[-1][0]
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      #arrange
+      # N/A
+      # act
+      Grocery::Order.find("1")
+      # assert
+      Grocery::Order.find("1").id.must_equal "1"
+      Grocery::Order.find("1").products.keys.must_include "Slivered Almonds"
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      #arrange
+      # N/A
+      # act
+      Grocery::Order.find("last")
+      # assert
+      Grocery::Order.find("last").id.must_equal Grocery::Order.all[-1].id
+      Grocery::Order.find("last").products.keys.must_include "Allspice"
     end
 
-    it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    it "Can find the order by id from the CSV" do
+      #arrange
+      # N/A
+      # act
+      Grocery::Order.find("1")
+      # assert
+      Grocery::Order.find("1").id.must_equal "1"
+      Grocery::Order.find("1").products.keys.must_include "Slivered Almonds"
+    end
+
+    it "Raises an error for an online order that doesn't exist" do
+      #arrange
+      # N/A
+      # act
+      # assert
+      proc {Grocery::Order.find("500")}.must_raise ArgumentError
     end
   end
 end
