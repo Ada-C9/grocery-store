@@ -73,12 +73,12 @@ describe "OnlineOrder" do
 
       online_order = Grocery::OnlineOrder.new(id, products, customer, status)
 
-      online_order.total.must_equal nil
+      online_order.total.must_equal 0
     end
   end
 
   describe "#add_product" do
-    it "Does not permit action for processing, shipped or completed statuses" do
+    it "Does not permit action if status is: processing, shipped or completed" do
       id = 1
       products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
       customer = 25
@@ -86,7 +86,7 @@ describe "OnlineOrder" do
 
       online_order = Grocery::OnlineOrder.new(id, products, customer, status)
 
-      online_order.add_product("Annatto seed", 58.38).must_be_nil
+      online_order.add_product("Annatto seed", 58.38).must_equal false
     end
 
     it "Permits action for pending and paid satuses" do
@@ -99,30 +99,31 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      Grocery::OnlineOrder.all_orders.must_be_kind_of Array
-      Grocery::OnlineOrder.all_orders.length.must_equal 100
+      Grocery::OnlineOrder.all.must_be_kind_of Array
+      Grocery::OnlineOrder.all.length.must_equal 100
     end
 
     it "Returns accurate information about the first online order" do
-      Grocery::OnlineOrder.all_online_orders.first.id.must_equal "1"
-      Grocery::OnlineOrder.all_online_orders.first.products.length.must_equal 3
+      Grocery::OnlineOrder.all.first.id.must_equal "1"
+      Grocery::OnlineOrder.all.first.products.length.must_equal 3
+      Grocery::OnlineOrder.all.first.products.include?("Lobster").must_equal true
     end
 
     it "Returns accurate information about the last online order" do
-      Grocery::OnlineOrder.all_online_orders.last.id.must_equal "100"
-      Grocery::OnlineOrder.all_online_orders.last.products.length.must_equal 3
+      Grocery::OnlineOrder.all.last.id.must_equal "100"
+      Grocery::OnlineOrder.all.last.products.length.must_equal 3
     end
   end
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      Grocery::OnlineOrder.find_online_order("1").customer.must_equal "25"
-      Grocery::OnlineOrder.find_online_order("25").products.must_equal ({"Cabbage"=>"52.42", "Tea"=>"54.52", "Custard ApplesDaikon"=>"7.65", "Wheat"=>"59.56"})
+      Grocery::OnlineOrder.find("1").customer.must_equal "25"
+      Grocery::OnlineOrder.find("25").products.must_equal ({"Cabbage"=>"52.42", "Tea"=>"54.52", "Custard ApplesDaikon"=>"7.65", "Wheat"=>"59.56"})
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      Grocery::OnlineOrder.find_online_order("0").must_be_nil
-      Grocery::OnlineOrder.find_online_order("205").must_be_nil
+      Grocery::OnlineOrder.find("0").must_be_nil
+      Grocery::OnlineOrder.find("205").must_be_nil
     end
   end
 

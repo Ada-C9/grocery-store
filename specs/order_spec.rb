@@ -86,37 +86,37 @@ describe "Order Wave 2" do
     it "Returns an array of all orders" do
       #all instances of orders (loop through)
 
-      Grocery::Order.all_orders.must_be_kind_of Array
-      Grocery::Order.all_orders.length.must_equal 100
+      Grocery::Order.all.must_be_kind_of Array
+      Grocery::Order.all.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
-      Grocery::Order.all_orders.first.products.class.must_equal Hash
-      Grocery::Order.all_orders.first.products.length.must_equal 3
-      #add more tests
+      Grocery::Order.all.first.products.class.must_equal Hash
+      Grocery::Order.all.first.products.length.must_equal 3
+      Grocery::Order.all.first.products.include?("Grape Seed Oil").must_equal true
     end
 
     it "Returns accurate information about the last order" do
-      Grocery::Order.all_orders.last.products.class.must_equal Hash
-      Grocery::Order.all_orders.last.products.length.must_equal 3
+      Grocery::Order.all.last.products.class.must_equal Hash
+      Grocery::Order.all.last.products.length.must_equal 3
       #add more tests
     end
   end
 
-  describe "Order.find_order" do
+  describe "Order.find" do
     it "Can find the first order from the CSV" do
-      Grocery::Order.find_order("1").id.must_equal "1"
-      Grocery::Order.find_order("1").products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
+      Grocery::Order.find("1").id.must_equal "1"
+      Grocery::Order.find("1").products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
       end
 
     it "Can find the last order from the CSV" do
-      Grocery::Order.find_order("100").id.must_equal "100"
-      Grocery::Order.find_order("100").products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
+      Grocery::Order.find("100").id.must_equal "100"
+      Grocery::Order.find("100").products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
     end
 
     it "Raises an error for an order that doesn't exist" do
-    Grocery::Order.find_order("200").must_equal nil
-    Grocery::Order.find_order("0").must_equal nil
+    Grocery::Order.find("200").must_equal nil
+    Grocery::Order.find("0").must_equal nil
 
     end
   end

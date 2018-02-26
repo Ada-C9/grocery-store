@@ -38,11 +38,11 @@ module Grocery
         @products.delete_if {|key, value| key >= product_name}
         return true
       else
-        return true
+        return false
       end
     end
 
-    def self.all_orders
+    def self.all
       orders = []
       CSV.read("support/orders.csv").each do |line|
         sorted_list = line[1].split(";")
@@ -58,8 +58,8 @@ module Grocery
         return orders
     end
 
-    def self.find_order(id)
-      Order.all_orders.each do |item|
+    def self.find(id)
+      Order.all.each do |item|
         if item.id == id
         return item
         end
@@ -68,8 +68,4 @@ module Grocery
     end
 
   end
-  # ap Order.all_orders[0]
-  # ap Order.all_orders
-  # ap Order.find_order("200")
-    # ap Order.all_orders
 end

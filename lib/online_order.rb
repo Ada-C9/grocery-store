@@ -8,7 +8,7 @@ require_relative 'customer'
 
 module Grocery
   class OnlineOrder < Order
-    attr_reader :id, :products, :customer, :status
+    attr_reader :customer, :status
 
     def initialize(id, products, customer, status)
       super(id, products)
@@ -19,18 +19,19 @@ module Grocery
     def total
       if super() > 0
         return super() +10
+      else return 0
       end
     end
 
     def add_product(product_name, product_price)
-      if [:processing, :shipped, :complete].include?@status
-        return nil
+      if [:processing, :shipped, :complete].include?(@status)
+        return false
       else
         return super(product_name, product_price)
       end
     end
 
-    def self.all_online_orders
+    def self.all
       orders = []
       CSV.read("support/online_orders.csv").each do |line|
         sorted_list = line[1].split(";")
@@ -46,8 +47,8 @@ module Grocery
       return orders
     end
 
-    def self.find_online_order(id)
-      OnlineOrder.all_online_orders.each do |item|
+    def self.find(id)
+      OnlineOrder.all.each do |item|
         if item.id == id
           return item
         end
@@ -57,7 +58,7 @@ module Grocery
 
     def self.find_by_customer(customer)
       all_orders = []
-      OnlineOrder.all_online_orders.each do |item|
+      OnlineOrder.all.each do |item|
         if item.customer == customer
           all_orders << item
         end
@@ -71,7 +72,7 @@ end
 
 
 
-
+# ap Grocery::OnlineOrder.all.first
 
 
 
