@@ -35,6 +35,7 @@ describe "OnlineOrder" do
 
     it "Can access Customer object" do
       # TODO: Your test code here!
+
     end
 
     it "Can access the online order status" do

@@ -8,7 +8,7 @@ module Grocery
     attr_reader :customerid, :status
 
     #overwrites initialize method for Order
-    def initialize(id, products, customerid, status)
+    def initialize(id, products, customerid = 1, status = :pending)
       super(id, products)
       @customerid = customerid
       @status = status
@@ -40,10 +40,12 @@ module Grocery
       online_orders_csv = CSV.read("support/online_orders.csv", 'r',headers: true).to_a
 
       online_orders_csv.each do |line|
-        online_orders << Grocery::OnlineOrder.new(*line)
-      end
+        online_orders << self.new(line[0].to_i,self.products_to_string(line[1]), line[2].to_i, line[3].to_sym)
 
+
+      end
       return online_orders
+
     end
 
     #overwrites .find method for Order class
@@ -51,25 +53,25 @@ module Grocery
       a = self.all
 
 
-      if id > online_orders_csv.length
-        return nil
-      end
-
-      if id >=1
-        specific_online_order = a[id-1]
-      elsif id < 0
-        specific_online_order = a[id]
-      else
-        return nil
-      end
-      return specific_online_order
+      # if id > online_orders_csv.length
+      #   return nil
+      # end
+      #
+      # if id >=1
+      #   specific_online_order = a[id-1]
+      # elsif id < 0
+      #   specific_online_order = a[id]
+      # else
+      #   return nil
+      # end
+      # return specific_online_order
     end
 
 
 
 
     def self.total
-      super
+      sum = super
       sum = (sum * 0.10) + sum
       # sum = 0
       # if !(@products.empty?) || @products !=  nil
@@ -91,16 +93,17 @@ module Grocery
         return true
         # TODO: implement add_product
       end
-    end
+      ends
 
-    def remove_product(product_name)
-      @products.delete(product_name)
-      if @products.has_key? product_name
-        return false
+      def remove_product(product_name)
+        @products.delete(product_name)
+        if @products.has_key? product_name
+          return false
+        end
+
       end
 
     end
 
   end
-
 end

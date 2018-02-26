@@ -3,13 +3,13 @@ require 'csv'
 require 'awesome_print'
 module Grocery
 
-  class Customer < Grocery::Order
+  class Customer
       attr_reader :id, :email, :address1, :city, :state, :zipcode
 
       #overriding initiazize method from Order class
       #self.initialize
       def initialize(id, email, address1, city, state, zipcode)
-        super(id) = id
+        @id = id
         @email = email
         @address1 = address1
         @city = city
@@ -20,13 +20,13 @@ module Grocery
 
     def self.all
       #overriding the self.all method of super classes
-      c = []
+      customer = []
       customer_info_csv=CSV.read("support/customers.csv", 'r',headers: true).to_a
 
       customer_info_csv.each do |line|
-        c << Grocery::Customer.new(*line)
+        customer << self.new(line[0], line[1], line[2], line[3],line[4],line[5])
       end
-      c
+      return scustomer
     end
 
     #overrides order class method .find
@@ -51,7 +51,7 @@ module Grocery
 
 end
 
-#customer = Grocery::Customer.new(5, 'bbb@gm', 'there', 'tt', 'oo', 'pp')
+customer = Grocery::Customer.new(5, 'bbb@gm', 'there', 'tt', 'oo', 'pp')
 
 #ap Grocery::Customer.all
 #ap customer_info_csv
