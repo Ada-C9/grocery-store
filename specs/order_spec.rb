@@ -2,6 +2,9 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+require 'awesome_print'
+
+Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
@@ -20,7 +23,7 @@ describe "Order Wave 1" do
 
   describe "#total" do
     it "Returns the total from the collection of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {"banana" => 1.99, "cracker" => 3.00}
       order = Grocery::Order.new(1337, products)
 
       sum = products.values.inject(0, :+)
@@ -38,7 +41,7 @@ describe "Order Wave 1" do
 
   describe "#add_product" do
     it "Increases the number of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {"banana" => 1.99, "cracker" => 3.00}
       before_count = products.count
       order = Grocery::Order.new(1337, products)
 
@@ -48,7 +51,7 @@ describe "Order Wave 1" do
     end
 
     it "Is added to the collection of products" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {"banana" => 1.99, "cracker" => 3.00}
       order = Grocery::Order.new(1337, products)
 
       order.add_product("sandwich", 4.25)
@@ -56,7 +59,7 @@ describe "Order Wave 1" do
     end
 
     it "Returns false if the product is already present" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {"banana" => 1.99, "cracker" => 3.00}
 
       order = Grocery::Order.new(1337, products)
       before_total = order.total
@@ -69,7 +72,7 @@ describe "Order Wave 1" do
     end
 
     it "Returns true if the product is new" do
-      products = { "banana" => 1.99, "cracker" => 3.00 }
+      products = {"banana" => 1.99, "cracker" => 3.00}
       order = Grocery::Order.new(1337, products)
 
       result = order.add_product("salad", 4.25)
@@ -78,33 +81,43 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
-  describe "Order.all" do
+describe "Order Wave 2" do
+  describe "Order.all_orders" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      #all instances of orders (loop through)
+
+      Grocery::Order.all.must_be_kind_of Array
+      Grocery::Order.all.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      Grocery::Order.all.first.products.class.must_equal Hash
+      Grocery::Order.all.first.products.length.must_equal 3
+      Grocery::Order.all.first.products.include?("Grape Seed Oil").must_equal true
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      Grocery::Order.all.last.products.class.must_equal Hash
+      Grocery::Order.all.last.products.length.must_equal 3
+      #add more tests
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
-    end
+      Grocery::Order.find("1").id.must_equal "1"
+      Grocery::Order.find("1").products.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
+      end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::Order.find("100").id.must_equal "100"
+      Grocery::Order.find("100").products.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+    Grocery::Order.find("200").must_equal nil
+    Grocery::Order.find("0").must_equal nil
+
     end
   end
 end

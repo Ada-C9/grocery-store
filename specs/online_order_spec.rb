@@ -1,9 +1,12 @@
+require 'pry'
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'awesome_print'
+
 
 # TODO: uncomment the next line once you start wave 3
-# require_relative '../lib/online_order'
+require_relative '../lib/online_order'
 # You may also need to require other classes here
 
 # Because an OnlineOrder is a kind of Order, and we've
@@ -11,80 +14,136 @@ require 'minitest/skip_dsl'
 # we effectively get all that testing for free! Here we'll
 # only test things that are different.
 
-xdescribe "OnlineOrder" do
+describe "OnlineOrder" do
   describe "#initialize" do
     it "Is a kind of Order" do
-      # Check that an OnlineOrder is in fact a kind of Order
+      id = 1
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+      customer = 25
+      status = :complete
 
-      # Instatiate your OnlineOrder here
-      # online_order =
-      # online_order.must_be_kind_of Grocery::Order
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+      online_order.must_respond_to :products
+      online_order.products.length.must_equal 3
+      online_order.must_be_kind_of Grocery::Order
     end
 
     it "Can access Customer object" do
-      # TODO: Your test code here!
+      id = 1
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+      customer = 25
+      status = :complete
+
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+
+      online_order.must_respond_to :id
+      online_order.id.must_equal id
     end
 
     it "Can access the online order status" do
-      # TODO: Your test code here!
+      id = 1
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+      customer = 25
+      status = :complete
+
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+
+      online_order.must_respond_to :status
+      online_order.status.must_equal :complete
     end
   end
 
   describe "#total" do
     it "Adds a shipping fee" do
-      # TODO: Your test code here!
+      id = 1
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+      customer = 25
+      status = :complete
+
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+
+      online_order.total.must_equal 180.68
     end
 
     it "Doesn't add a shipping fee if there are no products" do
-      # TODO: Your test code here!
+      id = 1
+      products = {}
+      customer = 25
+      status = :complete
+
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+
+      online_order.total.must_equal 0
     end
   end
 
   describe "#add_product" do
-    it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+    it "Does not permit action if status is: processing, shipped or completed" do
+      id = 1
+      products = {"Lobster" => 17.18, "Annatto seed" => 58.38, "Camomile" => 83.21}
+      customer = 25
+      status = :complete
+
+      online_order = Grocery::OnlineOrder.new(id, products, customer, status)
+
+      online_order.add_product("Annatto seed", 58.38).must_equal false
     end
 
     it "Permits action for pending and paid satuses" do
-      # TODO: Your test code here!
+      online_order = Grocery::OnlineOrder.new(1, {"Lobster" => 17.18, "Camomile" => 83.21}, 25, :pending)
+
+      online_order.add_product("Annatto seed", 58.38).must_equal true
+      online_order.products.length.must_equal 3
     end
   end
 
   describe "OnlineOrder.all" do
     it "Returns an array of all online orders" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.all.must_be_kind_of Array
+      Grocery::OnlineOrder.all.length.must_equal 100
     end
 
     it "Returns accurate information about the first online order" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.all.first.id.must_equal "1"
+      Grocery::OnlineOrder.all.first.products.length.must_equal 3
+      Grocery::OnlineOrder.all.first.products.include?("Lobster").must_equal true
     end
 
     it "Returns accurate information about the last online order" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.all.last.id.must_equal "100"
+      Grocery::OnlineOrder.all.last.products.length.must_equal 3
     end
   end
 
   describe "OnlineOrder.find" do
     it "Will find an online order from the CSV" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find("1").customer.must_equal "25"
+      Grocery::OnlineOrder.find("25").products.must_equal ({"Cabbage"=>"52.42", "Tea"=>"54.52", "Custard ApplesDaikon"=>"7.65", "Wheat"=>"59.56"})
     end
 
     it "Raises an error for an online order that doesn't exist" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find("0").must_be_nil
+      Grocery::OnlineOrder.find("205").must_be_nil
     end
   end
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
+      Grocery::OnlineOrder.find_by_customer("28").length.must_equal 3
+
+      Grocery::OnlineOrder.find_by_customer("28").must_be_kind_of Array
     end
 
-    it "Raises an error if the customer does not exist" do
-      # TODO: Your test code here!
+    it "Returns an empty array if the customer does not exist" do
+      Grocery::OnlineOrder.find_by_customer("300").must_equal []
+      Grocery::OnlineOrder.find_by_customer("0").must_equal []
     end
 
     it "Returns an empty array if the customer has no orders" do
-      # TODO: Your test code here!
+      online_order = Grocery::OnlineOrder.new("101", {}, "36", :pending)
+
+      Grocery::OnlineOrder.find_by_customer("36").must_equal []
     end
   end
 end
+# binding.pry
