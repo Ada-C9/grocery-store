@@ -59,10 +59,11 @@ end
 describe "Customer.find" do
   it "Can find the first customer from the CSV" do
 
-    all_customers = Grocery::Customer.all
+    # all_customers = Grocery::Customer.all
     find_customer = Grocery::Customer.find(1)
 
-    all_customers[0].must_equal find_customer
+    find_customer.costumer_id.must_equal 1
+    find_customer.email.must_equal "leonard.rogahn@hagenes.org"
   end
 
   it "Can find the last customer from the CSV" do
@@ -70,13 +71,16 @@ describe "Customer.find" do
     all_customers = Grocery::Customer.all
     find_customer = Grocery::Customer.find(all_customers.size)
 
-    all_customers.last.must_equal find_customer
+    find_customer.costumer_id.must_equal 35
+    find_customer.email.must_equal "rogers_koelpin@oconnell.org"
   end
 
-  it "Raises an error for a customer that doesn't exist" do
+  it "Returns nil for a customer that doesn't exist" do
 
     all_customers = Grocery::Customer.all
-    proc {Grocery::Customer.find(9999)}.must_raise ArgumentError
+    find_customer = Grocery::Customer.find(all_customers.size + 1)
+
+    find_customer.must_equal nil
 
   end
 end

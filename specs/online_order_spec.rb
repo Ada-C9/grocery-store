@@ -64,7 +64,7 @@ describe "OnlineOrder" do
 
       online_order = Grocery::OnlineOrder.new(nil, nil, nil)
 
-      online_order.total.must_equal nil
+      online_order.total.must_equal 0
 
     end
   end

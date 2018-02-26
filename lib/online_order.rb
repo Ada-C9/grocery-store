@@ -8,7 +8,7 @@ require_relative 'order.rb'
 module Grocery
   class OnlineOrder < Grocery::Order
 
-    attr_reader :id, :products, :customer_id, :status
+    attr_reader :customer_id, :status
 
     # Initialize class OnlineOrder:
     def initialize(id, products, customer_id, status = :pending)
@@ -27,6 +27,8 @@ module Grocery
 
       if @products != nil
         return 10 + super
+      else
+        return 0
       end
 
     end
@@ -54,7 +56,7 @@ module Grocery
       @all_orders = []
 
       # Read file:
-      read_file = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/online_orders.csv', 'r')
+      read_file = CSV.read('support/online_orders.csv', 'r')
       # ???? Somehow I keep on getting an error her eif i use only '../support/online_orders.csv'
 
       read_file.each do |row| # CSV.read('../support/orders.csv', 'r').each do |row|
@@ -85,9 +87,11 @@ module Grocery
     #############################################################################################
     # FIND ORDER:
 
-    def self.find(find_id)
-      super #(The same as in Grocery::Order)
-    end
+    # def self.find(find_id)
+    #   super #(The same as in Grocery::Order)
+    # end
+
+    # ---> NOT NECESSARY TO DUPLICATE
 
     #############################################################################################
     # FIND ORDER BY COSTUMER:

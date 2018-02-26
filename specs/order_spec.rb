@@ -164,7 +164,8 @@ describe "Order Wave 2" do
       orders = Grocery::Order.all
       find =  Grocery::Order.find(1)
 
-      orders[0].must_equal find
+      orders[0].id.must_equal find.id
+      orders[0].products.must_equal find.products
     end
 
     it "Can find the last order from the CSV" do

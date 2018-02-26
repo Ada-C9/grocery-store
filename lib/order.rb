@@ -26,7 +26,7 @@ module Grocery
 
       # Read file:
       # ???? Somehow I keep on getting an error here if i use only '../support/orders.csv'
-      file_to_read = CSV.read('/Users/leticiatran/Desktop/ada/c9_Ampers/ruby_projects/mini_projects/grocery-store/support/orders.csv', 'r')
+      file_to_read = CSV.read('support/orders.csv', 'r')
 
       file_to_read.each do |row|
 
@@ -69,9 +69,10 @@ module Grocery
 
     # Find order where the value of the id fiedl matches the passed parameter
     def self.find(find_id)
-      @all_orders.count.times do |order|
+      all_orders = self.all
+      all_orders.count.times do |order|
         if (order + 1) == find_id
-          return @all_orders[order]
+          return all_orders[order]
           # "Order #{@all_orders[order][0]}: products: #{@all_orders[order][1]}"
         end
       end
