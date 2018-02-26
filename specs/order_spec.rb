@@ -2,8 +2,16 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
+Minitest::Reporters.use!
+
+
+#_______________ WAVE 1 _______________
 
 describe "Order Wave 1" do
+
+  #############################################################################################
+  # INITIALIZES Order:
+
   describe "#initialize" do
     it "Takes an ID and collection of products" do
       id = 1337
@@ -17,6 +25,9 @@ describe "Order Wave 1" do
       order.products.length.must_equal 0
     end
   end
+
+  #############################################################################################
+  # CALCULATES TOTAL OF ORDER:
 
   describe "#total" do
     it "Returns the total from the collection of products" do
@@ -35,6 +46,24 @@ describe "Order Wave 1" do
       order.total.must_equal 0
     end
   end
+
+  #############################################################################################
+  # REMOVES PRODUCT OF ORDER:
+
+  describe "remove_product" do
+    it "Decreses the number of products" do
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+      before_count = products.count
+      order = Grocery::Order.new(1337, products)
+
+      order.remove_product("banana")
+      expected_count = before_count - 1
+      order.products.count.must_equal expected_count
+    end
+  end
+
+  #############################################################################################
+  # ADDS PRODUCT TO ORDER:
 
   describe "#add_product" do
     it "Increases the number of products" do
@@ -78,33 +107,87 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+
+#_______________ WAVE 2_______________
+
+describe "Order Wave 2" do
+
+  #############################################################################################
+  # READS FILE OF ALL ORDERS AND ADDS THEM:
+
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+
+      orders = CSV.read('support/orders.csv', 'r')
+
+      Grocery::Order.all.length.must_equal orders.length
+
+      Grocery::Order.all.must_be_kind_of Array
+
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+
+        # Create order #1:
+      file_first_order = Grocery::Order.new(1, {"Slivered Almonds"=>22.88, "Wholewheat flour"=>1.93, "Grape Seed Oil"=>74.9})
+
+      # create array of the first_order:
+      first_order = Grocery::Order.all[0]
+
+      # evaluate:
+      file_first_order.id.must_equal first_order.id
+      file_first_order.products.must_equal first_order.products
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      # Create order #1:
+    file_last_order = Grocery::Order.new(100, {"Allspice"=>64.74, "Bran"=>14.72, "UnbleachedFlour"=>80.59})
+
+    # create array of the first_order:
+    last_order = Grocery::Order.all[99]
+
+    # evaluate:
+    file_last_order.id.must_equal last_order.id
+    file_last_order.products.must_equal last_order.products
     end
   end
 
+  #############################################################################################
+  # FINDS ORDER:
+
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      # Order #1 on file:
+      # orders = CSV.read('support/orders.csv', 'r')[0][0]
+
+      # Create all orders on Grocery module and search for the order #1:
+      orders = Grocery::Order.all
+      find =  Grocery::Order.find(1)
+
+      orders[0].id.must_equal find.id
+      orders[0].products.must_equal find.products
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      # Order #1 on file:
+      order = CSV.read('support/orders.csv', 'r')[99][0].to_i
+
+      # Create all orders on Grocery module and search for the order #100:
+      Grocery::Order.all[0]
+      find =  Grocery::Order.find(100)
+
+      order.must_equal find.id
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      # Order that doesnt exists on file:
+      error = "Order doesn't exist!"
+      # Create all orders on Grocery module and search for the order #101 - doesnt exist!:
+      Grocery::Order.all
+      find =  Grocery::Order.find(101)
+
+      error.must_equal find
+
     end
   end
 end
