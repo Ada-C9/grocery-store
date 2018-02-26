@@ -59,7 +59,15 @@ describe "OnlineOrder" do
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      # TODO: Your test code here!
+      products = { "banana" => 1.99, "cracker" => 3.00 }
+
+      order_processing = OnlineOrder.new(200, products, :processino)
+      order_shipped = OnlineOrder.new(201, products, :shipped)
+      order_completed = OnlineOrder.new(202, products, :completed)
+
+      order_processing.add_product("banana" => 1.99).must_raise ArgumentError
+      order_shipped.add_product("banana" => 1.99).must_raise ArguementError
+      order_completed.add_product("banana" => 1.99).must_raise ArgumentError
     end
 
     it "Permits action for pending and paid satuses" do
