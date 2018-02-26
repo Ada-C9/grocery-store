@@ -1,17 +1,20 @@
 require 'minitest/autorun'
-require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'minitest/reporters'
 require_relative '../lib/order'
+require_relative '../lib/customer'
+
+Minitest::Reporters.use!
 
 describe "Order Wave 1" do
   describe "#initialize" do
-    it "Takes an ID and collection of products" do
-      id = 1337
-      order = Grocery::Order.new(id, {})
+    it "Takes an order_id and collection of products" do
+      order_id = 1337
+      order = Grocery::Order.new(order_id, {})
 
-      order.must_respond_to :id
-      order.id.must_equal id
-      order.id.must_be_kind_of Integer
+      order.must_respond_to :order_id
+      order.order_id.must_equal order_id
+      order.order_id.must_be_kind_of Integer
 
       order.must_respond_to :products
       order.products.length.must_equal 0
@@ -56,6 +59,7 @@ describe "Order Wave 1" do
     end
 
     it "Returns false if the product is already present" do
+
       products = { "banana" => 1.99, "cracker" => 3.00 }
 
       order = Grocery::Order.new(1337, products)
@@ -73,38 +77,71 @@ describe "Order Wave 1" do
       order = Grocery::Order.new(1337, products)
 
       result = order.add_product("salad", 4.25)
+
       result.must_equal true
     end
   end
 end
 
 # TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+    # Arrange
+    # ap Grocery::Order.all
+    # Act
+    result = Grocery::Order.all
+    # Assert
+    result.must_be_kind_of Array
+    result.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      # Arrange
+      # ap Grocery::Order.all
+      # Act
+      first_order = Grocery::Order.all[0]
+      # Assert
+      first_order.order_id.must_equal "1"
+      first_order.products.length.must_equal 3
+      first_order.products.must_be_kind_of Hash
     end
 
     it "Returns accurate information about the last order" do
       # TODO: Your test code here!
+      # Arrange
+      # ap Grocery::Order.all
+      # Act
+      last_order = Grocery::Order.all[99]
+      # Assert
+      last_order.order_id.must_equal "100"
+      last_order.products.length.must_equal 3
+      last_order.products["UnbleachedFlour"].must_equal "80.59"
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+
+      order_search_first = Grocery::Order.find("1")
+      # Assert
+      order_search_first.order_id.must_equal "1"
+      order_search_first.products["Slivered Almonds"].must_equal "22.88"
+      order_search_first.products.length.must_equal 3
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+
+      order_search_last = Grocery::Order.find("100")
+      # Assert
+      order_search_last.order_id.must_equal "100"
+      order_search_last.products.length.must_equal 3
+      order_search_last.products["UnbleachedFlour"].must_equal "80.59"
     end
 
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+
+      proc { Grocery::Order.find("101") }.must_raise NoMethodError
     end
   end
 end
