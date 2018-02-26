@@ -149,10 +149,10 @@ describe "Order Wave 2" do
       #arrange
       # N/A
       # act
-      Grocery::Order.find("first")
+      Grocery::Order.find("1")
       # assert
-      Grocery::Order.find("first").id.must_equal "1"
-      Grocery::Order.find("first").products.keys.must_include "Slivered Almonds"
+      Grocery::Order.find("1").id.must_equal "1"
+      Grocery::Order.find("1").products.keys.must_include "Slivered Almonds"
     end
 
     it "Can find the last order from the CSV" do
