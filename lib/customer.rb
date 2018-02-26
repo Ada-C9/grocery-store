@@ -44,7 +44,3 @@ module Grocery
   end
 
 end
-
-# ap Grocery::Customer.find(19)
-# ap customers
-# ap customers.find(19)

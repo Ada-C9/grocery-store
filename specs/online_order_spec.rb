@@ -65,13 +65,10 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.all" do
 
-    before do
-      @@all_online_orders = Grocery::OnlineOrder.all
-    end
-
     it "Returns an array of all online orders" do
-      @@all_online_orders.length.must_equal 100
-      @@all_online_orders.must_be_kind_of Array
+      all_online_orders = Grocery::OnlineOrder.all
+      all_online_orders.length.must_equal 100
+      all_online_orders.must_be_kind_of Array
     end
 
     it "Returns accurate information about the first online order" do
@@ -110,19 +107,19 @@ describe "OnlineOrder" do
   end
 
   describe "OnlineOrder.find_by_customer" do
-    xit "Returns an array of online orders for a specific customer ID" do
+    it "Returns an array of online orders for a specific customer ID" do
       rand_order = Grocery::OnlineOrder.find_by_customer(25)
 
       rand_order.must_be_kind_of Array
     end
 
-    xit "Returns an empty array if the customer does not exist" do
+    it "Returns an empty array if the customer does not exist" do
       rand_order = Grocery::OnlineOrder.find_by_customer(145)
 
       rand_order.must_be_nil
     end
 
-    xit "Returns an empty array if the customer has no orders" do
+    it "Returns an empty array if the customer has no orders" do
       # customers that have no orders are 16 & 22
       rand_order_16 = Grocery::OnlineOrder.find_by_customer(16)
       rand_order_22 = Grocery::OnlineOrder.find_by_customer(22)

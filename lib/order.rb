@@ -7,8 +7,6 @@ module Grocery
 
   class Order
 
-    @@all_orders = []
-
     attr_reader :id
     attr_accessor :products
 
@@ -36,28 +34,25 @@ module Grocery
     end
 
     def self.all
-      @@all_orders = []
+      all_orders = []
       CSV.read('support/orders.csv', 'r').each do |row|
       # CSV.read('../support/orders.csv', 'r').each do |row|
         row.each do
           @id = row[0].to_i
           split_rows = row[1].split(";")
-          # ap split_rows
           keys_values = split_rows.map {|item| item.split /\s*:\s*/ }
           @products = Hash[keys_values]
-          # ap prod_hash
         end
-        @@all_orders << Grocery::Order.new(@id, @products)
+        all_orders << Grocery::Order.new(@id, @products)
       end
-      return @@all_orders
+      return all_orders
     end
 
     # self.find(id) - returns an instance of Order where the value of the id field in the CSV matches the passed parameter.
-    # Return nil if order can't be found... write tests for this. Write test to find first order, last order, etc...
     def self.find(id)
-      @@all_orders = Grocery::Order.all
+      all_orders = Grocery::Order.all
       #.find_all returns an array, containing the one instance of Order where the id matches the passed parameter
-      order_instance = @@all_orders.find_all { |order| order.id == id }
+      order_instance = all_orders.find_all { |order| order.id == id }
       if order_instance.length <= 0
         return nil
       else
@@ -66,16 +61,3 @@ module Grocery
     end
   end
 end
-
-# ap Grocery::Order.find(33)
-# ap Grocery::Order.all[0].id
-# all_orders =
-# orders = Grocery::Order.all
-# ap orders
-# print all_orders
-# all_orders = []
-
-# WAVE 3
-
-# overwrite total and add_product methods to extend them and add certain things
-# OnlineOrder will also have its own class methods, which will completely overwrite the parent class's class methods

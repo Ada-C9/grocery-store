@@ -19,7 +19,6 @@ describe "Order Wave 1" do
 
       # Assert
       order.must_respond_to :products
-      #why does this say must be equal to zero? because hash inside the products variable above is currently empty?
       order.products.length.must_equal 0
     end
   end
@@ -126,16 +125,12 @@ describe "Order Wave 2" do
     end
 
     it "Returns an array of all orders" do
-
-      # all_orders = Grocery::Order.all
       # binding.pry
       @all_orders.length.must_equal 100
       @all_orders.must_be_kind_of Array
-
     end
 
     it "Returns accurate information about the first order" do
-
       first_row_products = {"Slivered Almonds"=>"22.88",
         "Wholewheat flour"=>"1.93",
         "Grape Seed Oil"=>"74.9"}
@@ -143,35 +138,29 @@ describe "Order Wave 2" do
       Grocery::Order.all.first.id.must_equal 1
       # Grocery::Order.all.first.id.must_be_kind_of Symbol
       Grocery::Order.all.first.products.must_equal first_row_products
-
       end
 
     it "Returns accurate information about the last order" do
-
       last_row_products = {"Allspice"=>"64.74",
         "Bran"=>"14.72",
         "UnbleachedFlour"=>"80.59"}
 
       Grocery::Order.all.last.id.must_equal 100
       Grocery::Order.all.last.products.must_equal last_row_products
-
     end
   end
 
   describe "Order.find" do
     it "Can find the first order from the CSV" do
-
       first_order = Grocery::Order.find(1)
 
       first_order[0].must_be_instance_of Grocery::Order
-
     end
 
     it "Can find the last order from the CSV" do
       last_order = Grocery::Order.find(100)
 
       last_order[0].must_be_instance_of Grocery::Order
-
     end
 
     it "Return nil for an order that doesn't exist" do
