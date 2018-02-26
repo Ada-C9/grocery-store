@@ -205,11 +205,13 @@ describe "OnlineOrder" do
       proc {Grocery::OnlineOrder.find_by_customer("500")}.must_raise ArgumentError
     end
 
-    xit "Returns an empty array if the customer has no orders" do
+    it "Returns an empty array if the customer has no orders" do
       # arrange
       # act
       # assert
-      # .must_be_empty
+      customers_orders = Grocery::OnlineOrder.find_by_customer(22)
+
+      customers_orders.must_be_empty
     end
   end
 end
