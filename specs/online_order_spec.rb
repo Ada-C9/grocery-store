@@ -91,6 +91,7 @@ describe "OnlineOrder" do
       Grocery::OnlineOrder.all
       # assert
       Grocery::OnlineOrder.all.must_be_kind_of Array
+      Grocery::Order.all[0].must_be_instance_of Grocery::Order
     end
 
     it "Returns accurate information about the first online order" do
