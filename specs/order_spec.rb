@@ -3,6 +3,9 @@ require 'minitest/reporters'
 require 'minitest/skip_dsl'
 require_relative '../lib/order'
 
+
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 describe "Order Wave 1" do
   describe "#initialize" do
     it "Takes an ID and collection of products" do
@@ -78,33 +81,61 @@ describe "Order Wave 1" do
   end
 end
 
-# TODO: change 'xdescribe' to 'describe' to run these tests
-xdescribe "Order Wave 2" do
+
+describe "Order Wave 2" do
   describe "Order.all" do
     it "Returns an array of all orders" do
-      # TODO: Your test code here!
+      # No Arrange because we are using Self(Class)
+      # Assert
+      order = Grocery::Order.all
+
+      order.each do |item|
+        item.must_be_instance_of Grocery::Order
+      end
+
+      order.length.must_equal 100
     end
 
     it "Returns accurate information about the first order" do
-      # TODO: Your test code here!
+      order = Grocery::Order.all
+
+      first_order = order.first
+
+      first_order.id.must_equal 1
     end
 
     it "Returns accurate information about the last order" do
-      # TODO: Your test code here!
+      order = Grocery::Order.all
+
+      last_order = order.last
+
+      last_order.id.must_equal 100
     end
   end
 
-  describe "Order.find" do
+describe "Order.find" do
     it "Can find the first order from the CSV" do
-      # TODO: Your test code here!
+      order_to_find = Grocery::Order.find(1)
+
+      order_to_find.must_be_kind_of Hash
+
+      order_to_find.must_equal ({"Slivered Almonds"=>"22.88", "Wholewheat flour"=>"1.93", "Grape Seed Oil"=>"74.9"})
     end
 
     it "Can find the last order from the CSV" do
-      # TODO: Your test code here!
+      order_to_find = Grocery::Order.find(100)
+
+      order_to_find.must_be_kind_of Hash
+
+      order_to_find.must_equal ({"Allspice"=>"64.74", "Bran"=>"14.72", "UnbleachedFlour"=>"80.59"})
     end
 
+
     it "Raises an error for an order that doesn't exist" do
-      # TODO: Your test code here!
+      order_to_find = Grocery::Order.find(101)
+
+      order_to_find.must_equal nil
+
     end
   end
 end
