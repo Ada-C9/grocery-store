@@ -26,7 +26,7 @@ module Grocery
         customer_email = row[1]
         address = row[2..4].join(", ") + " " + row[5]
         # Creates a new customer instance. Adds instance to array of Customer instances
-        new_customer = Grocery::Customer.new(custormer_id, customer_email, address)
+        new_customer = self.new(custormer_id, customer_email, address)
         all_customers << new_customer
       end
       return all_customers
@@ -34,7 +34,7 @@ module Grocery
 
     # Searches customer_list array for one Customer with customer_id. If customer does not exist, returns nil
     def self.find(customer_id)
-      customer_list = Customer.all
+      customer_list = self.all
       customer_list.each do |customer|
         if customer.id == customer_id
           return customer

@@ -62,7 +62,7 @@ module Grocery
           end
         id = row[0].to_i
         # Creates a new order from parsed data. Adds single order to Orders array
-        new_order_class = Order.new(id, products)
+        new_order_class = self.new(id, products)
         all_csv_orders << new_order_class
       end
 
@@ -72,7 +72,7 @@ module Grocery
 
     # Iterates through array of Order instances and searches by order_id
     def self.find(order_id)
-      all_orders = Order.all
+      all_orders = self.all
       all_orders.each do |one_order|
         if one_order.id == order_id
           return one_order

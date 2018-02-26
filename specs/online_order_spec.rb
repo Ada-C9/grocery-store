@@ -61,9 +61,9 @@ describe "OnlineOrder" do
 
   describe "#add_product" do
     it "Does not permit action for processing, shipped or completed statuses" do
-      online_order_proccessing = OnlineOrder.new(@test_id, @products, @customer, 'processing')
-      online_order_shipped = OnlineOrder.new(@test_id, @products, @customer, 'shipped')
-      online_order_completed = OnlineOrder.new(@test_id, @products, @customer, 'completed')
+      online_order_proccessing = OnlineOrder.new(@test_id, @products, @customer, :processing)
+      online_order_shipped = OnlineOrder.new(@test_id, @products, @customer, :shipped)
+      online_order_completed = OnlineOrder.new(@test_id, @products, @customer, :completed)
 
       assert_raises(ArgumentError) {online_order_proccessing.add_product("banana", 1.25)}
       assert_raises(ArgumentError) {online_order_shipped.add_product("banana", 1.25)}
@@ -71,7 +71,7 @@ describe "OnlineOrder" do
     end
 
     it "Permits action for pending and paid satuses" do
-      paid_online_order = OnlineOrder.new(@test_id, @products, @customer, 'paid')
+      paid_online_order = OnlineOrder.new(@test_id, @products, @customer, :paid)
       pending_online_order = OnlineOrder.new(@test_id, @products, @customer)
 
       paid_online_order.add_product("banana", 1.25).must_equal true
@@ -101,7 +101,7 @@ describe "OnlineOrder" do
       first_order.customer.id.must_equal 25
       first_order.customer.email.must_equal "summer@casper.io"
       first_order.customer.address.must_equal "66255 D'Amore Parkway, New Garettport, MO 57138"
-      first_order.fulfillment_status.must_equal "complete"
+      first_order.fulfillment_status.must_equal :complete
     end
 
     it "Returns accurate information about the last online order" do
@@ -113,7 +113,7 @@ describe "OnlineOrder" do
       last_order.customer.id.must_equal 20
       last_order.customer.email.must_equal "jerry@ferry.com"
       last_order.customer.address.must_equal "90842 Amani Common, Weissnatfurt, TX 24108"
-      last_order.fulfillment_status.must_equal "pending"
+      last_order.fulfillment_status.must_equal :pending
     end
   end
 
@@ -123,7 +123,7 @@ describe "OnlineOrder" do
       one_order.id.must_equal 3
       one_order.products.must_equal ({"Vegetable spaghetti" => 37.83, "Dates" => 90.88, "WhiteFlour" => 3.24, "Caraway Seed" => 54.29})
       one_order.customer.must_be_kind_of Grocery::Customer
-      one_order.fulfillment_status.must_equal "processing"
+      one_order.fulfillment_status.must_equal :processing
     end
 
     it "Raises an error for an online order that doesn't exist" do
