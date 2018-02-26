@@ -3,7 +3,7 @@ require "awesome_print"
 
 module Grocery
   class OnlineOrder < Order
-    attr_reader :id, :customer, :products, :status
+    attr_reader :customer, :status
 
     # set to pending as the default
     def initialize(id, products, customer, status = :pending)
