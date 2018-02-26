@@ -1,0 +1,4 @@
+class EBook < Book
+attr_reader :format
+
+def initi
