@@ -17,11 +17,6 @@ describe "OnlineOrder" do
   status = :complete
   let(:online_order) { Grocery::OnlineOrder.new(id, products, customer, status) }
 
-  let(:first_online_order) {Grocery::OnlineOrder.new(1, {"Lobster"=>17.18, "Annatto seed"=>58.38,"Camomile"=>83.21}, Grocery::Customer.new(25, "summer@casper.io", "66255 D'Amore Parkway, New Garettport, MO, 57138"), :complete)}
-
-  let(:last_online_order) {Grocery::OnlineOrder.new(100, {"Amaranth"=>83.81, "Smoked Trout"=>70.6,"Cheddar"=>5.63}, Grocery::Customer.new(20, "jerry@ferry.com", "90842 Amani Common, Weissnatfurt, TX, 24108"
-  ), :pending)}
-
   describe "#initialize" do
     it "Is a kind of Order" do
       # Check that an OnlineOrder is in fact a kind of Order
@@ -78,6 +73,10 @@ describe "OnlineOrder" do
   end
 
   describe "OnlineOrder.all" do
+    let(:first_online_order) {Grocery::OnlineOrder.new(1, {"Lobster"=>17.18, "Annatto seed"=>58.38,"Camomile"=>83.21}, Grocery::Customer.new(25, "summer@casper.io", "66255 D'Amore Parkway, New Garettport, MO, 57138"), :complete)}
+    let(:last_online_order) {Grocery::OnlineOrder.new(100, {"Amaranth"=>83.81, "Smoked Trout"=>70.6,"Cheddar"=>5.63}, Grocery::Customer.new(20, "jerry@ferry.com", "90842 Amani Common, Weissnatfurt, TX, 24108"
+    ), :pending)}
+
     it "Returns an array of all online orders" do
       all.must_be_instance_of Array
       all.length.must_equal 100
@@ -86,28 +85,36 @@ describe "OnlineOrder" do
 
     it "Returns accurate information about the first online order" do
       all[0].id.must_equal 1
-      all[0].products[name].must_equal first_online_order.products[name]
-      all[0].customer.id.must_equal first_online_order.customer.id
-      all[0].status.must_equal first_online_order.status
+      all[0].products.must_equal ({"Lobster"=>17.18, "Annatto seed"=>58.38,"Camomile"=>83.21})
+      all[0].products.keys.must_equal ["Lobster", "Annatto seed", "Camomile"]
+      all[0].customer.id.must_equal 25
+      all[0].status.must_equal :complete
     end
 
     it "Returns accurate information about the last online order" do
       all[-1].id.must_equal 100
-      all[-1].products[name].must_equal last_online_order.products[name]
-      all[-1].customer.id.must_equal last_online_order.customer.id
-      all[-1].status.must_equal last_online_order.status
+      all[-1].products.must_equal ({"Amaranth"=>83.81, "Smoked Trout"=>70.6,"Cheddar"=>5.63})
+      all[-1].products.keys.must_equal ["Amaranth", "Smoked Trout", "Cheddar"]
+      all[-1].customer.id.must_equal 20
+      all[-1].status.must_equal :pending
     end
   end
 
   describe "OnlineOrder.find" do
+    let(:first_online_order) {Grocery::OnlineOrder.new(1, {"Lobster"=>17.18, "Annatto seed"=>58.38,"Camomile"=>83.21}, Grocery::Customer.new(25, "summer@casper.io", "66255 D'Amore Parkway, New Garettport, MO, 57138"), :complete)}
+    let(:last_online_order) {Grocery::OnlineOrder.new(100, {"Amaranth"=>83.81, "Smoked Trout"=>70.6,"Cheddar"=>5.63}, Grocery::Customer.new(20, "jerry@ferry.com", "90842 Amani Common, Weissnatfurt, TX, 24108"
+    ), :pending)}
+
     it "Will find an online order from the CSV" do
       Grocery::OnlineOrder.find(1).must_be_instance_of Grocery::OnlineOrder
-      Grocery::OnlineOrder.find(1).id.must_equal first_online_order.id
-      Grocery::OnlineOrder.find(1).products[name].must_equal first_online_order.products[name]
-      Grocery::OnlineOrder.find(1).status.must_equal first_online_order.status
-      Grocery::OnlineOrder.find(100).id.must_equal last_online_order.id
-      Grocery::OnlineOrder.find(100).products[name].must_equal last_online_order.products[name]
-      Grocery::OnlineOrder.find(100).status.must_equal last_online_order.status
+      Grocery::OnlineOrder.find(1).id.must_equal 1
+      Grocery::OnlineOrder.find(1).products.must_equal ({"Lobster"=>17.18, "Annatto seed"=>58.38,"Camomile"=>83.21})
+      Grocery::OnlineOrder.find(1).products.values.must_equal ([17.18, 58.38, 83.21])
+      Grocery::OnlineOrder.find(1).status.must_equal :complete
+      Grocery::OnlineOrder.find(100).id.must_equal 100
+      Grocery::OnlineOrder.find(100).products.values.must_equal ([83.81, 70.6, 5.63])
+      Grocery::OnlineOrder.find(100).products.must_equal ({"Amaranth"=>83.81, "Smoked Trout"=>70.6,"Cheddar"=>5.63})
+      Grocery::OnlineOrder.find(100).status.must_equal :pending
     end
 
     it "Returns nil for an order that doesn't exist" do
@@ -117,7 +124,6 @@ describe "OnlineOrder" do
 
   describe "OnlineOrder.find_by_customer" do
     it "Returns an array of online orders for a specific customer ID" do
-      # TODO: Your test code here!
       Grocery::OnlineOrder.find_by_customer(25).must_be_instance_of Array
       Grocery::OnlineOrder.find_by_customer(25).length.must_equal 6
       Grocery::OnlineOrder.find_by_customer(19).must_be_instance_of Array
