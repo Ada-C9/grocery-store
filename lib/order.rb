@@ -22,6 +22,7 @@ module Grocery
     end
 
     def add_product(product_name, product_price)
+
       # Checks if the products hash contains product_name
       if @products.has_key?(product_name)
         return false
@@ -73,10 +74,9 @@ module Grocery
     # Iterates through array of Order instances and searches by order_id
     def self.find(order_id)
       all_orders = self.all
-      all_orders.each do |one_order|
-        if one_order.id == order_id
-          return one_order
-        end
+      order = all_orders.find {|order| order.id == order_id}
+      if order != nil
+        return order
       end
       return nil
     end
