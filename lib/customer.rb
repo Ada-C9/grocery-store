@@ -33,14 +33,12 @@ module Grocery
     end
 
     # Searches customer_list array for one Customer with customer_id. If customer does not exist, returns nil
+
+
     def self.find(customer_id)
       customer_list = self.all
-      customer_list.each do |customer|
-        if customer.id == customer_id
-          return customer
-        end
-      end
-      return nil
+      one_customer = customer_list.find {|customer| customer.id == customer_id}
+      return one_customer != nil ? one_customer : nil
     end
   end
 
