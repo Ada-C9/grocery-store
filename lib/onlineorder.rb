@@ -80,14 +80,11 @@ class OnlineOrder < Grocery::Order
     end
 
     customer_orders = []
-    online_orders = OnlineOrder.all
+    online_orders = self.all
     # Iterates through array of OnlineOrders to find all orders that have customer_id. Adds these OnlineOrders to customer_orders
-    online_orders.each do |order|
-      if order.customer.id == customer_id
-        customer_orders << order
-      end
-    end
-    return customer_orders
+
+    return online_orders.find_all {|order| order.customer.id == customer_id}
+
   end
 
 end
