@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/reporters'
 require 'minitest/skip_dsl'
+require 'minitest/pride'
 require_relative '../lib/order'
 require 'csv'
 require 'awesome_print'
@@ -139,7 +140,7 @@ describe "Order Wave 2" do
 
     it "Returns nil if order doesn't exist" do
       result = Grocery::Order.find(1000)
-      result.must_equal nil
+      result.must_be_nil
     end
   end
 end
